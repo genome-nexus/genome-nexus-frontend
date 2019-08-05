@@ -40,7 +40,7 @@ class Home extends React.Component<{}>
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="8" className="home-function-description">
+                        <Col lg="7" className="home-function-description">
                             Genome Nexus will integrate information from a variety of existing resources, 
                             including databases that convert DNA changes to protein changes, predict the 
                             functional effects of protein mutations, and contain information about mutation 
@@ -49,7 +49,7 @@ class Home extends React.Component<{}>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Col lg="2">
-                            <Button variant="outline-primary">Try live API</Button>
+                            <Button onClick={() => window.open("http://genomenexus.org/swagger-ui.html", "_blank")} variant="outline-primary">Try live API</Button>
                         </Col>
                         <Col lg="2">
                             <Button onClick={this.linkToExamples} variant="link">See examples</Button>
@@ -64,7 +64,7 @@ class Home extends React.Component<{}>
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="9" className="home-query-example-table">
+                        <Col lg="8" className="home-query-example-table">
                             <Table responsive>
                                 <thead>
                                     <tr>
@@ -153,7 +153,7 @@ class Home extends React.Component<{}>
     }
 
     private linkToExamples() {
-        document.getElementById('home-example-container')!.scrollIntoView(); 
+        document.getElementById('home-example-container')!.scrollIntoView();
     }
 
 }
