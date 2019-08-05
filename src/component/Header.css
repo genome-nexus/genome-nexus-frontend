@@ -1,5 +1,5 @@
 .bg-mskcc-header {
-    background-color: #1c75cd;
+    background-color: #0355A6;
     color: #ffffff;
 }
 
@@ -16,5 +16,16 @@
     text-decoration: none;
     color: #ffffff;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.1em;
+}
+.container {
+    margin-left: 50px !important;
+}
+
+.container > .navbar-collapse {
+    margin-left: 80px;
+}
+
+.nav-link {
+    margin-left: 20px;
 }

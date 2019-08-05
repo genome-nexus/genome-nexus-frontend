@@ -36,12 +36,6 @@ class Header extends React.Component<{}>
                                 <LinkContainer exact={true} to="/api"><Nav.Link>API Usage</Nav.Link></LinkContainer>
                             </Nav>
                         </Navbar.Collapse>
-                        <MskccLogo imageHeight={50} className="d-none d-lg-block ml-auto" />
-                    </Container>
-                </Navbar>
-                <Navbar bg="mskcc-subheader" expand="lg" className="navbar-dark sub-navbar">
-                    <Container>
-                        A resource for annotation and interpretation of genetic variants
                     </Container>
                 </Navbar>
             </header>
