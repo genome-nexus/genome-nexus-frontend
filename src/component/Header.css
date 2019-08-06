@@ -18,11 +18,12 @@
     font-weight: bold;
     font-size: 1.1em;
 }
-.container {
-    margin-left: 50px !important;
+
+#navbar-logo {
+    margin: 0px;
 }
 
-.container > .navbar-collapse {
+#navbar-collapse {
     margin-left: 80px;
 }
 

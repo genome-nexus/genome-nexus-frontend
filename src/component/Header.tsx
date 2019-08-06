@@ -21,14 +21,14 @@ class Header extends React.Component<{}>
         return (
             <header className="sticky-top">
                 <Navbar bg="mskcc-header" expand="lg" className="navbar-dark main-navbar">
-                    <Container>
+                    <Container id="navbar-logo">
                         <Navbar.Brand>
                             <Link to="/" className="brand-title-link">
                                 <GenomeNexusLogo /> Genome Nexus
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
-                        <Navbar.Collapse>
+                        <Navbar.Collapse id="navbar-collapse">
                             <Nav>
                                 <LinkContainer exact={true} to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                                 <LinkContainer exact={true} to="/annotation"><Nav.Link>MAF Annotation</Nav.Link></LinkContainer>
