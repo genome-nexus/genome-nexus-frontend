@@ -2,12 +2,13 @@ import {action, observable} from "mobx";
 import {observer} from "mobx-react";
 import * as React from 'react';
 import {
-    Col, Row, Button, Table
+    Col, Row, Button, Image
 } from 'react-bootstrap';
 
 import SearchBox from "../component/SearchBox";
-import GenomeNexusLogo from "../component/GenomeNexusLogo";
 import "./Home.css";
+import QueryExamples from "../component/QueryExamples";
+import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
 
 @observer
 class Home extends React.Component<{}>
@@ -20,9 +21,8 @@ class Home extends React.Component<{}>
             <div>
                 <div className="text-center">
                     <Row>
-                        <Col lg="8" className="home-logo">
-                            <GenomeNexusLogo imageHeight={130}/> 
-                                GenomeNexus
+                        <Col lg="4" className="home-logo">
+                            <Image src={logoWithText} fluid />    
                         </Col>
                     </Row>
                     <Row>
@@ -49,10 +49,10 @@ class Home extends React.Component<{}>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Col lg="2">
-                            <Button onClick={() => window.open("http://genomenexus.org/swagger-ui.html", "_blank")} variant="outline-primary">Try live API</Button>
+                            <Button href={"http://genomenexus.org/swagger-ui.html"} variant="outline-primary">Try live API</Button>
                         </Col>
                         <Col lg="2">
-                            <Button onClick={this.linkToExamples} variant="link">See examples</Button>
+                            <Button href="#home-example-container" variant="link">See examples</Button>
                         </Col>
                     </Row>
                 </div>
@@ -65,81 +65,7 @@ class Home extends React.Component<{}>
                     </Row>
                     <Row>
                         <Col lg="8" className="home-query-example-table">
-                            <Table responsive>
-                                <thead>
-                                    <tr>
-                                    <th>Resource</th>
-                                    <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/annotation/17%3Ag.41242962_41242963insGA">
-                                            GET http://genomenexus.org/annotation/17%3Ag.41242962_41242963insGA
-                                        </a>
-                                    </td>
-                                    <td>Retrieves VEP annotation for the provided variant</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/annotation/dbsnp/rs116035550">
-                                            GET http://genomenexus.org/annotation/dbsnp/rs116035550
-                                        </a>
-                                    </td>
-                                    <td>Retrieves VEP annotation for the give dbSNP id</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/annotation/genomic/7%2C140453136%2C140453136%2CA%2CT">
-                                            GET http://genomenexus.org/annotation/genomic/7%2C140453136%2C140453136%2CA%2CT
-                                        </a>
-                                    </td>
-                                    <td>Retrieves VEP annotation for the provided genomic location</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/ptm/experimental?ensemblTranscriptId=ENST00000646891">
-                                            GET http://genomenexus.org/ptm/experimental?ensemblTranscriptId=ENST00000646891
-                                        </a>
-                                    </td>
-                                    <td>Retrieves PTM entries by Ensembl Transcript ID</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/cancer_hotspots/hgvs/7%3Ag.140453136A%3ET">
-                                            GET http://genomenexus.org/cancer_hotspots/hgvs/7%3Ag.140453136A%3ET
-                                        </a>
-                                    </td>
-                                    <td>Retrieves hotspot annotations for a specific variant</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/cancer_hotspots/transcript/ENST00000288602">
-                                            GET http://genomenexus.org/cancer_hotspots/transcript/ENST00000288602
-                                        </a>
-                                    </td>
-                                    <td>Retrieves hotspot annotations for the provided transcript ID</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/mutation_assessor/7%3Ag.140453136A%3ET">
-                                            GET http://genomenexus.org/mutation_assessor/7%3Ag.140453136A%3ET
-                                        </a>
-                                    </td>
-                                    <td>Retrieves mutation assessor information for the provided variant</td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                        <a target="_blank" href="http://genomenexus.org/my_variant_info/variant/7%3Ag.140453136A%3ET">
-                                        GET http://genomenexus.org/my_variant_info/variant/7%3Ag.140453136A%3ET
-                                        </a>
-                                    </td>
-                                    <td>Retrieves myvariant information for the provided variant</td>
-                                    </tr>
-
-                                </tbody>
-                            </Table>
+                            <QueryExamples/>
                         </Col>
                     </Row>
                 </div>
@@ -151,11 +77,6 @@ class Home extends React.Component<{}>
     private onSearch(input: string) {
         this.inputText = input;
     }
-
-    private linkToExamples() {
-        document.getElementById('home-example-container')!.scrollIntoView();
-    }
-
 }
 
 export default Home;
