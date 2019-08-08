@@ -30,10 +30,10 @@ class Header extends React.Component<{}>
                         <Navbar.Toggle />
                         <Navbar.Collapse id="navbar-collapse">
                             <Nav>
-                                <LinkContainer exact={true} to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/annotation"><Nav.Link>MAF Annotation</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/patient"><Nav.Link>Patient Report</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/api"><Nav.Link>API Usage</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/"><Nav.Link className="navbar-link">Home</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/annotation"><Nav.Link className="navbar-link">MAF Annotation</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/patient"><Nav.Link className="navbar-link">Patient Report</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/api"><Nav.Link className="navbar-link">API Usage</Nav.Link></LinkContainer>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
