@@ -23,7 +23,7 @@ class BasicInfo extends React.Component<IBasicInfoProps>
                         <BasicInfoUnit field={"Organism"}/>
                     </Col>
                     <Col lg="4">
-                        <BasicInfoUnit field={"Allele"} data={"thisisalonglonglongstring123456789456132457891231654781231324645645657897465413214671231346579"}/>
+                        <BasicInfoUnit field={"Allele"} data={"thisisalonglonglongstring1234567894561324578912316547812313246456456578974654132146712313465"}/>
                     </Col>
                     <Col lg="4">
                         <BasicInfoUnit field={"Chromesome"}/>
