@@ -1,0 +1,14 @@
+.variant {
+    white-space: nowrap;
+    text-overflow: clip;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.searchBox {
+    margin-bottom: 40px;
+}
+
+.checkboxContainer {
+    margin-top: 20px;
+}

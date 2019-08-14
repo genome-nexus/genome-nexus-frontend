@@ -1,0 +1,37 @@
+.home-logo {
+    font-size: 70px;
+    color: #04A9EB;
+    font-family: Futura;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-description {
+    font-size: 22px;
+    margin: 60px auto;
+}
+
+.home-example-container {
+    background-color: #F2F2F2;
+    height: fit-content;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    margin-top: 100px;
+}
+
+.home-function-description {
+    font-size: 15px;
+    color: #828282;
+    margin: 150px auto 50px;  
+}
+
+.home-query-example-header {
+    margin: 100px auto 50px;
+    font-size: 25px;
+}
+
+.home-query-example-table{
+    margin: auto auto 100px;
+    font-size: 15px;
+}
