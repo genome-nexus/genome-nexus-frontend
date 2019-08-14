@@ -19,7 +19,7 @@ class Header extends React.Component<{}>
     public render()
     {
         return (
-            <header className="sticky-top">
+            <header>
                 <Navbar bg="mskcc-header" expand="lg" className="navbar-dark main-navbar">
                     <Container>
                         <Navbar.Brand>
