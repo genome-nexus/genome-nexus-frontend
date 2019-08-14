@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
     Col, Row, Button, Image
 } from 'react-bootstrap';
-
 import SearchBox from "../component/SearchBox";
 import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
