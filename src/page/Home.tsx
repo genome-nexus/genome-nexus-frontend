@@ -8,7 +8,7 @@ import {
 import SearchBox from "../component/SearchBox";
 
 @observer
-class Home extends React.Component<{}>
+class Home extends React.Component<{history: any}>
 {
     @observable
     protected inputText: string|undefined;
@@ -19,8 +19,9 @@ class Home extends React.Component<{}>
                 <Row>
                     <Col lg="8" className="m-auto">
                         <SearchBox
-                            onChange={this.onSearch}
-                            placeholder="Search variants"
+                            onChange={this.onTextChange}
+                            onSearch={this.onSearch}
+                            placeholder="Search variant"
                         />
                     </Col>
                 </Row>
@@ -34,9 +35,16 @@ class Home extends React.Component<{}>
     }
 
     @action.bound
-    private onSearch(input: string) {
+    private onTextChange(input: string) {
         this.inputText = input;
     }
-}
 
+    @action.bound
+    onSearch () {
+        const { history } = this.props;
+        history.push(`/variant/${this.inputText}`);
+      
+    }
+
+}
 export default Home;
