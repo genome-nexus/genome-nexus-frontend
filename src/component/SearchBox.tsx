@@ -8,6 +8,7 @@ import {
 interface ISearchBoxProps
 {
     onChange?: (input: string) => void;
+    onSearch: () => void;
     placeholder?: string;
     searchIconClassName?: string;
 }
@@ -28,6 +29,11 @@ class SearchBox extends React.Component<ISearchBoxProps>
                 placeholder={this.props.placeholder}
                 aria-label="Search"
                 aria-describedby="basic-addon2"
+                onKeyPress={(event: { key: string; }) => {
+                    if (event.key === "Enter") {
+                      this.props.onSearch();
+                    }
+                  }}
             />
         );
     }

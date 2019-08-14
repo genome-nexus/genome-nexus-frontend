@@ -2,41 +2,93 @@ import {action, observable} from "mobx";
 import {observer} from "mobx-react";
 import * as React from 'react';
 import {
-    Col, Row
+    Col, Row, Button, Image
 } from 'react-bootstrap';
 
 import SearchBox from "../component/SearchBox";
+import "./Home.css";
+import QueryExamples from "../component/QueryExamples";
+import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
 
 @observer
-class Home extends React.Component<{}>
+class Home extends React.Component<{history: any}>
 {
     @observable
     protected inputText: string|undefined;
 
     public render() {
         return (
-            <div className="text-center">
-                <Row>
-                    <Col lg="8" className="m-auto">
-                        <SearchBox
-                            onChange={this.onSearch}
-                            placeholder="Search variants"
-                        />
-                    </Col>
-                </Row>
-                <Row className="py-4">
-                    <Col className="m-auto">
-                        {this.inputText}
-                    </Col>
-                </Row>
+            <div>
+                <div className="text-center">
+                    <Row>
+                        <Col lg="4" className="home-logo">
+                            <Image src={logoWithText} fluid />    
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg="8" className="home-description">
+                            A resource for annotation and interpretation of genetic variants
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg="8" className="m-auto">
+                            <SearchBox
+                                onChange={this.onTextChange}
+                                onSearch={this.onSearch}
+                                placeholder="Search variant"
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg="7" className="home-function-description">
+                            Genome Nexus will integrate information from a variety of existing resources, 
+                            including databases that convert DNA changes to protein changes, predict the 
+                            functional effects of protein mutations, and contain information about mutation 
+                            frequencies, gene function, variant effects, and clinical actionability.
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Col lg="2">
+                            <Button href={"http://genomenexus.org/swagger-ui.html"} variant="outline-primary">Try live API</Button>
+                        </Col>
+                        <Col lg="2">
+                            <Button href="#home-example-container" variant="link">See examples</Button>
+                        </Col>
+                    </Row>
+                </div>
+
+                <div id="home-example-container" className="home-example-container">
+                    <Row>
+                        <Col lg="8" className="home-query-example-header">
+                                Query Examples
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg="8" className="home-query-example-table">
+                            <QueryExamples/>
+                        </Col>
+                    </Row>
+                </div>
             </div>
         );
     }
 
     @action.bound
-    private onSearch(input: string) {
+    private onTextChange(input: string) {
         this.inputText = input;
     }
-}
 
+    private linkToExamples() {
+        document.getElementById('home-example-container')!.scrollIntoView();
+    }
+
+
+    @action.bound
+    onSearch () {
+        const { history } = this.props;
+        history.push(`/variant/${this.inputText}`);
+      
+    }
+
+}
 export default Home;
