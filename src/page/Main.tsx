@@ -10,7 +10,10 @@ import Home from "./Home";
 import Patient from "./Patient";
 import Variant from "./Variant";
 import Api from "./Api";
+import { VariantStore } from './VariantStore';
+import { observer } from 'mobx-react';
 
+@observer
 class Main extends React.Component<{}>
 {
     public render()
@@ -18,6 +21,7 @@ class Main extends React.Component<{}>
         const VariantPage = (props: any) => (
             <Variant
                 variant={props.match.params.variant}
+                store={new VariantStore(props.match.params.variant)}
             />
         );
 

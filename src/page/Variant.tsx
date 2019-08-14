@@ -10,20 +10,32 @@ import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTa
 interface IVariantProps
 {
     variant: string;
+    store: VariantStore;
+    mainLoadingIndicator?: JSX.Element;
 }
 
-const variantStore = new VariantStore();
 
 const win:any = (window as any);
-
-win.patientViewPageStore = variantStore;
 
 @observer
 class Variant extends React.Component<IVariantProps>
 {
+    constructor(props: IVariantProps) {
+        super(props);
+        win.props = props;
+    }
+
     @computed
     private get variant() {
         return this.props.variant;
+    }
+
+    protected get isLoading() {
+        return this.props.store.annotation.isPending;
+    }
+
+    protected get loadingIndicator() {
+        return this.props.mainLoadingIndicator || <i className="fa fa-spinner fa-pulse fa-2x" />;
     }
 
     private getComponentByRescource(resource: string) {
@@ -133,67 +145,31 @@ class Variant extends React.Component<IVariantProps>
 
     public render()
     {
-        const primaryTranscript = {
-            transcript:"1",
-            hugoGeneSymbol:"2",
-            hgvsShort:"3",
-            refSeq:"4",
-            variantClassification:"5",
-            hgvsc: "6",
-            exon: "7"
-        }
-        const otherTranscripts = [
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            }
-        ]    
-        return (
+        return this.isLoading ? this.loadingIndicator : (
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
                     <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
-                        <SideBar store={variantStore} variant={this.variant}/>
+                        <SideBar store={this.props.store} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
                         <Row>
                             <Col lg="12" className="pl-5">
-                                <BasicInfo/>
+                            {                              
+                                <BasicInfo annotation={this.props.store.annotation.result}/>
+                            }
                             </Col>
                         </Row>
                         <Row>
                             <Col className="pl-5">
-                                <TranscriptSummaryTable primaryTranscript={primaryTranscript} otherTranscripts={otherTranscripts}/>
+                                <TranscriptSummaryTable annotation={this.props.store.annotation.result}/>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
                                 {/* add resouce components */}
-                                {variantStore.allResources.map((resource, index) => {   
-                                    return variantStore.selectedResources.includes(resource) && (
+                                {this.props.store.allResources.map((resource, index) => {
+                                    return this.props.store.selectedResources.includes(resource) && (
                                         <Row id={resource} key={index}>
                                             <Col lg="12" className="pl-5">
                                                 {variantComponentHeader(resource)}
@@ -204,7 +180,7 @@ class Variant extends React.Component<IVariantProps>
                                 })}
 
                                 {/* show notification when no fields has been selected */}
-                                {variantStore.selectedResources.length === 0 && (
+                                {this.props.store.selectedResources.length === 0 && (
                                     <div className="pl-4">
                                         <Alert key={"alert"} variant={"primary"}>
                                             Use the list on the left to show some content.

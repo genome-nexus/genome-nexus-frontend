@@ -8,6 +8,10 @@ import { withRouter, RouteComponentProps } from "react-router";
 import CheckBoxContainer from "./CheckBoxContainer";
 import "./SideBar.css";
 import { VariantStore } from '../../page/VariantStore';
+import { isVariantValid } from '../../util/variantValidator';
+import { observer } from 'mobx-react';
+import client from '../../page/genomeNexusClientInstance';
+import ValidatorNotification, { ErrorType } from '../ValidatorNotification';
 
 type PathParamsType = {
     history: any,
@@ -22,12 +26,16 @@ type SideBarProps = RouteComponentProps<PathParamsType> &
     variant?: string;
 }
 
+@observer
 class SideBar extends React.Component<SideBarProps>
 {
     public static defaultProps = {
         placeholder: "Search Genes",
         searchIconClassName: "fa fa-search"
     };
+
+    @observable
+    protected setAlert:boolean = false;
 
     @computed
     private get variant() {
@@ -36,6 +44,9 @@ class SideBar extends React.Component<SideBarProps>
 
     @observable
     protected inputText: string|undefined;
+
+    @observable
+    protected alertType: ErrorType = ErrorType.INVALID;
 
     public render()
     {
@@ -53,6 +64,11 @@ class SideBar extends React.Component<SideBarProps>
                                 onSearch={this.onSearch}
                                 placeholder="Search variant"
                             />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <ValidatorNotification showAlert={this.setAlert} type={this.alertType} onClose={this.onClose}/>
                     </Col>
                 </Row>
                 <Row>
@@ -75,8 +91,34 @@ class SideBar extends React.Component<SideBarProps>
     }
 
     @action.bound
-    onSearch () {
-        this.props.history.push(`/variant/${this.inputText}`);
+    async onSearch() {
+        if (isVariantValid(`${this.inputText}`).isValid) {
+            let hasResult = false;
+            // check if the variant has response
+            await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
+                // fulfillment
+                hasResult = true;
+                }, reason => {
+                // rejection
+                hasResult = false;
+                this.alertType = ErrorType.NO_RESULT;
+            })
+
+            if (hasResult) {
+                this.setAlert = false;
+                this.props.history.push(`/variant/${this.inputText}`);
+                return;
+            }
+        }
+        else {
+            this.alertType = ErrorType.INVALID;
+        }
+        this.setAlert = true;
+    }
+
+    @action.bound
+    private onClose() {
+        this.setAlert = false;
     }
 }
 
