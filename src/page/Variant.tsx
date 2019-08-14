@@ -7,13 +7,16 @@ import BasicInfo from "../component/variantPage/BasicInfo";
 import './Variant.css'
 import { VariantStore } from "./VariantStore";
 import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
+import { VariantAnnotationSummary, getProteinPositionFromProteinChange } from "cbioportal-frontend-commons";
+import { Mutation, TrackName } from "react-mutation-mapper";
+import GenomeNexusMutationMapper from "../component/GenomeNexusMutationMapper";
+
 interface IVariantProps
 {
     variant: string;
     store: VariantStore;
     mainLoadingIndicator?: JSX.Element;
 }
-
 
 const win:any = (window as any);
 
@@ -28,6 +31,11 @@ class Variant extends React.Component<IVariantProps>
     @computed
     private get variant() {
         return this.props.variant;
+    }
+
+    @computed
+    private get annotation() {
+        return this.props.store.annotation.result;
     }
 
     protected get isLoading() {
@@ -143,7 +151,48 @@ class Variant extends React.Component<IVariantProps>
         }
     }
 
-    public render()
+    private variantToMutation(data: VariantAnnotationSummary | undefined): Mutation[] {
+        let mutations = [];
+        let mutation: Mutation;
+        if(data !== undefined) {
+            mutation = {
+                "gene": {
+                    "hugoGeneSymbol": data.transcriptConsequenceSummary.hugoGeneSymbol? data.transcriptConsequenceSummary.hugoGeneSymbol: "",
+                    "entrezGeneId": parseInt(data.transcriptConsequenceSummary.entrezGeneId)
+                },
+                "chromosome": data.genomicLocation.chromosome,
+                "startPosition": data.genomicLocation.start,
+                "endPosition": data.genomicLocation.end,
+                "referenceAllele": data.genomicLocation.referenceAllele,
+                "variantAllele": data.genomicLocation.variantAllele,
+                // TODO: is it ok to return "" if no protein change data?
+                "proteinChange": data.transcriptConsequenceSummary.hgvspShort? data.transcriptConsequenceSummary.hgvspShort: "",
+                "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition
+                                    ? data.transcriptConsequenceSummary.proteinPosition.start
+                                    : this.getProteinPosStart(data.transcriptConsequenceSummary.hgvspShort),
+                "proteinPosEnd": data.transcriptConsequenceSummary.proteinPosition
+                                    ? data.transcriptConsequenceSummary.proteinPosition.end
+                                    : undefined,
+                "mutationType": data.transcriptConsequenceSummary.variantClassification
+            }
+            mutations.push(mutation);
+        }
+        return mutations;
+    }
+
+    private getProteinPosStart(proteinChange: string | undefined) {
+        var proteinPosition = getProteinPositionFromProteinChange(proteinChange);
+        if (proteinPosition) {
+            var proteinPosStart = proteinPosition.start;
+            return proteinPosStart;
+        }
+        // TODO: is it ok to return 0 if no protein change data?
+        else {
+            return 0;
+        }
+    }
+
+    public render(): React.ReactNode
     {
         return this.isLoading ? this.loadingIndicator : (
             <div>
@@ -156,14 +205,24 @@ class Variant extends React.Component<IVariantProps>
                         <Row>
                             <Col lg="12" className="pl-5">
                             {                              
-                                <BasicInfo annotation={this.props.store.annotation.result}/>
+                                <BasicInfo annotation={this.annotation}/>
                             }
                             </Col>
                         </Row>
                         <Row>
                             <Col className="pl-5">
-                                <TranscriptSummaryTable annotation={this.props.store.annotation.result}/>
+                                <TranscriptSummaryTable annotation={this.annotation}/>
                             </Col>
+                        </Row>
+                        <Row className="pl-5 pb-3 small">
+                            <GenomeNexusMutationMapper
+                                data={this.variantToMutation(this.annotation!)}
+                                tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
+                                hugoSymbol={this.annotation ? this.annotation.transcriptConsequenceSummary.hugoGeneSymbol: ""} 
+                                entrezGeneId={this.annotation ? Number(this.annotation.transcriptConsequenceSummary.entrezGeneId): 0}
+                                showPlotLegendToggle={false}
+                                showPlotDownloadControls={false}
+                            />
                         </Row>
                         <Row>
                             <Col>
