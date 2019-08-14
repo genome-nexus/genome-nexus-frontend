@@ -41,7 +41,7 @@ class Header extends React.Component<{}>
                 </Navbar>
                 <Navbar bg="mskcc-subheader" expand="lg" className="navbar-dark sub-navbar">
                     <Container>
-                        A resource for annotation and interpretation of genetic variants
+                        TEST
                     </Container>
                 </Navbar>
             </header>
