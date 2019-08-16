@@ -1,6 +1,7 @@
 .bg-mskcc-header {
     background-color: #0355A6;
     color: #ffffff;
+    font-size: 1.1rem;
 }
 
 .brand-title-link,
@@ -11,5 +12,5 @@
     text-decoration: none;
     color: #ffffff;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.8rem;
 }
