@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import gnLogo from '../image/logo/genome_nexus.png';
+import gnLogo from '../image/logo/genome_nexus_fullname_less_spacing_white.png';
 
 class GenomeNexusLogo extends React.Component<{imageHeight?: number, className?: string}>
 {

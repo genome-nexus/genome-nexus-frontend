@@ -11,12 +11,13 @@ interface ISearchBoxProps
     onSearch: () => void;
     placeholder?: string;
     searchIconClassName?: string;
+    height?: number;
 }
 
 class SearchBox extends React.Component<ISearchBoxProps>
 {
     public static defaultProps = {
-        placeholder: "Search Genes",
+        placeholder: "Search variant",
         searchIconClassName: "fa fa-search"
     };
 
@@ -34,6 +35,10 @@ class SearchBox extends React.Component<ISearchBoxProps>
                       this.props.onSearch();
                     }
                   }}
+                style={{
+                    height: this.props.height
+                }}
+                size="lg"
             />
         );
     }

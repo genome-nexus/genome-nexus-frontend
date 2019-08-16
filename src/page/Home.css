@@ -1,15 +1,12 @@
 .home-logo {
-    font-size: 70px;
-    color: #04A9EB;
-    font-family: Futura;
-    margin-top: 100px;
+    margin-top: 8rem;
     margin-left: auto;
     margin-right: auto;
 }
 
 .home-description {
-    font-size: 22px;
-    margin: 60px auto;
+    font-size: 1.5rem;
+    margin: 7rem auto;
 }
 
 .home-example-container {
@@ -17,13 +14,13 @@
     height: fit-content;
     margin-left: -2rem;
     margin-right: -2rem;
-    margin-top: 100px;
+    margin-top: 7rem;
 }
 
 .home-function-description {
-    font-size: 15px;
+    font-size: 1rem;
     color: #828282;
-    margin: 150px auto 50px;  
+    margin: 10rem auto 4rem;  
 }
 
 .home-query-example-header {

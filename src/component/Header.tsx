@@ -20,10 +20,10 @@ class Header extends React.Component<{}>
         return (
             <header>
                 <Navbar bg="mskcc-header" expand="lg" className="navbar-dark main-navbar">
-                    <Container className="m-0 pt-3">
+                    <Container className="m-3">
                         <Navbar.Brand>
                             <Link to="/" className="brand-title-link">
-                                <GenomeNexusLogo /> Genome Nexus
+                                <GenomeNexusLogo/>
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
