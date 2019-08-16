@@ -21,21 +21,22 @@ class Home extends React.Component<{history: any}>
             <div>
                 <div className="text-center">
                     <Row>
-                        <Col lg="4" className="home-logo">
-                            <Image src={logoWithText} fluid />    
+                        <Col lg="5" className="home-logo">
+                            <Image src={logoWithText} fluid />
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="8" className="home-description">
+                        <Col lg="7" className="home-description">
                             A resource for annotation and interpretation of genetic variants
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="8" className="m-auto">
+                        <Col lg="7" className="m-auto">
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
                                 placeholder="Search variant"
+                                height={50}
                             />
                         </Col>
                     </Row>
@@ -77,11 +78,6 @@ class Home extends React.Component<{history: any}>
     private onTextChange(input: string) {
         this.inputText = input;
     }
-
-    private linkToExamples() {
-        document.getElementById('home-example-container')!.scrollIntoView();
-    }
-
 
     @action.bound
     onSearch () {
