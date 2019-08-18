@@ -1,14 +1,15 @@
-.variant {
+#variant {
     white-space: nowrap;
     text-overflow: clip;
-    overflow-x: auto;
-    margin-bottom: 20px;
+    margin-top: 2rem;
+    font-size: 1.5rem;
 }
 
-.searchBox {
-    margin-bottom: 40px;
+#searchBox {
+    margin-top: 1rem;
+    margin-bottom: 4rem;
 }
 
-.checkboxContainer {
-    margin-top: 20px;
+#searchBox .form-control {
+    background-color: #f2f2f2;
 }

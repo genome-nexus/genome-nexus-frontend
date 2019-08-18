@@ -6,6 +6,7 @@ import "./CheckBox.css";
 import { observer } from "mobx-react";
 import { computed } from "mobx";
 import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface ICheckBoxProps
 {
@@ -34,7 +35,8 @@ class CheckBox extends React.Component<ICheckBoxProps>
                 <Form.Check
                     className="custom-checkbox"
                     type={"checkbox"}
-                    label={this.props.checkboxName}
+                    label={<span onClick={this.clickLabel}>{this.props.checkboxName}</span>}
+                    //label={this.props.checkboxName}
                     onChange={this.props.onChange}
                     value={this.props.checkboxName}
                     checked={this.props.isChecked}
@@ -42,6 +44,10 @@ class CheckBox extends React.Component<ICheckBoxProps>
             </div>
 
         );
+    }
+
+    private clickLabel() {
+        return <Link to={this.props.checkboxName}> </Link>
     }
 }
 

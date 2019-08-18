@@ -38,7 +38,6 @@ class SearchBox extends React.Component<ISearchBoxProps>
                 style={{
                     height: this.props.height
                 }}
-                size="lg"
             />
         );
     }
