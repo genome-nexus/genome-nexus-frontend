@@ -5,10 +5,18 @@ import { Row, Col } from "react-bootstrap";
 import SideBar from '../component/SideBar';
 import BasicInfo from "../component/BasicInfo";
 import './Variant.css'
+import CancerHotspots from "../component/variantPage/cancerHotspot";
+import { VariantStore } from "./VariantStore";
 interface IVariantProps
 {
     variant: string;
 }
+
+const variantStore = new VariantStore();
+
+const win:any = (window as any);
+
+win.patientViewPageStore = variantStore;
 
 @observer
 class Variant extends React.Component<IVariantProps>
@@ -23,8 +31,8 @@ class Variant extends React.Component<IVariantProps>
         return (
             <div>
                 <Row>
-                    <Col lg="2" className="mt-0 sidebar" style={{height: "200px"}}>
-                        <SideBar variant={this.variant}/>
+                    <Col lg="2" className="mt-0 sidebar" style={{height: "auto"}}>
+                        <SideBar store={variantStore} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
                         <Row>
@@ -34,9 +42,102 @@ class Variant extends React.Component<IVariantProps>
                         </Row>
                         <Row>
                             <Col lg="12" className="pl-5">
-
+                                <CancerHotspots/>
+                                <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
+                        <p>
+                            under construction.
+                        </p>
                             </Col>
                         </Row>
+                        <Row>
+                            <Col lg="12" className="pl-5">
+                                <CancerHotspots/>
                         <p>
                             under construction.
                         </p>
@@ -244,6 +345,8 @@ class Variant extends React.Component<IVariantProps>
                         <p>
                             under construction.
                         </p>
+                        </Col>
+                        </Row>
                     </Col>
                 </Row>
              </div>

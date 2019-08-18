@@ -21,17 +21,17 @@ class Home extends React.Component<{history: any}>
             <div>
                 <div className="text-center">
                     <Row>
-                        <Col lg="5" className="home-logo">
+                        <Col lg="5" id="home-logo">
                             <Image src={logoWithText} fluid />
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" className="home-description">
+                        <Col lg="7" id="home-description">
                             A resource for annotation and interpretation of genetic variants
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" className="m-auto">
+                        <Col lg="7" className="m-auto" id="search-box">
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
@@ -41,7 +41,7 @@ class Home extends React.Component<{history: any}>
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" className="home-function-description">
+                        <Col lg="7" id="home-function-description">
                             Genome Nexus will integrate information from a variety of existing resources, 
                             including databases that convert DNA changes to protein changes, predict the 
                             functional effects of protein mutations, and contain information about mutation 
@@ -58,14 +58,14 @@ class Home extends React.Component<{history: any}>
                     </Row>
                 </div>
 
-                <div id="home-example-container" className="home-example-container">
+                <div id="home-example-container">
                     <Row>
-                        <Col lg="8" className="home-query-example-header">
+                        <Col lg="8" id="home-query-example-header">
                                 Query Examples
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="8" className="home-query-example-table">
+                        <Col lg="8" id="home-query-example-table">
                             <QueryExamples/>
                         </Col>
                     </Row>
