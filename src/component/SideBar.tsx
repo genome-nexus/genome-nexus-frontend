@@ -7,6 +7,7 @@ import SearchBox from "./SearchBox";
 import { withRouter, RouteComponentProps } from "react-router";
 import CheckBoxContainer from "./CheckBoxContainer";
 import "./SideBar.css";
+import { VariantStore } from '../page/VariantStore';
 
 type PathParamsType = {
     history: any,
@@ -14,6 +15,7 @@ type PathParamsType = {
 
 type SideBarProps = RouteComponentProps<PathParamsType> &
 {
+    store: VariantStore;
     onChange?: (input: string) => void;
     placeholder?: string;
     searchIconClassName?: string;
@@ -40,12 +42,12 @@ class SideBar extends React.Component<SideBarProps>
         return (
             <div>
                 <Row>
-                    <Col lg="10" className="variant">
+                    <Col lg="10" id="variant">
                         {this.variant}
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="12" className="searchBox">
+                    <Col lg="12" id="searchBox">
                         <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
@@ -54,13 +56,13 @@ class SideBar extends React.Component<SideBarProps>
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="12" className="text-center">
+                    <Col lg="12" className="text-center" style={{fontSize: "1.5rem"}}>
                         Resources
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="12" className="checkboxContainer">
-                        <CheckBoxContainer/>
+                    <Col lg="12" className="mt-4">
+                        <CheckBoxContainer allCheckboxNames={this.props.store.selectedRecource}/>
                     </Col>
                 </Row>
             </div>

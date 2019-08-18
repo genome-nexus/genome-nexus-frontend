@@ -18,9 +18,6 @@ interface ICheckContainerProps
 @observer
 class CheckBoxContainer extends React.Component<ICheckContainerProps>
 {
-    public static defaultProps = {
-        allCheckboxNames: ["checkbox1", "checkbox2"]
-    };
 
     @observable selectedCheckboxNames = this.props.allCheckboxNames;
     @computed get isAllSelected() {
@@ -37,8 +34,8 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
         return (
             <div>
                 <Form>
-                    <Row>
-                        <Col lg="6" className="topCheckbox">
+                    <Row className="px-3">
+                        <Col className="topCheckbox justify-content-center d-flex">
                             <CheckBox 
                                 key={"Select all"}
                                 checkboxName={"Select all"}
@@ -46,7 +43,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                                 onChange={this.onSelectAll}
                                 className={"NoColor"}/>
                         </Col>
-                        <Col lg="6" className="topCheckbox">
+                        <Col className="topCheckbox justify-content-center d-flex">
                             <CheckBox 
                                 key={"Remove all"}
                                 checkboxName={"Remove all"}
@@ -55,7 +52,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                                 className={"NoColor"}/>
                         </Col>
                     </Row>
-                    <div>
+                    <div className="px-3">
                         {this.props.allCheckboxNames.map((name) => {
                             return (
                                 <Row className="m-auto">
