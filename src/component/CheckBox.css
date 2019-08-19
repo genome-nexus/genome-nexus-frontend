@@ -1,17 +1,26 @@
 .selectedBackground {
     background-color: #D5E7F9;
     font-size: 1rem;
-    background-size: inherit;
-    display: inherit;
-    box-sizing: border-box;
-}
-
-.selectedBackground .form-check {
-    display: inherit;
+    background-size: 100%;
+    display: inline-block;
     width: 100%;
 }
 
 .unselectedBackground {
     background-color: #F2F2F2;
     font-size: 1rem;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-checkbox {
+    margin-left: 5px;
+}
+
+.custom-checkbox input {
+    margin-top: 0.65rem;
+}
+
+.custom-checkbox label a {
+    padding-left: 0px !important;
 }
