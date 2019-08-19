@@ -36,8 +36,8 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
         return (
             <div>
                 <Form>
-                    <Row className="px-3">
-                        <Col className="topCheckbox justify-content-center d-flex">
+                    <Row>
+                        <Col lg="6" className="topCheckbox justify-content-center d-flex">
                             <CheckBox 
                                 key={"Select all"}
                                 checkboxName={"Select all"}
@@ -45,7 +45,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                                 onChange={this.onSelectAll}
                                 className={"NoColor"}/>
                         </Col>
-                        <Col className="topCheckbox justify-content-center d-flex">
+                        <Col lg="6" className="topCheckbox justify-content-center d-flex">
                             <CheckBox 
                                 key={"Remove all"}
                                 checkboxName={"Remove all"}
@@ -54,17 +54,17 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                                 className={"NoColor"}/>
                         </Col>
                     </Row>
-                    <div className="px-3">
+                    <div>
                         {this.props.allCheckboxNames.map((name) => {
                             return (
-                                <Row className="m-auto" style={{borderBottom: "#F3F3F3 solid 1px"}}>
-                                    <CheckBox key={name} checkboxName={name} isChecked={this.selectedCheckboxNames.includes(name)} onChange={this.onSelectionChange}/>
+                                <Row className="m-auto">
+                                    <Col>
+                                        <CheckBox key={name} checkboxName={name} isChecked={this.selectedCheckboxNames.includes(name)} onChange={this.onSelectionChange}/>
+                                    </Col>
                                 </Row>
                             )
                         })}
                     </div>
-
-               
                 </Form>
             </div>
         );
