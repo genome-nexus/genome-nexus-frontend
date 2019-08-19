@@ -4,6 +4,7 @@
     background-size: 100%;
     display: inline-block;
     width: 100%;
+    border-bottom: #F3F3F3 solid 1px;
 }
 
 .unselectedBackground {
@@ -11,6 +12,7 @@
     font-size: 1rem;
     display: inline-block;
     width: 100%;
+    border-bottom: #F3F3F3 solid 1px;
 }
 
 .custom-checkbox {
@@ -23,4 +25,6 @@
 
 .custom-checkbox label a {
     padding-left: 0px !important;
+    text-align: left;
+    color: black;
 }

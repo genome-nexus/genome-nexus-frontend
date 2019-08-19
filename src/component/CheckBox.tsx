@@ -36,7 +36,6 @@ class CheckBox extends React.Component<ICheckBoxProps>
                     className="custom-checkbox"
                     type={"checkbox"}
                     label={<Button href={`#${this.props.checkboxName}`} variant="link"> {this.props.checkboxName}</Button>}
-                    // label={this.props.checkboxName}
                     onChange={this.props.onChange}
                     value={this.props.checkboxName}
                     checked={this.props.isChecked}

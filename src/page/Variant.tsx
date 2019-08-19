@@ -1,7 +1,7 @@
 import {computed} from "mobx";
 import {observer} from "mobx-react";
 import * as React from 'react';
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Alert } from "react-bootstrap";
 import SideBar from '../component/SideBar';
 import BasicInfo from "../component/BasicInfo";
 import './Variant.css'
@@ -10,25 +10,6 @@ import VariantComponentHeader from "../component/variantPage/variantComponentHea
 interface IVariantProps
 {
     variant: string;
-}
-
-export enum ResourceName {
-    "Cancer Hotspots",
-    "OncoKB",
-    "COSMIC",
-    "cBioPortal",
-    "Mutation Assessor",
-    "CIVIC",
-    "PMKB",
-    "SIFT",
-    "Polyphen-2",
-    "UniProt",
-    "PFAM",
-    "PDB",
-    "ProSite",
-    "PhosphoSitePlus",
-    "PTM",
-    "External Links"
 }
 
 const variantStore = new VariantStore();
@@ -156,7 +137,7 @@ class Variant extends React.Component<IVariantProps>
             <div>
                 <Row>
                     {/* TODO the height should automatically change with the content */}
-                    <Col lg="2" className="mt-0 sidebar" style={{height: "300px"}}>
+                    <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
                         <SideBar store={variantStore} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
@@ -166,19 +147,24 @@ class Variant extends React.Component<IVariantProps>
                             </Col>
                         </Row>
                         {
-                            variantStore.selectedRecources.map((resource) => {
-                                return (
-                                    <Row id={resource}>
-                                        <Col lg="12" className="pl-5">
-                                            <VariantComponentHeader name={resource}/>
-                                            {this.getComponentByRescource(resource)}
-                                        </Col>
-                                    </Row>
-                                )
-                            })
+                            variantStore.allRecources.map((resource, index) => {
+                                if (variantStore.selectedRecources.includes(resource)) {
+                                    return (
+                                        <Row id={resource} key={index}>
+                                            <Col lg="12" className="pl-5">
+                                                <VariantComponentHeader name={resource}/>
+                                                {this.getComponentByRescource(resource)}
+                                            </Col>
+                                        </Row>
+                                    )
+                                }
+                           })
                         }
+
                         {variantStore.selectedRecources.length === 0 && (
-                                <p>Use the list on the left to show some content.</p>
+                            <Alert key={"alert"} variant={"primary"}>
+                                Use the list on the left to show some content.
+                            </Alert>
                             )
                         }
                     </Col>
