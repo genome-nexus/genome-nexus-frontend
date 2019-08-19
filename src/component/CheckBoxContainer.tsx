@@ -57,7 +57,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                     <div className="px-3">
                         {this.props.allCheckboxNames.map((name) => {
                             return (
-                                <Row className="m-auto">
+                                <Row className="m-auto" style={{borderBottom: "#F3F3F3 solid 1px"}}>
                                     <CheckBox key={name} checkboxName={name} isChecked={this.selectedCheckboxNames.includes(name)} onChange={this.onSelectionChange}/>
                                 </Row>
                             )
