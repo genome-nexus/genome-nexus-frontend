@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from "mobx-react";
 import { Row, Col } from "react-bootstrap";
-import Structure from './structure';
+import VariantComponentHeader from './variantComponentHeader';
 
 
 interface ICancerHotspotsProps
@@ -19,7 +19,7 @@ class CancerHotspots extends React.Component<ICancerHotspotsProps>
             <div>
                 <Row className="mb-1 mt-3">
                     <Col lg="12">
-                       <Structure name="OncoKB"/>
+                       <VariantComponentHeader name="OncoKB"/>
                     </Col>
                 </Row>
             </div>
