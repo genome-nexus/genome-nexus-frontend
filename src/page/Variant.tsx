@@ -103,7 +103,7 @@ class Variant extends React.Component<IVariantProps>
         return (
             <div>
                 <Row>
-                    <Col lg="2" className="mt-0 sidebar" style={{height: "auto"}}>
+                    <Col lg="2" className="mt-0 sidebar" style={{height: "auto", display:"table"}}>
                         <SideBar store={variantStore} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
