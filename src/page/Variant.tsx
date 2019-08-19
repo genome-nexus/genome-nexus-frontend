@@ -103,7 +103,8 @@ class Variant extends React.Component<IVariantProps>
         return (
             <div>
                 <Row>
-                    <Col lg="2" className="mt-0 sidebar" style={{height: "auto", display:"table"}}>
+                    {/* TODO the height should automatically change with the content */}
+                    <Col lg="2" className="mt-0 sidebar" style={{height: "300px"}}>
                         <SideBar store={variantStore} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
@@ -125,25 +126,9 @@ class Variant extends React.Component<IVariantProps>
                             })
                         }
                         {variantStore.selectedRecources.length === 0 && (
-                                <p>Ohhhhhh Noooooo! Nothing here!!!</p>
+                                <p>Use the list on the left to show some content.</p>
                             )
                         }
-                        {/* <Row>
-                            <Col lg="12" className="pl-5">
-                                <CancerHotspots/>
-                                <p>
-                                    under construction.
-                                </p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col lg="12" className="pl-5">
-                                <CancerHotspots/>
-                            <p>
-                                under construction.
-                            </p>
-                            </Col>
-                        </Row> */}
                     </Col>
                 </Row>
              </div>
