@@ -9,9 +9,11 @@ import { observable, action, computed } from "mobx";
 import { toggleIncluded } from "../lib/ArrayUtils";
 import { observer } from "mobx-react";
 import "./CheckboxContainer.css";
+import { VariantStore } from "../page/VariantStore";
 
 interface ICheckContainerProps
 {
+    store: VariantStore;
     allCheckboxNames: string[];
 }
 
@@ -79,6 +81,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     private toggleSelection(selection: string)
     {
         this.selectedCheckboxNames = toggleIncluded(selection, this.selectedCheckboxNames);
+        this.props.store.selectedRecources = toggleIncluded(selection, this.props.store.selectedRecources);
     }
 
     @autobind
@@ -86,6 +89,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     private onSelectAll()
     {
         this.selectedCheckboxNames = this.props.allCheckboxNames;
+        this.props.store.selectedRecources = this.props.allCheckboxNames;
     }
 
     @autobind
@@ -93,6 +97,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     private onRemoveAll()
     {
         this.selectedCheckboxNames = [];
+        this.props.store.selectedRecources = [];
     }
 }
 

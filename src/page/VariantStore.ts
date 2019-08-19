@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 
 export class VariantStore {
-    @observable public selectedRecource = ["Cancer Hotspots", "OncoKB"];
+    @observable public allRecources = ["Cancer Hotspots", "OncoKB"];
+    @observable public selectedRecources: string[] = this.allRecources;
 }
