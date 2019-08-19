@@ -5,8 +5,8 @@ import { Row, Col } from "react-bootstrap";
 import SideBar from '../component/SideBar';
 import BasicInfo from "../component/BasicInfo";
 import './Variant.css'
-import CancerHotspots from "../component/variantPage/cancerHotspot";
 import { VariantStore } from "./VariantStore";
+import VariantComponentHeader from "../component/variantPage/variantComponentHeader";
 interface IVariantProps
 {
     variant: string;
@@ -46,53 +46,105 @@ class Variant extends React.Component<IVariantProps>
     }
 
     private getComponentByRescource(resource: string) {
+        // TODO should call each component here
         switch(resource) {
             case "Cancer Hotspots": 
                 return (
                     <div>
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
+                        <p>{resource} under construction.</p>
                     </div>
                 );
             case "OncoKB":
                 return (
                     <div>
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
-                    <p>{resource} under construction.</p> 
+                        <p>{resource} under construction.</p>
                     </div>
-                )
+                );
+            case "COSMIC":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "cBioPortal":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "Mutation Assessor":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "CIVIC":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "PMKB":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "SIFT":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "Polyphen-2":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "UniProt":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "PFAM":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "PDB":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "ProSite":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "PhosphoSitePlus":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "PTM":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+            case "External Links":
+                return (
+                    <div>
+                        <p>{resource} under construction.</p>
+                    </div>
+                );
+
             default:
                     return;
         }
@@ -118,7 +170,7 @@ class Variant extends React.Component<IVariantProps>
                                 return (
                                     <Row id={resource}>
                                         <Col lg="12" className="pl-5">
-                                            <CancerHotspots data={resource}/>
+                                            <VariantComponentHeader name={resource}/>
                                             {this.getComponentByRescource(resource)}
                                         </Col>
                                     </Row>
