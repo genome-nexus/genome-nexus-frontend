@@ -1,8 +1,9 @@
 #variant {
     white-space: nowrap;
-    text-overflow: clip;
+    text-overflow: ellipsis;
     margin-top: 2rem;
     font-size: 1.5rem;
+    overflow: hidden;
 }
 
 #searchBox {
