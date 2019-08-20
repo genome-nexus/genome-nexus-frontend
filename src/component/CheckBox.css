@@ -4,7 +4,7 @@
     background-size: 100%;
     display: inline-block;
     width: 100%;
-    border-bottom: #F3F3F3 solid 1px;
+    border-bottom: #F2F2F2 solid 1px;
 }
 
 .unselectedBackground {
@@ -12,7 +12,7 @@
     font-size: 1rem;
     display: inline-block;
     width: 100%;
-    border-bottom: #F3F3F3 solid 1px;
+    border-bottom: #E0E0E0 solid 1px;
 }
 
 .custom-checkbox {
