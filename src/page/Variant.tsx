@@ -7,6 +7,7 @@ import BasicInfo from "../component/BasicInfo";
 import './Variant.css'
 import { VariantStore } from "./VariantStore";
 import VariantComponentHeader from "../component/variantPage/variantComponentHeader";
+import TranscriptSummaryTable from "../component/TranscriptSummaryTable";
 interface IVariantProps
 {
     variant: string;
@@ -136,7 +137,7 @@ class Variant extends React.Component<IVariantProps>
         return (
             <div>
                 <Row>
-                    {/* TODO the height should automatically change with the content */}
+                    {/* TODO: the height should automatically change with the content */}
                     <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
                         <SideBar store={variantStore} variant={this.variant}/>
                     </Col>
@@ -146,27 +147,38 @@ class Variant extends React.Component<IVariantProps>
                                 <BasicInfo/>
                             </Col>
                         </Row>
-                        {
-                            variantStore.allRecources.map((resource, index) => {
-                                if (variantStore.selectedRecources.includes(resource)) {
-                                    return (
-                                        <Row id={resource} key={index}>
-                                            <Col lg="12" className="pl-5">
-                                                <VariantComponentHeader name={resource}/>
-                                                {this.getComponentByRescource(resource)}
-                                            </Col>
-                                        </Row>
+                        <Row>
+                            <Col className="pl-5">
+                                <TranscriptSummaryTable/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {
+                                    variantStore.allRecources.map((resource, index) => {
+                                        if (variantStore.selectedRecources.includes(resource)) {
+                                            return (
+                                                <Row id={resource} key={index}>
+                                                    <Col lg="12" className="pl-5">
+                                                        <VariantComponentHeader name={resource}/>
+                                                        {this.getComponentByRescource(resource)}
+                                                    </Col>
+                                                </Row>
+                                            )
+                                        }
+                                    })
+                                }
+
+                                {/* show notification when no fields has been selected */}
+                                {variantStore.selectedRecources.length === 0 && (
+                                    <Alert key={"alert"} variant={"primary"}>
+                                        Use the list on the left to show some content.
+                                    </Alert>
                                     )
                                 }
-                           })
-                        }
+                            </Col>
+                        </Row>
 
-                        {variantStore.selectedRecources.length === 0 && (
-                            <Alert key={"alert"} variant={"primary"}>
-                                Use the list on the left to show some content.
-                            </Alert>
-                            )
-                        }
                     </Col>
                 </Row>
              </div>
