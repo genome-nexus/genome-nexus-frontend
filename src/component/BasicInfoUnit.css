@@ -1,10 +1,10 @@
 .field {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 1rem;
 }
 
 .data {
-    font-size: 15px;
+    font-size: 1rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
