@@ -60,7 +60,7 @@ class Variant extends React.Component<IVariantProps>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "CIVIC":
+            case "CIViC":
                 return (
                     <div>
                         <p>{resource} under construction.</p>
@@ -134,6 +134,44 @@ class Variant extends React.Component<IVariantProps>
 
     public render()
     {
+        const primaryTranscript = {
+            transcript:"1",
+            hugoGeneSymbol:"2",
+            HGVSShort:"3",
+            refSeq:"4",
+            variantClassification:"5",
+            HGVSC: "6",
+            exon: "7"
+        }
+        const otherTranscripts = [
+            {
+                transcript:"1",
+                hugoGeneSymbol:"2",
+                HGVSShort:"3",
+                refSeq:"4",
+                variantClassification:"5",
+                HGVSC: "6",
+                exon: "7"
+            },
+            {
+                transcript:"1",
+                hugoGeneSymbol:"2",
+                HGVSShort:"3",
+                refSeq:"4",
+                variantClassification:"5",
+                HGVSC: "6",
+                exon: "7"
+            },
+            {
+                transcript:"1",
+                hugoGeneSymbol:"2",
+                HGVSShort:"3",
+                refSeq:"4",
+                variantClassification:"5",
+                HGVSC: "6",
+                exon: "7"
+            }
+        ]    
         return (
             <div>
                 <Row>
@@ -149,7 +187,7 @@ class Variant extends React.Component<IVariantProps>
                         </Row>
                         <Row>
                             <Col className="pl-5">
-                                <TranscriptSummaryTable/>
+                                <TranscriptSummaryTable primaryTranscript={primaryTranscript} otherTranscripts={otherTranscripts}/>
                             </Col>
                         </Row>
                         <Row>
