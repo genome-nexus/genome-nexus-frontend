@@ -1,9 +1,7 @@
 import * as React from 'react';
-
-import "./CheckBox.css";
+import "./BasicInfo.css";
 import { observer } from "mobx-react";
 import { Row, Col } from "react-bootstrap";
-import BasicInfoUnit from './BasicInfoUnit';
 
 interface IBasicInfoProps
 {
@@ -20,35 +18,53 @@ class BasicInfo extends React.Component<IBasicInfoProps>
             <div>
                 <Row className="mb-1 mt-3">
                     <Col lg="4">
-                        <BasicInfoUnit field={"Organism"}/>
+                        {BasicInfoUnit("Organism")}
                     </Col>
                     <Col lg="4">
-                        <BasicInfoUnit field={"Allele"} data={"thisisalonglonglongstring1234567894561324578912316547812313246456456578974654132146712313465"}/>
+                        {BasicInfoUnit("Allele", "thisisalonglonglongstring1234567894561324578912316547812313246456456578974654132146712313465")}
                     </Col>
                     <Col lg="4">
-                        <BasicInfoUnit field={"Chromesome"}/>
-                    </Col>
-                </Row>
-                <Row className="mb-1">
-                    <Col lg="4">
-                        <BasicInfoUnit field={"Position"}/>
-                    </Col>
-                    <Col lg="4">
-                        <BasicInfoUnit field={"Variantion Type"}/>
-                    </Col>
-                    <Col lg="4">
-                        <BasicInfoUnit field={"Protein Change"}/>
+                        {BasicInfoUnit("Chromesome")}
                     </Col>
                 </Row>
                 <Row className="mb-1">
                     <Col lg="4">
-                        <BasicInfoUnit field={"Reference Genome Build"}/>
+                        {BasicInfoUnit("Position")}
+                    </Col>
+                    <Col lg="4">
+                        {BasicInfoUnit("Variantion Type")}
+                    </Col>
+                    <Col lg="4">
+                        {BasicInfoUnit("Protein Change")}
+                    </Col>
+                </Row>
+                <Row className="mb-1">
+                    <Col lg="4">
+                        {BasicInfoUnit("Reference Genome Build")}
                     </Col>
                 </Row>
 
             </div>
         );
     }
+    BasicInfoUnit(arg0: string): React.ReactNode {
+        throw new Error("Method not implemented.");
+    }
 }
+
+function BasicInfoUnit(field: string, data?: string ) 
+{
+    return (
+        <Row>
+            <Col lg="4" className="fieldName">
+                {field}
+            </Col>
+            <Col lg="8" className="data">
+                {data? data: "N/A"}
+            </Col>
+        </Row>
+    );
+}
+
 
 export default BasicInfo;
