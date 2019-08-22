@@ -2,12 +2,11 @@ import {computed} from "mobx";
 import {observer} from "mobx-react";
 import * as React from 'react';
 import { Row, Col, Alert } from "react-bootstrap";
-import SideBar from '../component/SideBar';
-import BasicInfo from "../component/BasicInfo";
+import SideBar from '../component/variantPage/SideBar';
+import BasicInfo from "../component/variantPage/BasicInfo";
 import './Variant.css'
 import { VariantStore } from "./VariantStore";
-import VariantComponentHeader from "../component/variantPage/variantComponentHeader";
-import TranscriptSummaryTable from "../component/TranscriptSummaryTable";
+import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
 interface IVariantProps
 {
     variant: string;
@@ -28,7 +27,7 @@ class Variant extends React.Component<IVariantProps>
     }
 
     private getComponentByRescource(resource: string) {
-        // TODO should call each component here
+        // TODO: each resource should have a component here
         switch(resource) {
             case "Cancer Hotspots": 
                 return (
@@ -198,7 +197,7 @@ class Variant extends React.Component<IVariantProps>
                                             return (
                                                 <Row id={resource} key={index}>
                                                     <Col lg="12" className="pl-5">
-                                                        <VariantComponentHeader name={resource}/>
+                                                        {variantComponentHeader(resource)}
                                                         {this.getComponentByRescource(resource)}
                                                     </Col>
                                                 </Row>
@@ -209,9 +208,11 @@ class Variant extends React.Component<IVariantProps>
 
                                 {/* show notification when no fields has been selected */}
                                 {variantStore.selectedRecources.length === 0 && (
-                                    <Alert key={"alert"} variant={"primary"}>
-                                        Use the list on the left to show some content.
-                                    </Alert>
+                                    <div className="pl-4">
+                                        <Alert key={"alert"} variant={"primary"}>
+                                            Use the list on the left to show some content.
+                                        </Alert>
+                                    </div>
                                     )
                                 }
                             </Col>
@@ -222,6 +223,16 @@ class Variant extends React.Component<IVariantProps>
              </div>
         );
     }
+}
+
+function variantComponentHeader(name: string)
+{
+    // header for each resouce component
+    return (
+        <div className="componentHeader" id={name}>
+            {name}
+        </div>
+    );
 }
 
 export default Variant;
