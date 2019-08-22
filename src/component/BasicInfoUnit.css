@@ -1,4 +1,4 @@
-.field {
+.fieldName {
     font-weight: bold;
     font-size: 1rem;
 }
@@ -8,4 +8,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.data:hover {
+    text-overflow: clip;
+    white-space: normal;
+    word-break: break-all;
 }
