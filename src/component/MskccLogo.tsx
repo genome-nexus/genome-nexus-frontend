@@ -9,6 +9,7 @@ class MskccLogo extends React.Component<{imageHeight?: number, className?: strin
             <a
                 href="http://mskcc.org"
                 target="_blank"
+                rel="noopener noreferrer"
                 className={this.props.className}
             >
                 <img

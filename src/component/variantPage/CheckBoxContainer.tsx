@@ -6,10 +6,10 @@ import {
 } from "react-bootstrap";
 import CheckBox from "./CheckBox";
 import { observable, action, computed } from "mobx";
-import { toggleIncluded } from "../lib/ArrayUtils";
+import { toggleIncluded } from "../../lib/ArrayUtils";
 import { observer } from "mobx-react";
 import "./CheckboxContainer.css";
-import { VariantStore } from "../page/VariantStore";
+import { VariantStore } from "../../page/VariantStore";
 
 interface ICheckContainerProps
 {
@@ -71,31 +71,27 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     }
 
     @autobind
-    private onSelectionChange(event: FormEvent<any>)
-    {
+    private onSelectionChange(event: FormEvent<any>) {
         this.toggleSelection(event.currentTarget.value);
     }
 
     @autobind
     @action
-    private toggleSelection(selection: string)
-    {
+    private toggleSelection(selection: string) {
         this.selectedCheckboxNames = toggleIncluded(selection, this.selectedCheckboxNames);
         this.props.store.selectedRecources = toggleIncluded(selection, this.props.store.selectedRecources);
     }
 
     @autobind
     @action
-    private onSelectAll()
-    {
+    private onSelectAll() {
         this.selectedCheckboxNames = this.props.allCheckboxNames;
         this.props.store.selectedRecources = this.props.allCheckboxNames;
     }
 
     @autobind
     @action
-    private onRemoveAll()
-    {
+    private onRemoveAll() {
         this.selectedCheckboxNames = [];
         this.props.store.selectedRecources = [];
     }

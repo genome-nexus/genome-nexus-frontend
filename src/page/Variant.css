@@ -2,3 +2,10 @@
     position: sticky !important;
     top:0;
 }
+
+.componentHeader {
+    border-bottom: 2px solid #E0E0E0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #A86767;
+}
