@@ -68,7 +68,7 @@ class QueryExamples extends React.Component<{}>
         return (
             <tr className="d-flex">
                 <td className="col-6" style={{textOverflow: "ellipsis", overflow: "hidden", display: "block"}}>
-                    <a target="_blank" href={queryExample.url}>{`GET ${queryExample.url}`}</a>
+                    <a target="_blank" href={queryExample.url} rel="noopener noreferrer">{`GET ${queryExample.url}`}</a>
                 </td>
                 <td className="col-4">
                     {queryExample.description}

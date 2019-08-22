@@ -1,4 +1,3 @@
-import autobind from "autobind-decorator";
 import * as React from 'react';
 import {FormEvent} from "react";
 
@@ -6,7 +5,6 @@ import "./CheckBox.css";
 import { observer } from "mobx-react";
 import { computed } from "mobx";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 interface ICheckBoxProps
 {

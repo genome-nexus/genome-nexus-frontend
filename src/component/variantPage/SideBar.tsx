@@ -3,11 +3,11 @@ import {
     Row, Col
 } from "react-bootstrap";
 import { computed, action, observable } from "mobx";
-import SearchBox from "./SearchBox";
+import SearchBox from "../SearchBox";
 import { withRouter, RouteComponentProps } from "react-router";
 import CheckBoxContainer from "./CheckBoxContainer";
 import "./SideBar.css";
-import { VariantStore } from '../page/VariantStore';
+import { VariantStore } from '../../page/VariantStore';
 
 type PathParamsType = {
     history: any,
