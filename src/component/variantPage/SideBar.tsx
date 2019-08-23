@@ -42,12 +42,12 @@ class SideBar extends React.Component<SideBarProps>
         return (
             <div>
                 <Row>
-                    <Col lg="10" id="variant" className="pl-4">
+                    <Col lg="10" className="pl-4 variant">
                         {this.variant}
                     </Col>
                 </Row>
                 <Row className="d-flex justify-content-center">
-                    <Col lg="11" id="searchBox">
+                    <Col lg="11" className="searchBox">
                         <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
@@ -56,7 +56,7 @@ class SideBar extends React.Component<SideBarProps>
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="12" className="text-center mb-4" style={{fontSize: "1.5rem"}}>
+                    <Col lg="12" className="text-center mb-4 resourceText">
                         Resources
                     </Col>
                 </Row>

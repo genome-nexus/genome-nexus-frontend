@@ -69,6 +69,7 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
         return (
             <>
             <Collapse in={isOpen}>
+                {/* show table header and the first row in default */}
                 <div className="tableContent">
                     <Table responsive striped bordered hover size="sm">
                         <thead>
@@ -106,6 +107,7 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
         return (
             <>
             <Collapse in={isOpen}>
+                {/* expand the table if have more transcript */}
                 <div className="tableContent">
                     <Table responsive striped bordered hover size="sm">
                         <thead>

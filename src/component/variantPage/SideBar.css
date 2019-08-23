@@ -1,4 +1,4 @@
-#variant {
+.variant {
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-top: 2rem;
@@ -6,11 +6,15 @@
     overflow: hidden;
 }
 
-#searchBox {
+.searchBox {
     margin-top: 1rem;
     margin-bottom: 4rem;
 }
 
-#searchBox .form-control {
+.searchBox .form-control {
     background-color: #f2f2f2;
+}
+
+.resourceText {
+    font-size: "1.5rem"
 }
