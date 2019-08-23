@@ -51,7 +51,7 @@ class QueryExamples extends React.Component<{}>
         return (
             <Table responsive>
                 <thead>
-                    <tr className="d-flex">
+                    <tr className="d-flex justify-content-center">
                         <th className="col-6">Resource</th>
                         <th className="col-4">Description</th>
                     </tr>
@@ -66,7 +66,7 @@ class QueryExamples extends React.Component<{}>
     @autobind
     private queryExampleToElement(queryExample: QueryExample) {
         return (
-            <tr className="d-flex">
+            <tr className="d-flex justify-content-center">
                 <td className="col-6" style={{textOverflow: "ellipsis", overflow: "hidden", display: "block"}}>
                     <a target="_blank" href={queryExample.url} rel="noopener noreferrer">{`GET ${queryExample.url}`}</a>
                 </td>
