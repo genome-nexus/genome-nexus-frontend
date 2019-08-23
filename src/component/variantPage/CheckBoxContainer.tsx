@@ -20,24 +20,13 @@ interface ICheckContainerProps
 @observer
 class CheckBoxContainer extends React.Component<ICheckContainerProps>
 {
-
-    @observable selectedCheckboxNames = this.props.allCheckboxNames;
-    @computed get isAllSelected() {
-        return this.selectedCheckboxNames.length === this.props.allCheckboxNames.length &&
-                this.selectedCheckboxNames.length > 0;
-    }
-
-    @computed get isAllRemoved() {
-        return this.selectedCheckboxNames.length === 0;
-    }
-
     public render()
     {
         return (
             <div>
                 <Form>
-                    <Row>
-                        <Col lg="6" className="topCheckbox justify-content-center d-flex">
+                    <Row style={{fontSize: "1rem"}}>
+                        <Col lg="6" className="justify-content-center d-flex mb-4">
                             <CheckBox 
                                 key={"Select all"}
                                 checkboxName={"Select all"}
@@ -45,7 +34,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                                 onChange={this.onSelectAll}
                                 className={"NoColor"}/>
                         </Col>
-                        <Col lg="6" className="topCheckbox justify-content-center d-flex">
+                        <Col lg="6" className="justify-content-center d-flex mb-4">
                             <CheckBox 
                                 key={"Remove all"}
                                 checkboxName={"Remove all"}
@@ -57,7 +46,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                     <div>
                         {this.props.allCheckboxNames.map((name) => {
                             return (
-                                <Row className="m-auto">
+                                <Row>
                                     <Col>
                                         <CheckBox key={name} checkboxName={name} isChecked={this.selectedCheckboxNames.includes(name)} onChange={this.onSelectionChange}/>
                                     </Col>
@@ -68,6 +57,20 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                 </Form>
             </div>
         );
+    }
+
+    @observable
+    selectedCheckboxNames = this.props.allCheckboxNames;
+
+    @computed
+    get isAllSelected() {
+        return this.selectedCheckboxNames.length === this.props.allCheckboxNames.length &&
+                this.selectedCheckboxNames.length > 0;
+    }
+
+    @computed
+    get isAllRemoved() {
+        return this.selectedCheckboxNames.length === 0;
     }
 
     @autobind

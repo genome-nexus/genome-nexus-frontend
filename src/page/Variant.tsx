@@ -191,6 +191,7 @@ class Variant extends React.Component<IVariantProps>
                         </Row>
                         <Row>
                             <Col>
+                                {/* add resouce components */}
                                 {
                                     variantStore.allRecources.map((resource, index) => {
                                         if (variantStore.selectedRecources.includes(resource)) {
@@ -217,7 +218,6 @@ class Variant extends React.Component<IVariantProps>
                                 }
                             </Col>
                         </Row>
-
                     </Col>
                 </Row>
              </div>
