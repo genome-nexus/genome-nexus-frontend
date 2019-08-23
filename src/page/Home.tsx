@@ -60,7 +60,7 @@ class Home extends React.Component<{history: any}>
 
                 <div id="home-example-container">
                     <Row>
-                        <Col lg="8" id="home-query-example-header">
+                        <Col lg="6" id="home-query-example-header">
                                 Query Examples
                         </Col>
                     </Row>
