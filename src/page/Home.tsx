@@ -80,10 +80,9 @@ class Home extends React.Component<{history: any}>
     }
 
     @action.bound
-    onSearch () {
+    onSearch() {
         const { history } = this.props;
         history.push(`/variant/${this.inputText}`);
-      
     }
 
 }
