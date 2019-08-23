@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 
 interface IBasicInfoProps
 {
+    // TODO: need to pass real data into this component
     data?: string;
 }
 
@@ -43,12 +44,8 @@ class BasicInfo extends React.Component<IBasicInfoProps>
                         {BasicInfoUnit("Reference Genome Build")}
                     </Col>
                 </Row>
-
             </div>
         );
-    }
-    BasicInfoUnit(arg0: string): React.ReactNode {
-        throw new Error("Method not implemented.");
     }
 }
 
