@@ -6,8 +6,6 @@ import {
     Link
 } from "react-router-dom";
 
-import MskccLogo from "./MskccLogo";
-
 import "./Footer.css";
 
 class Footer extends React.Component<{}>

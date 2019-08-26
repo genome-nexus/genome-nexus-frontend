@@ -145,7 +145,7 @@ class Variant extends React.Component<IVariantProps>
 
     public render()
     {
-        const primaryTranscript = {
+        const canonicalTranscript = {
             transcript:"1",
             hugoGeneSymbol:"2",
             hgvsShort:"3",
@@ -201,7 +201,7 @@ class Variant extends React.Component<IVariantProps>
                         </Row>
                         <Row>
                             <Col className="pl-5">
-                                <TranscriptSummaryTable primaryTranscript={primaryTranscript} otherTranscripts={otherTranscripts}/>
+                                <TranscriptSummaryTable annotation={this.props.store.annotation.result}/>
                             </Col>
                         </Row>
                         <Row>
