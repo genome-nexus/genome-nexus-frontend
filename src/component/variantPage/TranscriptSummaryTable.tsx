@@ -5,27 +5,84 @@ import { observer } from "mobx-react";
 import { action, observable } from "mobx";
 import { Button, Row, Col, Collapse, Table } from "react-bootstrap";
 import _ from "lodash";
+import { VariantAnnotationSummary } from "cbioportal-frontend-commons";
 
 interface ITranscriptSummaryTableProps
 {
-    primaryTranscript: Transcript;
-    otherTranscripts: Transcript[];
+    annotation: VariantAnnotationSummary | undefined;
 }
 
 type Transcript = {
-    transcript:String,
-    hugoGeneSymbol:string,
-    hgvsShort:string,
-    refSeq:string,
-    variantClassification:string,
-    hgvsc: string,
-    exon: string
+    transcript: String | undefined,
+    hugoGeneSymbol: string | undefined,
+    hgvsShort: string | undefined,
+    refSeq: string | undefined,
+    variantClassification: string | undefined,
+    hgvsc: string | undefined,
+    exon: string | undefined
 }
 
 @observer
 class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProps>
 {
     @observable showAllTranscript = false;
+
+    private getCanonicalTranscript(annotation: VariantAnnotationSummary | undefined ) {
+        let canonicalTranscript:Transcript;
+        if(annotation !== undefined) {
+            canonicalTranscript = {
+                "transcript": annotation.transcriptConsequenceSummary.transcriptId,
+                "hugoGeneSymbol": annotation.transcriptConsequenceSummary.hugoGeneSymbol,
+                "hgvsShort": annotation.transcriptConsequenceSummary.hgvspShort,
+                "refSeq": annotation.transcriptConsequenceSummary.refSeq,
+                "variantClassification": annotation.transcriptConsequenceSummary.variantClassification,
+                "hgvsc": annotation.transcriptConsequenceSummary.hgvsc,
+                "exon": annotation.transcriptConsequenceSummary.exon
+            } as Transcript;
+        }
+        else {
+            canonicalTranscript = {
+                "transcript": "",
+                "hugoGeneSymbol": "",
+                "hgvsShort": "",
+                "refSeq": "",
+                "variantClassification": "",
+                "hgvsc": "",
+                "exon": ""
+            } as Transcript;
+        }
+        return canonicalTranscript;
+    }
+
+    private getOtherTranscript(annotation: VariantAnnotationSummary | undefined ) {
+        let otherTranscript:Transcript[] = [];
+        if(annotation !== undefined) {
+            annotation.transcriptConsequenceSummaries.forEach(transcript => {
+                otherTranscript.push({
+                    "transcript": transcript.transcriptId,
+                    "hugoGeneSymbol": transcript.hugoGeneSymbol,
+                    "hgvsShort": transcript.hgvspShort,
+                    "refSeq": transcript.refSeq,
+                    "variantClassification": transcript.variantClassification,
+                    "hgvsc": transcript.hgvsc,
+                    "exon": transcript.exon
+                } as Transcript);
+            });
+
+        }
+        else {
+            otherTranscript.push({
+                "transcript": "",
+                "hugoGeneSymbol": "",
+                "hgvsShort": "",
+                "refSeq": "",
+                "variantClassification": "",
+                "hgvsc": "",
+                "exon": ""
+            } as Transcript);
+        }
+        return otherTranscript;
+    }
 
     public render()
     {
@@ -45,10 +102,10 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                         </Button>
                         {/* make sure we have at least one transcript here*/}
                         {!this.showAllTranscript && (
-                            TranscriptTable(!this.showAllTranscript, this.props.primaryTranscript)
+                            TranscriptTable(!this.showAllTranscript, this.getCanonicalTranscript(this.props.annotation))
                         )}
                         {this.showAllTranscript && (
-                            TranscriptTable(this.showAllTranscript, this.props.primaryTranscript, this.props.otherTranscripts)
+                            TranscriptTable(this.showAllTranscript, this.getCanonicalTranscript(this.props.annotation), this.getOtherTranscript(this.props.annotation))
                         )}
                     </Col>
                 </Row>
@@ -63,7 +120,7 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
     }
 }
 
-function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTranscripts?:Transcript[]) 
+function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTranscripts?:Transcript[]) 
 {
     if (_.isEmpty(otherTranscripts)) {
         return (
@@ -86,13 +143,13 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                         <tbody>
                             <tr>
                             <td>1</td>
-                            <td>{primaryTranscript.transcript}</td>
-                            <td>{primaryTranscript.hugoGeneSymbol}</td>
-                            <td>{primaryTranscript.hgvsShort}</td>
-                            <td>{primaryTranscript.refSeq}</td>
-                            <td>{primaryTranscript.variantClassification}</td>
-                            <td>{primaryTranscript.hgvsc}</td>
-                            <td>{primaryTranscript.exon}</td>
+                            <td>{canonicalTranscript.transcript}</td>
+                            <td>{canonicalTranscript.hugoGeneSymbol}</td>
+                            <td>{canonicalTranscript.hgvsShort}</td>
+                            <td>{canonicalTranscript.refSeq}</td>
+                            <td>{canonicalTranscript.variantClassification}</td>
+                            <td>{canonicalTranscript.hgvsc}</td>
+                            <td>{canonicalTranscript.exon}</td>
                             </tr>
                         </tbody>
                     </Table>
@@ -101,7 +158,7 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
         );
     }
     else {
-        const allTranscripts = _.concat(otherTranscripts!, primaryTranscript);
+        const allTranscripts = _.concat(otherTranscripts!, canonicalTranscript);
         return (
             <>
             <Collapse in={isOpen}>
