@@ -48,7 +48,12 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
                             return (
                                 <Row>
                                     <Col>
-                                        <CheckBox key={name} checkboxName={name} isChecked={this.selectedCheckboxNames.includes(name)} onChange={this.onSelectionChange}/>
+                                        <CheckBox 
+                                            key={name}
+                                            checkboxName={name}
+                                            isChecked={this.selectedCheckboxNames.includes(name)}
+                                            onChange={this.onSelectionChange}
+                                        />
                                     </Col>
                                 </Row>
                             )
@@ -59,8 +64,9 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
         );
     }
 
-    @observable
-    selectedCheckboxNames = this.props.allCheckboxNames;
+    @computed get selectedCheckboxNames() {
+        return this.props.store.selectedRecources;
+    }
 
     @computed
     get isAllSelected() {
@@ -81,21 +87,18 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     @autobind
     @action
     private toggleSelection(selection: string) {
-        this.selectedCheckboxNames = toggleIncluded(selection, this.selectedCheckboxNames);
         this.props.store.selectedRecources = toggleIncluded(selection, this.props.store.selectedRecources);
     }
 
     @autobind
     @action
     private onSelectAll() {
-        this.selectedCheckboxNames = this.props.allCheckboxNames;
         this.props.store.selectedRecources = this.props.allCheckboxNames;
     }
 
     @autobind
     @action
     private onRemoveAll() {
-        this.selectedCheckboxNames = [];
         this.props.store.selectedRecources = [];
     }
 }
