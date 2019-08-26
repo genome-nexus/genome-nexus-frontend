@@ -136,38 +136,38 @@ class Variant extends React.Component<IVariantProps>
         const primaryTranscript = {
             transcript:"1",
             hugoGeneSymbol:"2",
-            HGVSShort:"3",
+            hgvsShort:"3",
             refSeq:"4",
             variantClassification:"5",
-            HGVSC: "6",
+            hgvsc: "6",
             exon: "7"
         }
         const otherTranscripts = [
             {
                 transcript:"1",
                 hugoGeneSymbol:"2",
-                HGVSShort:"3",
+                hgvsShort:"3",
                 refSeq:"4",
                 variantClassification:"5",
-                HGVSC: "6",
+                hgvsc: "6",
                 exon: "7"
             },
             {
                 transcript:"1",
                 hugoGeneSymbol:"2",
-                HGVSShort:"3",
+                hgvsShort:"3",
                 refSeq:"4",
                 variantClassification:"5",
-                HGVSC: "6",
+                hgvsc: "6",
                 exon: "7"
             },
             {
                 transcript:"1",
                 hugoGeneSymbol:"2",
-                HGVSShort:"3",
+                hgvsShort:"3",
                 refSeq:"4",
                 variantClassification:"5",
-                HGVSC: "6",
+                hgvsc: "6",
                 exon: "7"
             }
         ]    

@@ -22,10 +22,10 @@ class BasicInfo extends React.Component<IBasicInfoProps>
                         {BasicInfoUnit("Organism")}
                     </Col>
                     <Col lg="4">
-                        {BasicInfoUnit("Allele", "thisisalonglonglongstring1234567894561324578912316547812313246456456578974654132146712313465")}
+                        {BasicInfoUnit("Allele")}
                     </Col>
                     <Col lg="4">
-                        {BasicInfoUnit("Chromesome")}
+                        {BasicInfoUnit("Chromosome")}
                     </Col>
                 </Row>
                 <Row className="mb-1">
