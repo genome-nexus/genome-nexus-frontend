@@ -15,10 +15,10 @@ interface ITranscriptSummaryTableProps
 type Transcript = {
     transcript:String,
     hugoGeneSymbol:string,
-    HGVSShort:string,
+    hgvsShort:string,
     refSeq:string,
     variantClassification:string,
-    HGVSC: string,
+    hgvsc: string,
     exon: string
 }
 
@@ -67,7 +67,6 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
 {
     if (_.isEmpty(otherTranscripts)) {
         return (
-            <>
             <Collapse in={isOpen}>
                 {/* show table header and the first row in default */}
                 <div className="tableContent">
@@ -77,10 +76,10 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                             <th>#</th>
                             <th>Transcript</th>
                             <th>Hugo Gene Symbol</th>
-                            <th>HGVS Short</th>
+                            <th>Hgvs Short</th>
                             <th>Ref Seq</th>
                             <th>Variant Classification</th>
-                            <th>HGVSC</th>
+                            <th>Hgvsc</th>
                             <th>Exon</th>
                             </tr>
                         </thead>
@@ -89,17 +88,16 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                             <td>1</td>
                             <td>{primaryTranscript.transcript}</td>
                             <td>{primaryTranscript.hugoGeneSymbol}</td>
-                            <td>{primaryTranscript.HGVSShort}</td>
+                            <td>{primaryTranscript.hgvsShort}</td>
                             <td>{primaryTranscript.refSeq}</td>
                             <td>{primaryTranscript.variantClassification}</td>
-                            <td>{primaryTranscript.HGVSC}</td>
+                            <td>{primaryTranscript.hgvsc}</td>
                             <td>{primaryTranscript.exon}</td>
                             </tr>
                         </tbody>
                     </Table>
                 </div>
                 </Collapse>
-            </>
         );
     }
     else {
@@ -115,10 +113,10 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                             <th>#</th>
                             <th>Transcript</th>
                             <th>Hugo Gene Symbol</th>
-                            <th>HGVS Short</th>
+                            <th>Hgvs Short</th>
                             <th>Ref Seq</th>
                             <th>Variant Classification</th>
-                            <th>HGVSC</th>
+                            <th>Hgvsc</th>
                             <th>Exon</th>
                             </tr>
                         </thead>
@@ -129,10 +127,10 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                                     <td>{index + 1}</td>
                                     <td>{transcript.transcript}</td>
                                     <td>{transcript.hugoGeneSymbol}</td>
-                                    <td>{transcript.HGVSShort}</td>
+                                    <td>{transcript.hgvsShort}</td>
                                     <td>{transcript.refSeq}</td>
                                     <td>{transcript.variantClassification}</td>
-                                    <td>{transcript.HGVSC}</td>
+                                    <td>{transcript.hgvsc}</td>
                                     <td>{transcript.exon}</td>
                                     </tr>
                                 )
@@ -140,7 +138,7 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                         </tbody>
                     </Table>
                 </div>
-                </Collapse>
+            </Collapse>
             </>
         );
     }
