@@ -12,15 +12,20 @@ interface IVariantProps
     variant: string;
 }
 
-const variantStore = new VariantStore();
 
 const win:any = (window as any);
-
-win.patientViewPageStore = variantStore;
 
 @observer
 class Variant extends React.Component<IVariantProps>
 {
+    private variantStore: VariantStore;
+    constructor(props: IVariantProps) {
+        super(props);
+
+        this.variantStore = new VariantStore(this.props.variant);
+        win.variantStore = this.variantStore;
+    }
+
     @computed
     private get variant() {
         return this.props.variant;
@@ -170,18 +175,28 @@ class Variant extends React.Component<IVariantProps>
                 hgvsc: "6",
                 exon: "7"
             }
-        ]    
+        ]   
+        // console.log(variantStore.getAnnotation.status);
+         
+        // if (variantStore.getAnnotation.isComplete) {
+        //     console.log(variantStore.getAnnotation.result.annotation_summary.assemblyName); 
+        // }
+        
         return (
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
                     <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
-                        <SideBar store={variantStore} variant={this.variant}/>
+                        <SideBar store={this.variantStore} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
                         <Row>
                             <Col lg="12" className="pl-5">
-                                <BasicInfo/>
+                            {
+                                //  (this.variantStore.getAnnotation.isComplete) && (
+                                    <BasicInfo annotation={this.variantStore.getAnnotation.result}/>
+                                //  )
+                            }
                             </Col>
                         </Row>
                         <Row>
@@ -193,8 +208,8 @@ class Variant extends React.Component<IVariantProps>
                             <Col>
                                 {/* add resouce components */}
                                 {
-                                    variantStore.allRecources.map((resource, index) => {
-                                        if (variantStore.selectedRecources.includes(resource)) {
+                                    this.variantStore.allRecources.map((resource, index) => {
+                                        if (this.variantStore.selectedRecources.includes(resource)) {
                                             return (
                                                 <Row id={resource} key={index}>
                                                     <Col lg="12" className="pl-5">
@@ -208,7 +223,7 @@ class Variant extends React.Component<IVariantProps>
                                 }
 
                                 {/* show notification when no fields has been selected */}
-                                {variantStore.selectedRecources.length === 0 && (
+                                {this.variantStore.selectedRecources.length === 0 && (
                                     <div className="pl-4">
                                         <Alert key={"alert"} variant={"primary"}>
                                             Use the list on the left to show some content.
