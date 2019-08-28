@@ -175,12 +175,7 @@ class Variant extends React.Component<IVariantProps>
                 hgvsc: "6",
                 exon: "7"
             }
-        ]   
-        // console.log(variantStore.getAnnotation.status);
-         
-        // if (variantStore.getAnnotation.isComplete) {
-        //     console.log(variantStore.getAnnotation.result.annotation_summary.assemblyName); 
-        // }
+        ]
         
         return (
             <div>
@@ -193,9 +188,7 @@ class Variant extends React.Component<IVariantProps>
                         <Row>
                             <Col lg="12" className="pl-5">
                             {
-                                //  (this.variantStore.getAnnotation.isComplete) && (
-                                    <BasicInfo annotation={this.variantStore.getAnnotation.result}/>
-                                //  )
+                                <BasicInfo annotation={this.variantStore.getAnnotation.result}/>
                             }
                             </Col>
                         </Row>
