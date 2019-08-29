@@ -29,7 +29,7 @@ class BasicInfo extends React.Component<IBasicInfoProps>
                         {BasicInfoUnit("Allele")}
                     </Col>
                     <Col lg="4">
-                        {BasicInfoUnit("Chromesome", this.props.annotation ? this.props.annotation.seq_region_name : "nothinghere")}
+                        {BasicInfoUnit("Chromosome", this.props.annotation ? this.props.annotation.seq_region_name : "nothinghere")}
                     </Col>
                 </Row>
                 <Row className="mb-1">
