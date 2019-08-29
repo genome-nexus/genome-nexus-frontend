@@ -10,6 +10,7 @@ import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTa
 interface IVariantProps
 {
     variant: string;
+    mainLoadingIndicator?: JSX.Element;
 }
 
 
@@ -18,18 +19,30 @@ const win:any = (window as any);
 @observer
 class Variant extends React.Component<IVariantProps>
 {
-    private variantStore: VariantStore;
     constructor(props: IVariantProps) {
         super(props);
-
-        this.variantStore = new VariantStore(this.props.variant);
-        win.variantStore = this.variantStore;
     }
 
     @computed
     private get variant() {
         return this.props.variant;
     }
+
+    private get variantStore(): VariantStore {
+        console.log("VariantStore initialization");
+        const variantStore = new VariantStore(this.props.variant);
+        win.variantStore = variantStore;
+        return variantStore;
+    }
+
+    protected get isLoading() {
+        return this.variantStore.annotation.isPending;
+    }
+
+    protected get loadingIndicator() {
+        return this.props.mainLoadingIndicator || <i className="fa fa-spinner fa-pulse fa-2x" />;
+    }
+
 
     private getComponentByRescource(resource: string) {
         // TODO: each resource should have a component here
@@ -176,7 +189,8 @@ class Variant extends React.Component<IVariantProps>
                 exon: "7"
             }
         ]
-        
+        console.log("in Variant.tsx: " + this.variantStore.annotation.result);
+
         return (
             <div>
                 <Row>
@@ -187,8 +201,8 @@ class Variant extends React.Component<IVariantProps>
                     <Col lg="10">
                         <Row>
                             <Col lg="12" className="pl-5">
-                            {
-                                <BasicInfo annotation={this.variantStore.getAnnotation.result}/>
+                            {                              
+                                this.variantStore.annotation.result && <BasicInfo annotation={this.variantStore.annotation.result}/>
                             }
                             </Col>
                         </Row>
@@ -201,7 +215,7 @@ class Variant extends React.Component<IVariantProps>
                             <Col>
                                 {/* add resouce components */}
                                 {
-                                    this.variantStore.allRecources.map((resource, index) => {
+                                    this.variantStore.allResources.map((resource, index) => {
                                         if (this.variantStore.selectedRecources.includes(resource)) {
                                             return (
                                                 <Row id={resource} key={index}>

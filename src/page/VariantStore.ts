@@ -9,21 +9,17 @@ export interface VariantStoreConfig {
 export class VariantStore {
 
     constructor(private variantId: string) {
-        this.getVariant(this.variantId);
+        this.variant = variantId;
     }
 
-    @observable public allRecources: string[] = ["Cancer Hotspots", "OncoKB", "COSMIC", "cBioPortal",
+    @observable public allResources: string[] = ["Cancer Hotspots", "OncoKB", "COSMIC", "cBioPortal",
                                         "Mutation Assessor", "CIViC", "PMKB", "SIFT", "Polyphen-2",
                                         "UniProt", "PFAM", "PDB", "ProSite", "PhosphoSitePlus",
                                         "PTM", "External Links"];
-    @observable public selectedRecources: string[] = this.allRecources;
+    @observable public selectedRecources: string[] = this.allResources;
     @observable public variant : string = "";
-
-    private getVariant(varaintId: string) {
-        this.variant = varaintId;
-    }
     
-    readonly getAnnotation = remoteData<VariantAnnotation>({
+    readonly annotation = remoteData<VariantAnnotation>({
         invoke: async() => {           
             const result = await client.fetchVariantAnnotationGET({variant: this.variant});
             console.log(result);
