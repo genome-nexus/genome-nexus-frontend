@@ -10,6 +10,7 @@ import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTa
 interface IVariantProps
 {
     variant: string;
+    store: VariantStore;
     mainLoadingIndicator?: JSX.Element;
 }
 
@@ -21,6 +22,7 @@ class Variant extends React.Component<IVariantProps>
 {
     constructor(props: IVariantProps) {
         super(props);
+        win.props = props;
     }
 
     @computed
@@ -28,21 +30,13 @@ class Variant extends React.Component<IVariantProps>
         return this.props.variant;
     }
 
-    private get variantStore(): VariantStore {
-        console.log("VariantStore initialization");
-        const variantStore = new VariantStore(this.props.variant);
-        win.variantStore = variantStore;
-        return variantStore;
-    }
-
     protected get isLoading() {
-        return this.variantStore.annotation.isPending;
+        return this.props.store.annotation.isPending;
     }
 
     protected get loadingIndicator() {
         return this.props.mainLoadingIndicator || <i className="fa fa-spinner fa-pulse fa-2x" />;
     }
-
 
     private getComponentByRescource(resource: string) {
         // TODO: each resource should have a component here
@@ -189,20 +183,19 @@ class Variant extends React.Component<IVariantProps>
                 exon: "7"
             }
         ]
-        console.log("in Variant.tsx: " + this.variantStore.annotation.result);
 
-        return (
+        return this.isLoading ? this.loadingIndicator : (
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
                     <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
-                        <SideBar store={this.variantStore} variant={this.variant}/>
+                        <SideBar store={this.props.store} variant={this.variant}/>
                     </Col>
                     <Col lg="10">
                         <Row>
                             <Col lg="12" className="pl-5">
                             {                              
-                                this.variantStore.annotation.result && <BasicInfo annotation={this.variantStore.annotation.result}/>
+                                <BasicInfo annotation={this.props.store.annotation.result}/>
                             }
                             </Col>
                         </Row>
@@ -215,8 +208,8 @@ class Variant extends React.Component<IVariantProps>
                             <Col>
                                 {/* add resouce components */}
                                 {
-                                    this.variantStore.allResources.map((resource, index) => {
-                                        if (this.variantStore.selectedRecources.includes(resource)) {
+                                    this.props.store.allResources.map((resource, index) => {
+                                        if (this.props.store.selectedRecources.includes(resource)) {
                                             return (
                                                 <Row id={resource} key={index}>
                                                     <Col lg="12" className="pl-5">
@@ -230,7 +223,7 @@ class Variant extends React.Component<IVariantProps>
                                 }
 
                                 {/* show notification when no fields has been selected */}
-                                {this.variantStore.selectedRecources.length === 0 && (
+                                {this.props.store.selectedRecources.length === 0 && (
                                     <div className="pl-4">
                                         <Alert key={"alert"} variant={"primary"}>
                                             Use the list on the left to show some content.
