@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { VariantAnnotation, remoteData} from "cbioportal-frontend-commons";
+import { VariantAnnotationSummary, remoteData} from "cbioportal-frontend-commons";
 import client from "./genomeNexusClientInstance";
 
 
@@ -19,9 +19,9 @@ export class VariantStore {
     @observable public selectedRecources: string[] = this.allResources;
     @observable public variant : string = "";
     
-    readonly annotation = remoteData<VariantAnnotation>({
+    readonly annotation = remoteData<VariantAnnotationSummary>({
         invoke: async() => {           
-            const result = await client.fetchVariantAnnotationGET({variant: this.variant});
+            const result = await client.fetchVariantAnnotationSummaryGET({variant: this.variant});
             return result;
         },
         onError: (err: Error) => {
