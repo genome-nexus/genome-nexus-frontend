@@ -2,58 +2,100 @@ import * as React from 'react';
 import "./BasicInfo.css";
 import { observer } from "mobx-react";
 import { Row, Col } from "react-bootstrap";
-import { VariantAnnotation } from 'cbioportal-frontend-commons';
+import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
+import _ from 'lodash';
 
 interface IBasicInfoProps
 {
-    // TODO: need to pass real data into this component
-    data?: string;
-    annotation: VariantAnnotation | undefined;
+    annotation: VariantAnnotationSummary | undefined;
 }
 
+export type BasicInfoData = {
+    name: string;
+    value: string | undefined;
+}
 @observer
 class BasicInfo extends React.Component<IBasicInfoProps>
 {
+    private parseAnnotation(annotation: VariantAnnotationSummary | undefined): BasicInfoData[] {
+        let parsedData:BasicInfoData[] = [];
+        if (annotation !== undefined) {
+            parsedData.push({
+                "name": "Allele",
+                "value": annotation.genomicLocation.referenceAllele + "/" + annotation.genomicLocation.variantAllele
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Chomosome",
+                "value": annotation.genomicLocation.chromosome
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Position",
+                "value": annotation.genomicLocation.start === annotation.genomicLocation.end ? annotation.genomicLocation.start.toString() :
+                        annotation.genomicLocation.start.toString() + "_" + annotation.genomicLocation.end.toString()
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Assembly Name",
+                "value": annotation.assemblyName
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Variant Type",
+                "value": annotation.variantType
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Strand Sign",
+                "value": annotation.strandSign
+            } as BasicInfoData);
+        }
+        else {
+            parsedData.push({
+                "name": "Allele",
+                "value": "N/A"
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Chomosome",
+                "value": "N/A"
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Position",
+                "value": "N/A"
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Assembly Name",
+                "value": "N/A"
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Variant Type",
+                "value": "N/A"
+            } as BasicInfoData);
+            parsedData.push({
+                "name": "Strand Sign",
+                "value": "N/A"
+            } as BasicInfoData);
+        }
+        return parsedData;
+        
+    }
 
     public render()
     {
-        console.log("see annotation below");
-        console.log(this.props.annotation);
+        const renderData: BasicInfoData[] = this.parseAnnotation(this.props.annotation);
         return (
             <div>
-                <Row className="mb-1 mt-3">
-                    <Col lg="4">
-                        {BasicInfoUnit("Organism")}
-                    </Col>
-                    <Col lg="4">
-                        {BasicInfoUnit("Allele")}
-                    </Col>
-                    <Col lg="4">
-                        {BasicInfoUnit("Chromosome", this.props.annotation ? this.props.annotation.seq_region_name : "nothinghere")}
-                    </Col>
-                </Row>
-                <Row className="mb-1">
-                    <Col lg="4">
-                        {BasicInfoUnit("Position")}
-                    </Col>
-                    <Col lg="4">
-                        {BasicInfoUnit("Variantion Type")}
-                    </Col>
-                    <Col lg="4">
-                        {BasicInfoUnit("Protein Change")}
-                    </Col>
-                </Row>
-                <Row className="mb-1">
-                    <Col lg="4">
-                        {BasicInfoUnit("Reference Genome Build")}
-                    </Col>
+                <Row className="mb-1 mt-3"> {
+                    _.map(renderData, (data) => {
+                        return (
+                        <Col lg="4">
+                            {BasicInfoUnit(data.name, data.value)}
+                        </Col>
+                        )
+                    })}
                 </Row>
             </div>
         );
     }
 }
 
-function BasicInfoUnit(field: string, data?: string ) 
+function BasicInfoUnit(field: string, data: string | undefined) 
 {
     return (
         <Row>
@@ -61,11 +103,10 @@ function BasicInfoUnit(field: string, data?: string )
                 {field}
             </Col>
             <Col lg="8" className="data">
-                {data? data: "N/A"}
+                {data === undefined ? "N/A": data}
             </Col>
         </Row>
     );
 }
-
 
 export default BasicInfo;
