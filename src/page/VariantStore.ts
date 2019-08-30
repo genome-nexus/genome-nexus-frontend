@@ -22,9 +22,7 @@ export class VariantStore {
     readonly annotation = remoteData<VariantAnnotation>({
         invoke: async() => {           
             const result = await client.fetchVariantAnnotationGET({variant: this.variant});
-            console.log(result);
-            return client.fetchVariantAnnotationGET({variant: this.variant});
-            
+            return result;
         },
         onError: (err: Error) => {
             // fail silently
