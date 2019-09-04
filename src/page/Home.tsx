@@ -2,19 +2,24 @@ import {action, observable} from "mobx";
 import {observer} from "mobx-react";
 import * as React from 'react';
 import {
-    Col, Row, Button, Image
+    Col, Row, Button, Image, Alert, Modal
 } from 'react-bootstrap';
 
 import SearchBox from "../component/SearchBox";
 import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
 import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
+import { isVariantValid } from "../util/variantValidator";
+import { useState } from "react";
 
 @observer
 class Home extends React.Component<{history: any}>
 {
     @observable
     protected inputText: string|undefined;
+
+    @observable
+    protected setAlert:boolean = false;
 
     public render() {
         return (
@@ -38,6 +43,20 @@ class Home extends React.Component<{history: any}>
                                 placeholder="Search variant"
                                 height={50}
                             />
+                        </Col>
+                    </Row>
+                    
+                    <Row>
+                        <Col>
+                        <Modal show={this.setAlert} onHide={this.handleCloseModal}>
+                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary" onClick={this.handleCloseModal}>
+                                Close
+                            </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        
                         </Col>
                     </Row>
                     <Row>
@@ -81,9 +100,27 @@ class Home extends React.Component<{history: any}>
 
     @action.bound
     onSearch() {
-        const { history } = this.props;
-        history.push(`/variant/${this.inputText}`);
+        if (`${this.inputText}` !== 'undefined'){
+            if (isVariantValid(`${this.inputText}`).isValid === true) {
+                const { history } = this.props;
+                history.push(`/variant/${this.inputText}`);
+                this.setAlert = false;
+            }
+
+            else {
+                this.setAlert = true;
+            }
+        }
+        else {
+            this.setAlert = false;
+        }
+    }
+
+    @action.bound
+    private handleCloseModal() {
+        this.setAlert = false;
     }
 
 }
+
 export default Home;
