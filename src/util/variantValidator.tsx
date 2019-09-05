@@ -1,6 +1,4 @@
 import _ from 'lodash';
-import { Alert, Button } from 'react-bootstrap';
-import { useState } from 'react';
 
 export enum VALIDATION_MESSAGE {
     VALID = "This variant is valid",
