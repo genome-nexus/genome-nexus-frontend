@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    Row, Col
+    Row, Col, Modal, Button
 } from "react-bootstrap";
 import { computed, action, observable } from "mobx";
 import SearchBox from "../SearchBox";
@@ -8,6 +8,8 @@ import { withRouter, RouteComponentProps } from "react-router";
 import CheckBoxContainer from "./CheckBoxContainer";
 import "./SideBar.css";
 import { VariantStore } from '../../page/VariantStore';
+import { isVariantValid } from '../../util/variantValidator';
+import { observer } from 'mobx-react';
 
 type PathParamsType = {
     history: any,
@@ -22,12 +24,16 @@ type SideBarProps = RouteComponentProps<PathParamsType> &
     variant?: string;
 }
 
+@observer
 class SideBar extends React.Component<SideBarProps>
 {
     public static defaultProps = {
         placeholder: "Search Genes",
         searchIconClassName: "fa fa-search"
     };
+
+    @observable
+    protected setAlert:boolean = false;
 
     @computed
     private get variant() {
@@ -56,6 +62,24 @@ class SideBar extends React.Component<SideBarProps>
                     </Col>
                 </Row>
                 <Row>
+                    <Col>
+                        <Modal show={this.setAlert} onHide={this.handleCloseModal} centered>
+                            <Modal.Header closeButton>
+                                <Modal.Title>This variant is invalid</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Currently we only support <a href="https://varnomen.hgvs.org/" target="_blank">HGVS</a> format.
+                                <p>For example: 17:g.41242962_41242963insGA</p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary" onClick={this.handleCloseModal}>
+                                Close
+                            </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        {/* {(this.setAlert) && (<span>this should work</span>)} */}
+                    </Col>
+                </Row>
+                <Row>
                     <Col lg="12" className="text-center mb-4 resourceText">
                         Resources
                     </Col>
@@ -75,8 +99,20 @@ class SideBar extends React.Component<SideBarProps>
     }
 
     @action.bound
-    onSearch () {
-        this.props.history.push(`/variant/${this.inputText}`);
+    onSearch() {
+        if (isVariantValid(`${this.inputText}`).isValid === true) {
+            this.setAlert = false;
+            this.props.history.push(`/variant/${this.inputText}`);
+            
+        }
+        else {
+            this.setAlert = true;
+        }
+    }
+
+    @action.bound
+    private handleCloseModal() {
+        this.setAlert = false;
     }
 }
 

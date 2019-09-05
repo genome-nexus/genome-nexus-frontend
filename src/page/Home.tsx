@@ -10,7 +10,6 @@ import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
 import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
 import { isVariantValid } from "../util/variantValidator";
-import { useState } from "react";
 
 @observer
 class Home extends React.Component<{history: any}>
@@ -48,15 +47,19 @@ class Home extends React.Component<{history: any}>
                     
                     <Row>
                         <Col>
-                        <Modal show={this.setAlert} onHide={this.handleCloseModal}>
-                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleCloseModal}>
-                                Close
-                            </Button>
-                            </Modal.Footer>
-                        </Modal>
-                        
+                            <Modal show={this.setAlert} onHide={this.handleCloseModal} centered>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>This variant is invalid</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>Currently we only support <a href="https://varnomen.hgvs.org/" target="_blank">HGVS</a> format.
+                                    <p>For example: 17:g.41242962_41242963insGA</p>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                <Button variant="secondary" onClick={this.handleCloseModal}>
+                                    Close
+                                </Button>
+                                </Modal.Footer>
+                            </Modal>
                         </Col>
                     </Row>
                     <Row>
@@ -100,19 +103,13 @@ class Home extends React.Component<{history: any}>
 
     @action.bound
     onSearch() {
-        if (`${this.inputText}` !== 'undefined'){
-            if (isVariantValid(`${this.inputText}`).isValid === true) {
-                const { history } = this.props;
-                history.push(`/variant/${this.inputText}`);
-                this.setAlert = false;
-            }
-
-            else {
-                this.setAlert = true;
-            }
+        if (isVariantValid(`${this.inputText}`).isValid === true) {
+            const { history } = this.props;
+            history.push(`/variant/${this.inputText}`);
+            this.setAlert = false;
         }
         else {
-            this.setAlert = false;
+            this.setAlert = true;
         }
     }
 
