@@ -11,6 +11,7 @@ import QueryExamples from "../component/QueryExamples";
 import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
 import { isVariantValid } from "../util/variantValidator";
 import client from "./genomeNexusClientInstance";
+import ValidatorNotification, { ErrorType } from "../component/ValidatorNotification";
 
 @observer
 class Home extends React.Component<{history: any}>
@@ -19,7 +20,10 @@ class Home extends React.Component<{history: any}>
     protected inputText: string|undefined;
 
     @observable
-    protected setAlert:boolean = false;
+    protected setAlert: boolean = false;
+
+    @observable
+    protected alertType: ErrorType = ErrorType.INVALID;
 
     public render() {
         return (
@@ -48,19 +52,7 @@ class Home extends React.Component<{history: any}>
                     
                     <Row>
                         <Col>
-                            <Modal show={this.setAlert} onHide={this.handleCloseModal} centered>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>This variant is invalid</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Currently we only support <a href="https://varnomen.hgvs.org/" target="_blank">HGVS</a> format.
-                                    <p>For example: 17:g.41242962_41242963insGA</p>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                <Button variant="secondary" onClick={this.handleCloseModal}>
-                                    Close
-                                </Button>
-                                </Modal.Footer>
-                            </Modal>
+                            <ValidatorNotification showAlert={this.setAlert} type={this.alertType} onClose={this.onClose}/>
                         </Col>
                     </Row>
                     <Row>
@@ -104,27 +96,31 @@ class Home extends React.Component<{history: any}>
 
     @action.bound
     async onSearch() {
-        if (isVariantValid(`${this.inputText}`).isValid === true) {
+        if (isVariantValid(`${this.inputText}`).isValid) {
             let hasResult = false;
+            // check if the variant has response
             await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
                 // fulfillment
                 hasResult = true;
                 }, reason => {
                 // rejection
                 hasResult = false;
+                this.alertType = ErrorType.NO_RESULT;
             })
-
             if (hasResult) {
                 this.setAlert = false;
                 this.props.history.push(`/variant/${this.inputText}`);
                 return;
             }
         }
+        else {
+            this.alertType = ErrorType.INVALID;
+        }
         this.setAlert = true;
     }
 
     @action.bound
-    private handleCloseModal() {
+    private onClose() {
         this.setAlert = false;
     }
 
