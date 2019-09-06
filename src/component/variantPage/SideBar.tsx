@@ -10,6 +10,7 @@ import "./SideBar.css";
 import { VariantStore } from '../../page/VariantStore';
 import { isVariantValid } from '../../util/variantValidator';
 import { observer } from 'mobx-react';
+import client from '../../page/genomeNexusClientInstance';
 
 type PathParamsType = {
     history: any,
@@ -99,15 +100,24 @@ class SideBar extends React.Component<SideBarProps>
     }
 
     @action.bound
-    onSearch() {
+    async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid === true) {
-            this.setAlert = false;
-            this.props.history.push(`/variant/${this.inputText}`);
-            
+            let hasResult = false;
+            await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
+                // fulfillment
+                hasResult = true;
+                }, reason => {
+                // rejection
+                hasResult = false;
+            })
+
+            if (hasResult) {
+                this.setAlert = false;
+                this.props.history.push(`/variant/${this.inputText}`);
+                return;
+            }
         }
-        else {
-            this.setAlert = true;
-        }
+        this.setAlert = true;
     }
 
     @action.bound
