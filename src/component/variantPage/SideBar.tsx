@@ -11,6 +11,7 @@ import { VariantStore } from '../../page/VariantStore';
 import { isVariantValid } from '../../util/variantValidator';
 import { observer } from 'mobx-react';
 import client from '../../page/genomeNexusClientInstance';
+import ValidatorNotification, { ErrorType } from '../ValidatorNotification';
 
 type PathParamsType = {
     history: any,
@@ -44,6 +45,9 @@ class SideBar extends React.Component<SideBarProps>
     @observable
     protected inputText: string|undefined;
 
+    @observable
+    protected alertType: ErrorType = ErrorType.INVALID;
+
     public render()
     {
         return (
@@ -64,20 +68,7 @@ class SideBar extends React.Component<SideBarProps>
                 </Row>
                 <Row>
                     <Col>
-                        <Modal show={this.setAlert} onHide={this.handleCloseModal} centered>
-                            <Modal.Header closeButton>
-                                <Modal.Title>This variant is invalid</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>Currently we only support <a href="https://varnomen.hgvs.org/" target="_blank">HGVS</a> format.
-                                <p>For example: 17:g.41242962_41242963insGA</p>
-                            </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleCloseModal}>
-                                Close
-                            </Button>
-                            </Modal.Footer>
-                        </Modal>
-                        {/* {(this.setAlert) && (<span>this should work</span>)} */}
+                        <ValidatorNotification showAlert={this.setAlert} type={this.alertType} onClose={this.onClose}/>
                     </Col>
                 </Row>
                 <Row>
@@ -101,14 +92,16 @@ class SideBar extends React.Component<SideBarProps>
 
     @action.bound
     async onSearch() {
-        if (isVariantValid(`${this.inputText}`).isValid === true) {
+        if (isVariantValid(`${this.inputText}`).isValid) {
             let hasResult = false;
+            // check if the variant has response
             await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
                 // fulfillment
                 hasResult = true;
                 }, reason => {
                 // rejection
                 hasResult = false;
+                this.alertType = ErrorType.NO_RESULT;
             })
 
             if (hasResult) {
@@ -117,11 +110,14 @@ class SideBar extends React.Component<SideBarProps>
                 return;
             }
         }
+        else {
+            this.alertType = ErrorType.INVALID;
+        }
         this.setAlert = true;
     }
 
     @action.bound
-    private handleCloseModal() {
+    private onClose() {
         this.setAlert = false;
     }
 }
