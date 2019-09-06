@@ -10,6 +10,7 @@ import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
 import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
 import { isVariantValid } from "../util/variantValidator";
+import client from "./genomeNexusClientInstance";
 
 @observer
 class Home extends React.Component<{history: any}>
@@ -102,15 +103,24 @@ class Home extends React.Component<{history: any}>
     }
 
     @action.bound
-    onSearch() {
+    async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid === true) {
-            const { history } = this.props;
-            history.push(`/variant/${this.inputText}`);
-            this.setAlert = false;
+            let hasResult = false;
+            await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
+                // fulfillment
+                hasResult = true;
+                }, reason => {
+                // rejection
+                hasResult = false;
+            })
+
+            if (hasResult) {
+                this.setAlert = false;
+                this.props.history.push(`/variant/${this.inputText}`);
+                return;
+            }
         }
-        else {
-            this.setAlert = true;
-        }
+        this.setAlert = true;
     }
 
     @action.bound
