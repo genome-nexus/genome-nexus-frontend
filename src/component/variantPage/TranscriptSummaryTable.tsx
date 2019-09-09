@@ -97,7 +97,7 @@ function TranscriptTable(isOpen:boolean, primaryTranscript:Transcript, otherTran
                         </tbody>
                     </Table>
                 </div>
-                </Collapse>
+            </Collapse>
         );
     }
     else {

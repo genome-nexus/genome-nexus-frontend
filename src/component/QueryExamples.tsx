@@ -8,7 +8,7 @@ type QueryExample =
     description: string;
 }
 
-const queryExamples: QueryExample[] = [
+const QUERY_EXAMPLES: QueryExample[] = [
     {
         "url": "http://genomenexus.org/annotation/17%3Ag.41242962_41242963insGA",
         "description": "Retrieves VEP annotation for the provided variant"
@@ -47,7 +47,7 @@ class QueryExamples extends React.Component<{}>
 {
     public render()
     {
-        const queryExampleElements = queryExamples.map((example: QueryExample) => this.queryExampleToElement(example))
+        const QUERY_EXAMPLE_ELEMENTS = QUERY_EXAMPLES.map((example: QueryExample) => this.queryExampleToElement(example))
         return (
             <Table responsive>
                 <thead>
@@ -57,7 +57,7 @@ class QueryExamples extends React.Component<{}>
                     </tr>
                 </thead>
                 <tbody>
-                    {queryExampleElements}
+                    {QUERY_EXAMPLE_ELEMENTS}
                 </tbody>
             </Table>
         );
