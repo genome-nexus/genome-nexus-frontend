@@ -19,6 +19,7 @@ type Transcript = {
     refSeq: string | undefined,
     variantClassification: string | undefined,
     hgvsc: string | undefined,
+    consequenceTerms: string | undefined,
     exon: string | undefined
 }
 
@@ -37,6 +38,7 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                 "refSeq": annotation.transcriptConsequenceSummary.refSeq,
                 "variantClassification": annotation.transcriptConsequenceSummary.variantClassification,
                 "hgvsc": annotation.transcriptConsequenceSummary.hgvsc,
+                "consequenceTerms": annotation.transcriptConsequenceSummary.consequenceTerms,
                 "exon": annotation.transcriptConsequenceSummary.exon
             } as Transcript;
         }
@@ -48,6 +50,7 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                 "refSeq": "",
                 "variantClassification": "",
                 "hgvsc": "",
+                "consequenceTerms": "",
                 "exon": ""
             } as Transcript;
         }
@@ -65,6 +68,7 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                     "refSeq": transcript.refSeq,
                     "variantClassification": transcript.variantClassification,
                     "hgvsc": transcript.hgvsc,
+                    "consequenceTerms": transcript.consequenceTerms,
                     "exon": transcript.exon
                 } as Transcript);
             });
@@ -78,6 +82,7 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                 "refSeq": "",
                 "variantClassification": "",
                 "hgvsc": "",
+                "consequenceTerms": "",
                 "exon": ""
             } as Transcript);
         }
@@ -137,6 +142,7 @@ function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTr
                             <th>Ref Seq</th>
                             <th>Variant Classification</th>
                             <th>Hgvsc</th>
+                            <th>Consequence Terms</th>
                             <th>Exon</th>
                             </tr>
                         </thead>
@@ -149,6 +155,7 @@ function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTr
                             <td>{canonicalTranscript.refSeq}</td>
                             <td>{canonicalTranscript.variantClassification}</td>
                             <td>{canonicalTranscript.hgvsc}</td>
+                            <td>{canonicalTranscript.consequenceTerms}</td>
                             <td>{canonicalTranscript.exon}</td>
                             </tr>
                         </tbody>
@@ -174,6 +181,7 @@ function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTr
                             <th>Ref Seq</th>
                             <th>Variant Classification</th>
                             <th>Hgvsc</th>
+                            <th>Consequence Terms</th>
                             <th>Exon</th>
                             </tr>
                         </thead>
@@ -188,6 +196,7 @@ function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTr
                                     <td>{transcript.refSeq}</td>
                                     <td>{transcript.variantClassification}</td>
                                     <td>{transcript.hgvsc}</td>
+                                    <td>{transcript.consequenceTerms}</td>
                                     <td>{transcript.exon}</td>
                                     </tr>
                                 )
