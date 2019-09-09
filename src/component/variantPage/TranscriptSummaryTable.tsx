@@ -161,7 +161,7 @@ function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTr
                         </tbody>
                     </Table>
                 </div>
-                </Collapse>
+            </Collapse>
         );
     }
     else {
