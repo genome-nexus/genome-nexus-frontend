@@ -3494,30 +3494,6 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cbioportal-frontend-commons@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.0.13.tgz#af91ed67ded8b3e536b6509ee28cd25dd97811d9"
-  integrity sha512-97vUtoVDftLYURZHmOgXJEOsMJL1Y6MA13vzaXWNGio6sEwACAOOoPBtL37Ovt0zADmghp9zBkhu8PyDSQzrFw==
-  dependencies:
-    autobind-decorator "^2.1.0"
-    babel-polyfill "^6.22.0"
-    classnames "^2.2.5"
-    jquery "^3.2.1"
-    lodash "^4.17.11"
-    measure-text "0.0.4"
-    mobx "^3.1.7"
-    mobx-react "^4.1.3"
-    mobxpromise "github:cbioportal/mobxpromise#v1.0.2"
-    rc-tooltip "3.7.3"
-    react "^16.8.4"
-    react-file-download "^0.3.2"
-    react-select2 "npm:react-select"
-    save-svg-as-png "^1.4.6"
-    seamless-immutable "^7.0.1"
-    superagent "^3.8.3"
-    svg2pdf.js "^1.3.3"
-    url "^0.11.0"
-
 cbioportal-frontend-commons@^0.0.19:
   version "0.0.19"
   resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.0.19.tgz#be9066f939d6713883c2876913cabc49922dc613"
@@ -8592,6 +8568,11 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0:
   dependencies:
     wrappy "1"
 
+oncokb-styles@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/oncokb-styles/-/oncokb-styles-0.1.0.tgz#3a67a03dbdf6ebdde497c77451fef167afe00c4f"
+  integrity sha512-4vhF2Q5hAbOyKWlstA/AItd33cnXbp/Z1Zluxnlc7u0Dz6GnqnrZFK/upUleT4CTES6k5+QWT4Zv95+l5FL0hg==
+
 onetime@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
@@ -10421,17 +10402,18 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-mutation-mapper@0.3.0-alpha.1:
-  version "0.3.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.3.0-alpha.1.tgz#f62d2e2083ae5a82af31ab6ff3cdd6cfa42caa99"
-  integrity sha512-Y1mC+oFF/t40Ls13DclbTiOZV4Ts7BJ7Ik37nDq/tVnRWmGebCTeRczAxF1Z0itp+Nf8fJRj4QXTT13TnL37Jw==
+react-mutation-mapper@^0.3.0-beta.2:
+  version "0.3.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.3.0-beta.2.tgz#9daea300074f5d048e1dafbbc382742ef172e468"
+  integrity sha512-1s9XKc2a4Ot17MCirSaJPvYozOazWw13yrdgRfpKPsauFaXJKoOCschfarkxzEcWLLBIIopxzuReFde7kK3IWw==
   dependencies:
     autobind-decorator "^2.4.0"
-    cbioportal-frontend-commons "^0.0.13"
+    cbioportal-frontend-commons "^0.0.19"
     classnames "^2.2.6"
     jquery "^3.3.1"
     lodash "^4.17.11"
     mobxpromise "github:cbioportal/mobxpromise#v1.0.2"
+    oncokb-styles "~0.1.0"
     react-collapse "^4.0.3"
     react-motion "^0.5.2"
     react-select "^3.0.4"
@@ -10557,7 +10539,7 @@ react-scripts@^3.0.1:
   optionalDependencies:
     fsevents "2.0.6"
 
-"react-select2@npm:react-select", react-select@^3.0.4:
+react-select@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-3.0.4.tgz#16bde37c24fd4f6444914d4681e78f15ffbc86d3"
   integrity sha512-fbVISKa/lSUlLsltuatfUiKcWCNvdLXxFFyrzVQCBUsjxJZH/m7UMPdw/ywmRixAmwXAP++MdbNNZypOsiDEfA==
