@@ -7,6 +7,8 @@ import BasicInfo from "../component/variantPage/BasicInfo";
 import './Variant.css'
 import { VariantStore } from "./VariantStore";
 import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
+import LollipopPlot from "../component/LollipopPlot";
+
 interface IVariantProps
 {
     variant: string;
@@ -145,45 +147,6 @@ class Variant extends React.Component<IVariantProps>
 
     public render()
     {
-        const canonicalTranscript = {
-            transcript:"1",
-            hugoGeneSymbol:"2",
-            hgvsShort:"3",
-            refSeq:"4",
-            variantClassification:"5",
-            hgvsc: "6",
-            exon: "7"
-        }
-        const otherTranscripts = [
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            }
-        ]
-
         return this.isLoading ? this.loadingIndicator : (
             <div>
                 <Row>
@@ -203,6 +166,9 @@ class Variant extends React.Component<IVariantProps>
                             <Col className="pl-5">
                                 <TranscriptSummaryTable annotation={this.props.store.annotation.result}/>
                             </Col>
+                        </Row>
+                        <Row>
+                            <LollipopPlot data={this.props.store.annotation.result}/>
                         </Row>
                         <Row>
                             <Col>
