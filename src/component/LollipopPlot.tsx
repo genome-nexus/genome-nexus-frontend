@@ -1,5 +1,5 @@
 import * as React from 'react';
-import "./TranscriptSummaryTable.css";
+// import "./TranscriptSummaryTable.css";
 import { observer } from "mobx-react";
 import _ from "lodash";
 import { VariantAnnotationSummary } from "cbioportal-frontend-commons";
@@ -10,7 +10,7 @@ import {
 } from "react-mutation-mapper";
 interface ILollipopPlotProps extends MutationMapperProps
 {
-    // data: VariantAnnotationSummary | undefined;
+    variantData?: VariantAnnotationSummary | undefined;
     onInit?: (mutationMapper: LollipopPlot) => void;
 }
 
@@ -18,6 +18,7 @@ interface ILollipopPlotProps extends MutationMapperProps
 class LollipopPlot extends ReactMutationMapper<ILollipopPlotProps>
 {
     private variantToMutation(data: VariantAnnotationSummary | undefined) {
+        let mutations = [];
         let mutation: Mutation;
         if(data !== undefined) {
             mutation = {
@@ -36,17 +37,19 @@ class LollipopPlot extends ReactMutationMapper<ILollipopPlotProps>
                 "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition.start
                 
             }
+            mutations.push(mutation);
         }
+        return mutations;
     }
 
-    public render()
-    {
-        return (
-            <div>
-                <ReactMutationMapper/>
-            </div>
-        );
-    }
+    // public render()
+    // {
+    //     return (
+    //         <div>
+    //             {/* <ReactMutationMapper data={this.variantToMutation(this.props.variantData!)}/> */}
+    //         </div>
+    //     );
+    // }
 
 }
 

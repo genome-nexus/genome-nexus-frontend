@@ -8,6 +8,11 @@ import './Variant.css'
 import { VariantStore } from "./VariantStore";
 import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
 import LollipopPlot from "../component/LollipopPlot";
+import { VariantAnnotationSummary } from "cbioportal-frontend-commons";
+import { Mutation, TrackName } from "react-mutation-mapper";
+import {
+    MutationMapper as ReactMutationMapper,
+} from "react-mutation-mapper";
 
 interface IVariantProps
 {
@@ -145,6 +150,31 @@ class Variant extends React.Component<IVariantProps>
         }
     }
 
+    private variantToMutation(data: VariantAnnotationSummary | undefined): Mutation[] {
+        let mutations = [];
+        let mutation: Mutation;
+        if(data !== undefined) {
+            mutation = {
+                "gene": {
+                    "hugoGeneSymbol": data.transcriptConsequenceSummary.hugoGeneSymbol,
+                    "entrezGeneId": parseInt(data.transcriptConsequenceSummary.entrezGeneId)
+                },
+                "chromosome": data.genomicLocation.chromosome,
+                "startPosition": data.genomicLocation.start,
+                "endPosition": data.genomicLocation.end,
+                "referenceAllele": data.genomicLocation.referenceAllele,
+                "variantAllele": data.genomicLocation.referenceAllele,
+                "proteinChange": data.transcriptConsequenceSummary.hgvspShort,
+                "variantType": data.transcriptConsequenceSummary.variantClassification,
+                "proteinPosEnd": data.transcriptConsequenceSummary.proteinPosition.end,
+                "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition.start
+                
+            }
+            mutations.push(mutation);
+        }
+        return mutations;
+    }
+
     public render()
     {
         return this.isLoading ? this.loadingIndicator : (
@@ -168,7 +198,8 @@ class Variant extends React.Component<IVariantProps>
                             </Col>
                         </Row>
                         <Row>
-                            <LollipopPlot data={this.props.store.annotation.result}/>
+                            {/* <ReactMutationMapper data={this.variantToMutation(this.props.store.annotation.result!)}/> */}
+                            <LollipopPlot data={this.variantToMutation(this.props.store.annotation.result!)}></LollipopPlot>
                         </Row>
                         <Row>
                             <Col>
