@@ -7,12 +7,9 @@ import BasicInfo from "../component/variantPage/BasicInfo";
 import './Variant.css'
 import { VariantStore } from "./VariantStore";
 import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
-import LollipopPlot from "../component/LollipopPlot";
 import { VariantAnnotationSummary } from "cbioportal-frontend-commons";
 import { Mutation, TrackName } from "react-mutation-mapper";
-import {
-    MutationMapper as ReactMutationMapper,
-} from "react-mutation-mapper";
+import GenomeNexusMutationMapper from "../component/GenomeNexusMutationMapper";
 
 interface IVariantProps
 {
@@ -27,6 +24,7 @@ const win:any = (window as any);
 @observer
 class Variant extends React.Component<IVariantProps>
 {
+
     constructor(props: IVariantProps) {
         super(props);
         win.props = props;
@@ -163,19 +161,18 @@ class Variant extends React.Component<IVariantProps>
                 "startPosition": data.genomicLocation.start,
                 "endPosition": data.genomicLocation.end,
                 "referenceAllele": data.genomicLocation.referenceAllele,
-                "variantAllele": data.genomicLocation.referenceAllele,
+                "variantAllele": data.genomicLocation.variantAllele,
                 "proteinChange": data.transcriptConsequenceSummary.hgvspShort,
-                "variantType": data.transcriptConsequenceSummary.variantClassification,
                 "proteinPosEnd": data.transcriptConsequenceSummary.proteinPosition.end,
-                "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition.start
-                
+                "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition.start,
+                "mutationType": data.transcriptConsequenceSummary.variantClassification
             }
             mutations.push(mutation);
         }
         return mutations;
     }
 
-    public render()
+    public render(): React.ReactNode
     {
         return this.isLoading ? this.loadingIndicator : (
             <div>
@@ -197,9 +194,15 @@ class Variant extends React.Component<IVariantProps>
                                 <TranscriptSummaryTable annotation={this.props.store.annotation.result}/>
                             </Col>
                         </Row>
-                        <Row>
-                            {/* <ReactMutationMapper data={this.variantToMutation(this.props.store.annotation.result!)}/> */}
-                            <LollipopPlot data={this.variantToMutation(this.props.store.annotation.result!)}></LollipopPlot>
+                        <Row className="pl-5 pb-3 small">
+                            <GenomeNexusMutationMapper
+                                data={this.variantToMutation(this.props.store.annotation.result!)}
+                                tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
+                                hugoSymbol={this.props.store.annotation.result ? this.props.store.annotation.result.transcriptConsequenceSummary.hugoGeneSymbol: ""} 
+                                entrezGeneId={this.props.store.annotation.result ? Number(this.props.store.annotation.result.transcriptConsequenceSummary.entrezGeneId): 0}
+                                showPlotLegendToggle={false}
+                                showPlotDownloadControls={false}
+                            />
                         </Row>
                         <Row>
                             <Col>

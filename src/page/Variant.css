@@ -9,3 +9,7 @@
     font-weight: 600;
     color: #A86767;
 }
+
+.annotation-track-selector.small {
+    width: 200px !important;
+}
