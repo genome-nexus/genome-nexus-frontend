@@ -1,0 +1,70 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+defaults: &defaults
+  working_directory: /tmp/repo
+  docker:
+    # specify the version you desire here
+    - image: circleci/node:8.12.0-browsers
+
+version: 2
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - run:
+          name: "Install yarn at specific version"
+          command:
+            sudo npm install --global yarn@1.13.0
+      - run:
+          name: "Show yarn and node versions"
+          command: |
+            node --version
+            yarn --version
+      - checkout
+      # restore node modules cachse
+      - restore_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - run:
+          name: "Make sure lock file is still the same"
+          command: 'git diff --exit-code yarn.lock > /dev/null || (echo -e "New package lock file at $(cat yarn.lock | curl -F c=@- https://ptpb.pw | grep url) (include this file in your PR to fix this test)"; git diff --exit-code yarn.lock; exit 1)'
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - yarn run build
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - repo
+
+  test:
+    <<: *defaults
+    steps:
+      - run:
+          name: "Install yarn at specific version"
+          command:
+            sudo npm install --global yarn@1.13.0
+      - attach_workspace:
+          at: /tmp/
+      # run tests!
+      - run:
+          command: "yarn run test"
+      - store_test_results:
+          path: /tmp/repo/junit
+      - store_artifacts:
+          path: /tmp/repo/junit
+
+
+workflows:
+    version: 2
+    install_and_test:
+        jobs:
+            - install
+            - test:
+                requires:
+                    - install
