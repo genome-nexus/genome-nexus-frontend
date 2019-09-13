@@ -1,17 +1,14 @@
-import {action, observable} from "mobx";
-import {observer} from "mobx-react";
+import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-    Col, Row
-} from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
-import SearchBox from "../component/SearchBox";
+import SearchBox from '../component/SearchBox';
 
 @observer
-class Home extends React.Component<{}>
-{
+class Home extends React.Component<{}> {
     @observable
-    protected inputText: string|undefined;
+    protected inputText: string | undefined;
 
     public render() {
         return (
@@ -25,9 +22,7 @@ class Home extends React.Component<{}>
                     </Col>
                 </Row>
                 <Row className="py-4">
-                    <Col className="m-auto">
-                        {this.inputText}
-                    </Col>
+                    <Col className="m-auto">{this.inputText}</Col>
                 </Row>
             </div>
         );

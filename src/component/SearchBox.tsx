@@ -1,26 +1,21 @@
-import autobind from "autobind-decorator";
+import autobind from 'autobind-decorator';
 import * as React from 'react';
-import {FormEvent} from "react";
-import {
-    FormControl
-} from "react-bootstrap";
+import { FormEvent } from 'react';
+import { FormControl } from 'react-bootstrap';
 
-interface ISearchBoxProps
-{
+interface ISearchBoxProps {
     onChange?: (input: string) => void;
     placeholder?: string;
     searchIconClassName?: string;
 }
 
-class SearchBox extends React.Component<ISearchBoxProps>
-{
+class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
-        placeholder: "Search Genes",
-        searchIconClassName: "fa fa-search"
+        placeholder: 'Search Genes',
+        searchIconClassName: 'fa fa-search',
     };
 
-    public render()
-    {
+    public render() {
         return (
             <FormControl
                 onChange={this.onChange}
@@ -33,8 +28,7 @@ class SearchBox extends React.Component<ISearchBoxProps>
     }
 
     @autobind
-    private onChange(event: FormEvent<any>)
-    {
+    private onChange(event: FormEvent<any>) {
         if (this.props.onChange) {
             this.props.onChange(event.currentTarget.value);
         }

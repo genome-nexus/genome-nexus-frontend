@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Main from "./page/Main";
+import Main from './page/Main';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'cbioportal-frontend-commons/styles.css';
