@@ -145,45 +145,6 @@ class Variant extends React.Component<IVariantProps>
 
     public render()
     {
-        const canonicalTranscript = {
-            transcript:"1",
-            hugoGeneSymbol:"2",
-            hgvsShort:"3",
-            refSeq:"4",
-            variantClassification:"5",
-            hgvsc: "6",
-            exon: "7"
-        }
-        const otherTranscripts = [
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            },
-            {
-                transcript:"1",
-                hugoGeneSymbol:"2",
-                hgvsShort:"3",
-                refSeq:"4",
-                variantClassification:"5",
-                hgvsc: "6",
-                exon: "7"
-            }
-        ]
-
         return this.isLoading ? this.loadingIndicator : (
             <div>
                 <Row>
@@ -207,30 +168,25 @@ class Variant extends React.Component<IVariantProps>
                         <Row>
                             <Col>
                                 {/* add resouce components */}
-                                {
-                                    this.props.store.allResources.map((resource, index) => {
-                                        if (this.props.store.selectedRecources.includes(resource)) {
-                                            return (
-                                                <Row id={resource} key={index}>
-                                                    <Col lg="12" className="pl-5">
-                                                        {variantComponentHeader(resource)}
-                                                        {this.getComponentByRescource(resource)}
-                                                    </Col>
-                                                </Row>
-                                            )
-                                        }
-                                    })
-                                }
+                                {this.props.store.allResources.map((resource, index) => {
+                                    return this.props.store.selectedResources.includes(resource) && (
+                                        <Row id={resource} key={index}>
+                                            <Col lg="12" className="pl-5">
+                                                {variantComponentHeader(resource)}
+                                                {this.getComponentByRescource(resource)}
+                                            </Col>
+                                        </Row>
+                                    )
+                                })}
 
                                 {/* show notification when no fields has been selected */}
-                                {this.props.store.selectedRecources.length === 0 && (
+                                {this.props.store.selectedResources.length === 0 && (
                                     <div className="pl-4">
                                         <Alert key={"alert"} variant={"primary"}>
                                             Use the list on the left to show some content.
                                         </Alert>
                                     </div>
-                                    )
-                                }
+                                )}
                             </Col>
                         </Row>
                     </Col>

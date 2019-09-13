@@ -65,7 +65,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     }
 
     @computed get selectedCheckboxNames() {
-        return this.props.store.selectedRecources;
+        return this.props.store.selectedResources;
     }
 
     @computed
@@ -87,19 +87,19 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     @autobind
     @action
     private toggleSelection(selection: string) {
-        this.props.store.selectedRecources = toggleIncluded(selection, this.props.store.selectedRecources);
+        this.props.store.selectedResources = toggleIncluded(selection, this.props.store.selectedResources);
     }
 
     @autobind
     @action
     private onSelectAll() {
-        this.props.store.selectedRecources = this.props.allCheckboxNames;
+        this.props.store.selectedResources = this.props.allCheckboxNames;
     }
 
     @autobind
     @action
     private onRemoveAll() {
-        this.props.store.selectedRecources = [];
+        this.props.store.selectedResources = [];
     }
 }
 

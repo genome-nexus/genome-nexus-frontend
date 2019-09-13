@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    Row, Col, Modal, Button
+    Row, Col
 } from "react-bootstrap";
 import { computed, action, observable } from "mobx";
 import SearchBox from "../SearchBox";

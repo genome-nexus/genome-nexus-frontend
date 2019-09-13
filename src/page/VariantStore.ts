@@ -16,7 +16,7 @@ export class VariantStore {
                                         "Mutation Assessor", "CIViC", "PMKB", "SIFT", "Polyphen-2",
                                         "UniProt", "PFAM", "PDB", "ProSite", "PhosphoSitePlus",
                                         "PTM", "External Links"];
-    @observable public selectedRecources: string[] = this.allResources;
+    @observable public selectedResources: string[] = this.allResources;
     @observable public variant : string = "";
     
     readonly annotation = remoteData<VariantAnnotationSummary>({

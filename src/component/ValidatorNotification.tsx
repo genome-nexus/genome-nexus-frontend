@@ -25,7 +25,8 @@ class ValidatorNotification extends React.Component<IValidatorNotificationProps>
                     <Modal.Header closeButton>
                         <Modal.Title>This variant is invalid</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Currently we only support <a href="https://varnomen.hgvs.org/" target="_blank">HGVS</a> format.
+                    <Modal.Body>Currently we only support
+                        <a href="https://varnomen.hgvs.org/" target="_blank" rel="noopener noreferrer"> HGVS</a> format.
                         <p>For example: 17:g.41242962_41242963insGA</p>
                     </Modal.Body>
                     <Modal.Footer>
