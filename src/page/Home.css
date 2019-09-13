@@ -1,0 +1,38 @@
+#home-logo {
+    margin-top: 8rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#home-description {
+    font-size: 1.3rem;
+    margin: 7rem auto;
+}
+
+#home-example-container {
+    background-color: #F2F2F2;
+    height: fit-content;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    margin-top: 7rem;
+}
+
+#home-function-description {
+    font-size: 1rem;
+    color: #828282;
+    margin: 10rem auto 4rem;  
+}
+
+#home-query-example-header {
+    margin: 8rem auto 3rem;
+    font-size: 1.625rem;
+}
+
+#home-query-example-table{
+    margin: auto auto 8rem;
+    font-size: 1.125rem;
+}
+
+#search-box .form-control{
+    font-size: 1.25rem;
+}

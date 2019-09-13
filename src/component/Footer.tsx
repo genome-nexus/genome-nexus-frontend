@@ -6,8 +6,6 @@ import {
     Link
 } from "react-router-dom";
 
-import MskccLogo from "./MskccLogo";
-
 import "./Footer.css";
 
 class Footer extends React.Component<{}>
@@ -60,9 +58,6 @@ class Footer extends React.Component<{}>
                     <Row className="text-center">
                         <Col md={true} className="m-auto">
                             {this.internalLinks}
-                        </Col>
-                        <Col md={true} className="m-auto">
-                            <MskccLogo imageHeight={50} />
                         </Col>
                         <Col md={true} className="m-auto">
                             <div>&copy; 2019 Memorial Sloan Kettering Cancer Center</div>

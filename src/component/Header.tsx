@@ -9,7 +9,6 @@ import {
     Link
 } from "react-router-dom";
 
-import MskccLogo from "./MskccLogo";
 import GenomeNexusLogo from "./GenomeNexusLogo";
 
 import "./Header.css";
@@ -19,29 +18,23 @@ class Header extends React.Component<{}>
     public render()
     {
         return (
-            <header className="sticky-top">
+            <header>
                 <Navbar bg="mskcc-header" expand="lg" className="navbar-dark main-navbar">
-                    <Container>
+                    <Container className="m-3">
                         <Navbar.Brand>
                             <Link to="/" className="brand-title-link">
-                                <GenomeNexusLogo /> Genome Nexus
+                                <GenomeNexusLogo/>
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
-                        <Navbar.Collapse>
+                        <Navbar.Collapse className="ml-5">
                             <Nav>
-                                <LinkContainer exact={true} to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/annotation"><Nav.Link>MAF Annotation</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/patient"><Nav.Link>Patient Report</Nav.Link></LinkContainer>
-                                <LinkContainer exact={true} to="/api"><Nav.Link>API Usage</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/"><Nav.Link className="ml-5">Home</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/annotation"><Nav.Link className="ml-5">MAF Annotation</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/patient"><Nav.Link className="ml-5">Patient Report</Nav.Link></LinkContainer>
+                                <LinkContainer exact={true} to="/api"><Nav.Link className="ml-5">API Usage</Nav.Link></LinkContainer>
                             </Nav>
                         </Navbar.Collapse>
-                        <MskccLogo imageHeight={50} className="d-none d-lg-block ml-auto" />
-                    </Container>
-                </Navbar>
-                <Navbar bg="mskcc-subheader" expand="lg" className="navbar-dark sub-navbar">
-                    <Container>
-                        A resource for annotation and interpretation of genetic variants
                     </Container>
                 </Navbar>
             </header>

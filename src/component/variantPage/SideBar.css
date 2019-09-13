@@ -1,0 +1,20 @@
+.variant {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.searchBox {
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+}
+
+.searchBox .form-control {
+    background-color: #f2f2f2;
+}
+
+.resourceText {
+    font-size: "1.5rem"
+}

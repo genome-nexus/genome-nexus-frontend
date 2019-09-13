@@ -8,14 +8,16 @@ import {
 interface ISearchBoxProps
 {
     onChange?: (input: string) => void;
+    onSearch: () => void;
     placeholder?: string;
     searchIconClassName?: string;
+    height?: number;
 }
 
 class SearchBox extends React.Component<ISearchBoxProps>
 {
     public static defaultProps = {
-        placeholder: "Search Genes",
+        placeholder: "Search variant",
         searchIconClassName: "fa fa-search"
     };
 
@@ -28,6 +30,14 @@ class SearchBox extends React.Component<ISearchBoxProps>
                 placeholder={this.props.placeholder}
                 aria-label="Search"
                 aria-describedby="basic-addon2"
+                onKeyPress={(event: { key: string; }) => {
+                    if (event.key === "Enter") {
+                      this.props.onSearch();
+                    }
+                  }}
+                style={{
+                    height: this.props.height
+                }}
             />
         );
     }
