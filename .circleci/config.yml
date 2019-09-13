@@ -36,7 +36,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - yarn run build
+      - run: yarn run build
       - persist_to_workspace:
           root: /tmp
           paths:
