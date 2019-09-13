@@ -199,10 +199,16 @@ class Variant extends React.Component<IVariantProps>
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
-                    <Col lg="2" className="mt-0 sidebar" style={{height: "1050px"}}>
+                    {/* TODO: remove the d-none when we want side bar back */}
+                    <Col lg="2" className="mt-0 sidebar d-none" style={{height: "1050px"}}>
                         <SideBar store={this.props.store} variant={this.variant}/>
                     </Col>
-                    <Col lg="10">
+                    {/* TODO: change to lg="10" if have side bar */}
+                    <Col lg="12">
+                        {/* TODO: remove this row if have side bar */}
+                        <Row className="pl-5" style={{fontSize: "1.3rem"}}>
+                            {this.props.variant}
+                        </Row>
                         <Row>
                             <Col lg="12" className="pl-5">
                             {                              
@@ -225,7 +231,9 @@ class Variant extends React.Component<IVariantProps>
                                 showPlotDownloadControls={false}
                             />
                         </Row>
-                        <Row>
+                        {/* TODO: remove this row if have side bar */}
+                        {/* the content for each resources */}
+                        <Row className="d-none">
                             <Col>
                                 {/* add resouce components */}
                                 {
