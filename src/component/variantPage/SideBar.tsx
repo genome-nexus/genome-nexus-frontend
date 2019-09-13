@@ -62,7 +62,7 @@ class SideBar extends React.Component<SideBarProps>
                 </Row>
                 <Row>
                     <Col lg="12">
-                        <CheckBoxContainer allCheckboxNames={this.props.store.allRecources} store={this.props.store}/>
+                        <CheckBoxContainer allCheckboxNames={this.props.store.allResources} store={this.props.store}/>
                     </Col>
                 </Row>
             </div>

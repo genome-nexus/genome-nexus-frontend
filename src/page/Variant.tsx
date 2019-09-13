@@ -192,30 +192,25 @@ class Variant extends React.Component<IVariantProps>
                         <Row>
                             <Col>
                                 {/* add resouce components */}
-                                {
-                                    variantStore.allRecources.map((resource, index) => {
-                                        if (variantStore.selectedRecources.includes(resource)) {
-                                            return (
-                                                <Row id={resource} key={index}>
-                                                    <Col lg="12" className="pl-5">
-                                                        {variantComponentHeader(resource)}
-                                                        {this.getComponentByRescource(resource)}
-                                                    </Col>
-                                                </Row>
-                                            )
-                                        }
-                                    })
-                                }
+                                {variantStore.allResources.map((resource, index) => {   
+                                    return variantStore.selectedResources.includes(resource) && (
+                                        <Row id={resource} key={index}>
+                                            <Col lg="12" className="pl-5">
+                                                {variantComponentHeader(resource)}
+                                                {this.getComponentByRescource(resource)}
+                                            </Col>
+                                        </Row>
+                                    )
+                                })}
 
                                 {/* show notification when no fields has been selected */}
-                                {variantStore.selectedRecources.length === 0 && (
+                                {variantStore.selectedResources.length === 0 && (
                                     <div className="pl-4">
                                         <Alert key={"alert"} variant={"primary"}>
                                             Use the list on the left to show some content.
                                         </Alert>
                                     </div>
-                                    )
-                                }
+                                )}
                             </Col>
                         </Row>
                     </Col>
