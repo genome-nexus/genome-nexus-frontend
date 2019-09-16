@@ -6,7 +6,7 @@ import {
 } from "react-bootstrap";
 import CheckBox from "./CheckBox";
 import { action, computed } from "mobx";
-import { toggleIncluded } from "../../lib/ArrayUtils";
+import { toggleIncluded } from "../../util/ArrayUtils";
 import { observer } from "mobx-react";
 import "./CheckboxContainer.css";
 import { VariantStore } from "../../page/VariantStore";

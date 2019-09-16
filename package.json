@@ -16,6 +16,7 @@
     "@types/superagent": "^4.1.1",
     "autobind-decorator": "^2.4.0",
     "bootstrap": "^4.3.1",
+    "cbioportal-frontend-commons": "^0.0.19",
     "file-loader": "^4.1.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",

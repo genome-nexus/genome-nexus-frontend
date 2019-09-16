@@ -9,12 +9,21 @@ import SearchBox from "../component/SearchBox";
 import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
 import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
+import { isVariantValid } from "../util/variantValidator";
+import client from "./genomeNexusClientInstance";
+import ValidatorNotification, { ErrorType } from "../component/ValidatorNotification";
 
 @observer
 class Home extends React.Component<{history: any}>
 {
     @observable
     protected inputText: string|undefined;
+
+    @observable
+    protected setAlert: boolean = false;
+
+    @observable
+    protected alertType: ErrorType = ErrorType.INVALID;
 
     public render() {
         return (
@@ -38,6 +47,12 @@ class Home extends React.Component<{history: any}>
                                 placeholder="Search variant"
                                 height={50}
                             />
+                        </Col>
+                    </Row>
+                    
+                    <Row>
+                        <Col>
+                            <ValidatorNotification showAlert={this.setAlert} type={this.alertType} onClose={this.onClose}/>
                         </Col>
                     </Row>
                     <Row>
@@ -80,9 +95,33 @@ class Home extends React.Component<{history: any}>
     }
 
     @action.bound
-    onSearch() {
-        const { history } = this.props;
-        history.push(`/variant/${this.inputText}`);
+    async onSearch() {
+        if (isVariantValid(`${this.inputText}`).isValid) {
+            let hasResult = false;
+            // check if the variant has response
+            await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
+                // fulfillment
+                hasResult = true;
+                }, reason => {
+                // rejection
+                hasResult = false;
+                this.alertType = ErrorType.NO_RESULT;
+            })
+            if (hasResult) {
+                this.setAlert = false;
+                this.props.history.push(`/variant/${this.inputText}`);
+                return;
+            }
+        }
+        else {
+            this.alertType = ErrorType.INVALID;
+        }
+        this.setAlert = true;
+    }
+
+    @action.bound
+    private onClose() {
+        this.setAlert = false;
     }
 
 }
