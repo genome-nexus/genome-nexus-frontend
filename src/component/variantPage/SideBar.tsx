@@ -60,10 +60,10 @@ class SideBar extends React.Component<SideBarProps>
                 <Row className="d-flex justify-content-center">
                     <Col lg="11" className="searchBox">
                         <SearchBox
-                                onChange={this.onTextChange}
-                                onSearch={this.onSearch}
-                                placeholder="Search variant"
-                            />
+                            onChange={this.onTextChange}
+                            onSearch={this.onSearch}
+                            placeholder="Search variant"
+                        />
                     </Col>
                 </Row>
                 <Row>

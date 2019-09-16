@@ -13,7 +13,7 @@ interface ITranscriptSummaryTableProps
 }
 
 type Transcript = {
-    transcript: String | undefined,
+    transcript: string | undefined,
     hugoGeneSymbol: string | undefined,
     hgvsShort: string | undefined,
     refSeq: string | undefined,
