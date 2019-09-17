@@ -55,7 +55,7 @@ class TranscriptTable extends React.Component<ITranscriptTableProps>
             );
         }
         else {
-            const allTranscripts = _.concat(this.props.otherTranscripts!, this.props.canonicalTranscript);
+            const allTranscripts = _.concat(this.props.canonicalTranscript, this.props.otherTranscripts!);
             return (
                 <Collapse in={this.props.isOpen}>
                     {/* expand the table if have more transcript */}

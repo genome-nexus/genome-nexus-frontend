@@ -59,18 +59,21 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
 
     private getOtherTranscript(annotation: VariantAnnotationSummary | undefined ) {
         let otherTranscript:Transcript[] = [];
+        let canonicalTranscriptId = this.getCanonicalTranscript(this.props.annotation);
         if(annotation !== undefined) {
             annotation.transcriptConsequenceSummaries.forEach(transcript => {
-                otherTranscript.push({
-                    "transcript": transcript.transcriptId,
-                    "hugoGeneSymbol": transcript.hugoGeneSymbol,
-                    "hgvsShort": transcript.hgvspShort,
-                    "refSeq": transcript.refSeq,
-                    "variantClassification": transcript.variantClassification,
-                    "hgvsc": transcript.hgvsc,
-                    "consequenceTerms": transcript.consequenceTerms,
-                    "exon": transcript.exon
-                });
+                if (transcript.transcriptId !== canonicalTranscriptId.transcript) {
+                    otherTranscript.push({
+                        "transcript": transcript.transcriptId,
+                        "hugoGeneSymbol": transcript.hugoGeneSymbol,
+                        "hgvsShort": transcript.hgvspShort,
+                        "refSeq": transcript.refSeq,
+                        "variantClassification": transcript.variantClassification,
+                        "hgvsc": transcript.hgvsc,
+                        "consequenceTerms": transcript.consequenceTerms,
+                        "exon": transcript.exon
+                    });
+                }
             });
 
         }
@@ -124,90 +127,5 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
         this.showAllTranscript = !this.showAllTranscript;
     }
 }
-
-// function TranscriptTable(isOpen:boolean, canonicalTranscript:Transcript, otherTranscripts?:Transcript[]) 
-// {
-//     if (_.isEmpty(otherTranscripts)) {
-//         return (
-//             <Collapse in={isOpen}>
-//                 {/* show table header and the first row in default */}
-//                 <div className="tableContent">
-//                     <Table responsive striped bordered hover size="sm">
-//                         <thead>
-//                             <tr>
-//                             <th>#</th>
-//                             <th>Transcript</th>
-//                             <th>Hugo Gene Symbol</th>
-//                             <th>Hgvs Short</th>
-//                             <th>Ref Seq</th>
-//                             <th>Variant Classification</th>
-//                             <th>Hgvsc</th>
-//                             <th>Consequence Terms</th>
-//                             <th>Exon</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             <tr>
-//                             <td>1</td>
-//                             <td>{canonicalTranscript.transcript}</td>
-//                             <td>{canonicalTranscript.hugoGeneSymbol}</td>
-//                             <td>{canonicalTranscript.hgvsShort}</td>
-//                             <td>{canonicalTranscript.refSeq}</td>
-//                             <td>{canonicalTranscript.variantClassification}</td>
-//                             <td>{canonicalTranscript.hgvsc}</td>
-//                             <td>{canonicalTranscript.consequenceTerms}</td>
-//                             <td>{canonicalTranscript.exon}</td>
-//                             </tr>
-//                         </tbody>
-//                     </Table>
-//                 </div>
-//             </Collapse>
-//         );
-//     }
-//     else {
-//         const allTranscripts = _.concat(otherTranscripts!, canonicalTranscript);
-//         return (
-//             <>
-//             <Collapse in={isOpen}>
-//                 {/* expand the table if have more transcript */}
-//                 <div className="tableContent">
-//                     <Table responsive striped bordered hover size="sm">
-//                         <thead>
-//                             <tr>
-//                             <th>#</th>
-//                             <th>Transcript</th>
-//                             <th>Hugo Gene Symbol</th>
-//                             <th>Hgvs Short</th>
-//                             <th>Ref Seq</th>
-//                             <th>Variant Classification</th>
-//                             <th>Hgvsc</th>
-//                             <th>Consequence Terms</th>
-//                             <th>Exon</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             {allTranscripts.map((transcript, index) => {
-//                                 return (
-//                                     <tr>
-//                                     <td>{index + 1}</td>
-//                                     <td>{transcript.transcript}</td>
-//                                     <td>{transcript.hugoGeneSymbol}</td>
-//                                     <td>{transcript.hgvsShort}</td>
-//                                     <td>{transcript.refSeq}</td>
-//                                     <td>{transcript.variantClassification}</td>
-//                                     <td>{transcript.hgvsc}</td>
-//                                     <td>{transcript.consequenceTerms}</td>
-//                                     <td>{transcript.exon}</td>
-//                                     </tr>
-//                                 )
-//                             })}
-//                         </tbody>
-//                     </Table>
-//                 </div>
-//             </Collapse>
-//             </>
-//         );
-//     }
-// }
 
 export default TranscriptSummaryTable;
