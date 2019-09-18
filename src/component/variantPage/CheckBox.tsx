@@ -3,7 +3,8 @@ import {FormEvent} from "react";
 import "./CheckBox.css";
 import { observer } from "mobx-react";
 import { computed } from "mobx";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import {Link} from "react-scroll";
 
 interface ICheckBoxProps
 {
@@ -34,7 +35,7 @@ class CheckBox extends React.Component<ICheckBoxProps>
                     className="custom-checkbox"
                     type={"checkbox"}
                     // click button will go the selection field and make it on the top
-                    label={<Button href={`#${this.props.checkboxName}`} variant="link"> {this.props.checkboxName}</Button>}
+                    label={<Link to={this.props.checkboxName} smooth={true} duration={500}>{this.props.checkboxName}</Link>}
                     onChange={this.props.onChange}
                     value={this.props.checkboxName}
                     checked={this.props.isChecked}

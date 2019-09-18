@@ -35,7 +35,7 @@ class SideBar extends React.Component<SideBarProps>
     };
 
     @observable
-    protected setAlert:boolean = false;
+    protected alert:boolean = false;
 
     @computed
     private get variant() {
@@ -68,7 +68,7 @@ class SideBar extends React.Component<SideBarProps>
                 </Row>
                 <Row>
                     <Col>
-                        <ValidatorNotification showAlert={this.setAlert} type={this.alertType} onClose={this.onClose}/>
+                        <ValidatorNotification showAlert={this.alert} type={this.alertType} onClose={this.onClose}/>
                     </Col>
                 </Row>
                 <Row>
@@ -93,19 +93,14 @@ class SideBar extends React.Component<SideBarProps>
     @action.bound
     async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid) {
-            let hasResult = false;
-            // check if the variant has response
-            await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).then(function(response){
-                // fulfillment
-                hasResult = true;
-                }, reason => {
-                // rejection
-                hasResult = false;
-                this.alertType = ErrorType.NO_RESULT;
-            })
+            const response = await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).catch(
+                (ex) => {
+                    this.alertType = ErrorType.NO_RESULT;
+                }
+            );
 
-            if (hasResult) {
-                this.setAlert = false;
+            if (response) {
+                this.alert = false;
                 this.props.history.push(`/variant/${this.inputText}`);
                 return;
             }
@@ -113,12 +108,12 @@ class SideBar extends React.Component<SideBarProps>
         else {
             this.alertType = ErrorType.INVALID;
         }
-        this.setAlert = true;
+        this.alert = true;
     }
 
     @action.bound
     private onClose() {
-        this.setAlert = false;
+        this.alert = false;
     }
 }
 

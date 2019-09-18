@@ -13,64 +13,77 @@ interface IBasicInfoProps
 export type BasicInfoData = {
     name: string;
     value: string | undefined;
+    key: string;
 }
 @observer
 class BasicInfo extends React.Component<IBasicInfoProps>
 {
     private parseAnnotation(annotation: VariantAnnotationSummary | undefined): BasicInfoData[] {
-        let parsedData:BasicInfoData[] = [];
+        let parsedData: BasicInfoData[] = [];
         if (annotation !== undefined) {
             parsedData.push({
+                "key": "allele",
                 "name": "Allele",
-                "value": annotation.genomicLocation.referenceAllele + "/" + annotation.genomicLocation.variantAllele
-            } as BasicInfoData);
+                "value": `${annotation.genomicLocation.referenceAllele}/${annotation.genomicLocation.variantAllele}`
+            });
             parsedData.push({
+                "key": "chomosome",
                 "name": "Chomosome",
                 "value": annotation.genomicLocation.chromosome
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "position",
                 "name": "Position",
-                "value": annotation.genomicLocation.start === annotation.genomicLocation.end ? annotation.genomicLocation.start.toString() :
-                        annotation.genomicLocation.start.toString() + "_" + annotation.genomicLocation.end.toString()
-            } as BasicInfoData);
+                "value": annotation.genomicLocation.start === annotation.genomicLocation.end ? `${annotation.genomicLocation.start}` :
+                        `${annotation.genomicLocation.start}_${annotation.genomicLocation.end}`
+            });
             parsedData.push({
+                "key": "assemblyName",
                 "name": "Assembly Name",
                 "value": annotation.assemblyName
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "variantType",
                 "name": "Variant Type",
                 "value": annotation.variantType
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "strandSign",
                 "name": "Strand Sign",
                 "value": annotation.strandSign
-            } as BasicInfoData);
+            });
         }
         else {
             parsedData.push({
+                "key": "allele",
                 "name": "Allele",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "chomosome",
                 "name": "Chomosome",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "position",
                 "name": "Position",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "assemblyName",
                 "name": "Assembly Name",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "variantType",
                 "name": "Variant Type",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
             parsedData.push({
+                "key": "strandSign",
                 "name": "Strand Sign",
                 "value": "N/A"
-            } as BasicInfoData);
+            });
         }
         return parsedData;
         
@@ -85,7 +98,7 @@ class BasicInfo extends React.Component<IBasicInfoProps>
                     _.map(renderData, (data) => {
                         return (
                         <Col lg="4">
-                            {BasicInfoUnit(data.name, data.value)}
+                            {BasicInfoUnit(data.name, data.value, data.key)}
                         </Col>
                         )
                     })}
@@ -95,10 +108,10 @@ class BasicInfo extends React.Component<IBasicInfoProps>
     }
 }
 
-function BasicInfoUnit(field: string, data: string | undefined) 
+function BasicInfoUnit(field: string, data: string | undefined, key: string) 
 {
     return (
-        <Row>
+        <Row key={key}>
             <Col lg="4" className="fieldName">
                 {field}
             </Col>

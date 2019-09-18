@@ -8,7 +8,7 @@ export interface VariantStoreConfig {
 }
 export class VariantStore {
 
-    constructor(private variantId: string) {
+    constructor(public variantId: string) {
         this.variant = variantId;
     }
 
@@ -21,8 +21,7 @@ export class VariantStore {
     
     readonly annotation = remoteData<VariantAnnotationSummary>({
         invoke: async() => {           
-            const result = await client.fetchVariantAnnotationSummaryGET({variant: this.variant});
-            return result;
+            return await client.fetchVariantAnnotationSummaryGET({variant: this.variant});
         },
         onError: (err: Error) => {
             // fail silently
