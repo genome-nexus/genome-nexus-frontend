@@ -18,13 +18,3 @@
 .custom-checkbox {
     margin-left: 5px;
 }
-
-.custom-checkbox input {
-    margin-top: 0.65rem;
-}
-
-.custom-checkbox label a {
-    padding-left: 0.2rem !important;
-    text-align: left;
-    color: black;
-}
