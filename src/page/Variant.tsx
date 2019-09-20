@@ -224,10 +224,21 @@ class Variant extends React.Component<IVariantProps>
                             <GenomeNexusMutationMapper
                                 data={this.variantToMutation(this.annotation!)}
                                 tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
+                                trackVisibility={{
+                                    [TrackName.CancerHotspots]: 'visible', [TrackName.OncoKB]: 'visible', [TrackName.PTM]: 'visible'}}
                                 hugoSymbol={this.annotation ? this.annotation.transcriptConsequenceSummary.hugoGeneSymbol: ""} 
                                 entrezGeneId={this.annotation ? Number(this.annotation.transcriptConsequenceSummary.entrezGeneId): 0}
                                 showPlotLegendToggle={false}
                                 showPlotDownloadControls={false}
+                                showFilterResetPanel={false}
+                                // hide track slider
+                                showPlotYMaxSlider={false}
+                                // hide track selector
+                                showTrackSelector={false}
+                                // hide y axis
+                                showYAxis={false}
+                                // set lollipop height
+                                plotTopYAxisDefaultMax={2}
                             />
                         </Row>
                         {/* remove the d-none if have sidebar */}
