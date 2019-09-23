@@ -5,7 +5,8 @@ import { observer } from "mobx-react";
 import { action, observable } from "mobx";
 import { Button, Row, Col } from "react-bootstrap";
 import { VariantAnnotationSummary } from "cbioportal-frontend-commons";
-import TranscriptTable from "./TranscriptTable"
+import TranscriptTable from "./TranscriptTable";
+import { getTranscriptConsequenceSummary } from "../../util/AnnotationSummaryUtil";
 
 interface ITranscriptSummaryTableProps
 {
@@ -29,40 +30,28 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
     @observable showAllTranscript = false;
 
     private getCanonicalTranscript(annotation: VariantAnnotationSummary | undefined ) {
-        let canonicalTranscript:Transcript;
-        if(annotation !== undefined) {
-            canonicalTranscript = {
-                "transcript": annotation.transcriptConsequenceSummary.transcriptId,
-                "hugoGeneSymbol": annotation.transcriptConsequenceSummary.hugoGeneSymbol,
-                "hgvsShort": annotation.transcriptConsequenceSummary.hgvspShort,
-                "refSeq": annotation.transcriptConsequenceSummary.refSeq,
-                "variantClassification": annotation.transcriptConsequenceSummary.variantClassification,
-                "hgvsc": annotation.transcriptConsequenceSummary.hgvsc,
-                "consequenceTerms": annotation.transcriptConsequenceSummary.consequenceTerms,
-                "exon": annotation.transcriptConsequenceSummary.exon
-            };
-        }
-        else {
-            canonicalTranscript = {
-                "transcript": "",
-                "hugoGeneSymbol": "",
-                "hgvsShort": "",
-                "refSeq": "",
-                "variantClassification": "",
-                "hgvsc": "",
-                "consequenceTerms": "",
-                "exon": ""
-            };
-        }
+        let transcriptConsequenceSummary = getTranscriptConsequenceSummary(annotation);
+
+        let canonicalTranscript = {
+            "transcript": transcriptConsequenceSummary.transcriptId,
+            "hugoGeneSymbol": transcriptConsequenceSummary.hugoGeneSymbol,
+            "hgvsShort": transcriptConsequenceSummary.hgvspShort,
+            "refSeq": transcriptConsequenceSummary.refSeq,
+            "variantClassification": transcriptConsequenceSummary.variantClassification,
+            "hgvsc": transcriptConsequenceSummary.hgvsc,
+            "consequenceTerms": transcriptConsequenceSummary.consequenceTerms,
+            "exon": transcriptConsequenceSummary.exon
+        };
+
         return canonicalTranscript;
     }
 
     private getOtherTranscript(annotation: VariantAnnotationSummary | undefined ) {
         let otherTranscript:Transcript[] = [];
-        let canonicalTranscriptId = this.getCanonicalTranscript(this.props.annotation);
-        if(annotation !== undefined) {
+        let canonicalTranscriptId = this.getCanonicalTranscript(annotation).transcript;
+        if(annotation !== undefined && annotation.transcriptConsequenceSummaries) {
             annotation.transcriptConsequenceSummaries.forEach(transcript => {
-                if (transcript.transcriptId !== canonicalTranscriptId.transcript) {
+                if (transcript.transcriptId !== canonicalTranscriptId) {
                     otherTranscript.push({
                         "transcript": transcript.transcriptId,
                         "hugoGeneSymbol": transcript.hugoGeneSymbol,
@@ -74,19 +63,6 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                         "exon": transcript.exon
                     });
                 }
-            });
-
-        }
-        else {
-            otherTranscript.push({
-                "transcript": "",
-                "hugoGeneSymbol": "",
-                "hgvsShort": "",
-                "refSeq": "",
-                "variantClassification": "",
-                "hgvsc": "",
-                "consequenceTerms": "",
-                "exon": ""
             });
         }
         return otherTranscript;
@@ -108,12 +84,20 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
                         >
                             see all transcripts
                         </Button>
-                        {/* make sure we have at least one transcript here*/}
+                        {/* show canonical transcript */}
                         {!this.showAllTranscript && (
-                            <TranscriptTable isOpen={!this.showAllTranscript} canonicalTranscript={this.getCanonicalTranscript(this.props.annotation)} />
+                            <TranscriptTable
+                                isOpen={!this.showAllTranscript}
+                                canonicalTranscript={this.getCanonicalTranscript(this.props.annotation)}
+                            />
                         )}
+                        {/* show all trancscripts after click the button */}
                         {this.showAllTranscript && (
-                            <TranscriptTable isOpen={this.showAllTranscript} canonicalTranscript={this.getCanonicalTranscript(this.props.annotation)} otherTranscripts={this.getOtherTranscript(this.props.annotation)} />
+                            <TranscriptTable
+                                isOpen={this.showAllTranscript}
+                                canonicalTranscript={this.getCanonicalTranscript(this.props.annotation)}
+                                otherTranscripts={this.getOtherTranscript(this.props.annotation)}
+                            />
                         )}
                     </Col>
                 </Row>

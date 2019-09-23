@@ -10,7 +10,7 @@ import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTa
 import { VariantAnnotationSummary, getProteinPositionFromProteinChange } from "cbioportal-frontend-commons";
 import { Mutation, TrackName } from "react-mutation-mapper";
 import GenomeNexusMutationMapper from "../component/GenomeNexusMutationMapper";
-
+import { getTranscriptConsequenceSummary } from "../util/AnnotationSummaryUtil";
 interface IVariantProps
 {
     variant: string;
@@ -44,6 +44,44 @@ class Variant extends React.Component<IVariantProps>
 
     protected get loadingIndicator() {
         return this.props.mainLoadingIndicator || <i className="fa fa-spinner fa-pulse fa-2x" />;
+    }
+
+    private getMutationMapper() {
+        let mutation = this.variantToMutation(this.annotation);
+        if (mutation[0].gene && mutation[0].gene.hugoGeneSymbol.length !== 0) {
+            return (
+                <GenomeNexusMutationMapper
+                    data={mutation}
+                    tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
+                    // allow default tracks to show up
+                    trackVisibility={{
+                        [TrackName.CancerHotspots]: 'visible', [TrackName.OncoKB]: 'visible', [TrackName.PTM]: 'visible'}}
+                    hugoSymbol={getTranscriptConsequenceSummary(this.annotation).hugoGeneSymbol} 
+                    entrezGeneId={Number(getTranscriptConsequenceSummary(this.annotation).entrezGeneId)}
+                    showPlotLegendToggle={false}
+                    showPlotDownloadControls={false}
+                    // disable filter reset notification
+                    showFilterResetPanel={false}
+                    // hide track slider
+                    showPlotYMaxSlider={false}
+                    // hide track selector
+                    showTrackSelector={false}
+                    // hide y axis
+                    showPlotYAxis={false}
+                    // set lollipop height
+                    plotTopYAxisDefaultMax={1}
+                    // set plot height
+                    plotLollipopHeight={150}
+                />
+            );
+        }
+        else {
+            return (
+                <Alert key={"alert"} variant={"secondary"}>
+                    No plot.
+                </Alert>
+            );
+        }
     }
 
     private getComponentByRescource(resource: string) {
@@ -155,10 +193,11 @@ class Variant extends React.Component<IVariantProps>
         let mutations = [];
         let mutation: Mutation;
         if(data !== undefined) {
+            let transcriptConsequenceSummary = getTranscriptConsequenceSummary(data);
             mutation = {
                 "gene": {
-                    "hugoGeneSymbol": data.transcriptConsequenceSummary.hugoGeneSymbol? data.transcriptConsequenceSummary.hugoGeneSymbol: "",
-                    "entrezGeneId": parseInt(data.transcriptConsequenceSummary.entrezGeneId)
+                    "hugoGeneSymbol": transcriptConsequenceSummary.hugoGeneSymbol,
+                    "entrezGeneId": Number(transcriptConsequenceSummary.entrezGeneId)
                 },
                 "chromosome": data.genomicLocation.chromosome,
                 "startPosition": data.genomicLocation.start,
@@ -166,14 +205,14 @@ class Variant extends React.Component<IVariantProps>
                 "referenceAllele": data.genomicLocation.referenceAllele,
                 "variantAllele": data.genomicLocation.variantAllele,
                 // TODO: is it ok to return "" if no protein change data?
-                "proteinChange": data.transcriptConsequenceSummary.hgvspShort? data.transcriptConsequenceSummary.hgvspShort: "",
-                "proteinPosStart": data.transcriptConsequenceSummary.proteinPosition
-                                    ? data.transcriptConsequenceSummary.proteinPosition.start
-                                    : this.getProteinPosStart(data.transcriptConsequenceSummary.hgvspShort),
-                "proteinPosEnd": data.transcriptConsequenceSummary.proteinPosition
-                                    ? data.transcriptConsequenceSummary.proteinPosition.end
+                "proteinChange": transcriptConsequenceSummary.hgvspShort,
+                "proteinPosStart": transcriptConsequenceSummary.proteinPosition
+                                    ? transcriptConsequenceSummary.proteinPosition.start
+                                    : this.getProteinPosStart(transcriptConsequenceSummary.hgvspShort),
+                "proteinPosEnd": transcriptConsequenceSummary.proteinPosition
+                                    ? transcriptConsequenceSummary.proteinPosition.end
                                     : undefined,
-                "mutationType": data.transcriptConsequenceSummary.variantClassification
+                "mutationType": transcriptConsequenceSummary.variantClassification
             }
             mutations.push(mutation);
         }
@@ -182,19 +221,13 @@ class Variant extends React.Component<IVariantProps>
 
     private getProteinPosStart(proteinChange: string | undefined) {
         var proteinPosition = getProteinPositionFromProteinChange(proteinChange);
-        if (proteinPosition) {
-            var proteinPosStart = proteinPosition.start;
-            return proteinPosStart;
-        }
         // TODO: is it ok to return 0 if no protein change data?
-        else {
-            return 0;
-        }
+        return proteinPosition ? proteinPosition.start : 0;
     }
 
     public render(): React.ReactNode
     {
-        return this.isLoading ? this.loadingIndicator : (
+        return this.isLoading ? this.loadingIndicator :(
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
@@ -204,7 +237,7 @@ class Variant extends React.Component<IVariantProps>
                     </Col>
                     {/* change to lg="10" if have side bar */}
                     <Col lg="12">
-                        {/* TODO: remove this row if have side bar */}
+                        {/* remove this row if have side bar */}
                         <Row className="pl-5" style={{fontSize: "1.3rem"}}>
                             {this.props.variant}
                         </Row>
@@ -221,27 +254,7 @@ class Variant extends React.Component<IVariantProps>
                             </Col>
                         </Row>
                         <Row className="pl-5 pb-3 small">
-                            <GenomeNexusMutationMapper
-                                data={this.variantToMutation(this.annotation!)}
-                                tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
-                                trackVisibility={{
-                                    [TrackName.CancerHotspots]: 'visible', [TrackName.OncoKB]: 'visible', [TrackName.PTM]: 'visible'}}
-                                hugoSymbol={this.annotation ? this.annotation.transcriptConsequenceSummary.hugoGeneSymbol: ""} 
-                                entrezGeneId={this.annotation ? Number(this.annotation.transcriptConsequenceSummary.entrezGeneId): 0}
-                                showPlotLegendToggle={false}
-                                showPlotDownloadControls={false}
-                                showFilterResetPanel={false}
-                                // hide track slider
-                                showPlotYMaxSlider={false}
-                                // hide track selector
-                                showTrackSelector={false}
-                                // hide y axis
-                                showPlotYAxis={false}
-                                // set lollipop height
-                                plotTopYAxisDefaultMax={1}
-                                // set plot height
-                                plotLollipopHeight={150}
-                            />
+                            {this.getMutationMapper()}
                         </Row>
                         {/* remove the d-none if have sidebar */}
                         {/* the content for each resources */}
