@@ -236,7 +236,7 @@ class Variant extends React.Component<IVariantProps>
                                 // hide track selector
                                 showTrackSelector={false}
                                 // hide y axis
-                                showPlotAxis={false}
+                                showPlotYAxis={false}
                                 // set lollipop height
                                 plotTopYAxisDefaultMax={1}
                                 // set plot height
