@@ -8,7 +8,7 @@ import {
 import SearchBox from "../component/SearchBox";
 import "./Home.css";
 import QueryExamples from "../component/QueryExamples";
-import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_dark_blue.png';
+import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_light_blue.png';
 import { isVariantValid } from "../util/variantValidator";
 import client from "./genomeNexusClientInstance";
 import ValidatorNotification, { ErrorType } from "../component/ValidatorNotification";
