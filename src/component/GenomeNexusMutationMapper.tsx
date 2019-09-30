@@ -4,6 +4,7 @@ import {
     MutationMapper as ReactMutationMapper,
     MutationMapperProps
 } from "react-mutation-mapper";
+import { computed } from "mobx";
 interface IGenomeNexusMutationMapperProps extends MutationMapperProps
 {
     variantData?: VariantAnnotationSummary | undefined;
@@ -21,6 +22,16 @@ class GenomeNexusMutationMapper extends ReactMutationMapper<IGenomeNexusMutation
         return null;
     }
 
+    @computed
+    protected get geneWidth()
+    {
+        if (this.lollipopPlotGeneX) {
+            return this.windowWrapper.size.width * 0.9 - this.lollipopPlotGeneX;
+        }
+        else {
+            return 640;
+        }
+    }
 }
 
 export default GenomeNexusMutationMapper;
