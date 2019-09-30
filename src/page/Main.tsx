@@ -33,7 +33,7 @@ class Main extends React.Component<{}>
                         marginLeft: "2rem",
                         marginRight: "2rem",
                         paddingTop: 20,
-                        paddingBottom: 100,
+                        paddingBottom: 78,
                         fontSize: "1.25rem",
                         color: "#2c3e50"}}
                     >
