@@ -33,7 +33,7 @@
                             <goal>yarn</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>run install</arguments>
                         </configuration>
                     </execution>
 
