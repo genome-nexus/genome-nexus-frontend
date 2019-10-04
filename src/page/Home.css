@@ -10,7 +10,7 @@
 }
 
 #home-example-container {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     height: fit-content;
     margin-left: -2rem;
     margin-right: -2rem;
@@ -20,7 +20,7 @@
 #home-function-description {
     font-size: 1rem;
     color: #828282;
-    margin: 10rem auto 4rem;  
+    margin: 10rem auto 4rem;
 }
 
 #home-query-example-header {
@@ -28,11 +28,11 @@
     font-size: 1.625rem;
 }
 
-#home-query-example-table{
+#home-query-example-table {
     margin: auto auto 8rem;
     font-size: 1.125rem;
 }
 
-#search-box .form-control{
+#search-box .form-control {
     font-size: 1.25rem;
 }

@@ -1,18 +1,18 @@
 .selectedBackground {
-    background-color: #D5E7F9;
+    background-color: #d5e7f9;
     font-size: 1rem;
     background-size: 100%;
     display: inline-block;
     width: 100%;
-    border-bottom: #F2F2F2 solid 1px;
+    border-bottom: #f2f2f2 solid 1px;
 }
 
 .unselectedBackground {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     font-size: 1rem;
     display: inline-block;
     width: 100%;
-    border-bottom: #E0E0E0 solid 1px;
+    border-bottom: #e0e0e0 solid 1px;
 }
 
 .custom-checkbox {
