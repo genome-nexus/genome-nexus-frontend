@@ -12,6 +12,7 @@ import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_light
 import { isVariantValid } from "../util/variantValidator";
 import client from "./genomeNexusClientInstance";
 import ValidatorNotification, { ErrorType } from "../component/ValidatorNotification";
+import { Link } from "react-router-dom";
 
 @observer
 class Home extends React.Component<{history: any}>
@@ -39,7 +40,7 @@ class Home extends React.Component<{history: any}>
                             A resource for annotation and interpretation of genetic variants
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="justify-content-center">
                         <Col lg="7" className="m-auto" id="search-box">
                             <SearchBox
                                 onChange={this.onTextChange}
@@ -48,8 +49,10 @@ class Home extends React.Component<{history: any}>
                                 height={50}
                             />
                         </Col>
-                    </Row>
-                    
+                        <Col lg="7" style={{color:"grey", fontSize:"1rem", textAlign:"left"}} className="pt-1">
+                            Example:<Link to={"/variant/17:g.41242962_41242963insGA"}> 17:g.41242962_41242963insGA</Link>
+                        </Col>
+                    </Row>                   
                     <Row>
                         <Col>
                             <ValidatorNotification showAlert={this.alert} type={this.alertType} onClose={this.onClose}/>
