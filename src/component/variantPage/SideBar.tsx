@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {
-    Row, Col
-} from "react-bootstrap";
-import { computed, action, observable } from "mobx";
-import SearchBox from "../SearchBox";
-import { withRouter, RouteComponentProps } from "react-router";
-import CheckBoxContainer from "./CheckBoxContainer";
-import "./SideBar.css";
+import { Row, Col } from 'react-bootstrap';
+import { computed, action, observable } from 'mobx';
+import SearchBox from '../SearchBox';
+import { withRouter, RouteComponentProps } from 'react-router';
+import CheckBoxContainer from './CheckBoxContainer';
+import './SideBar.css';
 import { VariantStore } from '../../page/VariantStore';
 import { isVariantValid } from '../../util/variantValidator';
 import { observer } from 'mobx-react';
@@ -14,28 +12,26 @@ import client from '../../page/genomeNexusClientInstance';
 import ValidatorNotification, { ErrorType } from '../ValidatorNotification';
 
 type PathParamsType = {
-    history: any,
-}
+    history: any;
+};
 
-type SideBarProps = RouteComponentProps<PathParamsType> &
-{
+type SideBarProps = RouteComponentProps<PathParamsType> & {
     store: VariantStore;
     onChange?: (input: string) => void;
     placeholder?: string;
     searchIconClassName?: string;
     variant?: string;
-}
+};
 
 @observer
-class SideBar extends React.Component<SideBarProps>
-{
+class SideBar extends React.Component<SideBarProps> {
     public static defaultProps = {
-        placeholder: "Search Genes",
-        searchIconClassName: "fa fa-search"
+        placeholder: 'Search Genes',
+        searchIconClassName: 'fa fa-search',
     };
 
     @observable
-    protected alert:boolean = false;
+    protected alert: boolean = false;
 
     @computed
     private get variant() {
@@ -43,13 +39,12 @@ class SideBar extends React.Component<SideBarProps>
     }
 
     @observable
-    protected inputText: string|undefined;
+    protected inputText: string | undefined;
 
     @observable
     protected alertType: ErrorType = ErrorType.INVALID;
 
-    public render()
-    {
+    public render() {
         return (
             <div>
                 <Row>
@@ -68,7 +63,11 @@ class SideBar extends React.Component<SideBarProps>
                 </Row>
                 <Row>
                     <Col>
-                        <ValidatorNotification showAlert={this.alert} type={this.alertType} onClose={this.onClose}/>
+                        <ValidatorNotification
+                            showAlert={this.alert}
+                            type={this.alertType}
+                            onClose={this.onClose}
+                        />
                     </Col>
                 </Row>
                 <Row>
@@ -78,7 +77,10 @@ class SideBar extends React.Component<SideBarProps>
                 </Row>
                 <Row>
                     <Col lg="12">
-                        <CheckBoxContainer allCheckboxNames={this.props.store.allResources} store={this.props.store}/>
+                        <CheckBoxContainer
+                            allCheckboxNames={this.props.store.allResources}
+                            store={this.props.store}
+                        />
                     </Col>
                 </Row>
             </div>
@@ -93,19 +95,18 @@ class SideBar extends React.Component<SideBarProps>
     @action.bound
     async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid) {
-            const response = await client.fetchVariantAnnotationSummaryGET({variant: this.inputText!}).catch(
-                (ex) => {
+            const response = await client
+                .fetchVariantAnnotationSummaryGET({ variant: this.inputText! })
+                .catch(ex => {
                     this.alertType = ErrorType.NO_RESULT;
-                }
-            );
+                });
 
             if (response) {
                 this.alert = false;
                 this.props.history.push(`/variant/${this.inputText}`);
                 return;
             }
-        }
-        else {
+        } else {
             this.alertType = ErrorType.INVALID;
         }
         this.alert = true;

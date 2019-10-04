@@ -1,12 +1,9 @@
-import autobind from "autobind-decorator";
+import autobind from 'autobind-decorator';
 import * as React from 'react';
-import {FormEvent} from "react";
-import {
-    FormControl
-} from "react-bootstrap";
+import { FormEvent } from 'react';
+import { FormControl } from 'react-bootstrap';
 
-interface ISearchBoxProps
-{
+interface ISearchBoxProps {
     onChange?: (input: string) => void;
     onSearch: () => void;
     placeholder?: string;
@@ -14,15 +11,13 @@ interface ISearchBoxProps
     height?: number;
 }
 
-class SearchBox extends React.Component<ISearchBoxProps>
-{
+class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
-        placeholder: "Search variant",
-        searchIconClassName: "fa fa-search"
+        placeholder: 'Search variant',
+        searchIconClassName: 'fa fa-search',
     };
 
-    public render()
-    {
+    public render() {
         return (
             <FormControl
                 onChange={this.onChange}
@@ -30,21 +25,20 @@ class SearchBox extends React.Component<ISearchBoxProps>
                 placeholder={this.props.placeholder}
                 aria-label="Search"
                 aria-describedby="basic-addon2"
-                onKeyPress={(event: { key: string; }) => {
-                    if (event.key === "Enter") {
-                      this.props.onSearch();
+                onKeyPress={(event: { key: string }) => {
+                    if (event.key === 'Enter') {
+                        this.props.onSearch();
                     }
-                  }}
+                }}
                 style={{
-                    height: this.props.height
+                    height: this.props.height,
                 }}
             />
         );
     }
 
     @autobind
-    private onChange(event: FormEvent<any>)
-    {
+    private onChange(event: FormEvent<any>) {
         if (this.props.onChange) {
             this.props.onChange(event.currentTarget.value);
         }

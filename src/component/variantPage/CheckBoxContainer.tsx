@@ -1,62 +1,67 @@
-import autobind from "autobind-decorator";
+import autobind from 'autobind-decorator';
 import * as React from 'react';
-import {FormEvent} from "react";
-import {
-    Form, Row, Col
-} from "react-bootstrap";
-import CheckBox from "./CheckBox";
-import { action, computed } from "mobx";
-import { toggleIncluded } from "../../util/ArrayUtils";
-import { observer } from "mobx-react";
-import "./CheckboxContainer.css";
-import { VariantStore } from "../../page/VariantStore";
+import { FormEvent } from 'react';
+import { Form, Row, Col } from 'react-bootstrap';
+import CheckBox from './CheckBox';
+import { action, computed } from 'mobx';
+import { toggleIncluded } from '../../util/ArrayUtils';
+import { observer } from 'mobx-react';
+import './CheckboxContainer.css';
+import { VariantStore } from '../../page/VariantStore';
 
-interface ICheckContainerProps
-{
+interface ICheckContainerProps {
     store: VariantStore;
     allCheckboxNames: string[];
 }
 
 @observer
-class CheckBoxContainer extends React.Component<ICheckContainerProps>
-{
-    public render()
-    {
+class CheckBoxContainer extends React.Component<ICheckContainerProps> {
+    public render() {
         return (
             <div>
                 <Form>
-                    <Row style={{fontSize: "1rem"}}>
-                        <Col lg="6" className="justify-content-center d-flex mb-4">
-                            <CheckBox 
-                                key={"Select all"}
-                                checkboxName={"Select all"}
+                    <Row style={{ fontSize: '1rem' }}>
+                        <Col
+                            lg="6"
+                            className="justify-content-center d-flex mb-4"
+                        >
+                            <CheckBox
+                                key={'Select all'}
+                                checkboxName={'Select all'}
                                 isChecked={this.isAllSelected}
                                 onChange={this.onSelectAll}
-                                className={"NoColor"}/>
+                                className={'NoColor'}
+                            />
                         </Col>
-                        <Col lg="6" className="justify-content-center d-flex mb-4">
-                            <CheckBox 
-                                key={"Remove all"}
-                                checkboxName={"Remove all"}
+                        <Col
+                            lg="6"
+                            className="justify-content-center d-flex mb-4"
+                        >
+                            <CheckBox
+                                key={'Remove all'}
+                                checkboxName={'Remove all'}
                                 isChecked={this.isAllRemoved}
                                 onChange={this.onRemoveAll}
-                                className={"NoColor"}/>
+                                className={'NoColor'}
+                            />
                         </Col>
                     </Row>
                     <div>
-                        {this.props.allCheckboxNames.map((name) => {
+                        {this.props.allCheckboxNames.map(name => {
                             return (
                                 <Row>
                                     <Col>
-                                        <CheckBox 
+                                        <CheckBox
                                             key={name}
                                             checkboxName={name}
-                                            isChecked={this.selectedCheckboxNames.includes(name)}
+                                            isChecked={this.selectedCheckboxNames.includes(
+                                                name
+                                            )}
                                             onChange={this.onSelectionChange}
                                         />
                                     </Col>
                                 </Row>
-                            )
+                            );
                         })}
                     </div>
                 </Form>
@@ -70,8 +75,11 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
 
     @computed
     get isAllSelected() {
-        return this.selectedCheckboxNames.length === this.props.allCheckboxNames.length &&
-                this.selectedCheckboxNames.length > 0;
+        return (
+            this.selectedCheckboxNames.length ===
+                this.props.allCheckboxNames.length &&
+            this.selectedCheckboxNames.length > 0
+        );
     }
 
     @computed
@@ -87,7 +95,10 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps>
     @autobind
     @action
     private toggleSelection(selection: string) {
-        this.props.store.selectedResources = toggleIncluded(selection, this.props.store.selectedResources);
+        this.props.store.selectedResources = toggleIncluded(
+            selection,
+            this.props.store.selectedResources
+        );
     }
 
     @autobind

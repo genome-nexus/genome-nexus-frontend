@@ -1,13 +1,13 @@
 .sidebar {
     position: sticky !important;
-    top:0;
+    top: 0;
 }
 
 .componentHeader {
-    border-bottom: 2px solid #E0E0E0;
+    border-bottom: 2px solid #e0e0e0;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #A86767;
+    color: #a86767;
 }
 
 .annotation-track-selector.small {

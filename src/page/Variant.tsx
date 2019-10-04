@@ -1,28 +1,29 @@
-import {computed} from "mobx";
-import {observer} from "mobx-react";
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Row, Col, Alert } from "react-bootstrap";
+import { Row, Col, Alert } from 'react-bootstrap';
 import SideBar from '../component/variantPage/SideBar';
-import BasicInfo from "../component/variantPage/BasicInfo";
-import './Variant.css'
-import { VariantStore } from "./VariantStore";
-import TranscriptSummaryTable from "../component/variantPage/TranscriptSummaryTable";
-import { VariantAnnotationSummary, getProteinPositionFromProteinChange } from "cbioportal-frontend-commons";
-import { Mutation, TrackName } from "react-mutation-mapper";
-import GenomeNexusMutationMapper from "../component/GenomeNexusMutationMapper";
-import { getTranscriptConsequenceSummary } from "../util/AnnotationSummaryUtil";
-interface IVariantProps
-{
+import BasicInfo from '../component/variantPage/BasicInfo';
+import './Variant.css';
+import { VariantStore } from './VariantStore';
+import TranscriptSummaryTable from '../component/variantPage/TranscriptSummaryTable';
+import {
+    VariantAnnotationSummary,
+    getProteinPositionFromProteinChange,
+} from 'cbioportal-frontend-commons';
+import { Mutation, TrackName } from 'react-mutation-mapper';
+import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
+import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+interface IVariantProps {
     variant: string;
     store: VariantStore;
     mainLoadingIndicator?: JSX.Element;
 }
 
-const win:any = (window as any);
+const win: any = window as any;
 
 @observer
-class Variant extends React.Component<IVariantProps>
-{
+class Variant extends React.Component<IVariantProps> {
     constructor(props: IVariantProps) {
         super(props);
         win.props = props;
@@ -43,7 +44,11 @@ class Variant extends React.Component<IVariantProps>
     }
 
     protected get loadingIndicator() {
-        return this.props.mainLoadingIndicator || <i className="fa fa-spinner fa-pulse fa-2x" />;
+        return (
+            this.props.mainLoadingIndicator || (
+                <i className="fa fa-spinner fa-pulse fa-2x" />
+            )
+        );
     }
 
     private getMutationMapper() {
@@ -52,12 +57,25 @@ class Variant extends React.Component<IVariantProps>
             return (
                 <GenomeNexusMutationMapper
                     data={mutation}
-                    tracks={[TrackName.CancerHotspots, TrackName.OncoKB, TrackName.PTM]}
+                    tracks={[
+                        TrackName.CancerHotspots,
+                        TrackName.OncoKB,
+                        TrackName.PTM,
+                    ]}
                     // allow default tracks to show up
                     trackVisibility={{
-                        [TrackName.CancerHotspots]: 'visible', [TrackName.OncoKB]: 'visible', [TrackName.PTM]: 'visible'}}
-                    hugoSymbol={getTranscriptConsequenceSummary(this.annotation).hugoGeneSymbol} 
-                    entrezGeneId={Number(getTranscriptConsequenceSummary(this.annotation).entrezGeneId)}
+                        [TrackName.CancerHotspots]: 'visible',
+                        [TrackName.OncoKB]: 'visible',
+                        [TrackName.PTM]: 'visible',
+                    }}
+                    hugoSymbol={
+                        getTranscriptConsequenceSummary(this.annotation)
+                            .hugoGeneSymbol
+                    }
+                    entrezGeneId={Number(
+                        getTranscriptConsequenceSummary(this.annotation)
+                            .entrezGeneId
+                    )}
                     showPlotLegendToggle={false}
                     showPlotDownloadControls={false}
                     // disable filter reset notification
@@ -74,10 +92,9 @@ class Variant extends React.Component<IVariantProps>
                     plotLollipopHeight={150}
                 />
             );
-        }
-        else {
+        } else {
             return (
-                <Alert key={"alert"} variant={"secondary"}>
+                <Alert key={'alert'} variant={'secondary'}>
                     No plot.
                 </Alert>
             );
@@ -86,98 +103,98 @@ class Variant extends React.Component<IVariantProps>
 
     private getComponentByRescource(resource: string) {
         // TODO: each resource should have a component here
-        switch(resource) {
-            case "Cancer Hotspots": 
+        switch (resource) {
+            case 'Cancer Hotspots':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "OncoKB":
+            case 'OncoKB':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "COSMIC":
+            case 'COSMIC':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "cBioPortal":
+            case 'cBioPortal':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "Mutation Assessor":
+            case 'Mutation Assessor':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "CIViC":
+            case 'CIViC':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "PMKB":
+            case 'PMKB':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "SIFT":
+            case 'SIFT':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "Polyphen-2":
+            case 'Polyphen-2':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "UniProt":
+            case 'UniProt':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "PFAM":
+            case 'PFAM':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "PDB":
+            case 'PDB':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "ProSite":
+            case 'ProSite':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "PhosphoSitePlus":
+            case 'PhosphoSitePlus':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "PTM":
+            case 'PTM':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
                     </div>
                 );
-            case "External Links":
+            case 'External Links':
                 return (
                     <div>
                         <p>{resource} under construction.</p>
@@ -185,72 +202,91 @@ class Variant extends React.Component<IVariantProps>
                 );
 
             default:
-                    return;
+                return;
         }
     }
 
-    private variantToMutation(data: VariantAnnotationSummary | undefined): Mutation[] {
+    private variantToMutation(
+        data: VariantAnnotationSummary | undefined
+    ): Mutation[] {
         let mutations = [];
         let mutation: Mutation;
-        if(data !== undefined) {
-            let transcriptConsequenceSummary = getTranscriptConsequenceSummary(data);
+        if (data !== undefined) {
+            let transcriptConsequenceSummary = getTranscriptConsequenceSummary(
+                data
+            );
             mutation = {
-                "gene": {
-                    "hugoGeneSymbol": transcriptConsequenceSummary.hugoGeneSymbol,
-                    "entrezGeneId": Number(transcriptConsequenceSummary.entrezGeneId)
+                gene: {
+                    hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
+                    entrezGeneId: Number(
+                        transcriptConsequenceSummary.entrezGeneId
+                    ),
                 },
-                "chromosome": data.genomicLocation.chromosome,
-                "startPosition": data.genomicLocation.start,
-                "endPosition": data.genomicLocation.end,
-                "referenceAllele": data.genomicLocation.referenceAllele,
-                "variantAllele": data.genomicLocation.variantAllele,
+                chromosome: data.genomicLocation.chromosome,
+                startPosition: data.genomicLocation.start,
+                endPosition: data.genomicLocation.end,
+                referenceAllele: data.genomicLocation.referenceAllele,
+                variantAllele: data.genomicLocation.variantAllele,
                 // TODO: is it ok to return "" if no protein change data?
-                "proteinChange": transcriptConsequenceSummary.hgvspShort,
-                "proteinPosStart": transcriptConsequenceSummary.proteinPosition
-                                    ? transcriptConsequenceSummary.proteinPosition.start
-                                    : this.getProteinPosStart(transcriptConsequenceSummary.hgvspShort),
-                "proteinPosEnd": transcriptConsequenceSummary.proteinPosition
-                                    ? transcriptConsequenceSummary.proteinPosition.end
-                                    : undefined,
-                "mutationType": transcriptConsequenceSummary.variantClassification
-            }
+                proteinChange: transcriptConsequenceSummary.hgvspShort,
+                proteinPosStart: transcriptConsequenceSummary.proteinPosition
+                    ? transcriptConsequenceSummary.proteinPosition.start
+                    : this.getProteinPosStart(
+                          transcriptConsequenceSummary.hgvspShort
+                      ),
+                proteinPosEnd: transcriptConsequenceSummary.proteinPosition
+                    ? transcriptConsequenceSummary.proteinPosition.end
+                    : undefined,
+                mutationType:
+                    transcriptConsequenceSummary.variantClassification,
+            };
             mutations.push(mutation);
         }
         return mutations;
     }
 
     private getProteinPosStart(proteinChange: string | undefined) {
-        var proteinPosition = getProteinPositionFromProteinChange(proteinChange);
+        var proteinPosition = getProteinPositionFromProteinChange(
+            proteinChange
+        );
         // TODO: is it ok to return 0 if no protein change data?
         return proteinPosition ? proteinPosition.start : 0;
     }
 
-    public render(): React.ReactNode
-    {
-        return this.isLoading ? this.loadingIndicator :(
+    public render(): React.ReactNode {
+        return this.isLoading ? (
+            this.loadingIndicator
+        ) : (
             <div>
                 <Row>
                     {/* TODO: the height should automatically change with the content */}
                     {/* remove the d-none if have sidebar */}
-                    <Col lg="2" className="mt-0 sidebar d-none" style={{height: "1050px"}}>
-                        <SideBar store={this.props.store} variant={this.variant}/>
+                    <Col
+                        lg="2"
+                        className="mt-0 sidebar d-none"
+                        style={{ height: '1050px' }}
+                    >
+                        <SideBar
+                            store={this.props.store}
+                            variant={this.variant}
+                        />
                     </Col>
                     {/* change to lg="10" if have side bar */}
                     <Col lg="12">
                         {/* remove this row if have side bar */}
-                        <Row className="pl-5" style={{fontSize: "1.3rem"}}>
+                        <Row className="pl-5" style={{ fontSize: '1.3rem' }}>
                             {this.props.variant}
                         </Row>
                         <Row>
                             <Col lg="12" className="pl-5">
-                            {                              
-                                <BasicInfo annotation={this.annotation}/>
-                            }
+                                {<BasicInfo annotation={this.annotation} />}
                             </Col>
                         </Row>
                         <Row>
                             <Col className="pl-5">
-                                <TranscriptSummaryTable annotation={this.annotation}/>
+                                <TranscriptSummaryTable
+                                    annotation={this.annotation}
+                                />
                             </Col>
                         </Row>
                         <Row className="pl-5 pb-3 small">
@@ -261,22 +297,40 @@ class Variant extends React.Component<IVariantProps>
                         <Row className="d-none">
                             <Col>
                                 {/* add resouce components */}
-                                {this.props.store.allResources.map((resource, index) => {
-                                    return this.props.store.selectedResources.includes(resource) && (
-                                        <Row id={resource} key={index}>
-                                            <Col lg="12" className="pl-5">
-                                                {variantComponentHeader(resource)}
-                                                {this.getComponentByRescource(resource)}
-                                            </Col>
-                                        </Row>
-                                    )
-                                })}
+                                {this.props.store.allResources.map(
+                                    (resource, index) => {
+                                        return (
+                                            this.props.store.selectedResources.includes(
+                                                resource
+                                            ) && (
+                                                <Row id={resource} key={index}>
+                                                    <Col
+                                                        lg="12"
+                                                        className="pl-5"
+                                                    >
+                                                        {variantComponentHeader(
+                                                            resource
+                                                        )}
+                                                        {this.getComponentByRescource(
+                                                            resource
+                                                        )}
+                                                    </Col>
+                                                </Row>
+                                            )
+                                        );
+                                    }
+                                )}
 
                                 {/* show notification when no fields has been selected */}
-                                {this.props.store.selectedResources.length === 0 && (
+                                {this.props.store.selectedResources.length ===
+                                    0 && (
                                     <div className="pl-4">
-                                        <Alert key={"alert"} variant={"primary"}>
-                                            Use the list on the left to show some content.
+                                        <Alert
+                                            key={'alert'}
+                                            variant={'primary'}
+                                        >
+                                            Use the list on the left to show
+                                            some content.
                                         </Alert>
                                     </div>
                                 )}
@@ -284,13 +338,12 @@ class Variant extends React.Component<IVariantProps>
                         </Row>
                     </Col>
                 </Row>
-             </div>
+            </div>
         );
     }
 }
 
-function variantComponentHeader(name: string)
-{
+function variantComponentHeader(name: string) {
     // header for each resouce component
     return (
         <div className="componentHeader" id={name}>
