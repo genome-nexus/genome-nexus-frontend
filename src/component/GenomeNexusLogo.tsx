@@ -12,7 +12,7 @@ class GenomeNexusLogo extends React.Component<{
                 alt="genome-nexus-logo"
                 src={gnLogo}
                 style={{
-                    height: this.props.imageHeight || 40,
+                    height: this.props.imageHeight || 25,
                 }}
             />
         );
