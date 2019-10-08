@@ -1,12 +1,9 @@
 #home-logo {
-    margin-top: 8rem;
+    padding-top: 5%;
+    padding-bottom: 1.5%;
     margin-left: auto;
     margin-right: auto;
-}
-
-#home-description {
-    font-size: 1.3rem;
-    margin: 7rem auto;
+    max-width: 800px;
 }
 
 #home-example-container {

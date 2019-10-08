@@ -6,7 +6,7 @@ import { Col, Row, Button, Image } from 'react-bootstrap';
 import SearchBox from '../component/SearchBox';
 import './Home.css';
 import QueryExamples from '../component/QueryExamples';
-import logoWithText from '../image/logo/genome_nexus_fullname_less_spacing_light_blue.png';
+import logoWithText from '../image/logo/genome_nexus_logo_background_light_blue_with_description.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
@@ -30,17 +30,11 @@ class Home extends React.Component<{ history: any }> {
             <div>
                 <div className="text-center">
                     <Row>
-                        <Col lg="5" id="home-logo">
+                        <Col lg="5" xs="8" id="home-logo" className="mb-5">
                             <Image src={logoWithText} fluid />
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" id="home-description">
-                            A resource for annotation and interpretation of
-                            genetic variants
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-center">
                         <Col lg="7" className="m-auto" id="search-box">
                             <SearchBox
                                 onChange={this.onTextChange}
@@ -56,7 +50,7 @@ class Home extends React.Component<{ history: any }> {
                                 fontSize: '1rem',
                                 textAlign: 'left',
                             }}
-                            className="pt-1"
+                            className="pt-1 m-auto"
                         >
                             Example:
                             <Link to={'/variant/17:g.41242962_41242963insGA'}>
