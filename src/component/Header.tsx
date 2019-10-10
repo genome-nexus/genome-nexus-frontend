@@ -16,18 +16,15 @@ class Header extends React.Component<{}> {
                     expand="lg"
                     className="navbar-dark main-navbar"
                 >
-                    <Container className="m-3">
+                    <Container fluid={true}>
                         <Navbar.Brand>
                             <Link to="/" className="brand-title-link">
                                 <GenomeNexusLogo />
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
-                        <Navbar.Collapse className="ml-5">
+                        <Navbar.Collapse>
                             <Nav>
-                                <LinkContainer exact={true} to="/">
-                                    <Nav.Link className="ml-5">Home</Nav.Link>
-                                </LinkContainer>
                                 <LinkContainer exact={true} to="/annotation">
                                     <Nav.Link className="ml-5">
                                         MAF Annotation
