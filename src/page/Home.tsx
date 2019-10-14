@@ -101,12 +101,10 @@ class Home extends React.Component<{ history: any }> {
 
                 <div id="home-example-container">
                     <Row>
-                        <Col lg="6" id="home-query-example-header">
-                            Query Examples
-                        </Col>
+                        <Col id="home-query-example-header">Query Examples</Col>
                     </Row>
                     <Row>
-                        <Col lg="8" id="home-query-example-table">
+                        <Col lg="10" id="home-query-example-table">
                             <QueryExamples />
                         </Col>
                     </Row>

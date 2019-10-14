@@ -23,11 +23,13 @@
 #home-query-example-header {
     margin: 8rem auto 3rem;
     font-size: 1.625rem;
+    padding-left: 20%;
 }
 
 #home-query-example-table {
     margin: auto auto 8rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
+    max-width: 1600px;
 }
 
 #search-box .form-control {
