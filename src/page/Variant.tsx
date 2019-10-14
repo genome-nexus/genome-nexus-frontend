@@ -11,10 +11,11 @@ import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
 } from 'cbioportal-frontend-commons';
-import { Mutation, TrackName } from 'react-mutation-mapper';
+import { Mutation, TrackName, DataFilterType } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
+import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -36,8 +37,25 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     @computed
-    private get annotation() {
-        return this.props.store.annotation.result;
+    private get annotationSummary() {
+        return this.props.store.annotation.result
+            ? this.props.store.annotation.result.annotation_summary
+            : undefined;
+    }
+
+    @computed
+    private get myVariantInfo() {
+        return this.props.store.annotation.result &&
+            this.props.store.annotation.result.my_variant_info
+            ? this.props.store.annotation.result.my_variant_info.annotation
+            : undefined;
+    }
+
+    @computed
+    private get variantAnnotation() {
+        return this.props.store.annotation.result
+            ? this.props.store.annotation.result
+            : undefined;
     }
 
     protected get isLoading() {
@@ -53,7 +71,7 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     private getMutationMapper() {
-        let mutation = this.variantToMutation(this.annotation);
+        let mutation = this.variantToMutation(this.annotationSummary);
         if (mutation[0].gene && mutation[0].gene.hugoGeneSymbol.length !== 0) {
             return (
                 <GenomeNexusMutationMapper
@@ -71,11 +89,11 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.PTM]: 'visible',
                     }}
                     hugoSymbol={
-                        getTranscriptConsequenceSummary(this.annotation)
+                        getTranscriptConsequenceSummary(this.annotationSummary)
                             .hugoGeneSymbol
                     }
                     entrezGeneId={Number(
-                        getTranscriptConsequenceSummary(this.annotation)
+                        getTranscriptConsequenceSummary(this.annotationSummary)
                             .entrezGeneId
                     )}
                     showPlotLegendToggle={false}
@@ -92,6 +110,13 @@ class Variant extends React.Component<IVariantProps> {
                     plotTopYAxisDefaultMax={1}
                     // set plot height
                     plotLollipopHeight={150}
+                    // select the lollipop by default
+                    selectionFilters={[
+                        {
+                            type: DataFilterType.POSITION,
+                            values: [mutation[0].proteinPosStart],
+                        },
+                    ]}
                 />
             );
         } else {
@@ -260,7 +285,7 @@ class Variant extends React.Component<IVariantProps> {
             this.loadingIndicator
         ) : (
             <div>
-                <Row>
+                <Row className="variant-page-container">
                     {/* TODO: the height should automatically change with the content */}
                     {/* remove the d-none if have sidebar */}
                     <Col
@@ -274,25 +299,42 @@ class Variant extends React.Component<IVariantProps> {
                         />
                     </Col>
                     {/* change to lg="10" if have side bar */}
-                    <Col lg="12">
+                    <Col className="variant-page">
                         {/* remove this row if have side bar */}
-                        <Row className="pl-5" style={{ fontSize: '1.3rem' }}>
-                            {this.props.variant}
-                        </Row>
                         <Row>
-                            <Col lg="12" className="pl-5">
-                                {<BasicInfo annotation={this.annotation} />}
+                            <Col style={{ fontSize: '1.3rem' }}>
+                                {this.props.variant}
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="pl-5">
+                            <Col>
+                                {
+                                    <BasicInfo
+                                        annotation={this.annotationSummary}
+                                    />
+                                }
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
                                 <TranscriptSummaryTable
-                                    annotation={this.annotation}
+                                    annotation={this.annotationSummary}
                                 />
                             </Col>
                         </Row>
-                        <Row className="pl-5 pb-3 small">
-                            {this.getMutationMapper()}
+                        <Row>
+                            <Col className="pb-3 small">
+                                {this.getMutationMapper()}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FunctionalGroups
+                                    myVariantInfo={this.myVariantInfo}
+                                    annotationInternal={this.annotationSummary}
+                                    variantAnnotation={this.variantAnnotation}
+                                />
+                            </Col>
                         </Row>
                         {/* remove the d-none if have sidebar */}
                         {/* the content for each resources */}

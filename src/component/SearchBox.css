@@ -1,0 +1,39 @@
+.search-button.btn.btn-outline-primary {
+    border-left: 0px;
+    border-color: #ced4da;
+    background-color: #ffdd99;
+    color: #333e47;
+}
+
+.search-button.btn.btn-outline-primary:hover,
+.search-button.btn.btn-outline-primary:focus,
+.search-button.btn.btn-outline-primary:active,
+.search-button.btn.btn-outline-primary:visited {
+    background-color: #ffb31a !important;
+    color: #333e47 !important;
+}
+
+.search-box .form-control-feedback {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.input-group > .form-control:not(:first-child),
+.input-group > .custom-select:not(:first-child) {
+    border-radius: 0.25rem !important;
+}
+
+.search-example {
+    font-size: 1rem;
+    color: gray;
+    float: left;
+}

@@ -1,8 +1,5 @@
 import { observable } from 'mobx';
-import {
-    VariantAnnotationSummary,
-    remoteData,
-} from 'cbioportal-frontend-commons';
+import { remoteData, VariantAnnotation } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
 
 export interface VariantStoreConfig {
@@ -34,10 +31,15 @@ export class VariantStore {
     @observable public selectedResources: string[] = this.allResources;
     @observable public variant: string = '';
 
-    readonly annotation = remoteData<VariantAnnotationSummary>({
+    readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {
-            return await client.fetchVariantAnnotationSummaryGET({
+            return await client.fetchVariantAnnotationGET({
                 variant: this.variant,
+                fields: [
+                    'annotation_summary',
+                    'my_variant_info',
+                    'mutation_assessor',
+                ],
             });
         },
         onError: (err: Error) => {
