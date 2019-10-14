@@ -1,0 +1,14 @@
+.search-button.btn.btn-outline-primary {
+    border-left: 0px;
+    border-color: #ced4da;
+    background-color: #ffdd99;
+    color: #333e47;
+}
+
+.search-button.btn.btn-outline-primary:hover,
+.search-button.btn.btn-outline-primary:focus,
+.search-button.btn.btn-outline-primary:active,
+.search-button.btn.btn-outline-primary:visited {
+    background-color: #ffb31a !important;
+    color: #333e47 !important;
+}
