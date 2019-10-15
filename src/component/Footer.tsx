@@ -53,17 +53,8 @@ class Footer extends React.Component<{}> {
             <footer className="mskcc-footer bg-mskcc-footer d-none d-md-block">
                 <Container>
                     <Row className="text-center">
-                        <Col>{this.externalLinks}</Col>
-                    </Row>
-                    <Row className="text-center">
                         <Col md={true} className="m-auto">
                             {this.internalLinks}
-                        </Col>
-                        <Col md={true} className="m-auto">
-                            <div>
-                                &copy; 2019 Memorial Sloan Kettering Cancer
-                                Center
-                            </div>
                         </Col>
                     </Row>
                 </Container>
