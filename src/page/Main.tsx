@@ -7,7 +7,6 @@ import Annotation from './Annotation';
 import Home from './Home';
 import Patient from './Patient';
 import Variant from './Variant';
-import Api from './Api';
 import { VariantStore } from './VariantStore';
 import { observer } from 'mobx-react';
 
@@ -52,7 +51,15 @@ class Main extends React.Component<{}> {
                                 path="/patient"
                                 component={Patient}
                             />
-                            <Route exact={true} path="/api" component={Api} />
+                            <Route
+                                exact={true}
+                                path="/api"
+                                component={() => {
+                                    window.location.href =
+                                        'https://www.genomenexus.org/swagger-ui.html';
+                                    return null;
+                                }}
+                            />
                         </Switch>
                     </div>
                     <Footer />
