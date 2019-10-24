@@ -14,6 +14,7 @@ import {
 import { Mutation, TrackName } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -56,6 +57,7 @@ class Variant extends React.Component<IVariantProps> {
         if (mutation[0].gene && mutation[0].gene.hugoGeneSymbol.length !== 0) {
             return (
                 <GenomeNexusMutationMapper
+                    genomeNexusUrl={genomeNexusApiRoot}
                     data={mutation}
                     tracks={[
                         TrackName.CancerHotspots,
