@@ -25,3 +25,12 @@ yarn-error.log*
 # intellij idea
 *.iml
 .idea
+
+target/classes/static/*
+.settings
+node/yarn/dist/
+target/classes
+
+node
+.project
+.classpath

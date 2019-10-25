@@ -13,6 +13,7 @@ class GenomeNexusLogo extends React.Component<{
                 src={gnLogo}
                 style={{
                     height: this.props.imageHeight || 25,
+                    verticalAlign: 'baseline',
                 }}
             />
         );
