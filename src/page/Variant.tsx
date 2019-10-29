@@ -15,6 +15,7 @@ import { Mutation, TrackName } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
+import GnomadFrequency from '../component/variantPage/gnomad/GnomadFrequency'
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -40,6 +41,10 @@ class Variant extends React.Component<IVariantProps> {
         return this.props.store.annotation.result;
     }
 
+    @computed
+    private get myVariantInfo() {
+        return this.props.store.myVariantInfo.result;
+    }
     protected get isLoading() {
         return this.props.store.annotation.isPending;
     }
@@ -293,6 +298,13 @@ class Variant extends React.Component<IVariantProps> {
                         </Row>
                         <Row className="pl-5 pb-3 small">
                             {this.getMutationMapper()}
+                        </Row>
+                        <Row>
+                            <Col lg="4" className="gnomad pl-5 pt-5">
+                                <GnomadFrequency
+                                    myVariantInfo={this.myVariantInfo}
+                                ></GnomadFrequency>
+                            </Col>
                         </Row>
                         {/* remove the d-none if have sidebar */}
                         {/* the content for each resources */}

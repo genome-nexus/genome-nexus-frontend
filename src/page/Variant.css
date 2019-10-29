@@ -13,3 +13,7 @@
 .annotation-track-selector.small {
     width: 200px !important;
 }
+
+.gnomad {
+    font-size: 1rem;
+}
