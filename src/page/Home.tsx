@@ -6,7 +6,7 @@ import { Col, Row, Button, Image } from 'react-bootstrap';
 import SearchBox from '../component/SearchBox';
 import './Home.css';
 import QueryExamples from '../component/QueryExamples';
-import logoWithText from '../image/logo/genome_nexus_logo_background_light_blue_with_description.png';
+import logo from '../image/logo/home_page_logo.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
@@ -30,8 +30,10 @@ class Home extends React.Component<{ history: any }> {
             <div>
                 <div className="text-center">
                     <Row>
-                        <Col lg="5" xs="8" id="home-logo" className="mb-5">
-                            <Image src={logoWithText} fluid />
+                        <Col lg="5" xs="8" id="home-logo">
+                            <Image src={logo} fluid />
+                            Annotation and Interpretation of Genetic Variants in
+                            Cancer
                         </Col>
                     </Row>
                     <Row>

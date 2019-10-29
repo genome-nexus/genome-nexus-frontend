@@ -1,9 +1,12 @@
 #home-logo {
     padding-top: 5%;
-    padding-bottom: 1.5%;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 5%;
     max-width: 800px;
+    color: #7b7979;
+    text-align: center;
+    font-size: calc(14px + 0.3vw);
 }
 
 #home-example-container {

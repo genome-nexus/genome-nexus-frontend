@@ -17,7 +17,7 @@ class Header extends React.Component<{}> {
                     className="navbar-dark main-navbar"
                 >
                     <Container fluid={true}>
-                        <Navbar.Brand>
+                        <Navbar.Brand className="pt-0">
                             <Link to="/" className="brand-title-link">
                                 <GenomeNexusLogo />
                             </Link>

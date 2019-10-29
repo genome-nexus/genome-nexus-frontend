@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import gnLogo from '../image/logo/genome_nexus_fullname_less_spacing_white.png';
+import gnLogo from '../image/logo/header_logo_with_white_text.png';
 
 class GenomeNexusLogo extends React.Component<{
     imageHeight?: number;
@@ -13,6 +13,7 @@ class GenomeNexusLogo extends React.Component<{
                 src={gnLogo}
                 style={{
                     height: this.props.imageHeight || 25,
+                    verticalAlign: 'baseline',
                 }}
             />
         );
