@@ -3,3 +3,25 @@
         padding: 4px 5px;
     }
 }
+
+.gnomad-table-title {
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    background-color: lightgray;
+    padding-bottom: 10px;
+}
+
+.gnomad-tooltip {
+    padding-top: 5px;
+}
+
+.gnomad-alert {
+    position: absolute;
+    top: -200px;
+    width: 20%;
+    left: 40%;
+    text-align: center;
+    opacity: 0.8;
+}

@@ -15,7 +15,7 @@ import { Mutation, TrackName } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
-import GnomadFrequency from '../component/variantPage/gnomad/GnomadFrequency'
+import GnomadFrequency from '../component/variantPage/gnomad/GnomadFrequency';
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -300,7 +300,7 @@ class Variant extends React.Component<IVariantProps> {
                             {this.getMutationMapper()}
                         </Row>
                         <Row>
-                            <Col lg="4" className="gnomad pl-5 pt-5">
+                            <Col lg="6" md="12" className="gnomad pl-5 pt-5">
                                 <GnomadFrequency
                                     myVariantInfo={this.myVariantInfo}
                                 ></GnomadFrequency>

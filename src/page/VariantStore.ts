@@ -48,7 +48,7 @@ export class VariantStore {
         },
     });
 
-    readonly myVariantInfo: MobxPromise<MyVariantInfo>= remoteData({
+    readonly myVariantInfo: MobxPromise<MyVariantInfo> = remoteData({
         invoke: async () => {
             return await client.fetchMyVariantInfoAnnotationGET({
                 variant: this.variant,
@@ -56,8 +56,6 @@ export class VariantStore {
         },
         onError: () => {
             // fail silently, leave the error handling responsibility to the data consumer
-        }
+        },
     });
-
-
 }

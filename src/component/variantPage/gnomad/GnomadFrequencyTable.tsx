@@ -1,24 +1,21 @@
-import autobind from "autobind-decorator";
+import autobind from 'autobind-decorator';
 import * as React from 'react';
-import ReactTable, {RowInfo} from "react-table";
+import ReactTable, { RowInfo } from 'react-table';
 
-import {GnomadSummary} from "react-mutation-mapper/dist/model/GnomadSummary";
-import { ColumnHeader } from "react-mutation-mapper";
+import { GnomadSummary } from 'react-mutation-mapper/dist/model/GnomadSummary';
+import { ColumnHeader } from 'react-mutation-mapper';
 
-import "./GnomadFrequencyTable.scss";
+import './GnomadFrequencyTable.scss';
 
-export interface IGnomadFrequencyTableProps
-{
+export interface IGnomadFrequencyTableProps {
     data: GnomadSummary[];
     gnomadUrl: string;
 }
 
 export function frequencyOutput(frequency: number) {
-
     if (frequency === 0) {
-        return <span>0</span>
-    }
-    else {
+        return <span>0</span>;
+    } else {
         // keep one digit on allele frequency and using scientific notation
         return <span>{parseFloat(frequency.toString()).toExponential(1)}</span>;
     }
@@ -29,10 +26,10 @@ export enum GnomadTableColumnName {
     alleleCount = 'ac',
     alleleNumber = 'an',
     homozygotes = 'hom',
-    alleleFrequency = 'af'
+    alleleFrequency = 'af',
 }
 
-const headerClassName = "text-wrap font-weight-bold";
+const headerClassName = 'text-wrap font-weight-bold';
 
 const HEADERS = {
     [GnomadTableColumnName.population]: (
@@ -52,14 +49,23 @@ const HEADERS = {
         <ColumnHeader
             className={headerClassName}
             headerContent={<span>Allele Number</span>}
-            overlay={<span>Number of times any allele has been observed at this position in the population</span>}
+            overlay={
+                <span>
+                    Number of times any allele has been observed at this
+                    position in the population
+                </span>
+            }
         />
     ),
     [GnomadTableColumnName.homozygotes]: (
         <ColumnHeader
             className={headerClassName}
             headerContent={<span>Number of Homozygotes</span>}
-            overlay={<span>Number of individuals carrying this allele in both copies</span>}
+            overlay={
+                <span>
+                    Number of individuals carrying this allele in both copies
+                </span>
+            }
         />
     ),
     [GnomadTableColumnName.alleleFrequency]: (
@@ -68,37 +74,20 @@ const HEADERS = {
             headerContent={<span>Allele Frequency</span>}
             overlay={<span>Proportion of the population with this allele</span>}
         />
-    )
+    ),
 };
 
 function renderNumericalValue(column: any) {
     return <span className="pull-right mr-1">{column.value}</span>;
 }
 
-export default class GnomadFrequencyTable extends React.Component<IGnomadFrequencyTableProps, {}>
-{
-    public render()
-    {
-        const myvariantLink = (
-            <a href="https://myvariant.info/" target="_blank">
-                myvariant.info
-            </a>
-        );
-
-        const genomeNexusLink = (
-            <a href="https://www.genomenexus.org/" target="_blank">
-                genomenexus.org
-            </a>
-        );
-
-        const gnomadLink = (
-            <a href={this.props.gnomadUrl} target="_blank">
-                gnomAD
-            </a>
-        );
-
+export default class GnomadFrequencyTable extends React.Component<
+    IGnomadFrequencyTableProps,
+    {}
+> {
+    public render() {
         return (
-            <div className="gnomad-frequency-table" data-test='gnomad-table'>
+            <div className="gnomad-frequency-table" data-test="gnomad-table">
                 <ReactTable
                     data={this.props.data}
                     showPagination={false}
@@ -109,60 +98,62 @@ export default class GnomadFrequencyTable extends React.Component<IGnomadFrequen
                     columns={[
                         {
                             id: GnomadTableColumnName.population,
-                            accessor: "population",
+                            accessor: 'population',
                             Cell: renderNumericalValue,
                             Header: HEADERS[GnomadTableColumnName.population],
-                            width: 200
+                            minWidth: 200,
                         },
                         {
                             id: GnomadTableColumnName.alleleCount,
-                            accessor: "alleleCount",
+                            accessor: 'alleleCount',
                             Cell: renderNumericalValue,
                             Header: HEADERS[GnomadTableColumnName.alleleCount],
-                            width: 80
+                            minWidth: 70,
                         },
                         {
                             id: GnomadTableColumnName.alleleNumber,
-                            accessor: "alleleNumber",
+                            accessor: 'alleleNumber',
                             Cell: renderNumericalValue,
                             Header: HEADERS[GnomadTableColumnName.alleleNumber],
-                            width: 100
+                            minWidth: 90,
                         },
                         {
                             id: GnomadTableColumnName.homozygotes,
                             Cell: renderNumericalValue,
-                            accessor: "homozygotes",
+                            accessor: 'homozygotes',
                             Header: HEADERS[GnomadTableColumnName.homozygotes],
-                            width: 120
+                            minWidth: 120,
                         },
                         {
                             id: GnomadTableColumnName.alleleFrequency,
-                            accessor: "alleleFrequency",
-                            Header: HEADERS[GnomadTableColumnName.alleleFrequency],
-                            Cell: (column: any) =>
-                                <span className="pull-right mr-1" data-test="allele-frequency-data">
+                            accessor: 'alleleFrequency',
+                            Header:
+                                HEADERS[GnomadTableColumnName.alleleFrequency],
+                            Cell: (column: any) => (
+                                <span
+                                    className="pull-right mr-1"
+                                    data-test="allele-frequency-data"
+                                >
                                     {frequencyOutput(column.value)}
-                                </span>,
-                            width: 100
+                                </span>
+                            ),
+                            minWidth: 100,
                         },
                     ]}
                 />
-                <div style={{fontSize:'x-small',textAlign:"center",paddingTop:5}}>
-                    Source: {genomeNexusLink}, which serves
-                    {' '}{myvariantLink}'s gnomAD data.<br />
-                    Latest {gnomadLink} data may differ.
-                </div>
             </div>
         );
     }
 
     @autobind
-    protected getTrProps(state: any, row?: RowInfo)
-    {
+    protected getTrProps(state: any, row?: RowInfo) {
         return {
             style: {
-                fontWeight: state && row && row.index === this.props.data.length - 1 ? "bold": undefined
-            }
+                fontWeight:
+                    state && row && row.index === this.props.data.length - 1
+                        ? 'bold'
+                        : undefined,
+            },
         };
     }
 }
