@@ -11,11 +11,11 @@ import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
 } from 'cbioportal-frontend-commons';
-import { Mutation, TrackName } from 'react-mutation-mapper';
+import { Mutation, TrackName, GnomadFrequency } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
-import GnomadFrequency from '../component/variantPage/gnomad/GnomadFrequency';
+
 interface IVariantProps {
     variant: string;
     store: VariantStore;
