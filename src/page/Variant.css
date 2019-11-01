@@ -13,3 +13,12 @@
 .annotation-track-selector.small {
     width: 200px !important;
 }
+
+.variant-page {
+    max-width: 1400px !important;
+}
+
+.variant-page-container {
+    display: flex;
+    justify-content: center;
+}

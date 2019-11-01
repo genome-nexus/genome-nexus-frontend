@@ -100,7 +100,7 @@ class BasicInfo extends React.Component<IBasicInfoProps> {
                     {' '}
                     {_.map(renderData, data => {
                         return (
-                            <Col lg="4">
+                            <Col lg="4" md="6">
                                 {BasicInfoUnit(data.name, data.value, data.key)}
                             </Col>
                         );
@@ -114,10 +114,10 @@ class BasicInfo extends React.Component<IBasicInfoProps> {
 function BasicInfoUnit(field: string, data: string | undefined, key: string) {
     return (
         <Row key={key}>
-            <Col lg="4" className="fieldName">
+            <Col lg="5" className="fieldName">
                 {field}
             </Col>
-            <Col lg="8" className="data">
+            <Col lg="7" className="data">
                 {data === undefined ? 'N/A' : data}
             </Col>
         </Row>
