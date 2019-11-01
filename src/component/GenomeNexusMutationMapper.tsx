@@ -25,8 +25,8 @@ class GenomeNexusMutationMapper extends ReactMutationMapper<
     @computed
     protected get geneWidth() {
         if (this.lollipopPlotGeneX) {
-            if (this.windowWrapper.size.width >= 1400) {
-                return 1240;
+            if (this.windowWrapper.size.width >= 1440) {
+                return 1260;
             } else {
                 return (
                     this.windowWrapper.size.width * 0.93 -
