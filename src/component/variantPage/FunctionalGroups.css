@@ -1,0 +1,41 @@
+.group-name {
+    background-color: #f2f2f2;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    max-width: 27%;
+    display: flex;
+    align-items: center;
+}
+
+.data-content {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.data-scouce {
+    font-weight: normal;
+    font-size: 0.75rem;
+    vertical-align: middle;
+}
+
+/* gnomad */
+.gnomad {
+    font-size: 1rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/* dbsnp */
+.dbsnp {
+    font-size: 1rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
