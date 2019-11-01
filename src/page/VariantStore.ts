@@ -2,8 +2,10 @@ import { observable } from 'mobx';
 import {
     VariantAnnotationSummary,
     remoteData,
+    MyVariantInfo,
 } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
+import MobxPromise from 'mobxpromise';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -42,6 +44,17 @@ export class VariantStore {
         },
         onError: (err: Error) => {
             // fail silently
+        },
+    });
+
+    readonly myVariantInfo: MobxPromise<MyVariantInfo> = remoteData({
+        invoke: async () => {
+            return await client.fetchMyVariantInfoAnnotationGET({
+                variant: this.variant,
+            });
+        },
+        onError: () => {
+            // fail silently, leave the error handling responsibility to the data consumer
         },
     });
 }

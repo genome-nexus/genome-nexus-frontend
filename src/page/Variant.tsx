@@ -15,6 +15,7 @@ import { Mutation, TrackName } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
+import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -38,6 +39,11 @@ class Variant extends React.Component<IVariantProps> {
     @computed
     private get annotation() {
         return this.props.store.annotation.result;
+    }
+
+    @computed
+    private get myVariantInfo() {
+        return this.props.store.myVariantInfo.result;
     }
 
     protected get isLoading() {
@@ -296,6 +302,13 @@ class Variant extends React.Component<IVariantProps> {
                         <Row>
                             <Col className="pb-3 small">
                                 {this.getMutationMapper()}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FunctionalGroups
+                                    myVariantInfo={this.myVariantInfo}
+                                />
                             </Col>
                         </Row>
                         {/* remove the d-none if have sidebar */}
