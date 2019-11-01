@@ -15,6 +15,7 @@ import { Mutation, TrackName } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
+import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -38,6 +39,11 @@ class Variant extends React.Component<IVariantProps> {
     @computed
     private get annotation() {
         return this.props.store.annotation.result;
+    }
+
+    @computed
+    private get myVariantInfo() {
+        return this.props.store.myVariantInfo.result;
     }
 
     protected get isLoading() {
@@ -260,7 +266,7 @@ class Variant extends React.Component<IVariantProps> {
             this.loadingIndicator
         ) : (
             <div>
-                <Row>
+                <Row className="variant-page-container">
                     {/* TODO: the height should automatically change with the content */}
                     {/* remove the d-none if have sidebar */}
                     <Col
@@ -274,25 +280,37 @@ class Variant extends React.Component<IVariantProps> {
                         />
                     </Col>
                     {/* change to lg="10" if have side bar */}
-                    <Col lg="12">
+                    <Col className="variant-page">
                         {/* remove this row if have side bar */}
-                        <Row className="pl-5" style={{ fontSize: '1.3rem' }}>
-                            {this.props.variant}
+                        <Row>
+                            <Col style={{ fontSize: '1.3rem' }}>
+                                {this.props.variant}
+                            </Col>
                         </Row>
                         <Row>
-                            <Col lg="12" className="pl-5">
+                            <Col>
                                 {<BasicInfo annotation={this.annotation} />}
                             </Col>
                         </Row>
                         <Row>
-                            <Col className="pl-5">
+                            <Col>
                                 <TranscriptSummaryTable
                                     annotation={this.annotation}
                                 />
                             </Col>
                         </Row>
-                        <Row className="pl-5 pb-3 small">
-                            {this.getMutationMapper()}
+                        <Row>
+                            <Col className="pb-3 small">
+                                {this.getMutationMapper()}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FunctionalGroups
+                                    myVariantInfo={this.myVariantInfo}
+                                    annotationInternal={this.annotation}
+                                />
+                            </Col>
                         </Row>
                         {/* remove the d-none if have sidebar */}
                         {/* the content for each resources */}
