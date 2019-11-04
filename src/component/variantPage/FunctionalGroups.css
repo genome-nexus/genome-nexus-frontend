@@ -7,7 +7,8 @@
     padding-bottom: 4px;
     padding-top: 4px;
     max-width: 27%;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
 }
 
 .data-content {
@@ -15,6 +16,8 @@
     margin-bottom: 3px;
     padding-bottom: 4px;
     padding-top: 4px;
+    display: flex;
+    align-items: center;
 }
 
 .data-scouce {
@@ -23,13 +26,14 @@
     vertical-align: middle;
 }
 
-/* gnomad and dbsnp */
+/* gnomad */
 .gnomad {
     font-size: 1rem;
     font-weight: bold;
     vertical-align: middle;
 }
 
+/* dbsnp */
 .dbsnp {
     font-size: 1rem;
     font-weight: bold;
