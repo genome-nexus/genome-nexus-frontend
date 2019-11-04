@@ -2,10 +2,7 @@ import * as React from 'react';
 import './FunctionalGroups';
 import { observer } from 'mobx-react';
 import { Row, Col } from 'react-bootstrap';
-import {
-    MyVariantInfo,
-    DefaultTooltip,
-} from 'cbioportal-frontend-commons';
+import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 
 import { GnomadFrequency } from 'react-mutation-mapper';
 
@@ -29,7 +26,6 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             this.props.myVariantInfo.dbsnp &&
             this.props.myVariantInfo.dbsnp.rsid
         ) {
-            console.log(`https://www.ncbi.nlm.nih.gov/snp/${this.props.myVariantInfo.dbsnp.rsid}`)
             return (
                 <DefaultTooltip
                     placement="top"
@@ -40,7 +36,9 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <span>Click here to see variant on dbSNP website.</span>
+                                <span>
+                                    Click here to see variant on dbSNP website.
+                                </span>
                             </a>
                         </span>
                     }
@@ -48,9 +46,8 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     <span>{this.props.myVariantInfo.dbsnp.rsid}</span>
                 </DefaultTooltip>
             );
-        }
-        else {
-            return "N/A";
+        } else {
+            return 'N/A';
         }
     }
 
