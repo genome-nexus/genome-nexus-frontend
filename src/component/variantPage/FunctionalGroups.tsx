@@ -35,7 +35,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                     <Col lg="2" className="group-name">
                         Population prevalence:
                     </Col>
-                    <Col className="data-content">
+                    <Col>
                         <PopulationPrevalence
                             myVariantInfo={this.props.myVariantInfo}
                         />

@@ -2,14 +2,19 @@
     background-color: #f2f2f2;
     font-size: 1rem;
     font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    max-width: 27%;
     vertical-align: middle;
 }
 
 .data-content {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
 }
 
 .data-scouce {
@@ -18,8 +23,14 @@
     vertical-align: middle;
 }
 
-/* gnomad */
+/* gnomad and dbsnp */
 .gnomad {
+    font-size: 1rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.dbsnp {
     font-size: 1rem;
     font-weight: bold;
     vertical-align: middle;
