@@ -7,7 +7,7 @@ import PopulationPrevalence from './PopulationPrevalence';
 import './FunctionalGroups.css';
 
 interface IFunctionalGroupsProps {
-    annotationInternal?: VariantAnnotationSummary | undefined;
+    annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
 }
 
@@ -38,6 +38,12 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                     <Col>
                         <PopulationPrevalence
                             myVariantInfo={this.props.myVariantInfo}
+                            chromosome={
+                                this.props.annotationInternal
+                                    ? this.props.annotationInternal
+                                          .genomicLocation.chromosome
+                                    : null
+                            }
                         />
                     </Col>
                 </Row>

@@ -308,6 +308,7 @@ class Variant extends React.Component<IVariantProps> {
                             <Col>
                                 <FunctionalGroups
                                     myVariantInfo={this.myVariantInfo}
+                                    annotationInternal={this.annotation}
                                 />
                             </Col>
                         </Row>
