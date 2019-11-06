@@ -37,16 +37,18 @@ class Home extends React.Component<{ history: any }> {
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" className="m-auto" id="search-box">
+                        <Col lg="6" className="m-auto" id="search-box">
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
                                 placeholder="Search variant"
-                                height={50}
+                                height={44}
                             />
                         </Col>
+                    </Row>
+                    <Row>
                         <Col
-                            lg="7"
+                            lg="6"
                             style={{
                                 color: 'grey',
                                 fontSize: '1rem',

@@ -20,7 +20,8 @@ class SearchBox extends React.Component<ISearchBoxProps> {
 
     public render() {
         return (
-            <InputGroup>
+            <InputGroup className="search-box">
+                <span className="fa fa-search form-control-feedback"></span>
                 <FormControl
                     onChange={this.onChange}
                     className="text-center"
@@ -34,18 +35,10 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     }}
                     style={{
                         height: this.props.height,
+                        paddingLeft: '44px',
                     }}
                     autoFocus={true}
                 />
-                <InputGroup.Append>
-                    <Button
-                        variant="outline-primary"
-                        className="search-button"
-                        onClick={this.props.onSearch}
-                    >
-                        <i className="fa fa-search" />
-                    </Button>
-                </InputGroup.Append>
             </InputGroup>
         );
     }
