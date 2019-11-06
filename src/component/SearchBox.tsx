@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { FormEvent } from 'react';
-import { FormControl, InputGroup, Button } from 'react-bootstrap';
+import { FormControl, InputGroup } from 'react-bootstrap';
 import './SearchBox.css';
 
 interface ISearchBoxProps {
