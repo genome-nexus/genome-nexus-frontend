@@ -16,14 +16,17 @@
     margin-bottom: 3px;
     padding-bottom: 4px;
     padding-top: 4px;
-    display: flex;
+    padding-left: 20px;
+    display: inline-block;
     align-items: center;
 }
 
-.data-scouce {
+.data-source {
     font-weight: normal;
     font-size: 0.75rem;
     vertical-align: middle;
+    display: inline-block;
+    padding-right: 20px;
 }
 
 /* gnomad */
@@ -38,4 +41,16 @@
     font-size: 1rem;
     font-weight: bold;
     vertical-align: middle;
+}
+
+/* functional prediction */
+.functional-prediction-data {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.functional-prediction-no-data {
+    font-size: 1rem;
+    font-weight: bold;
 }

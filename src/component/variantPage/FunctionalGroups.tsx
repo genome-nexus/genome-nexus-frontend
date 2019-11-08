@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Row, Col } from 'react-bootstrap';
-import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
+import {
+    VariantAnnotationSummary,
+    VariantAnnotation,
+} from 'cbioportal-frontend-commons';
 import { MyVariantInfo } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPIInternal';
 import PopulationPrevalence from './PopulationPrevalence';
 import './FunctionalGroups.css';
+import FunctionalPrediction from './FunctionalPrediction';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
+    variantAnnotation?: VariantAnnotation;
 }
 
 @observer
@@ -29,6 +34,11 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                 <Row>
                     <Col lg="2" className="group-name">
                         Functional prediction:
+                    </Col>
+                    <Col>
+                        <FunctionalPrediction
+                            variantAnnotation={this.props.variantAnnotation}
+                        />
                     </Col>
                 </Row>
                 <Row>

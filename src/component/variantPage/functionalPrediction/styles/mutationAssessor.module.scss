@@ -1,0 +1,34 @@
+@import 'functionalImpact';
+
+.ma-high {
+    background-color: $high;
+    font-weight: bold;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.ma-medium {
+    font-weight: bold;
+    background-color: $medium;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.ma-low {
+    background-color: $low;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.ma-neutral {
+    background-color: $neutral;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}

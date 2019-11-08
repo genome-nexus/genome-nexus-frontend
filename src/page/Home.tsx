@@ -108,7 +108,7 @@ class Home extends React.Component<{ history: any }> {
         if (isVariantValid(`${this.inputText}`).isValid) {
             // check if the variant has response
             const response = await client
-                .fetchVariantAnnotationSummaryGET({ variant: this.inputText! })
+                .fetchVariantAnnotationGET({ variant: this.inputText! })
                 .catch(ex => {
                     this.alertType = ErrorType.NO_RESULT;
                 });
