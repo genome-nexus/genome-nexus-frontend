@@ -23,10 +23,6 @@ export default class Sift extends React.Component<ISiftProps, {}> {
         this.tooltipContent = this.tooltipContent.bind(this);
     }
 
-    public static download(siftScore: number, siftPrediction: string): string {
-        return `impact: ${siftPrediction}, score: ${siftScore}`;
-    }
-
     public render() {
         let siftContent: JSX.Element = (
             <span className={`${annotationStyles['annotation-item-text']}`} />

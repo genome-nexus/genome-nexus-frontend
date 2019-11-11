@@ -20,7 +20,6 @@ type Vcf = {
 @observer
 class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
     public gnomad() {
-        console.log(this.props.myVariantInfo);
         if (
             this.props.myVariantInfo &&
             (this.props.myVariantInfo.gnomadExome ||
@@ -68,7 +67,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span className="data-source">&nbsp;[gnomAD]</span>
+                <span>&nbsp;[gnomAD]</span>
             </DefaultTooltip>
         );
     }
@@ -133,7 +132,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span className="data-source">&nbsp;[dbSNP]</span>
+                <span>&nbsp;[dbSNP]</span>
             </DefaultTooltip>
         );
     }
@@ -142,7 +141,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         return (
             <Row className="data-content">
                 <span className="gnomad">{this.gnomad()}</span>
-                <span>
+                <span className="data-source">
                     {this.generateGnomadTooltip(
                         this.props.myVariantInfo,
                         this.props.chromosome
@@ -150,7 +149,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 </span>
 
                 <span className="dbsnp">{this.dbsnp()}</span>
-                <span>
+                <span className="data-source">
                     {this.generateDbsnpToolTip(this.props.myVariantInfo)}
                 </span>
             </Row>

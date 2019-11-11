@@ -46,15 +46,4 @@ export class VariantStore {
             // fail silently
         },
     });
-
-    // readonly myVariantInfo: MobxPromise<MyVariantInfo> = remoteData({
-    //     invoke: async () => {
-    //         return await client.fetchMyVariantInfoAnnotationGET({
-    //             variant: this.variant,
-    //         });
-    //     },
-    //     onError: () => {
-    //         // fail silently, leave the error handling responsibility to the data consumer
-    //     },
-    // });
 }

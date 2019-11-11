@@ -2,7 +2,7 @@ import * as React from 'react';
 import annotationStyles from './styles/annotation.module.scss';
 import classNames from 'classnames';
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
-import { MutationAssessor as MutationAssessorData } from '../../../model/GenomeNexusModel';
+import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
 import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import '../FunctionalGroups.css';
@@ -32,10 +32,10 @@ export default class MutationAssessor extends React.Component<
         let maContent: JSX.Element = (
             <span className={`${annotationStyles['annotation-item-text']}`} />
         );
-
         if (
             this.props.mutationAssessor &&
-            this.props.mutationAssessor.functionalImpact !== null
+            this.props.mutationAssessor.functionalImpact != null &&
+            this.props.mutationAssessor.functionalImpact !== ""
         ) {
             const maData = this.props.mutationAssessor;
             maContent = (

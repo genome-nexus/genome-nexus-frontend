@@ -17,7 +17,6 @@
     padding-bottom: 4px;
     padding-top: 4px;
     padding-left: 20px;
-    display: inline-block;
     align-items: center;
 }
 
@@ -25,8 +24,7 @@
     font-weight: normal;
     font-size: 0.75rem;
     vertical-align: middle;
-    display: inline-block;
-    padding-right: 20px;
+    margin-right: 20px;
 }
 
 /* gnomad */

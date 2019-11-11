@@ -3,7 +3,7 @@ import './FunctionalGroups.css';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { VariantAnnotation } from 'cbioportal-frontend-commons';
-import { MutationAssessor as MutationAssessorData } from '../../model/GenomeNexusModel';
+import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
@@ -59,7 +59,6 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     <MutationAssessor
                         mutationAssessor={data.mutationAssessor}
                     />
-
                     <Sift
                         siftScore={data.siftScore}
                         siftPrediction={data.siftPrediction}
