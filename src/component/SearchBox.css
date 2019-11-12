@@ -31,3 +31,9 @@
 .input-group > .custom-select:not(:first-child) {
     border-radius: 0.25rem !important;
 }
+
+.search-example {
+    font-size: 1rem;
+    color: gray;
+    float: left;
+}
