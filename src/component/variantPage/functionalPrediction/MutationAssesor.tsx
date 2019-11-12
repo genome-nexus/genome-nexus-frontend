@@ -35,7 +35,7 @@ export default class MutationAssessor extends React.Component<
         if (
             this.props.mutationAssessor &&
             this.props.mutationAssessor.functionalImpact != null &&
-            this.props.mutationAssessor.functionalImpact !== ""
+            this.props.mutationAssessor.functionalImpact !== ''
         ) {
             const maData = this.props.mutationAssessor;
             maContent = (
