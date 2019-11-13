@@ -1,10 +1,10 @@
 import * as React from 'react';
-import './FunctionalGroups.css';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
-
 import { GnomadFrequency } from 'react-mutation-mapper';
+
+import './FunctionalGroups.css';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;

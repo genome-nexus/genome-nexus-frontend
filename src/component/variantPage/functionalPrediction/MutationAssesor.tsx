@@ -1,11 +1,14 @@
 import * as React from 'react';
-import annotationStyles from './styles/annotation.module.scss';
 import classNames from 'classnames';
-import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
 import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
-import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+
 import '../FunctionalGroups.css';
+import annotationStyles from './styles/annotation.module.scss';
+import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
+import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
+
+// Most of this component comes from cBioPortal-frontend
 
 export interface IMutationAssessorProps {
     mutationAssessor: MutationAssessorData;
@@ -13,7 +16,7 @@ export interface IMutationAssessorProps {
 
 export function hideArrow(tooltipEl: any) {
     const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
-    arrowEl.style.display = 'none';
+    arrowEl.style.display = 'true';
 }
 
 export default class MutationAssessor extends React.Component<

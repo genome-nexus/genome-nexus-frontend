@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './FunctionalGroups.css';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { VariantAnnotation } from 'cbioportal-frontend-commons';
@@ -7,6 +6,10 @@ import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-co
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
+
+import './FunctionalGroups.css';
+
+// Most of this component comes from cBioPortal-frontend
 
 interface IFunctionalPredictionProps {
     variantAnnotation?: VariantAnnotation;
@@ -49,22 +52,20 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     }
     public render() {
         const data = this.getData(this.props.variantAnnotation);
-        return (
-            data && (
-                <Row className="data-content">
-                    <PolyPhen2
-                        polyPhenScore={data.polyPhenScore}
-                        polyPhenPrediction={data.polyPhenPrediction}
-                    />
-                    <MutationAssessor
-                        mutationAssessor={data.mutationAssessor}
-                    />
-                    <Sift
-                        siftScore={data.siftScore}
-                        siftPrediction={data.siftPrediction}
-                    />
-                </Row>
-            )
+        return data ? (
+            <Row className="data-content">
+                <PolyPhen2
+                    polyPhenScore={data.polyPhenScore}
+                    polyPhenPrediction={data.polyPhenPrediction}
+                />
+                <MutationAssessor mutationAssessor={data.mutationAssessor} />
+                <Sift
+                    siftScore={data.siftScore}
+                    siftPrediction={data.siftPrediction}
+                />
+            </Row>
+        ) : (
+            <span className="data-content">No data available</span>
         );
     }
 }

@@ -4,11 +4,12 @@ import { Row, Col } from 'react-bootstrap';
 import {
     VariantAnnotationSummary,
     VariantAnnotation,
+    MyVariantInfo,
 } from 'cbioportal-frontend-commons';
-import { MyVariantInfo } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPIInternal';
 import PopulationPrevalence from './PopulationPrevalence';
-import './FunctionalGroups.css';
 import FunctionalPrediction from './FunctionalPrediction';
+
+import './FunctionalGroups.css';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -20,7 +21,7 @@ interface IFunctionalGroupsProps {
 class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
     public render() {
         return (
-            <div style={{ paddingTop: '10px', marginLeft: '2%' }}>
+            <div className="functional-groups">
                 <Row>
                     <Col lg="2" className="group-name">
                         Therapeutic implication:

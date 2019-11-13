@@ -1,9 +1,12 @@
 import * as React from 'react';
-import annotationStyles from './styles/annotation.module.scss';
 import classNames from 'classnames';
-import tooltipStyles from './styles/siftTooltip.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+
 import '../FunctionalGroups.css';
+import annotationStyles from './styles/annotation.module.scss';
+import tooltipStyles from './styles/siftTooltip.module.scss';
+
+// Most of this component comes from cBioPortal-frontend
 
 export interface ISiftProps {
     siftPrediction: string; // deleterious, deleterious_low_confidence, tolerated, tolerated_low_confidence
@@ -12,7 +15,7 @@ export interface ISiftProps {
 
 export function hideArrow(tooltipEl: any) {
     const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
-    arrowEl.style.display = 'none';
+    arrowEl.style.display = 'true';
 }
 
 export default class Sift extends React.Component<ISiftProps, {}> {

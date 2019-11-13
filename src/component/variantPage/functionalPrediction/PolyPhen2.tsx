@@ -1,9 +1,12 @@
 import * as React from 'react';
-import annotationStyles from './styles/annotation.module.scss';
 import classNames from 'classnames';
-import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+
 import '../FunctionalGroups.css';
+import annotationStyles from './styles/annotation.module.scss';
+import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
+
+// Most of this component comes from cBioPortal-frontend
 
 export interface IPolyPhen2Props {
     polyPhenPrediction: string; // benign, possibly_damaging, probably_damging
@@ -12,7 +15,7 @@ export interface IPolyPhen2Props {
 
 export function hideArrow(tooltipEl: any) {
     const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
-    arrowEl.style.display = 'none';
+    arrowEl.style.display = 'true';
 }
 
 export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
