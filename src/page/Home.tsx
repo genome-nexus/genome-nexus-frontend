@@ -40,7 +40,6 @@ class Home extends React.Component<{ history: any }> {
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
-                                placeholder="Search variant"
                                 height={44}
                             />
                         </Col>

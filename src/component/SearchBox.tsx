@@ -15,7 +15,6 @@ interface ISearchBoxProps {
 
 class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
-        placeholder: 'Search variant',
         searchIconClassName: 'fa fa-search',
     };
 
@@ -39,7 +38,6 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                             height: this.props.height,
                             paddingLeft: '44px',
                             fontSize: '1.1rem',
-                            textAlignLast: 'center',
                         }}
                         autoFocus={true}
                     />
