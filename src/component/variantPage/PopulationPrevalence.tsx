@@ -67,7 +67,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>&nbsp;[gnomAD]</span>
+                <span>gnomAD</span>
             </DefaultTooltip>
         );
     }
@@ -132,7 +132,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>&nbsp;[dbSNP]</span>
+                <span>dbSNP</span>
             </DefaultTooltip>
         );
     }
@@ -140,18 +140,17 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
     public render() {
         return (
             <Row className="data-content">
-                <span className="gnomad">{this.gnomad()}</span>
                 <span className="data-source">
                     {this.generateGnomadTooltip(
                         this.props.myVariantInfo,
                         this.props.chromosome
                     )}
                 </span>
-
-                <span className="dbsnp">{this.dbsnp()}</span>
+                <span className="gnomad">{this.gnomad()}</span>
                 <span className="data-source">
                     {this.generateDbsnpToolTip(this.props.myVariantInfo)}
                 </span>
+                <span className="dbsnp">{this.dbsnp()}</span>
             </Row>
         );
     }

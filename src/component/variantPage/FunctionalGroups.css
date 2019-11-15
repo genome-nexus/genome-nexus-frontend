@@ -21,15 +21,15 @@
     margin-bottom: 3px;
     padding-bottom: 4px;
     padding-top: 4px;
-    padding-left: 20px;
     align-items: center;
 }
 
 .data-source {
     font-weight: normal;
-    font-size: 0.75rem;
+    font-size: 1rem;
     vertical-align: middle;
-    margin-right: 20px;
+    margin-left: 30px;
+    margin-right: 5px;
 }
 
 /* gnomad */

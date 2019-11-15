@@ -1,10 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { Table } from 'react-bootstrap';
 
 import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/siftTooltip.module.scss';
+import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -24,6 +26,115 @@ export default class Sift extends React.Component<ISiftProps, {}> {
     constructor(props: ISiftProps) {
         super(props);
         this.tooltipContent = this.tooltipContent.bind(this);
+    }
+
+    public static siftText() {
+        return (
+            <div style={{ width: 450, height: 90 }}>
+                <a
+                    href={Sift.SIFT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    SIFT
+                </a>{' '}
+                predicts whether an amino acid substitution affects protein
+                function based on sequence homology and the physical properties
+                of amino acids. SIFT can be applied to naturally occurring
+                nonsynonymous polymorphisms and laboratory-induced missense
+                mutations.
+            </div>
+        );
+    }
+
+    public static siftTooltip() {
+        return (
+            <div>
+                <Table table-border-top striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Legend</th>
+                            <th>
+                                <span
+                                    style={{ display: 'inline-block' }}
+                                    title="SIFT"
+                                >
+                                    <img
+                                        height={14}
+                                        src={require('./styles/siftFunnel.png')}
+                                        alt="SIFT"
+                                    />
+                                    &nbsp;Qualitative prediction
+                                </span>
+                            </th>
+                            <th>Score (0 ~ 1)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['high'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>deleterious</td>
+                            <td>Less than 0.05</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['low'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>deleterious_low_confidence</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['neutral'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>tolerated_low_confidence</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['neutral'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>tolerated</td>
+                            <td>Greater than or equal to 0.05</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+        );
     }
 
     public render() {
@@ -65,31 +176,18 @@ export default class Sift extends React.Component<ISiftProps, {}> {
 
         return (
             <div>
-                {siftContent}
                 <DefaultTooltip
                     placement="top"
                     overlay={
-                        <span>
-                            SIFT predicts whether an amino acid substitution
-                            <br />
-                            affects protein function based on sequence homology
-                            <br />
-                            and the physical properties of amino acids.
-                            <br />
-                            <a
-                                href="http://sift.bii.a-star.edu.sg/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span>
-                                    Click to see variant on SIFT website.
-                                </span>
-                            </a>
-                        </span>
+                        <div>
+                            {Sift.siftText()}
+                            {Sift.siftTooltip()}
+                        </div>
                     }
                 >
-                    <span className="data-source">&nbsp;[SIFT]</span>
+                    <span className="data-source">SIFT</span>
                 </DefaultTooltip>
+                {siftContent}
             </div>
         );
     }
@@ -108,20 +206,6 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                             >
                                 SIFT
                             </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Impact</td>
-                        <td>
-                            <span
-                                className={
-                                    tooltipStyles[
-                                        `sift-${this.props.siftPrediction}`
-                                    ]
-                                }
-                            >
-                                {this.props.siftPrediction}
-                            </span>
                         </td>
                     </tr>
                     {(this.props.siftScore || this.props.siftScore === 0) && (

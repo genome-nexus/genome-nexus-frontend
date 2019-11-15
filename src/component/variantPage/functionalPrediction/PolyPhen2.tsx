@@ -1,10 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { Table } from 'react-bootstrap';
 
 import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
+import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -24,6 +26,116 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
     constructor(props: IPolyPhen2Props) {
         super(props);
         this.tooltipContent = this.tooltipContent.bind(this);
+    }
+
+    public static polyPhenText() {
+        return (
+            <div style={{ width: 450, height: 80 }}>
+                <a
+                    href={PolyPhen2.POLYPHEN2_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    PolyPhen-2
+                </a>{' '}
+                (Polymorphism Phenotyping v2) is a tool which predicts possible
+                impact of an amino acid substitution on the structure and
+                function of a human protein using straightforward physical and
+                comparative considerations.
+            </div>
+        );
+    }
+
+    public static polyPhenTooltip() {
+        return (
+            <div>
+                <Table table-border-top striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Legend</th>
+                            <th>
+                                <span
+                                    style={{ display: 'inline-block' }}
+                                    title="PolyPhen-2"
+                                >
+                                    <img
+                                        height={14}
+                                        src={require('./styles/polyPhen-2.png')}
+                                        alt="PolyPhen-2"
+                                    />
+                                    &nbsp;Qualitative prediction
+                                </span>
+                            </th>
+                            <th>Score (0 ~ 1)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['high'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>probably_damaging</td>
+                            <td>Greater than 0.908</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['low'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>possibly_damaging</td>
+                            <td>
+                                Greater than 0.446 and less than or equal to
+                                0.908
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['neutral'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>benign</td>
+                            <td>Less than or equal to 0.446</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['unknown']
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>-</td>
+                            <td>Unknown</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+        );
     }
 
     public render() {
@@ -70,37 +182,18 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
 
         return (
             <div>
-                {polyPhen2content}
                 <DefaultTooltip
                     placement="top"
                     overlay={
-                        <span>
-                            PolyPhen-2 (Polymorphism Phenotyping v2) is a tool
-                            which
-                            <br />
-                            predicts possible impact of an amino acid
-                            substitution
-                            <br />
-                            on the structure and function of a human protein
-                            using
-                            <br />
-                            straightforward physical and comparative
-                            considerations.
-                            <br />
-                            <a
-                                href="http://genetics.bwh.harvard.edu/pph2/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span>
-                                    Click to see variant on PolyPhen-2 website.
-                                </span>
-                            </a>
-                        </span>
+                        <div>
+                            {PolyPhen2.polyPhenText()}
+                            {PolyPhen2.polyPhenTooltip()}
+                        </div>
                     }
                 >
-                    <span className="data-source">&nbsp;[PolyPhen-2]</span>
+                    <span className="data-source">PolyPhen-2</span>
                 </DefaultTooltip>
+                {polyPhen2content}
             </div>
         );
     }
@@ -119,20 +212,6 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                             >
                                 PolyPhen-2
                             </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Impact</td>
-                        <td>
-                            <span
-                                className={
-                                    tooltipStyles[
-                                        `polyPhen2-${this.props.polyPhenPrediction}`
-                                    ]
-                                }
-                            >
-                                {this.props.polyPhenPrediction}
-                            </span>
                         </td>
                     </tr>
                     {(this.props.polyPhenScore ||

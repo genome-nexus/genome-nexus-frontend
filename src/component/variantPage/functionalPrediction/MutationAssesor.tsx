@@ -2,11 +2,13 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { Table } from 'react-bootstrap';
 
 import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
 import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
+import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -29,6 +31,120 @@ export default class MutationAssessor extends React.Component<
         super(props);
 
         this.tooltipContent = this.tooltipContent.bind(this);
+    }
+
+    public static mutationAssessorText() {
+        return (
+            <div style={{ width: 450, height: 120 }}>
+                <a
+                    href={MutationAssessor.MUTATION_ASSESSOR_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Mutation Assessor
+                </a>{' '}
+                predicts the functional impact of amino-acid substitutions in
+                proteins, such as mutations discovered in cancer or missense
+                polymorphisms. The functional impact is assessed based on
+                evolutionary conservation of the affected amino acid in protein
+                homologs. The method has been validated on a large set (60k) of
+                disease associated (OMIM) and polymorphic variants.
+            </div>
+        );
+    }
+
+    public static mutationAssessorTooltip() {
+        return (
+            <div>
+                <Table table-border-top striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Legend</th>
+                            <th>
+                                <span
+                                    style={{ display: 'inline-block' }}
+                                    title="Mutation Assessor"
+                                >
+                                    <img
+                                        height={14}
+                                        src={require('./styles/mutationAssessor.png')}
+                                        alt="Mutation Assessor"
+                                    />
+                                    &nbsp;Qualitative prediction
+                                </span>
+                            </th>
+                            <th>Score (‐5.545 ~ 5.937)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['high'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>High</td>
+                            <td>Greater than 3.5</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['medium'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>Medium</td>
+                            <td>
+                                Greater than 1.938 and less than or equal to 3.5
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['low'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>Low</td>
+                            <td>
+                                Greater than 0.8 and less than or equal to 1.938
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['neutral'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>Neutral</td>
+                            <td>Less than or equal to 0.8</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+        );
     }
 
     public render() {
@@ -74,35 +190,18 @@ export default class MutationAssessor extends React.Component<
 
         return (
             <div>
-                {maContent}
                 <DefaultTooltip
                     placement="top"
                     overlay={
-                        <span>
-                            Mutation Assessor predicts the functional impact of
-                            <br />
-                            amino-acid substitutions in proteins, such as
-                            mutations
-                            <br />
-                            discovered in cancer or missense polymorphisms.{' '}
-                            <br />
-                            <a
-                                href="http://mutationassessor.org/r3"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span>
-                                    Click to see variant on Mutation Assessor
-                                    website.
-                                </span>
-                            </a>
-                        </span>
+                        <div>
+                            {MutationAssessor.mutationAssessorText()}
+                            {MutationAssessor.mutationAssessorTooltip()}
+                        </div>
                     }
                 >
-                    <span className="data-source">
-                        &nbsp;[Mutation Assessor]
-                    </span>
+                    <span className="data-source">Mutation Assessor</span>
                 </DefaultTooltip>
+                {maContent}
             </div>
         );
     }
@@ -128,20 +227,6 @@ export default class MutationAssessor extends React.Component<
                             >
                                 MutationAssessor
                             </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Impact</td>
-                        <td>
-                            <span
-                                className={
-                                    mutationAssessorColumn[
-                                        `ma-${maData.functionalImpact}`
-                                    ]
-                                }
-                            >
-                                {maData.functionalImpact}
-                            </span>
                         </td>
                     </tr>
                     {(maData.functionalImpactScore ||

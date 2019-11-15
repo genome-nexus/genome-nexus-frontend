@@ -11,7 +11,7 @@ import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
 } from 'cbioportal-frontend-commons';
-import { Mutation, TrackName } from 'react-mutation-mapper';
+import { Mutation, TrackName, DataFilterType } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
@@ -110,6 +110,13 @@ class Variant extends React.Component<IVariantProps> {
                     plotTopYAxisDefaultMax={1}
                     // set plot height
                     plotLollipopHeight={150}
+                    // select the lollipop by default
+                    selectionFilters={[
+                        {
+                            type: DataFilterType.POSITION,
+                            values: [mutation[0].proteinPosStart],
+                        },
+                    ]}
                 />
             );
         } else {

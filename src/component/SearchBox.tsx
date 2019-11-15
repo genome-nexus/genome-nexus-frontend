@@ -44,9 +44,9 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                 </InputGroup>
                 <span className="search-example">
                     Example:
-                    <Link to={'/variant/17:g.41242962_41242963insGA'}>
+                    <Link to={'/variant/17:g.7577094G>A'}>
                         {' '}
-                        17:g.41242962_41242963insGA
+                        17:g.7577094G>A
                     </Link>
                 </span>
             </div>
