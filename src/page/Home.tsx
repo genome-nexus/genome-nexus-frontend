@@ -12,7 +12,6 @@ import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
-import { Link } from 'react-router-dom';
 
 @observer
 class Home extends React.Component<{ history: any }> {
@@ -36,29 +35,13 @@ class Home extends React.Component<{ history: any }> {
                             Cancer
                         </Col>
                     </Row>
-                    <Row>
-                        <Col lg="7" className="m-auto" id="search-box">
+                    <Row className="d-flex justify-content-center">
+                        <Col lg="5" xs="8" id="search-box-container">
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
-                                placeholder="Search variant"
-                                height={50}
+                                height={44}
                             />
-                        </Col>
-                        <Col
-                            lg="7"
-                            style={{
-                                color: 'grey',
-                                fontSize: '1rem',
-                                textAlign: 'left',
-                            }}
-                            className="pt-1 m-auto"
-                        >
-                            Example:
-                            <Link to={'/variant/17:g.41242962_41242963insGA'}>
-                                {' '}
-                                17:g.41242962_41242963insGA
-                            </Link>
                         </Col>
                     </Row>
                     <Row>

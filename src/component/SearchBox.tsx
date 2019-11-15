@@ -1,7 +1,9 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { FormEvent } from 'react';
-import { FormControl } from 'react-bootstrap';
+import { FormControl, InputGroup } from 'react-bootstrap';
+import './SearchBox.css';
+import { Link } from 'react-router-dom';
 
 interface ISearchBoxProps {
     onChange?: (input: string) => void;
@@ -13,27 +15,41 @@ interface ISearchBoxProps {
 
 class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
-        placeholder: 'Search variant',
         searchIconClassName: 'fa fa-search',
     };
 
     public render() {
         return (
-            <FormControl
-                onChange={this.onChange}
-                className="text-center"
-                placeholder={this.props.placeholder}
-                aria-label="Search"
-                aria-describedby="basic-addon2"
-                onKeyPress={(event: { key: string }) => {
-                    if (event.key === 'Enter') {
-                        this.props.onSearch();
-                    }
-                }}
-                style={{
-                    height: this.props.height,
-                }}
-            />
+            <div>
+                <InputGroup className="search-box">
+                    <span className="fa fa-search form-control-feedback"></span>
+                    <FormControl
+                        onChange={this.onChange}
+                        className="text-left"
+                        placeholder={this.props.placeholder}
+                        aria-label="Search"
+                        aria-describedby="basic-addon2"
+                        onKeyPress={(event: { key: string }) => {
+                            if (event.key === 'Enter') {
+                                this.props.onSearch();
+                            }
+                        }}
+                        style={{
+                            height: this.props.height,
+                            paddingLeft: '44px',
+                            fontSize: '1.1rem',
+                        }}
+                        autoFocus={true}
+                    />
+                </InputGroup>
+                <span className="search-example">
+                    Example:
+                    <Link to={'/variant/17:g.41242962_41242963insGA'}>
+                        {' '}
+                        17:g.41242962_41242963insGA
+                    </Link>
+                </span>
+            </div>
         );
     }
 
