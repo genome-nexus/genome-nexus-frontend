@@ -5,10 +5,13 @@ import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
 import { MyVariantInfo } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPIInternal';
 import PopulationPrevalence from './PopulationPrevalence';
 import './FunctionalGroups.css';
+import BiologicalFunction from './BiologicalFunction';
+import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
+    oncokb?: IndicatorQueryResp;
 }
 
 @observer
@@ -24,6 +27,11 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                 <Row>
                     <Col lg="2" className="group-name">
                         Biological function:
+                    </Col>
+                    <Col>
+                        <BiologicalFunction
+                            oncokb={this.props.oncokb}
+                        />
                     </Col>
                 </Row>
                 <Row>

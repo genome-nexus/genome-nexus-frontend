@@ -46,6 +46,11 @@ class Variant extends React.Component<IVariantProps> {
         return this.props.store.myVariantInfo.result;
     }
 
+    @computed
+    private get oncokb() {
+        return this.props.store.oncokbData.result;
+    }
+
     protected get isLoading() {
         return this.props.store.annotation.isPending;
     }
@@ -309,6 +314,7 @@ class Variant extends React.Component<IVariantProps> {
                                 <FunctionalGroups
                                     myVariantInfo={this.myVariantInfo}
                                     annotationInternal={this.annotation}
+                                    oncokb={this.oncokb}
                                 />
                             </Col>
                         </Row>

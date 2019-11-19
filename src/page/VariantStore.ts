@@ -6,6 +6,8 @@ import {
 } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
 import MobxPromise from 'mobxpromise';
+import oncokbClient from './OncokbClientInstance';
+import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -56,5 +58,17 @@ export class VariantStore {
         onError: () => {
             // fail silently, leave the error handling responsibility to the data consumer
         },
+    });
+
+    readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
+
+        invoke: async () => {
+            return await oncokbClient.annotateMutationsByHGVSgGetUsingGET({
+                hgvsg: this.variant,
+            });
+        },
+        onError: () => {
+            // fail silently, leave the error handling responsibility to the data consumer
+        }
     });
 }
