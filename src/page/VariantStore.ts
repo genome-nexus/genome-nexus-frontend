@@ -61,7 +61,6 @@ export class VariantStore {
     });
 
     readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
-
         invoke: async () => {
             return await oncokbClient.annotateMutationsByHGVSgGetUsingGET({
                 hgvsg: this.variant,
@@ -69,6 +68,6 @@ export class VariantStore {
         },
         onError: () => {
             // fail silently, leave the error handling responsibility to the data consumer
-        }
+        },
     });
 }

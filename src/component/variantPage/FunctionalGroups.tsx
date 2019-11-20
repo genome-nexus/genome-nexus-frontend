@@ -29,9 +29,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                         Biological function:
                     </Col>
                     <Col>
-                        <BiologicalFunction
-                            oncokb={this.props.oncokb}
-                        />
+                        <BiologicalFunction oncokb={this.props.oncokb} />
                     </Col>
                 </Row>
                 <Row>

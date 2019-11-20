@@ -1,0 +1,64 @@
+@import '~oncokb-styles/scss/_vars';
+
+.oncogenic {
+    background-color: $oncokb-color-oncogenic; // blue
+    font-size: 1rem;
+    font-weight: bold;
+    color: white !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.neutral {
+    background-color: $oncokb-color-neutral; // dark grey
+    font-size: 1rem;
+    font-weight: bold;
+    color: white !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.inconclusive {
+    background-color: $oncokb-color-inconclusive; // light grey
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.vus {
+    background-color: $oncokb-color-vus; // dark grey
+    font-size: 1rem;
+    font-weight: bold;
+    color: white !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.unknown {
+    background-color: $oncokb-color-unknown; //lighter grey
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.mutation-effect {
+    background-color: transparent; //lighter grey
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    // border-color: lightgray !important;
+    // border-style: solid;
+    // border-width: 2px;
+}
