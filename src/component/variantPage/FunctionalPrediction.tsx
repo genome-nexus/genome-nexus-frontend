@@ -6,8 +6,7 @@ import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-co
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
-
-import './FunctionalGroups.css';
+import functionalGroupsStyle from './functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -53,7 +52,7 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     public render() {
         const data = this.getData(this.props.variantAnnotation);
         return data ? (
-            <Row className="data-content">
+            <Row className={functionalGroupsStyle['data-content']}>
                 <PolyPhen2
                     polyPhenScore={data.polyPhenScore}
                     polyPhenPrediction={data.polyPhenPrediction}
@@ -65,7 +64,9 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                 />
             </Row>
         ) : (
-            <span className="data-content">No data available</span>
+            <span className={functionalGroupsStyle['data-content']}>
+                No data available
+            </span>
         );
     }
 }

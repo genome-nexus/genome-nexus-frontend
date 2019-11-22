@@ -8,8 +8,7 @@ import {
 } from 'cbioportal-frontend-commons';
 import PopulationPrevalence from './PopulationPrevalence';
 import FunctionalPrediction from './FunctionalPrediction';
-
-import './FunctionalGroups.css';
+import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -21,32 +20,32 @@ interface IFunctionalGroupsProps {
 class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
     public render() {
         return (
-            <div className="functional-groups">
+            <div className={functionalGroupsStyle['functional-groups']}>
                 <Row>
-                    <Col lg="2" className="group-name">
+                    <Col lg="2" className={functionalGroupsStyle['group-name']}>
                         Therapeutic implication:
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="2" className="group-name">
+                    <Col lg="2" className={functionalGroupsStyle['group-name']}>
                         Biological function:
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="2" className="group-name">
+                    <Col lg="2" className={functionalGroupsStyle['group-name']}>
                         Functional prediction:
                     </Col>
-                    <Col>
+                    <Col className={functionalGroupsStyle['group-content']}>
                         <FunctionalPrediction
                             variantAnnotation={this.props.variantAnnotation}
                         />
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="2" className="group-name">
+                    <Col lg="2" className={functionalGroupsStyle['group-name']}>
                         Population prevalence:
                     </Col>
-                    <Col>
+                    <Col className={functionalGroupsStyle['group-content']}>
                         <PopulationPrevalence
                             myVariantInfo={this.props.myVariantInfo}
                             chromosome={

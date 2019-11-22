@@ -4,7 +4,7 @@ import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 import { GnomadFrequency } from 'react-mutation-mapper';
 
-import './FunctionalGroups.css';
+import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;
@@ -25,13 +25,17 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             (this.props.myVariantInfo.gnomadExome ||
                 this.props.myVariantInfo.gnomadGenome)
         ) {
-            return <GnomadFrequency myVariantInfo={this.props.myVariantInfo} />;
+            return (
+                <span className={functionalGroupsStyle['gnomad']}>
+                    <GnomadFrequency myVariantInfo={this.props.myVariantInfo} />
+                </span>
+            );
         } else {
-            return 'N/A';
+            return <span className={functionalGroupsStyle['gnomad']}>N/A</span>;
         }
     }
 
-    public generateGnomadTooltip(
+    public gnomadTooltip(
         myVariantInfo: MyVariantInfo | undefined,
         chromosome: string | null
     ) {
@@ -67,7 +71,15 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>gnomAD</span>
+                <span className={functionalGroupsStyle['data-source']}>
+                    <a
+                        href={gnomadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        gnomAD
+                    </a>
+                </span>
             </DefaultTooltip>
         );
     }
@@ -96,15 +108,17 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                         </span>
                     }
                 >
-                    <span>{this.props.myVariantInfo.dbsnp.rsid}</span>
+                    <span className={functionalGroupsStyle['dbsnp']}>
+                        {this.props.myVariantInfo.dbsnp.rsid}
+                    </span>
                 </DefaultTooltip>
             );
         } else {
-            return 'N/A';
+            return <span className={functionalGroupsStyle['dbsnp']}>N/A</span>;
         }
     }
 
-    public generateDbsnpToolTip(myVariantInfo: MyVariantInfo | undefined) {
+    public dbsnpToolTip(myVariantInfo: MyVariantInfo | undefined) {
         let dbsnpUrl = '';
         if (myVariantInfo && myVariantInfo.dbsnp && myVariantInfo.dbsnp.rsid) {
             dbsnpUrl = `https://www.ncbi.nlm.nih.gov/snp/${myVariantInfo.dbsnp.rsid}`;
@@ -132,25 +146,29 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>dbSNP</span>
+                <span className={functionalGroupsStyle['data-source']}>
+                    <a
+                        href={dbsnpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        dbSNP
+                    </a>
+                </span>
             </DefaultTooltip>
         );
     }
 
     public render() {
         return (
-            <Row className="data-content">
-                <span className="data-source">
-                    {this.generateGnomadTooltip(
-                        this.props.myVariantInfo,
-                        this.props.chromosome
-                    )}
-                </span>
-                <span className="gnomad">{this.gnomad()}</span>
-                <span className="data-source">
-                    {this.generateDbsnpToolTip(this.props.myVariantInfo)}
-                </span>
-                <span className="dbsnp">{this.dbsnp()}</span>
+            <Row className={functionalGroupsStyle['data-content']}>
+                {this.gnomadTooltip(
+                    this.props.myVariantInfo,
+                    this.props.chromosome
+                )}
+                {this.gnomad()}
+                {this.dbsnpToolTip(this.props.myVariantInfo)}
+                {this.dbsnp()}
             </Row>
         );
     }

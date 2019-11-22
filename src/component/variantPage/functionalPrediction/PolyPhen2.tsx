@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
+import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -15,22 +15,17 @@ export interface IPolyPhen2Props {
     polyPhenScore: number;
 }
 
-export function hideArrow(tooltipEl: any) {
-    const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
-    arrowEl.style.display = 'true';
-}
-
 export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
     static POLYPHEN2_URL: string = 'http://genetics.bwh.harvard.edu/pph2/';
 
     constructor(props: IPolyPhen2Props) {
         super(props);
-        this.tooltipContent = this.tooltipContent.bind(this);
+        this.polyPhenData = this.polyPhenData.bind(this);
     }
 
     public static polyPhenText() {
         return (
-            <div style={{ width: 450, height: 80 }}>
+            <div style={{ width: 450, height: 77 }}>
                 <a
                     href={PolyPhen2.POLYPHEN2_URL}
                     target="_blank"
@@ -46,7 +41,60 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         );
     }
 
-    public static polyPhenTooltip() {
+    public polyPhenData() {
+        const impact = this.props.polyPhenPrediction ? (
+            <div>
+                <table className={tooltipStyles['polyPhen2-tooltip-table']}>
+                    {(this.props.polyPhenScore ||
+                        this.props.polyPhenScore === 0) && (
+                        <tr>
+                            <td>Score</td>
+                            <td>
+                                <b>{this.props.polyPhenScore.toFixed(2)}</b>
+                            </td>
+                        </tr>
+                    )}
+                </table>
+                <span>
+                    Please refer to the score range{' '}
+                    <a
+                        href="https://useast.ensembl.org/info/genome/variation/prediction/protein_function.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        here
+                    </a>
+                    .
+                </span>
+            </div>
+        ) : null;
+
+        return (
+            <div>
+                {impact}
+                <br />
+            </div>
+        );
+    }
+
+    public polyPhenTooltip(tooltipTrigger: JSX.Element) {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <div>
+                        {PolyPhen2.polyPhenText()}
+                        {this.polyPhenData()}
+                        {PolyPhen2.polyPhenTooltipTable()}
+                    </div>
+                }
+            >
+                {tooltipTrigger}
+            </DefaultTooltip>
+        );
+    }
+
+    public static polyPhenTooltipTable() {
         return (
             <div>
                 <Table table-border-top striped bordered hover size="sm">
@@ -66,7 +114,6 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                                     &nbsp;Qualitative prediction
                                 </span>
                             </th>
-                            <th>Score (0 ~ 1)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,8 +129,9 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>probably_damaging</td>
-                            <td>Greater than 0.908</td>
+                            <td>
+                                <b>probably_damaging</b>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -97,10 +145,8 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>possibly_damaging</td>
                             <td>
-                                Greater than 0.446 and less than or equal to
-                                0.908
+                                <b>possibly_damaging</b>
                             </td>
                         </tr>
                         <tr>
@@ -115,8 +161,9 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>benign</td>
-                            <td>Less than or equal to 0.446</td>
+                            <td>
+                                <b>benign</b>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -129,8 +176,9 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>-</td>
-                            <td>Unknown</td>
+                            <td>
+                                <b>-</b>
+                            </td>
                         </tr>
                     </tbody>
                 </Table>
@@ -141,6 +189,18 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
     public render() {
         let polyPhen2content: JSX.Element = (
             <span className={`${annotationStyles['annotation-item-text']}`} />
+        );
+
+        const dataSource = (
+            <span className={functionalGroupsStyle['data-source']}>
+                <a
+                    href={PolyPhen2.POLYPHEN2_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    PolyPhen-2
+                </a>
+            </span>
         );
 
         if (
@@ -156,77 +216,34 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                         ]
                     )}
                 >
-                    <span className="functional-prediction-data">
+                    <span
+                        className={
+                            functionalGroupsStyle['functional-prediction-data']
+                        }
+                    >
                         {this.props.polyPhenPrediction}
                     </span>
                 </span>
             );
-            const arrowContent = <div className="rc-tooltip-arrow-inner" />;
-            polyPhen2content = (
-                <DefaultTooltip
-                    overlay={this.tooltipContent}
-                    placement="top"
-                    trigger={['hover', 'focus']}
-                    arrowContent={arrowContent}
-                    onPopupAlign={hideArrow}
-                    destroyTooltipOnHide={false}
-                >
-                    {polyPhen2content}
-                </DefaultTooltip>
-            );
+            polyPhen2content = this.polyPhenTooltip(polyPhen2content);
         } else {
-            polyPhen2content = (
-                <span className="functional-prediction-no-data">N/A</span>
+            const noData = (
+                <span
+                    className={
+                        functionalGroupsStyle['functional-prediction-no-data']
+                    }
+                >
+                    N/A
+                </span>
             );
+            polyPhen2content = this.polyPhenTooltip(noData);
         }
 
         return (
-            <div>
-                <DefaultTooltip
-                    placement="top"
-                    overlay={
-                        <div>
-                            {PolyPhen2.polyPhenText()}
-                            {PolyPhen2.polyPhenTooltip()}
-                        </div>
-                    }
-                >
-                    <span className="data-source">PolyPhen-2</span>
-                </DefaultTooltip>
+            <span>
+                {this.polyPhenTooltip(dataSource)}
                 {polyPhen2content}
-            </div>
+            </span>
         );
-    }
-
-    private tooltipContent() {
-        const impact = this.props.polyPhenPrediction ? (
-            <div>
-                <table className={tooltipStyles['polyPhen2-tooltip-table']}>
-                    <tr>
-                        <td>Source</td>
-                        <td>
-                            <a
-                                href="http://genetics.bwh.harvard.edu/pph2/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                PolyPhen-2
-                            </a>
-                        </td>
-                    </tr>
-                    {(this.props.polyPhenScore ||
-                        this.props.polyPhenScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{this.props.polyPhenScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
-                    )}
-                </table>
-            </div>
-        ) : null;
-
-        return <span>{impact}</span>;
     }
 }

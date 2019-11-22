@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/siftTooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
+import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -15,22 +15,17 @@ export interface ISiftProps {
     siftScore: number;
 }
 
-export function hideArrow(tooltipEl: any) {
-    const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
-    arrowEl.style.display = 'true';
-}
-
 export default class Sift extends React.Component<ISiftProps, {}> {
     static SIFT_URL: string = 'http://sift.bii.a-star.edu.sg/';
 
     constructor(props: ISiftProps) {
         super(props);
-        this.tooltipContent = this.tooltipContent.bind(this);
+        this.siftData = this.siftData.bind(this);
     }
 
     public static siftText() {
         return (
-            <div style={{ width: 450, height: 90 }}>
+            <div style={{ width: 450, height: 88 }}>
                 <a
                     href={Sift.SIFT_URL}
                     target="_blank"
@@ -47,7 +42,59 @@ export default class Sift extends React.Component<ISiftProps, {}> {
         );
     }
 
-    public static siftTooltip() {
+    public siftData() {
+        const impact = this.props.siftPrediction ? (
+            <div>
+                <table className={tooltipStyles['sift-tooltip-table']}>
+                    {(this.props.siftScore || this.props.siftScore === 0) && (
+                        <tr>
+                            <td>Score</td>
+                            <td>
+                                <b>{this.props.siftScore.toFixed(2)}</b>
+                            </td>
+                        </tr>
+                    )}
+                </table>
+                <span>
+                    Please refer to the score range{' '}
+                    <a
+                        href="https://useast.ensembl.org/info/genome/variation/prediction/protein_function.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        here
+                    </a>
+                    .
+                </span>
+            </div>
+        ) : null;
+
+        return (
+            <div>
+                {impact}
+                <br />
+            </div>
+        );
+    }
+
+    public siftTooltip(tooltipTrigger: JSX.Element) {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <div>
+                        {Sift.siftText()}
+                        {this.siftData()}
+                        {Sift.siftTooltipTable()}
+                    </div>
+                }
+            >
+                {tooltipTrigger}
+            </DefaultTooltip>
+        );
+    }
+
+    public static siftTooltipTable() {
         return (
             <div>
                 <Table table-border-top striped bordered hover size="sm">
@@ -67,7 +114,6 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                                     &nbsp;Qualitative prediction
                                 </span>
                             </th>
-                            <th>Score (0 ~ 1)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,8 +129,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>deleterious</td>
-                            <td>Less than 0.05</td>
+                            <td>
+                                <b>deleterious</b>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -98,8 +145,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>deleterious_low_confidence</td>
-                            <td>&nbsp;</td>
+                            <td>
+                                <b>deleterious_low_confidence</b>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -113,8 +161,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>tolerated_low_confidence</td>
-                            <td>&nbsp;</td>
+                            <td>
+                                <b>tolerated_low_confidence</b>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -128,8 +177,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                                     ></i>
                                 </span>
                             </td>
-                            <td>tolerated</td>
-                            <td>Greater than or equal to 0.05</td>
+                            <td>
+                                <b>tolerated</b>
+                            </td>
                         </tr>
                     </tbody>
                 </Table>
@@ -141,6 +191,17 @@ export default class Sift extends React.Component<ISiftProps, {}> {
         let siftContent: JSX.Element = (
             <span className={`${annotationStyles['annotation-item-text']}`} />
         );
+        const dataSource = (
+            <span className={functionalGroupsStyle['data-source']}>
+                <a
+                    href={Sift.SIFT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    SIFT
+                </a>
+            </span>
+        );
 
         if (this.props.siftPrediction && this.props.siftPrediction.length > 0) {
             siftContent = (
@@ -150,76 +211,34 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                         tooltipStyles[`sift-${this.props.siftPrediction}`]
                     )}
                 >
-                    <span className="functional-prediction-data">
+                    <span
+                        className={
+                            functionalGroupsStyle['functional-prediction-data']
+                        }
+                    >
                         {this.props.siftPrediction}
                     </span>
                 </span>
             );
-            const arrowContent = <div className="rc-tooltip-arrow-inner" />;
-            siftContent = (
-                <DefaultTooltip
-                    overlay={this.tooltipContent}
-                    placement="top"
-                    trigger={['hover', 'focus']}
-                    arrowContent={arrowContent}
-                    onPopupAlign={hideArrow}
-                    destroyTooltipOnHide={false}
-                >
-                    {siftContent}
-                </DefaultTooltip>
-            );
+            siftContent = this.siftTooltip(siftContent);
         } else {
-            siftContent = (
-                <span className="functional-prediction-no-data">N/A</span>
+            const noData = (
+                <span
+                    className={
+                        functionalGroupsStyle['functional-prediction-no-data']
+                    }
+                >
+                    N/A
+                </span>
             );
+            siftContent = this.siftTooltip(noData);
         }
 
         return (
-            <div>
-                <DefaultTooltip
-                    placement="top"
-                    overlay={
-                        <div>
-                            {Sift.siftText()}
-                            {Sift.siftTooltip()}
-                        </div>
-                    }
-                >
-                    <span className="data-source">SIFT</span>
-                </DefaultTooltip>
+            <span>
+                {this.siftTooltip(dataSource)}
                 {siftContent}
-            </div>
+            </span>
         );
-    }
-
-    private tooltipContent() {
-        const impact = this.props.siftPrediction ? (
-            <div>
-                <table className={tooltipStyles['sift-tooltip-table']}>
-                    <tr>
-                        <td>Source</td>
-                        <td>
-                            <a
-                                href="http://sift.bii.a-star.edu.sg/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                SIFT
-                            </a>
-                        </td>
-                    </tr>
-                    {(this.props.siftScore || this.props.siftScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{this.props.siftScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
-                    )}
-                </table>
-            </div>
-        ) : null;
-
-        return <span>{impact}</span>;
     }
 }

@@ -4,11 +4,11 @@ import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-co
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import '../FunctionalGroups.css';
 import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
 import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
+import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -30,12 +30,12 @@ export default class MutationAssessor extends React.Component<
     constructor(props: IMutationAssessorProps) {
         super(props);
 
-        this.tooltipContent = this.tooltipContent.bind(this);
+        this.mutationAssessorData = this.mutationAssessorData.bind(this);
     }
 
     public static mutationAssessorText() {
         return (
-            <div style={{ width: 450, height: 120 }}>
+            <div style={{ width: 450, height: 110 }}>
                 <a
                     href={MutationAssessor.MUTATION_ASSESSOR_URL}
                     target="_blank"
@@ -53,160 +53,7 @@ export default class MutationAssessor extends React.Component<
         );
     }
 
-    public static mutationAssessorTooltip() {
-        return (
-            <div>
-                <Table table-border-top striped bordered hover size="sm">
-                    <thead>
-                        <tr>
-                            <th>Legend</th>
-                            <th>
-                                <span
-                                    style={{ display: 'inline-block' }}
-                                    title="Mutation Assessor"
-                                >
-                                    <img
-                                        height={14}
-                                        src={require('./styles/mutationAssessor.png')}
-                                        alt="Mutation Assessor"
-                                    />
-                                    &nbsp;Qualitative prediction
-                                </span>
-                            </th>
-                            <th>Score (‐5.545 ~ 5.937)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['high'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>High</td>
-                            <td>Greater than 3.5</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['medium'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>Medium</td>
-                            <td>
-                                Greater than 1.938 and less than or equal to 3.5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['low'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>Low</td>
-                            <td>
-                                Greater than 0.8 and less than or equal to 1.938
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['neutral'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>Neutral</td>
-                            <td>Less than or equal to 0.8</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-        );
-    }
-
-    public render() {
-        let maContent: JSX.Element = (
-            <span className={`${annotationStyles['annotation-item-text']}`} />
-        );
-        if (
-            this.props.mutationAssessor &&
-            this.props.mutationAssessor.functionalImpact != null &&
-            this.props.mutationAssessor.functionalImpact !== ''
-        ) {
-            const maData = this.props.mutationAssessor;
-            maContent = (
-                <span
-                    className={classNames(
-                        annotationStyles['annotation-item-text'],
-                        mutationAssessorColumn[`ma-${maData.functionalImpact}`]
-                    )}
-                >
-                    <span className="functional-prediction-data">
-                        {maData.functionalImpact}
-                    </span>
-                </span>
-            );
-            const arrowContent = <div className="rc-tooltip-arrow-inner" />;
-            maContent = (
-                <DefaultTooltip
-                    overlay={this.tooltipContent}
-                    placement="top"
-                    trigger={['hover', 'focus']}
-                    arrowContent={arrowContent}
-                    onPopupAlign={hideArrow}
-                    destroyTooltipOnHide={false}
-                >
-                    {maContent}
-                </DefaultTooltip>
-            );
-        } else {
-            maContent = (
-                <span className="functional-prediction-no-data">N/A</span>
-            );
-        }
-
-        return (
-            <div>
-                <DefaultTooltip
-                    placement="top"
-                    overlay={
-                        <div>
-                            {MutationAssessor.mutationAssessorText()}
-                            {MutationAssessor.mutationAssessorTooltip()}
-                        </div>
-                    }
-                >
-                    <span className="data-source">Mutation Assessor</span>
-                </DefaultTooltip>
-                {maContent}
-            </div>
-        );
-    }
-
-    private tooltipContent() {
+    public mutationAssessorData() {
         const maData = this.props.mutationAssessor;
         const xVarLink = MutationAssessor.maLink(
             `http://mutationassessor.org/r3/?cm=var&p=${maData.uniprotId}&var=${maData.variant}`
@@ -217,18 +64,6 @@ export default class MutationAssessor extends React.Component<
         const impact = maData.functionalImpact ? (
             <div>
                 <table className={tooltipStyles['ma-tooltip-table']}>
-                    <tr>
-                        <td>Source</td>
-                        <td>
-                            <a
-                                href="http://mutationassessor.org/r3"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                MutationAssessor
-                            </a>
-                        </td>
-                    </tr>
                     {(maData.functionalImpactScore ||
                         maData.functionalImpactScore === 0) && (
                         <tr>
@@ -239,6 +74,17 @@ export default class MutationAssessor extends React.Component<
                         </tr>
                     )}
                 </table>
+                <span>
+                    Please refer to the score range{' '}
+                    <a
+                        href="http://mutationassessor.org/r3/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        here
+                    </a>
+                    .
+                </span>
             </div>
         ) : null;
 
@@ -284,11 +130,182 @@ export default class MutationAssessor extends React.Component<
         ) : null;
 
         return (
-            <span>
+            <div>
                 {impact}
                 {msa}
                 {pdb}
                 {xVar}
+                <br />
+            </div>
+        );
+    }
+
+    public mutationAssessorTooltip(tooltipTrigger: JSX.Element) {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <div>
+                        {MutationAssessor.mutationAssessorText()}
+                        {this.mutationAssessorData()}
+                        {MutationAssessor.mutationAssessorTooltipTable()}
+                    </div>
+                }
+            >
+                {tooltipTrigger}
+            </DefaultTooltip>
+        );
+    }
+
+    public static mutationAssessorTooltipTable() {
+        return (
+            <div>
+                <Table table-border-top striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Legend</th>
+                            <th>
+                                <span
+                                    style={{ display: 'inline-block' }}
+                                    title="Mutation Assessor"
+                                >
+                                    <img
+                                        height={14}
+                                        src={require('./styles/mutationAssessor.png')}
+                                        alt="Mutation Assessor"
+                                    />
+                                    &nbsp;Qualitative prediction
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['high'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>
+                                <b>High</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['medium'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>
+                                <b>Medium</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['low'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>
+                                <b>Low</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>
+                                    <i
+                                        className={classNames(
+                                            functionalImpactColor['neutral'],
+                                            'fa fa-circle'
+                                        )}
+                                        aria-hidden="true"
+                                    ></i>
+                                </span>
+                            </td>
+                            <td>
+                                <b>Neutral</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+        );
+    }
+
+    public render() {
+        let maContent: JSX.Element = (
+            <span className={`${annotationStyles['annotation-item-text']}`} />
+        );
+        const dataSource = (
+            <span className={functionalGroupsStyle['data-source']}>
+                <a
+                    href={MutationAssessor.MUTATION_ASSESSOR_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Mutation Assessor
+                </a>
+            </span>
+        );
+
+        if (
+            this.props.mutationAssessor &&
+            this.props.mutationAssessor.functionalImpact != null &&
+            this.props.mutationAssessor.functionalImpact !== ''
+        ) {
+            const maData = this.props.mutationAssessor;
+            maContent = (
+                <span
+                    className={classNames(
+                        annotationStyles['annotation-item-text'],
+                        mutationAssessorColumn[`ma-${maData.functionalImpact}`]
+                    )}
+                >
+                    <span
+                        className={
+                            functionalGroupsStyle['functional-prediction-data']
+                        }
+                    >
+                        {maData.functionalImpact}
+                    </span>
+                </span>
+            );
+            maContent = this.mutationAssessorTooltip(maContent);
+        } else {
+            const noData = (
+                <span
+                    className={
+                        functionalGroupsStyle['functional-prediction-no-data']
+                    }
+                >
+                    N/A
+                </span>
+            );
+            maContent = this.mutationAssessorTooltip(noData);
+        }
+
+        return (
+            <span>
+                {this.mutationAssessorTooltip(dataSource)}
+                {maContent}
             </span>
         );
     }
