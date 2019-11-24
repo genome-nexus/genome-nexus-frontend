@@ -8,12 +8,15 @@ import {
 } from 'cbioportal-frontend-commons';
 import PopulationPrevalence from './PopulationPrevalence';
 import FunctionalPrediction from './FunctionalPrediction';
+import BiologicalFunction from './BiologicalFunction';
+import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
     variantAnnotation?: VariantAnnotation;
+    oncokb?: IndicatorQueryResp;
 }
 
 @observer
@@ -29,6 +32,9 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                 <Row>
                     <Col lg="2" className={functionalGroupsStyle['group-name']}>
                         Biological function:
+                    </Col>
+                    <Col className={functionalGroupsStyle['group-content']}>
+                        <BiologicalFunction oncokb={this.props.oncokb} />
                     </Col>
                 </Row>
                 <Row>
