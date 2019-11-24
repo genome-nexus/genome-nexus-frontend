@@ -52,6 +52,11 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     @computed
+    private get oncokb() {
+        return this.props.store.oncokbData.result;
+    }
+
+    @computed
     private get variantAnnotation() {
         return this.props.store.annotation.result
             ? this.props.store.annotation.result
@@ -333,6 +338,7 @@ class Variant extends React.Component<IVariantProps> {
                                     myVariantInfo={this.myVariantInfo}
                                     annotationInternal={this.annotationSummary}
                                     variantAnnotation={this.variantAnnotation}
+                                    oncokb={this.oncokb}
                                 />
                             </Col>
                         </Row>
