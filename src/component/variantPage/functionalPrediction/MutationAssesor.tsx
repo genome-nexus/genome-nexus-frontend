@@ -13,7 +13,7 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 // Most of this component comes from cBioPortal-frontend
 
 export interface IMutationAssessorProps {
-    mutationAssessor: MutationAssessorData;
+    mutationAssessor: MutationAssessorData | undefined;
 }
 
 export function hideArrow(tooltipEl: any) {
@@ -54,90 +54,114 @@ export default class MutationAssessor extends React.Component<
     }
 
     public mutationAssessorData() {
-        const maData = this.props.mutationAssessor;
-        const xVarLink = MutationAssessor.maLink(
-            `http://mutationassessor.org/r3/?cm=var&p=${maData.uniprotId}&var=${maData.variant}`
-        );
-        const msaLink = MutationAssessor.maLink(maData.msaLink);
-        const pdbLink = MutationAssessor.maLink(maData.pdbLink);
-
-        const impact = maData.functionalImpact ? (
-            <div>
-                <table className={tooltipStyles['ma-tooltip-table']}>
-                    {(maData.functionalImpactScore ||
-                        maData.functionalImpactScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{maData.functionalImpactScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
-                    )}
-                </table>
-                <span>
-                    Please refer to the score range{' '}
-                    <a
-                        href="http://mutationassessor.org/r3/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        here
-                    </a>
-                    .
-                </span>
-            </div>
-        ) : null;
-
-        const xVar = xVarLink ? (
-            <div className={tooltipStyles['mutation-assessor-link']}>
-                <a href={xVarLink} target="_blank" rel="noopener noreferrer">
-                    <img
-                        height="15"
-                        width="19"
-                        src={require('./styles/mutationAssessor.png')}
-                        className={tooltipStyles['mutation-assessor-main-img']}
-                        alt="Mutation Assessor"
-                    />
-                    Go to Mutation Assessor
-                </a>
-            </div>
-        ) : null;
-
-        const msa = msaLink ? (
-            <div className={tooltipStyles['mutation-assessor-link']}>
-                <a href={msaLink} target="_blank" rel="noopener noreferrer">
-                    <span
-                        className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-msa-icon']}`}
-                    >
-                        msa
+        if (this.props.mutationAssessor) {
+            const maData = this.props.mutationAssessor;
+            const xVarLink = MutationAssessor.maLink(
+                `http://mutationassessor.org/r3/?cm=var&p=${maData.uniprotId}&var=${maData.variant}`
+            );
+            const msaLink = MutationAssessor.maLink(maData.msaLink);
+            const pdbLink = MutationAssessor.maLink(maData.pdbLink);
+            const impact = maData.functionalImpact ? (
+                <div>
+                    <table className={tooltipStyles['ma-tooltip-table']}>
+                        {(maData.functionalImpactScore ||
+                            maData.functionalImpactScore === 0) && (
+                            <tr>
+                                <td>Score</td>
+                                <td>
+                                    <b>
+                                        {maData.functionalImpactScore.toFixed(
+                                            2
+                                        )}
+                                    </b>
+                                </td>
+                            </tr>
+                        )}
+                    </table>
+                    <span>
+                        Please refer to the score range{' '}
+                        <a
+                            href="http://mutationassessor.org/r3/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            here
+                        </a>
+                        .
                     </span>
-                    Multiple Sequence Alignment
-                </a>
-            </div>
-        ) : null;
+                </div>
+            ) : null;
 
-        const pdb = pdbLink ? (
-            <div className={tooltipStyles['mutation-assessor-link']}>
-                <a href={pdbLink} target="_blank" rel="noopener noreferrer">
-                    <span
-                        className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-3d-icon']}`}
-                    >
-                        3D
-                    </span>
-                    Mutation Assessor 3D View
-                </a>
-            </div>
-        ) : null;
+            const xVar =
+                xVarLink &&
+                maData.uniprotId.length !== 0 &&
+                maData.variant.length !== 0 ? (
+                    <div className={tooltipStyles['mutation-assessor-link']}>
+                        <a
+                            href={xVarLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img
+                                height="15"
+                                width="19"
+                                src={require('./styles/mutationAssessor.png')}
+                                className={
+                                    tooltipStyles['mutation-assessor-main-img']
+                                }
+                                alt="Mutation Assessor"
+                            />
+                            Go to Mutation Assessor
+                        </a>
+                    </div>
+                ) : null;
 
-        return (
-            <div>
-                {impact}
-                {msa}
-                {pdb}
-                {xVar}
-                <br />
-            </div>
-        );
+            const msa =
+                msaLink && maData.msaLink.length !== 0 ? (
+                    <div className={tooltipStyles['mutation-assessor-link']}>
+                        <a
+                            href={msaLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span
+                                className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-msa-icon']}`}
+                            >
+                                msa
+                            </span>
+                            Multiple Sequence Alignment
+                        </a>
+                    </div>
+                ) : null;
+
+            const pdb =
+                pdbLink && maData.pdbLink.length !== 0 ? (
+                    <div className={tooltipStyles['mutation-assessor-link']}>
+                        <a
+                            href={pdbLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span
+                                className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-3d-icon']}`}
+                            >
+                                3D
+                            </span>
+                            Mutation Assessor 3D View
+                        </a>
+                    </div>
+                ) : null;
+
+            return (
+                <div>
+                    {impact}
+                    {msa}
+                    {pdb}
+                    {xVar}
+                    <br />
+                </div>
+            );
+        }
     }
 
     public mutationAssessorTooltip(tooltipTrigger: JSX.Element) {
