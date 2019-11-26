@@ -31,10 +31,10 @@
 .data-source {
     font-weight: normal;
     font-size: 1rem;
-    margin-left: 30px;
     margin-right: 5px;
     color: black;
 }
+
 .data-source a,
 .data-source a:hover,
 .data-source a:focus,
@@ -43,18 +43,20 @@
     color: black;
     // text-decoration: none !important;
 }
+
+.data-group-gap {
+    margin-left: 30px;
+}
 /* gnomad */
 .gnomad {
     font-size: 1rem;
     font-weight: bold;
-    vertical-align: middle;
 }
 
 /* dbsnp */
 .dbsnp {
     font-size: 1rem;
     font-weight: bold;
-    vertical-align: middle;
 }
 
 /* functional prediction */

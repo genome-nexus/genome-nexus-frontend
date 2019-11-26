@@ -26,12 +26,28 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 this.props.myVariantInfo.gnomadGenome)
         ) {
             return (
-                <span className={functionalGroupsStyle['gnomad']}>
-                    <GnomadFrequency myVariantInfo={this.props.myVariantInfo} />
+                <span className={functionalGroupsStyle['data-group-gap']}>
+                    {this.gnomadTooltip(
+                        this.props.myVariantInfo,
+                        this.props.chromosome
+                    )}
+                    <span className={functionalGroupsStyle['gnomad']}>
+                        <GnomadFrequency
+                            myVariantInfo={this.props.myVariantInfo}
+                        />
+                    </span>
                 </span>
             );
         } else {
-            return <span className={functionalGroupsStyle['gnomad']}>N/A</span>;
+            return (
+                <span className={functionalGroupsStyle['data-group-gap']}>
+                    {this.gnomadTooltip(
+                        this.props.myVariantInfo,
+                        this.props.chromosome
+                    )}
+                    <span className={functionalGroupsStyle['gnomad']}>N/A</span>
+                </span>
+            );
         }
     }
 
@@ -91,30 +107,39 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             this.props.myVariantInfo.dbsnp.rsid
         ) {
             return (
-                <DefaultTooltip
-                    placement="top"
-                    overlay={
-                        <span>
-                            dbSNP ID.&nbsp;
-                            <a
-                                href={`https://www.ncbi.nlm.nih.gov/snp/${this.props.myVariantInfo.dbsnp.rsid}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span>
-                                    Click here to see variant on dbSNP website.
-                                </span>
-                            </a>
+                <span className={functionalGroupsStyle['data-group-gap']}>
+                    {this.dbsnpToolTip(this.props.myVariantInfo)}
+                    <DefaultTooltip
+                        placement="top"
+                        overlay={
+                            <span>
+                                dbSNP ID.&nbsp;
+                                <a
+                                    href={`https://www.ncbi.nlm.nih.gov/snp/${this.props.myVariantInfo.dbsnp.rsid}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <span>
+                                        Click here to see variant on dbSNP
+                                        website.
+                                    </span>
+                                </a>
+                            </span>
+                        }
+                    >
+                        <span className={functionalGroupsStyle['dbsnp']}>
+                            {this.props.myVariantInfo.dbsnp.rsid}
                         </span>
-                    }
-                >
-                    <span className={functionalGroupsStyle['dbsnp']}>
-                        {this.props.myVariantInfo.dbsnp.rsid}
-                    </span>
-                </DefaultTooltip>
+                    </DefaultTooltip>
+                </span>
             );
         } else {
-            return <span className={functionalGroupsStyle['dbsnp']}>N/A</span>;
+            return (
+                <span className={functionalGroupsStyle['data-group-gap']}>
+                    {this.dbsnpToolTip(this.props.myVariantInfo)}
+                    <span className={functionalGroupsStyle['dbsnp']}>N/A</span>
+                </span>
+            );
         }
     }
 
@@ -162,12 +187,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
     public render() {
         return (
             <Row className={functionalGroupsStyle['data-content']}>
-                {this.gnomadTooltip(
-                    this.props.myVariantInfo,
-                    this.props.chromosome
-                )}
                 {this.gnomad()}
-                {this.dbsnpToolTip(this.props.myVariantInfo)}
                 {this.dbsnp()}
             </Row>
         );

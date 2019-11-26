@@ -312,9 +312,8 @@ export default class MutationAssessor extends React.Component<
                     </span>
                 </span>
             );
-            maContent = this.mutationAssessorTooltip(maContent);
         } else {
-            const noData = (
+            maContent = (
                 <span
                     className={
                         functionalGroupsStyle['functional-prediction-no-data']
@@ -323,13 +322,16 @@ export default class MutationAssessor extends React.Component<
                     N/A
                 </span>
             );
-            maContent = this.mutationAssessorTooltip(noData);
         }
 
         return (
-            <span>
-                {this.mutationAssessorTooltip(dataSource)}
-                {maContent}
+            <span className={functionalGroupsStyle['data-group-gap']}>
+                {this.mutationAssessorTooltip(
+                    <span>
+                        {dataSource}
+                        {maContent}
+                    </span>
+                )}
             </span>
         );
     }

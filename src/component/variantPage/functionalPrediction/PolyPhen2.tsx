@@ -225,9 +225,8 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                     </span>
                 </span>
             );
-            polyPhen2content = this.polyPhenTooltip(polyPhen2content);
         } else {
-            const noData = (
+            polyPhen2content = (
                 <span
                     className={
                         functionalGroupsStyle['functional-prediction-no-data']
@@ -236,13 +235,16 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                     N/A
                 </span>
             );
-            polyPhen2content = this.polyPhenTooltip(noData);
         }
 
         return (
-            <span>
-                {this.polyPhenTooltip(dataSource)}
-                {polyPhen2content}
+            <span className={functionalGroupsStyle['data-group-gap']}>
+                {this.polyPhenTooltip(
+                    <span>
+                        {dataSource}
+                        {polyPhen2content}
+                    </span>
+                )}
             </span>
         );
     }

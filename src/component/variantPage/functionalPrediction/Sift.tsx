@@ -220,9 +220,8 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                     </span>
                 </span>
             );
-            siftContent = this.siftTooltip(siftContent);
         } else {
-            const noData = (
+            siftContent = (
                 <span
                     className={
                         functionalGroupsStyle['functional-prediction-no-data']
@@ -231,13 +230,16 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                     N/A
                 </span>
             );
-            siftContent = this.siftTooltip(noData);
         }
 
         return (
-            <span>
-                {this.siftTooltip(dataSource)}
-                {siftContent}
+            <span className={functionalGroupsStyle['data-group-gap']}>
+                {this.siftTooltip(
+                    <span>
+                        {dataSource}
+                        {siftContent}
+                    </span>
+                )}
             </span>
         );
     }
