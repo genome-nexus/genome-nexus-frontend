@@ -100,7 +100,13 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         );
     }
 
-    public dbsnp() {
+    public dbsnp(myVariantInfo: MyVariantInfo | undefined) {
+        let dbsnpUrl = '';
+        if (myVariantInfo && myVariantInfo.dbsnp && myVariantInfo.dbsnp.rsid) {
+            dbsnpUrl = `https://www.ncbi.nlm.nih.gov/snp/${myVariantInfo.dbsnp.rsid}`;
+        } else {
+            dbsnpUrl = 'https://www.ncbi.nlm.nih.gov/snp/';
+        }
         if (
             this.props.myVariantInfo &&
             this.props.myVariantInfo.dbsnp &&
@@ -108,48 +114,29 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         ) {
             return (
                 <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.dbsnpToolTip(this.props.myVariantInfo)}
-                    <DefaultTooltip
-                        placement="top"
-                        overlay={
-                            <span>
-                                dbSNP ID.&nbsp;
-                                <a
-                                    href={`https://www.ncbi.nlm.nih.gov/snp/${this.props.myVariantInfo.dbsnp.rsid}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <span>
-                                        Click here to see variant on dbSNP
-                                        website.
-                                    </span>
-                                </a>
-                            </span>
-                        }
-                    >
+                    {this.dbsnpToolTip(
+                        dbsnpUrl,
                         <span className={functionalGroupsStyle['dbsnp']}>
                             {this.props.myVariantInfo.dbsnp.rsid}
                         </span>
-                    </DefaultTooltip>
+                    )}
                 </span>
             );
         } else {
             return (
                 <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.dbsnpToolTip(this.props.myVariantInfo)}
-                    <span className={functionalGroupsStyle['dbsnp']}>N/A</span>
+                    {this.dbsnpToolTip(
+                        dbsnpUrl,
+                        <span className={functionalGroupsStyle['dbsnp']}>
+                            N/A
+                        </span>
+                    )}
                 </span>
             );
         }
     }
 
-    public dbsnpToolTip(myVariantInfo: MyVariantInfo | undefined) {
-        let dbsnpUrl = '';
-        if (myVariantInfo && myVariantInfo.dbsnp && myVariantInfo.dbsnp.rsid) {
-            dbsnpUrl = `https://www.ncbi.nlm.nih.gov/snp/${myVariantInfo.dbsnp.rsid}`;
-        } else {
-            dbsnpUrl = 'https://www.ncbi.nlm.nih.gov/snp/';
-        }
+    public dbsnpToolTip(dbsnpUrl: string, tooltipTrigger: JSX.Element) {
         return (
             <DefaultTooltip
                 placement="top"
@@ -171,14 +158,17 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={dbsnpUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        dbSNP
-                    </a>
+                <span>
+                    <span className={functionalGroupsStyle['data-source']}>
+                        <a
+                            href={dbsnpUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            dbSNP
+                        </a>
+                    </span>
+                    {tooltipTrigger}
                 </span>
             </DefaultTooltip>
         );
@@ -188,7 +178,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         return (
             <Row className={functionalGroupsStyle['data-content']}>
                 {this.gnomad()}
-                {this.dbsnp()}
+                {this.dbsnp(this.props.myVariantInfo)}
             </Row>
         );
     }
