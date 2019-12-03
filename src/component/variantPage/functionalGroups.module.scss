@@ -1,0 +1,72 @@
+.functional-groups {
+    padding-top: 10px;
+    margin-left: 2%;
+}
+
+.group-name {
+    background-color: #f2f2f2;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    max-width: 27%;
+    display: flex;
+    align-items: center;
+}
+
+.group-content {
+    display: flex;
+    align-items: center;
+}
+
+.data-content {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.data-source {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-right: 5px;
+    color: black;
+}
+
+.data-source a,
+.data-source a:hover,
+.data-source a:focus,
+.data-source a:active,
+.brand-title-link:visited {
+    color: black;
+    // text-decoration: none !important;
+}
+
+.data-group-gap {
+    margin-left: 30px;
+}
+/* gnomad */
+.gnomad {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* dbsnp */
+.dbsnp {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* functional prediction */
+.functional-prediction-data {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.functional-prediction-no-data {
+    font-size: 1rem;
+    font-weight: bold;
+}
