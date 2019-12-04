@@ -2,8 +2,8 @@ import { observable } from 'mobx';
 import { remoteData, VariantAnnotation } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
 import oncokbClient from './OncokbClientInstance';
-import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 import MobxPromise from 'mobxpromise';
+import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 
 export interface VariantStoreConfig {
     variant: string;

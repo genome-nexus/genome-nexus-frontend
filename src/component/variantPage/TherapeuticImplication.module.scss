@@ -1,0 +1,70 @@
+.drugs-with-icon {
+    display: inline-flex;
+}
+
+.icon {
+    margin: auto;
+}
+
+.drugs {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.treatments {
+    // display: flex;
+    // align-items: center;
+}
+
+.sensitive-text {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #33a02c; // yellow
+    color: white;
+}
+
+.sensitive-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.resitant-text {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #ee3424; // yellow
+    color: white;
+}
+
+.data-content {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    margin-left: 15px !important;
+}
+
+.data-source {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-right: 5px;
+    color: black;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.data-source a,
+.data-source a:hover,
+.data-source a:focus,
+.data-source a:active,
+.brand-title-link:visited {
+    color: black;
+}
