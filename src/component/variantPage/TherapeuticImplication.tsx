@@ -240,7 +240,7 @@ class TherapeuticImplication extends React.Component<
                 {resistantDrugs}
             </Row>
         ) : (
-            <span className={functionalGroupsStyle['data-content']}>
+            <span className={classNames(functionalGroupsStyle['data-content'], functionalGroupsStyle['no-data'])}>
                 No data available
             </span>
         );

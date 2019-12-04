@@ -5,6 +5,7 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 import { Row } from 'react-bootstrap';
 import Oncokb from './biologicalFunction/Oncokb';
 import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+import classNames from 'classnames';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -21,7 +22,7 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
             );
         } else {
             return (
-                <Row className={functionalGroupsStyle['data-content']}>
+                <Row className={classNames(functionalGroupsStyle['data-content'], functionalGroupsStyle['no-data'])}>
                     No data available.
                 </Row>
             );
