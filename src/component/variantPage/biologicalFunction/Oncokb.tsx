@@ -151,7 +151,7 @@ class Oncokb extends React.Component<IOncokbProps> {
     public render() {
         if (this.props.oncokb) {
             return (
-                <span>
+                <span className={functionalGroupsStyle['data-group-gap']}>
                     {this.oncokbTooltip()}
                     {this.mutationEffect(this.props.oncokb)}
                     {this.oncogenicity(this.props.oncokb)}
