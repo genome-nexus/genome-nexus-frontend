@@ -45,11 +45,18 @@ class TherapeuticImplication extends React.Component<
             const sensitiveTreatmentLevels = this.getSensitiveTreatmentLevels(
                 treatmentsGroupByLevel
             ); // get all sensitive levels in this mutation
-            const sensitiveDrugs = this.sensitiveTreatments(
+            const sensitiveDrugs = this.allDrugs(
                 treatmentsGroupByLevel,
                 sensitiveTreatmentLevels
             );
-            return sensitiveDrugs;
+            return (
+                <span className={therapeuticImplication['drugs-container']}>
+                    <span className={therapeuticImplication['sensitive-text']}>
+                        Sensitive to:
+                    </span>
+                    {sensitiveDrugs}
+                </span>
+            );
         }
         return null;
     }
@@ -66,79 +73,44 @@ class TherapeuticImplication extends React.Component<
             const resistantTreatmentLevels = this.getResistantTreatmentLevels(
                 treatmentsGroupByLevel
             ); // get all resistant levels in this mutation
-            const resistantDrugs = this.resistantTreatments(
+            const resistantDrugs = this.allDrugs(
                 treatmentsGroupByLevel,
                 resistantTreatmentLevels
             );
-            return resistantDrugs;
+            return (
+                <span className={therapeuticImplication['drugs-container']}>
+                    <span className={therapeuticImplication['resistant-text']}>
+                        Resistant to:
+                    </span>
+                    {resistantDrugs}
+                </span>
+            );
         }
         return null;
     }
 
-    public sensitiveTreatments(
+    private allDrugs(
         treatmentsGroupByLevel: { [level: string]: IndicatorQueryTreatment[] },
         levels: string[]
     ) {
-        var content: any = [];
+        var drugs: any[] = [];
+        var drugNames: string = '';
         _.forEach(levels, level => {
-            content.push(
-                this.drugNamesWithLevelIcon(
-                    treatmentsGroupByLevel[level],
-                    level
-                )
+            drugs.push(
+                _.chain(treatmentsGroupByLevel[level])
+                    .flatMap(treatment => treatment.drugs)
+                    .map(drug => drug.drugName)
+                    .uniq()
+                    .value()
             );
         });
+        drugNames = _.chain(drugs)
+            .flatMap()
+            .uniq()
+            .value()
+            .join(', ');
         return (
-            <span className={therapeuticImplication['sensitive-container']}>
-                <span className={therapeuticImplication['sensitive-text']}>
-                    Sensitive to:
-                </span>
-                {content}
-            </span>
-        );
-    }
-
-    public resistantTreatments(
-        treatmentsGroupByLevel: { [level: string]: IndicatorQueryTreatment[] },
-        levels: string[]
-    ) {
-        var content: any = [];
-        _.forEach(levels, level => {
-            content.push(
-                this.drugNamesWithLevelIcon(
-                    treatmentsGroupByLevel[level],
-                    level
-                )
-            );
-        });
-        // TODO need to change the style names
-        return (
-            <span className={therapeuticImplication['sensitive-container']}>
-                <span className={therapeuticImplication['resitant-text']}>
-                    Resistant to:
-                </span>
-                {content}
-            </span>
-        );
-    }
-
-    public drugNamesWithLevelIcon(
-        treatments: IndicatorQueryTreatment[],
-        level: string
-    ) {
-        return (
-            <span className={therapeuticImplication['drugs-with-icon']}>
-                <span className={therapeuticImplication['icon']}>
-                    <i
-                        className={`oncokb level-icon level-${
-                            level.split('_')[1]
-                        }`}
-                    />
-                </span>
-                <span className={therapeuticImplication['drugs']}>
-                    {this.getDrugs(treatments)}
-                </span>
-            </span>
+            <span className={therapeuticImplication['drugs']}>{drugNames}</span>
         );
     }
 
@@ -174,20 +146,6 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public getDrugs(treatments: IndicatorQueryTreatment[]) {
-        let drugsNames: string[] = [];
-        if (treatments.length === 0) {
-            return null;
-        } else {
-            return _.chain(treatments)
-                .flatMap(treatment => treatment.drugs)
-                .map(drug => drug.drugName)
-                .uniq()
-                .value()
-                .join(', ');
-        }
-    }
-
     public oncokbToolTip(oncokb: IndicatorQueryResp | undefined) {
         let oncokbUrl = '';
         if (oncokb && oncokb.query && oncokb.query.hugoSymbol) {
@@ -217,7 +175,12 @@ class TherapeuticImplication extends React.Component<
                     </span>
                 }
             >
-                <span className={therapeuticImplication['data-source']}>
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-source'],
+                        therapeuticImplication['data-source']
+                    )}
+                >
                     <a
                         href={oncokbUrl}
                         target="_blank"
@@ -234,13 +197,23 @@ class TherapeuticImplication extends React.Component<
         const sensitiveDrugs = this.sensitiveDrugs(this.props.oncokb);
         const resistantDrugs = this.resistantDrugs(this.props.oncokb);
         return sensitiveDrugs || resistantDrugs ? (
-            <Row className={classNames(therapeuticImplication['data-content'])}>
+            <Row
+                className={classNames(
+                    functionalGroupsStyle['data-content'],
+                    therapeuticImplication['data-content']
+                )}
+            >
                 {this.oncokbToolTip(this.props.oncokb)}
                 {sensitiveDrugs}
                 {resistantDrugs}
             </Row>
         ) : (
-            <span className={classNames(functionalGroupsStyle['data-content'], functionalGroupsStyle['no-data'])}>
+            <span
+                className={classNames(
+                    functionalGroupsStyle['data-content'],
+                    functionalGroupsStyle['no-data']
+                )}
+            >
                 No data available
             </span>
         );

@@ -65,7 +65,12 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                 />
             </Row>
         ) : (
-            <span className={classNames(functionalGroupsStyle['data-content'], functionalGroupsStyle['no-data'])}>
+            <span
+                className={classNames(
+                    functionalGroupsStyle['data-content'],
+                    functionalGroupsStyle['no-data']
+                )}
+            >
                 No data available
             </span>
         );

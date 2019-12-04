@@ -22,9 +22,14 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
             );
         } else {
             return (
-                <Row className={classNames(functionalGroupsStyle['data-content'], functionalGroupsStyle['no-data'])}>
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-content'],
+                        functionalGroupsStyle['no-data']
+                    )}
+                >
                     No data available.
-                </Row>
+                </span>
             );
         }
     }
