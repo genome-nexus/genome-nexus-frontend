@@ -2,10 +2,10 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 
-import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 import BiologicalFunctionStyles from './BiologicalFunction.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
+import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 
 interface IOncokbProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -72,8 +72,11 @@ class Oncokb extends React.Component<IOncokbProps> {
                 <span
                     className={classNames(
                         BiologicalFunctionStyles[
-                            `oncogenicity-${ONCOGENICITY_CLASS_NAMES[oncokb.oncogenic]}`
-                        ], BiologicalFunctionStyles['oncogenicity-text']
+                            `oncogenicity-${
+                                ONCOGENICITY_CLASS_NAMES[oncokb.oncogenic]
+                            }`
+                        ],
+                        BiologicalFunctionStyles['oncogenicity-text']
                     )}
                 >
                     {oncokb.oncogenic}
@@ -130,7 +133,8 @@ class Oncokb extends React.Component<IOncokbProps> {
                                     oncokb.mutationEffect.knownEffect
                                 ]
                             }`
-                        ], BiologicalFunctionStyles['mutation-effect-text']
+                        ],
+                        BiologicalFunctionStyles['mutation-effect-text']
                     )}
                 >
                     {oncokb.mutationEffect.knownEffect}
@@ -161,7 +165,6 @@ class Oncokb extends React.Component<IOncokbProps> {
                         N/A
                     </span>
                 </span>
-                
             );
         }
     }

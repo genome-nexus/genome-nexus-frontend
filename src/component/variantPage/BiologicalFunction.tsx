@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { IndicatorQueryResp } from 'react-mutation-mapper/dist/model/OncoKb';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 import { Row } from 'react-bootstrap';
 import Oncokb from './biologicalFunction/Oncokb';
+import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -12,7 +12,6 @@ interface IBiologicalFunctionProps {
 
 @observer
 class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
-
     public render() {
         if (this.props.oncokb) {
             return (
