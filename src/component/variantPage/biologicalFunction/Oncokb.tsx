@@ -66,7 +66,6 @@ class Oncokb extends React.Component<IOncokbProps> {
     static ONCOKB_URL: string = 'https://oncokb.org/';
 
     public oncogenicity(oncokb: IndicatorQueryResp) {
-        // TODO do we need to check the ""
         if (oncokb.oncogenic && oncokb.oncogenic !== '') {
             return (
                 <span
