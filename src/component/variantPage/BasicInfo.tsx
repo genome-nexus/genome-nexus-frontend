@@ -1,127 +1,116 @@
 import * as React from 'react';
-import './BasicInfo.css';
 import { observer } from 'mobx-react';
 import { Row, Col } from 'react-bootstrap';
-import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
+import { VariantAnnotationSummary, TranscriptConsequenceSummary } from 'cbioportal-frontend-commons';
 import _ from 'lodash';
+import basicInfo from './BasicInfo.module.scss';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
 }
 
+// type BasicInfoData = {
+//     hgvsc?: string | null;
+//     hgvsShort?: string | null;
+//     hugoGeneSymbol?: string | null;
+//     variantType?: string | null;
+//     consequenceTerms?: string | null;
+//     oncogene?: string | null;
+//     tsg?: string | null;
+// }
+
 export type BasicInfoData = {
-    name: string;
-    value: string | undefined;
-    key: string;
+    value:string | null;
+    key:string;
+    category?:string;
 };
+
 @observer
-class BasicInfo extends React.Component<IBasicInfoProps> {
-    private parseAnnotation(
-        annotation: VariantAnnotationSummary | undefined
-    ): BasicInfoData[] {
-        let parsedData: BasicInfoData[] = [];
-        if (annotation !== undefined) {
-            parsedData.push({
-                key: 'allele',
-                name: 'Allele',
-                value: `${annotation.genomicLocation.referenceAllele}/${annotation.genomicLocation.variantAllele}`,
-            });
-            parsedData.push({
-                key: 'chomosome',
-                name: 'Chomosome',
-                value: annotation.genomicLocation.chromosome,
-            });
-            parsedData.push({
-                key: 'position',
-                name: 'Position',
-                value:
-                    annotation.genomicLocation.start ===
-                    annotation.genomicLocation.end
-                        ? `${annotation.genomicLocation.start}`
-                        : `${annotation.genomicLocation.start}_${annotation.genomicLocation.end}`,
-            });
-            parsedData.push({
-                key: 'assemblyName',
-                name: 'Assembly Name',
-                value: annotation.assemblyName,
-            });
-            parsedData.push({
-                key: 'variantType',
-                name: 'Variant Type',
-                value: annotation.variantType,
-            });
-            parsedData.push({
-                key: 'strandSign',
-                name: 'Strand Sign',
-                value: annotation.strandSign,
-            });
-        } else {
-            parsedData.push({
-                key: 'allele',
-                name: 'Allele',
-                value: 'N/A',
-            });
-            parsedData.push({
-                key: 'chomosome',
-                name: 'Chomosome',
-                value: 'N/A',
-            });
-            parsedData.push({
-                key: 'position',
-                name: 'Position',
-                value: 'N/A',
-            });
-            parsedData.push({
-                key: 'assemblyName',
-                name: 'Assembly Name',
-                value: 'N/A',
-            });
-            parsedData.push({
-                key: 'variantType',
-                name: 'Variant Type',
-                value: 'N/A',
-            });
-            parsedData.push({
-                key: 'strandSign',
-                name: 'Strand Sign',
-                value: 'N/A',
-            });
+class BasicInfo extends React.Component<IBasicInfoProps> {    
+    
+    public render() {
+        // if (this.props.annotation) {
+        //     if (this.props.annotation.transcriptConsequenceSummary)
+        // }
+        // var basicInfoData : BasicInfoData[] = [];
+
+        if (this.props.annotation) {
+            const renderData: BasicInfoData[] | null= this.getDataFromTranscriptConsequenceSummary(
+                this.props.annotation
+            );
+            const basicInfoList = _.map(renderData, data => {
+                return (
+                    
+                        BasicInfoUnit(data.value, data.key, data.category)
+                    
+                );
+            })
+            return <div style={{display:"flex", flexWrap:"wrap"}}>{basicInfoList}</div>
         }
-        return parsedData;
+        else {
+            return null;
+        }
     }
 
-    public render() {
-        const renderData: BasicInfoData[] = this.parseAnnotation(
-            this.props.annotation
-        );
-        return (
-            <div>
-                <Row className="mb-1 mt-3">
-                    {' '}
-                    {_.map(renderData, data => {
-                        return (
-                            <Col lg="4" md="6">
-                                {BasicInfoUnit(data.name, data.value, data.key)}
-                            </Col>
-                        );
-                    })}
-                </Row>
-            </div>
-        );
+    public getDataFromTranscriptConsequenceSummary(annotation: VariantAnnotationSummary): BasicInfoData[] | null {
+        let parsedData: BasicInfoData[] = [];
+        if (annotation.transcriptConsequenceSummary) {
+            let canonicalTranscript = annotation.transcriptConsequenceSummary;
+            parsedData.push({
+                value: this.parseHgvscFromTranscriptConsequenceSummary(canonicalTranscript),
+                key: 'hgvsc',
+                category:'default'
+            });
+            parsedData.push({
+                value: canonicalTranscript.hgvspShort,
+                key: 'hgvsShort',
+                category:'default'
+            });
+            parsedData.push({
+                value: canonicalTranscript.hugoGeneSymbol,
+                key: 'hugoGeneSymbol',
+                category:'default'
+            });
+            parsedData.push({
+                value: annotation.variantType,
+                key: 'variantType',
+                category:'mutation'
+            });
+            parsedData.push({
+                value: canonicalTranscript.consequenceTerms,
+                key: 'consequenceTerms',
+                category:'mutation'
+            });
+            parsedData.push({
+                value: "TODO",
+                key: 'oncogene',
+                category:'oncogene'
+            });
+            parsedData.push({
+                value: "TODO",
+                key: 'tsg',
+                category:'tsg'
+            });
+            return parsedData;
+        }
+        return null;
+    }
+
+    private parseHgvscFromTranscriptConsequenceSummary(transcript: TranscriptConsequenceSummary) {
+        if (transcript.hgvsc) {
+            let hgvsc = transcript.hgvsc;
+            var startIndex = hgvsc.indexOf('c.');
+            return startIndex !== -1 ? hgvsc.substr(startIndex) : null; 
+        }
+        return null;
     }
 }
 
-function BasicInfoUnit(field: string, data: string | undefined, key: string) {
+function BasicInfoUnit(value: string | null, key: string, category: string | undefined) {
     return (
-        <Row key={key}>
-            <Col lg="5" className="fieldName">
-                {field}
-            </Col>
-            <Col lg="7" className="data">
-                {data === undefined ? 'N/A' : data}
-            </Col>
-        </Row>
+        <span className={basicInfo[`${category}`]}>{value}</span>
     );
 }
+
 
 export default BasicInfo;

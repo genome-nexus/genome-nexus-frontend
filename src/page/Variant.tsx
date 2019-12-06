@@ -320,13 +320,13 @@ class Variant extends React.Component<IVariantProps> {
                                 }
                             </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <Col>
                                 <TranscriptSummaryTable
                                     annotation={this.annotationSummary}
                                 />
                             </Col>
-                        </Row>
+                        </Row> */}
                         <Row>
                             <Col className="pb-3 small">
                                 {this.getMutationMapper()}
