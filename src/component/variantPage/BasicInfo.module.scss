@@ -1,43 +1,57 @@
-.default {
+@import './functionalPrediction/styles/functionalImpact.scss';
+
+.data-pills {
     color: black;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
-    background-color: lightgray;
+    background-color: #f2f2f2;
     font-size: 1.05rem;
     margin-right: 10px;
     margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.default {
+    // some styles here
 }
 
 .mutation {
-    color: black;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
-    background-color: lightgray;
-    font-size: 1.05rem;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    // some styles here
 }
 
 .oncogene {
-    color: black;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
-    background-color: lightgray;
-    font-size: 1.05rem;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    color: $high; // red
 }
 
 .tsg {
-    color: black;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
-    background-color: lightgray;
-    font-size: 1.05rem;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    color: $medium; // orange
+}
+
+.basic-info-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.missense-mutation {
+    color: #008000;
+    font-weight: bold;
+}
+.trunc-mutation {
+    color: #000000;
+    font-weight: bold;
+}
+.inframe-mutation {
+    color: #8b4513;
+    font-weight: bold;
+}
+.other-mutation {
+    color: #8b00c9;
+    font-weight: bold;
+}
+.default-mutation {
+    color: #bb0000;
+    font-weight: bold;
 }

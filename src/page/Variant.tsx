@@ -6,7 +6,6 @@ import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
 import { VariantStore } from './VariantStore';
-import TranscriptSummaryTable from '../component/variantPage/TranscriptSummaryTable';
 import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
@@ -54,6 +53,11 @@ class Variant extends React.Component<IVariantProps> {
     @computed
     private get oncokb() {
         return this.props.store.oncokbData.result;
+    }
+
+    @computed
+    private get oncokbVariant() {
+        return this.props.store.oncokbVariant.result;
     }
 
     @computed
@@ -316,6 +320,12 @@ class Variant extends React.Component<IVariantProps> {
                                 {
                                     <BasicInfo
                                         annotation={this.annotationSummary}
+                                        mutation={
+                                            this.variantToMutation(
+                                                this.annotationSummary
+                                            )[0]
+                                        }
+                                        oncokbVariant={this.oncokbVariant}
                                     />
                                 }
                             </Col>
