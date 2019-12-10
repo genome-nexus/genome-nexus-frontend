@@ -1,0 +1,74 @@
+@import '~oncokb-styles/scss/_vars';
+@import '../functionalPrediction/styles/functionalImpact.scss';
+
+.oncogenicity-text {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.oncogenicity-oncogenic {
+    background-color: $oncokb-color-oncogenic; // blue
+    color: white !important;
+}
+
+.oncogenicity-neutral {
+    background-color: $oncokb-color-neutral; // dark grey
+    color: white !important;
+}
+
+.oncogenicity-nconclusive {
+    background-color: $oncokb-color-inconclusive; // light grey
+    color: black;
+}
+
+.oncogenicity-vus {
+    background-color: $oncokb-color-vus; // dark grey
+    color: white !important;
+}
+
+.oncogenicity-unknown {
+    background-color: $oncokb-color-unknown; //lighter grey
+    color: black;
+}
+
+.mutation-effect-text {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-right: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.mutation-effect-gain {
+    background-color: $low; // yellow
+    color: black;
+}
+
+.mutation-effect-loss {
+    background-color: $high; // red
+    color: white !important;
+}
+
+.mutation-effect-switch {
+    background-color: $neutral; // grey
+    color: black;
+}
+
+.mutation-effect-neutral {
+    background-color: $neutral; // grey
+    color: black;
+}
+
+.mutation-effect-inconclusive {
+    background-color: $neutral; // grey
+    color: black;
+}
+
+.mutation-effect-unknown {
+    background-color: $neutral; // grey
+    color: black;
+}

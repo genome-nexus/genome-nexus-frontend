@@ -1,6 +1,9 @@
 import { observable } from 'mobx';
 import { remoteData, VariantAnnotation } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
+import oncokbClient from './OncokbClientInstance';
+import MobxPromise from 'mobxpromise';
+import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -44,6 +47,17 @@ export class VariantStore {
         },
         onError: (err: Error) => {
             // fail silently
+        },
+    });
+
+    readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
+        invoke: async () => {
+            return await oncokbClient.annotateMutationsByHGVSgGetUsingGET({
+                hgvsg: this.variant,
+            });
+        },
+        onError: () => {
+            // fail silently, leave the error handling responsibility to the data consumer
         },
     });
 }
