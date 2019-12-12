@@ -1,5 +1,12 @@
 @import './functionalPrediction/styles/functionalImpact.scss';
 
+.basic-info-container {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
 .data-pills {
     color: black;
     padding-left: 10px;
@@ -28,11 +35,14 @@
     color: $medium; // orange
 }
 
-.basic-info-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 5px;
-    margin-bottom: 5px;
+.transcript-dropdown {
+    min-width: 200px;
+    margin-right: 20px;
+}
+
+.basic-info-pills-container {
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .missense-mutation {
