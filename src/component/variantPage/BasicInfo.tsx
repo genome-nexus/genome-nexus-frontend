@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import {
     VariantAnnotationSummary,
     TranscriptConsequenceSummary,
@@ -12,13 +12,15 @@ import {
 } from 'cbioportal-frontend-commons';
 import { Alteration } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import { Mutation } from 'react-mutation-mapper';
-import TranscriptDropdown from './TranscriptDropdown';
 import basicInfo from './BasicInfo.module.scss';
+import { Button } from 'react-bootstrap';
+import TranscriptSummaryTable from './TranscriptSummaryTable';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
     mutation: Mutation;
     oncokbVariant?: Alteration[];
+    variant: string;
 }
 
 type MutationTypeFormat = {
@@ -102,16 +104,21 @@ export type BasicInfoData = {
 
 @observer
 export default class BasicInfo extends React.Component<IBasicInfoProps> {
-    @observable activeTranscript: TranscriptConsequenceSummary | undefined = this.shouldShowDropDown(this.props.annotation) ? this.props.annotation!.transcriptConsequenceSummary : undefined;
+    @observable showAllTranscripts = false;
 
     public render() {
+        const haveTranscriptTable = this.haveTranscriptTable(
+            this.props.annotation
+        );
+        const canonicalTranscript =
+            this.props.annotation &&
+            this.props.annotation.transcriptConsequenceSummary;
         if (this.props.annotation) {
             let renderData:
                 | BasicInfoData[]
                 | null = this.getDataFromTranscriptConsequenceSummary(
-                this.activeTranscript
+                canonicalTranscript
             );
-            // no selection, return null
             if (renderData === null) {
                 return null;
             }
@@ -124,23 +131,15 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
 
             return (
                 <div className={basicInfo['basic-info-container']}>
-                    <span className={basicInfo['transcript-dropdown']}>
-                    {
-                        (this.shouldShowDropDown(this.props.annotation)) && (
-                            <TranscriptDropdown
-                                annotation={this.props.annotation!}
-                                canonicalTranscript={
-                                    this.props.annotation.transcriptConsequenceSummary!
-                                }
-                                otherTranscript={this.props.annotation.transcriptConsequenceSummaries!}
-                                onTranscriptSelection={this.onTranscriptSelection}
-                            />
-                        )
-                    }
-                    </span>
-                    <span className={basicInfo['basic-info-pills-container']}>
+                    <span className={basicInfo['basic-info-pills']}>
                         {basicInfoList}
                     </span>
+                    {haveTranscriptTable &&
+                        this.transcriptsButton(this.showAllTranscripts)}
+                    <TranscriptSummaryTable
+                        annotation={this.props.annotation}
+                        isOpen={this.showAllTranscripts}
+                    />
                 </div>
             );
         } else {
@@ -151,7 +150,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     public getDataFromTranscriptConsequenceSummary(
         Transcript: TranscriptConsequenceSummary | undefined
     ): BasicInfoData[] | null {
-        // no active Transcript, return null
+        // no canonical transcript, return null
         if (Transcript === undefined) {
             return null;
         }
@@ -159,44 +158,61 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         const oncokbOncogeneTsg = this.findOncokbVariant(
             this.props.oncokbVariant
         );
-            parsedData.push({
-                value: this.parseHgvscFromTranscriptConsequenceSummary(
-                    Transcript
-                ),
-                key: 'hgvsc',
-                category: 'default',
-            });
-            parsedData.push({
-                value: Transcript.hgvspShort,
-                key: 'hgvsShort',
-                category: 'default',
-            });
-            parsedData.push({
-                value: Transcript.hugoGeneSymbol,
-                key: 'hugoGeneSymbol',
-                category: 'default',
-            });
-            parsedData.push({
-                value: this.props.annotation!.variantType,
-                key: 'variantType',
-                category: 'mutation',
-            });
-            parsedData.push({
-                value: getMutationTypeData(Transcript),
-                key: 'consequenceTerms',
-                category: getMutationTypeClassName(Transcript),
-            });
-            parsedData.push({
-                value: this.getOncogene(oncokbOncogeneTsg),
-                key: 'oncogene',
-                category: 'oncogene',
-            });
-            parsedData.push({
-                value: this.getTsg(oncokbOncogeneTsg),
-                key: 'tsg',
-                category: 'tsg',
-            });
-            return parsedData;
+        // gene
+        parsedData.push({
+            value: Transcript.hugoGeneSymbol,
+            key: 'hugoGeneSymbol',
+            category: 'default',
+        });
+        // oncogene
+        parsedData.push({
+            value: this.getOncogene(oncokbOncogeneTsg),
+            key: 'oncogene',
+            category: 'oncogene',
+        });
+        // tsg
+        parsedData.push({
+            value: this.getTsg(oncokbOncogeneTsg),
+            key: 'tsg',
+            category: 'tsg',
+        });
+        // protein change
+        parsedData.push({
+            value: Transcript.hgvspShort,
+            key: 'hgvsShort',
+            category: 'default',
+        });
+        // variant classification
+        parsedData.push({
+            value: getMutationTypeData(Transcript),
+            key: 'consequenceTerms',
+            category: getMutationTypeClassName(Transcript),
+        });
+        // variant type
+        parsedData.push({
+            value: this.props.annotation!.variantType,
+            key: 'variantType',
+            category: 'mutation',
+        });
+        // hgvsg
+        parsedData.push({
+            value: this.props.variant,
+            key: 'hgvsg',
+            category: 'default',
+        });
+        //hgvsc
+        parsedData.push({
+            value: this.parseHgvscFromTranscriptConsequenceSummary(Transcript),
+            key: 'hgvsc',
+            category: 'default',
+        });
+        // transcript
+        parsedData.push({
+            value: Transcript.transcriptId,
+            key: 'transcript',
+            category: 'default',
+        });
+        return parsedData;
     }
 
     private parseHgvscFromTranscriptConsequenceSummary(
@@ -210,7 +226,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         return null;
     }
 
-    public findOncokbVariant(
+    private findOncokbVariant(
         oncokb: Alteration[] | undefined
     ): OncogeneTsg | null {
         if (oncokb) {
@@ -244,7 +260,6 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
 
     private getOncogene(oncogeneData: OncogeneTsg | null) {
         if (oncogeneData) {
-            console.log(oncogeneData.oncogene);
             return oncogeneData.oncogene === true ? 'Oncogene' : null;
         } else {
             return null;
@@ -269,23 +284,56 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         }
     }
 
-    private shouldShowDropDown(annotation: VariantAnnotationSummary | undefined) {
-        if (annotation
-            && annotation.transcriptConsequenceSummary !== undefined
-            && annotation.transcriptConsequenceSummaries !== undefined
-            && annotation.transcriptConsequenceSummaries.length > 1) {
+    private haveTranscriptTable(
+        annotation: VariantAnnotationSummary | undefined
+    ): boolean {
+        if (
+            annotation &&
+            annotation.transcriptConsequenceSummary !== undefined &&
+            annotation.transcriptConsequenceSummaries !== undefined &&
+            annotation.transcriptConsequenceSummaries.length > 1
+        ) {
             return true;
         }
         return false;
     }
 
-    private getTranscriptsMap(annotation: VariantAnnotationSummary) {
-        return _.groupBy(annotation.transcriptConsequenceSummaries, (transcriptConsequenceSummary) => transcriptConsequenceSummary.transcriptId);
+    private transcriptsButton(isOpened: boolean) {
+        if (isOpened === false) {
+            return (
+                <Button
+                    onClick={this.onButtonClick}
+                    aria-controls="table-content"
+                    variant="outline-secondary"
+                    className="btn-sm"
+                >
+                    <span>
+                        All transcripts&nbsp;
+                        <i className="fa fa-plus-circle" />
+                    </span>
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    onClick={this.onButtonClick}
+                    aria-controls="table-content"
+                    variant="outline-secondary"
+                    className="btn-sm"
+                >
+                    <span>
+                        Close table&nbsp;
+                        <i className="fa fa-minus-circle" />
+                    </span>
+                </Button>
+            );
+        }
     }
 
     @autobind
-    private onTranscriptSelection(option: {value: string, label: string}) {
-        this.activeTranscript = this.getTranscriptsMap(this.props.annotation!)[option.value][0];
+    @action
+    onButtonClick() {
+        this.showAllTranscripts = !this.showAllTranscripts;
     }
 }
 
@@ -294,31 +342,77 @@ function BasicInfoUnit(
     key: string,
     category: string | undefined
 ) {
-    if (key === "consequenceTerms") {
+    if (key === 'consequenceTerms') {
         return (
             <DefaultTooltip
-            placement="top"
-            overlay={
-                <span>
-                    The possible mutation types are:
-                    <br />Missense, Frame_shift_ins, Frame_shift_del, Frameshift, Nonsense,
-                    <br />Splice_site, Nonstart, Nonstop, In_frame_del, In_frame_ins, Inframe,
-                    <br />Truncating, Fusion, Silent, Other
+                placement="top"
+                overlay={
+                    <span>
+                        The possible variant classifications are:
+                        <br />
+                        Missense, Frame_shift_ins, Frame_shift_del, Frameshift,
+                        Nonsense,
+                        <br />
+                        Splice_site, Nonstart, Nonstop, In_frame_del,
+                        In_frame_ins, Inframe,
+                        <br />
+                        Truncating, Fusion, Silent, Other
+                    </span>
+                }
+            >
+                <span
+                    className={classNames(
+                        basicInfo[`${category}`],
+                        basicInfo[`data-pills`]
+                    )}
+                >
+                    {value}
                 </span>
-            }
-            >
-            <span
-                className={classNames(
-                    basicInfo[`${category}`],
-                    basicInfo[`data-pills`]
-                )}
-            >
-                {value}
-            </span>
-        </DefaultTooltip>
-        )
+            </DefaultTooltip>
+        );
     }
-    
+
+    if (key === 'oncogene' || key === 'tsg') {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <span>
+                        As categorised by&nbsp;
+                        <a
+                            href={'https://www.oncokb.org/'} // TODO goes to oncokb variant page?
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                OncoKB
+                                <img
+                                    height={12}
+                                    src={require('./biologicalFunction/oncokb.png')}
+                                    alt="oncokb"
+                                />
+                            </span>
+                        </a>
+                    </span>
+                }
+            >
+                <span
+                    className={classNames(
+                        basicInfo[`${category}`],
+                        basicInfo[`data-pills`]
+                    )}
+                >
+                    {value}
+                </span>
+            </DefaultTooltip>
+        );
+    }
+
     return (
         <span
             className={classNames(

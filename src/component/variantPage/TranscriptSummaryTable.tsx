@@ -1,15 +1,15 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import './TranscriptSummaryTable.css';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
-import { Button, Row, Col } from 'react-bootstrap';
 import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
 import TranscriptTable from './TranscriptTable';
 import { getTranscriptConsequenceSummary } from '../../util/AnnotationSummaryUtil';
+import './TranscriptSummaryTable.css';
 
 interface ITranscriptSummaryTableProps {
     annotation: VariantAnnotationSummary | undefined;
+    isOpen: boolean;
 }
 
 export type Transcript = {
@@ -29,7 +29,7 @@ class TranscriptSummaryTable extends React.Component<
 > {
     @observable showAllTranscript = false;
 
-    private getCanonicalTranscript(
+    private putCanonicalTranscriptInTable(
         annotation: VariantAnnotationSummary | undefined
     ) {
         let transcriptConsequenceSummary = getTranscriptConsequenceSummary(
@@ -51,12 +51,13 @@ class TranscriptSummaryTable extends React.Component<
         return canonicalTranscript;
     }
 
-    private getOtherTranscript(
+    private putOtherTranscriptsInTable(
         annotation: VariantAnnotationSummary | undefined
     ) {
         let otherTranscript: Transcript[] = [];
-        let canonicalTranscriptId = this.getCanonicalTranscript(annotation)
-            .transcript;
+        let canonicalTranscriptId = this.putCanonicalTranscriptInTable(
+            annotation
+        ).transcript;
         if (
             annotation !== undefined &&
             annotation.transcriptConsequenceSummaries
@@ -81,43 +82,16 @@ class TranscriptSummaryTable extends React.Component<
 
     public render() {
         return (
-            <div>
-                <Row>
-                    <Col lg="12" className="transcriptTable">
-                        <strong>Transcript Consequence Summary</strong>
-                        &nbsp;&nbsp;&nbsp;
-                        <Button
-                            onClick={this.onButtonClick}
-                            aria-controls="table-content"
-                            aria-expanded={this.showAllTranscript}
-                            variant="outline-secondary"
-                            className="btn-sm"
-                        >
-                            see all transcripts
-                        </Button>
-                        {/* show canonical transcript */}
-                        {!this.showAllTranscript && (
-                            <TranscriptTable
-                                isOpen={!this.showAllTranscript}
-                                canonicalTranscript={this.getCanonicalTranscript(
-                                    this.props.annotation
-                                )}
-                            />
-                        )}
-                        {/* show all trancscripts after click the button */}
-                        {this.showAllTranscript && (
-                            <TranscriptTable
-                                isOpen={this.showAllTranscript}
-                                canonicalTranscript={this.getCanonicalTranscript(
-                                    this.props.annotation
-                                )}
-                                otherTranscripts={this.getOtherTranscript(
-                                    this.props.annotation
-                                )}
-                            />
-                        )}
-                    </Col>
-                </Row>
+            <div className="transcriptTable">
+                <TranscriptTable
+                    isOpen={this.props.isOpen}
+                    canonicalTranscript={this.putCanonicalTranscriptInTable(
+                        this.props.annotation
+                    )}
+                    otherTranscripts={this.putOtherTranscriptsInTable(
+                        this.props.annotation
+                    )}
+                />
             </div>
         );
     }

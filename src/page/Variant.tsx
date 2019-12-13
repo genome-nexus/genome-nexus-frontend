@@ -309,12 +309,6 @@ class Variant extends React.Component<IVariantProps> {
                     </Col>
                     {/* change to lg="10" if have side bar */}
                     <Col className="variant-page">
-                        {/* remove this row if have side bar */}
-                        <Row>
-                            <Col style={{ fontSize: '1.3rem' }}>
-                                {this.props.variant}
-                            </Col>
-                        </Row>
                         <Row>
                             <Col>
                                 {
@@ -326,6 +320,7 @@ class Variant extends React.Component<IVariantProps> {
                                             )[0]
                                         }
                                         oncokbVariant={this.oncokbVariant}
+                                        variant={this.props.variant}
                                     />
                                 }
                             </Col>
