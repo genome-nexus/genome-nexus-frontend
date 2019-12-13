@@ -123,7 +123,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 return null;
             }
             if (renderData) {
-                renderData = renderData.filter(data => data.value != null);
+                renderData = renderData.filter(data => data.value != null); // remove null fields
             }
             let basicInfoList = _.map(renderData, data => {
                 return BasicInfoUnit(data.value, data.key, data.category);
@@ -206,7 +206,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'hgvsc',
             category: 'default',
         });
-        // transcript
+        // transcript id
         parsedData.push({
             value: Transcript.transcriptId,
             key: 'transcript',
@@ -226,18 +226,16 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         return null;
     }
 
+    // find the target variant by alteration
     private findOncokbVariant(
         oncokb: Alteration[] | undefined
     ): OncogeneTsg | null {
         if (oncokb) {
             const alterationName = this.getAlteration(this.props.annotation);
             let oncogeneTsg: OncogeneTsg = {};
+            // find the variant with same alteration
             const targetVariant = _.find(oncokb, variant => {
-                if (
-                    alterationName &&
-                    (variant.alteration === alterationName ||
-                        variant.name === alterationName)
-                ) {
+                if (alterationName && variant.alteration === alterationName) {
                     if (
                         variant.gene &&
                         (variant.gene.oncogene || variant.gene.tsg)
@@ -268,7 +266,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
 
     private getTsg(oncogeneData: OncogeneTsg | null) {
         if (oncogeneData) {
-            return oncogeneData.tsg === true ? 'Oncogene' : null;
+            return oncogeneData.tsg === true ? 'TSG' : null;
         } else {
             return null;
         }
