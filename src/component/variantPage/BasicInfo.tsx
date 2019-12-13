@@ -162,7 +162,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         parsedData.push({
             value: Transcript.hugoGeneSymbol,
             key: 'hugoGeneSymbol',
-            category: 'default',
+            category: 'gene',
         });
         // oncogene
         parsedData.push({
