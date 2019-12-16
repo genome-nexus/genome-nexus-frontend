@@ -30,11 +30,9 @@ class Header extends React.Component<{}> {
                                         API
                                     </Nav.Link>
                                 </LinkContainer>
-                                <LinkContainer exact={true} to="https://docs.genomenexus.org">
-                                    <Nav.Link className="ml-5">
-                                        Documentation
-                                    </Nav.Link>
-                                </LinkContainer>
+                                <Nav.Link href="https://docs.genomenexus.org" className="ml-5">
+                                    Documentation
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
