@@ -82,7 +82,7 @@ class TranscriptSummaryTable extends React.Component<
 
     public render() {
         return (
-            <div className="transcriptTable">
+            <div className="transcript-table">
                 <TranscriptTable
                     isOpen={this.props.isOpen}
                     canonicalTranscript={this.putCanonicalTranscriptInTable(

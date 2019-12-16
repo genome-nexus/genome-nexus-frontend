@@ -140,6 +140,22 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                         annotation={this.props.annotation}
                         isOpen={this.showAllTranscripts}
                     />
+                    {this.showAllTranscripts && haveTranscriptTable && (
+                        <span className={basicInfo['transcript-table-source']}>
+                            Data in the table comes from&nbsp;
+                            <a
+                                href={
+                                    'https://useast.ensembl.org/info/docs/tools/vep/index.html'
+                                } // TODO goes to VEP variant page
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                VEP
+                            </a>
+                            .&nbsp;&nbsp;&nbsp;
+                            {this.transcriptsButton(this.showAllTranscripts)}
+                        </span>
+                    )}
                 </div>
             );
         } else {
@@ -148,10 +164,10 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     }
 
     public getDataFromTranscriptConsequenceSummary(
-        Transcript: TranscriptConsequenceSummary | undefined
+        transcript: TranscriptConsequenceSummary | undefined
     ): BasicInfoData[] | null {
         // no canonical transcript, return null
-        if (Transcript === undefined) {
+        if (transcript === undefined) {
             return null;
         }
         let parsedData: BasicInfoData[] = [];
@@ -160,7 +176,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
         // gene
         parsedData.push({
-            value: Transcript.hugoGeneSymbol,
+            value: transcript.hugoGeneSymbol,
             key: 'hugoGeneSymbol',
             category: 'gene',
         });
@@ -178,15 +194,15 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
         // protein change
         parsedData.push({
-            value: Transcript.hgvspShort,
+            value: transcript.hgvspShort,
             key: 'hgvsShort',
             category: 'default',
         });
         // variant classification
         parsedData.push({
-            value: getMutationTypeData(Transcript),
+            value: transcript.consequenceTerms,
             key: 'consequenceTerms',
-            category: getMutationTypeClassName(Transcript),
+            category: getMutationTypeClassName(transcript),
         });
         // variant type
         parsedData.push({
@@ -202,14 +218,20 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
         //hgvsc
         parsedData.push({
-            value: this.parseHgvscFromTranscriptConsequenceSummary(Transcript),
+            value: this.parseHgvscFromTranscriptConsequenceSummary(transcript),
             key: 'hgvsc',
             category: 'default',
         });
         // transcript id
         parsedData.push({
-            value: Transcript.transcriptId,
+            value: transcript.transcriptId,
             key: 'transcript',
+            category: 'default',
+        });
+        // ref seq
+        parsedData.push({
+            value: transcript.refSeq,
+            key: 'refSeq',
             category: 'default',
         });
         return parsedData;
@@ -307,7 +329,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 >
                     <span>
                         All transcripts&nbsp;
-                        <i className="fa fa-plus-circle" />
+                        <i className="fa fa-chevron-circle-down" />
                     </span>
                 </Button>
             );
@@ -321,7 +343,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 >
                     <span>
                         Close table&nbsp;
-                        <i className="fa fa-minus-circle" />
+                        <i className="fa fa-chevron-circle-up" />
                     </span>
                 </Button>
             );
@@ -340,36 +362,6 @@ function BasicInfoUnit(
     key: string,
     category: string | undefined
 ) {
-    if (key === 'consequenceTerms') {
-        return (
-            <DefaultTooltip
-                placement="top"
-                overlay={
-                    <span>
-                        The possible variant classifications are:
-                        <br />
-                        Missense, Frame_shift_ins, Frame_shift_del, Frameshift,
-                        Nonsense,
-                        <br />
-                        Splice_site, Nonstart, Nonstop, In_frame_del,
-                        In_frame_ins, Inframe,
-                        <br />
-                        Truncating, Fusion, Silent, Other
-                    </span>
-                }
-            >
-                <span
-                    className={classNames(
-                        basicInfo[`${category}`],
-                        basicInfo[`data-pills`]
-                    )}
-                >
-                    {value}
-                </span>
-            </DefaultTooltip>
-        );
-    }
-
     if (key === 'oncogene' || key === 'tsg') {
         return (
             <DefaultTooltip
@@ -425,10 +417,10 @@ function BasicInfoUnit(
 
 // logic is from react-mutation-mapper
 function getMutationTypeClassName(
-    canonicalTranscript: TranscriptConsequenceSummary
+    transcript: TranscriptConsequenceSummary
 ): string {
     const value: MutationTypeFormat | undefined = getMapEntry(
-        canonicalTranscript.consequenceTerms
+        transcript.consequenceTerms
     );
     if (value && value.className) {
         return value.className;
@@ -443,22 +435,5 @@ function getMapEntry(mutationType: string | undefined) {
         return MAIN_MUTATION_TYPE_MAP[getCanonicalMutationType(mutationType)];
     } else {
         return undefined;
-    }
-}
-
-// logic is from react-mutation-mapper
-function getMutationTypeData(
-    canonicalTranscript: TranscriptConsequenceSummary
-) {
-    const mutationType = canonicalTranscript.consequenceTerms;
-    const entry: MutationTypeFormat | undefined = getMapEntry(mutationType);
-
-    // first, try to find a mapped value
-    if (entry && entry.label) {
-        return entry.label;
-    }
-    // if no mapped value, then return the text value as is
-    else {
-        return mutationType || null;
     }
 }

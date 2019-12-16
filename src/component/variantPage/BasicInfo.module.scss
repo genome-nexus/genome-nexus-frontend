@@ -2,7 +2,7 @@
 
 .basic-info-container {
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     align-items: center;
 }
 
@@ -39,9 +39,16 @@
     color: $medium; // orange, same as loss-of-function
 }
 
-.transcript-dropdown {
-    min-width: 200px;
-    margin-right: 20px;
+.transcript-table-source {
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.transcript-table-source a,
+.transcript-table-source a:hover,
+.transcript-table-source a:focus,
+.transcript-table-source a:active {
+    color: rgb(44, 62, 80);
 }
 
 .basic-info-pills {

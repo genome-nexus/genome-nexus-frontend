@@ -18,7 +18,7 @@ class TranscriptTable extends React.Component<ITranscriptTableProps> {
             return (
                 <Collapse in={this.props.isOpen}>
                     {/* show table header and the first row in default */}
-                    <div className="tableContent">
+                    <div className="table-content">
                         <Table responsive striped bordered hover size="sm">
                             <thead>
                                 <tr>
@@ -89,7 +89,7 @@ class TranscriptTable extends React.Component<ITranscriptTableProps> {
             return (
                 <Collapse in={this.props.isOpen}>
                     {/* expand the table if have more transcript */}
-                    <div className="tableContent">
+                    <div className="table-content">
                         <Table responsive striped bordered hover size="sm">
                             <thead>
                                 <tr>
