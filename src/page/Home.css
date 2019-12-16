@@ -20,7 +20,8 @@
 #home-function-description {
     font-size: 1rem;
     color: #828282;
-    margin: 10rem auto 4rem;
+    margin: 4rem auto 4rem;
+    font-style: italic;
 }
 
 #home-query-example-header {

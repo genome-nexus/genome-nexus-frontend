@@ -54,14 +54,19 @@ class Home extends React.Component<{ history: any }> {
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="7" id="home-function-description">
-                            Genome Nexus will integrate information from a
-                            variety of existing resources, including databases
+                        <Col lg="5" id="home-function-description">
+                            Genome Nexus integrates genetic variant information
+                            from a variety of resources, including databases
                             that convert DNA changes to protein changes, predict
-                            the functional effects of protein mutations, and
-                            contain information about mutation frequencies, gene
-                            function, variant effects, and clinical
-                            actionability.
+                            the functional effects of protein mutations, serve
+                            information about mutation frequencies in
+                            populations, gene function, variant effects, and
+                            clinical actionability. For a comprehensive overview
+                            of all the annotation sources see the{' '}
+                            <a href="https://docs.genomenexus.org/annotation-sources">
+                                documentation
+                            </a>
+                            .
                         </Col>
                     </Row>
                     <Row className="justify-content-md-center">

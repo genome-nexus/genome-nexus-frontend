@@ -25,21 +25,18 @@ class Header extends React.Component<{}> {
                         <Navbar.Toggle />
                         <Navbar.Collapse>
                             <Nav>
-                                <LinkContainer exact={true} to="/annotation">
-                                    <Nav.Link className="ml-5">
-                                        MAF Annotation
-                                    </Nav.Link>
+                                <LinkContainer
+                                    exact={true}
+                                    to="/swagger-ui.html"
+                                >
+                                    <Nav.Link className="ml-5">API</Nav.Link>
                                 </LinkContainer>
-                                <LinkContainer exact={true} to="/patient">
-                                    <Nav.Link className="ml-5">
-                                        Patient Report
-                                    </Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer exact={true} to="/api">
-                                    <Nav.Link className="ml-5">
-                                        API Usage
-                                    </Nav.Link>
-                                </LinkContainer>
+                                <Nav.Link
+                                    href="https://docs.genomenexus.org"
+                                    className="ml-5"
+                                >
+                                    Documentation
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
