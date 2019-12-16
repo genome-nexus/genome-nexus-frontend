@@ -133,9 +133,9 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
                         {basicInfoList}
+                        {haveTranscriptTable &&
+                            this.transcriptsButton(this.showAllTranscripts)}
                     </span>
-                    {haveTranscriptTable &&
-                        this.transcriptsButton(this.showAllTranscripts)}
                     <TranscriptSummaryTable
                         annotation={this.props.annotation}
                         isOpen={this.showAllTranscripts}
