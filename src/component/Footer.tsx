@@ -40,9 +40,12 @@ class Footer extends React.Component<{}> {
     public get internalLinks() {
         return (
             <div>
-                <Link to="/api">API</Link>
+                <Link to="/swagger-ui.html">API</Link>
+                <a href="https://docs.genomenexus.org" target="_top">
+                    Documentation
+                </a>
                 <a href="mailto:info@genomenexus.org" target="_top">
-                    Contact Us
+                    Contact
                 </a>
             </div>
         );
