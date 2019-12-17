@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface IValidatorNotificationProps {
     showAlert: boolean;
@@ -37,7 +38,13 @@ class ValidatorNotification extends React.Component<
                             HGVS
                         </a>{' '}
                         format.
-                        <p>For example: 17:g.41242962_41242963insGA</p>
+                        <p>
+                            For example:
+                            <Link to={'/variant/7:g.140453136A>T'}>
+                                7:g.140453136A>T
+                            </Link>
+                            &nbsp;(BRAF in V600E)
+                        </p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button

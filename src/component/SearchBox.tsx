@@ -43,11 +43,21 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     />
                 </InputGroup>
                 <span className="search-example">
-                    Example:
-                    <Link to={'/variant/17:g.7577094G>A'}>
-                        {' '}
-                        17:g.7577094G>A
+                    Currently we only support
+                    <a
+                        href="https://varnomen.hgvs.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        &nbsp; HGVS
+                    </a>
+                    &nbsp; format.
+                    <br />
+                    Example:&nbsp;
+                    <Link to={'/variant/7:g.140453136A>T'}>
+                        7:g.140453136A>T
                     </Link>
+                    &nbsp;(BRAF in V600E)
                 </span>
             </div>
         );
