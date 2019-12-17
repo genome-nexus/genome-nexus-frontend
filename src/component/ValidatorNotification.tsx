@@ -39,12 +39,13 @@ class ValidatorNotification extends React.Component<
                         </a>{' '}
                         format.
                         <p>
-                            For example:
+                            For example:&nbsp;
                             <Link to={'/variant/7:g.140453136A>T'}>
                                 7:g.140453136A>T
                             </Link>
                             &nbsp;(BRAF in V600E)
                         </p>
+                        <p>Other formats will be supported soon.</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
