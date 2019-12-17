@@ -141,7 +141,12 @@ class Oncokb extends React.Component<IOncokbProps> {
             );
         } else {
             return (
-                <span className={functionalGroupsStyle['data-content']}>
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-content'],
+                        functionalGroupsStyle['oncokb']
+                    )}
+                >
                     N/A
                 </span>
             );
@@ -160,7 +165,12 @@ class Oncokb extends React.Component<IOncokbProps> {
             return (
                 <span>
                     {this.oncokbTooltip()}
-                    <span className={functionalGroupsStyle['data-content']}>
+                    <span
+                        className={classNames(
+                            functionalGroupsStyle['data-content'],
+                            functionalGroupsStyle['oncokb']
+                        )}
+                    >
                         N/A
                     </span>
                 </span>

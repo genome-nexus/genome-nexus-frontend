@@ -216,7 +216,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         parsedData.push({
             value: this.props.variant,
             key: 'hgvsg',
-            category: 'default',
+            category: 'hgvsg',
         });
         //hgvsc
         parsedData.push({

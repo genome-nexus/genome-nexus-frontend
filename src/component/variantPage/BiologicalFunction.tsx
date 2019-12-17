@@ -16,7 +16,7 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
     public render() {
         if (this.props.oncokb) {
             return (
-                <Row>
+                <Row className={functionalGroupsStyle['data-content']}>
                     <Oncokb oncokb={this.props.oncokb}></Oncokb>
                 </Row>
             );

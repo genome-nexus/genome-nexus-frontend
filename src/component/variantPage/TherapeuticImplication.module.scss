@@ -15,11 +15,10 @@
 }
 
 .drugs-container {
-    display: flex;
-    align-items: center;
     margin-right: 8px;
     margin-top: 2px;
     margin-bottom: 2px;
+    display: inline-flex;
 }
 
 .resistant-text {
@@ -30,10 +29,6 @@
     font-weight: bold;
     background-color: #ee3424; // red
     color: white;
-}
-
-.data-content {
-    margin-left: 15px !important;
 }
 
 .data-source {

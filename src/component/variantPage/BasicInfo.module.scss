@@ -31,6 +31,13 @@
     // some styles here
 }
 
+.hgvsg {
+    white-space: nowrap;
+    max-width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .oncogene {
     color: $high; // red, same as gain-of-function
 }
