@@ -202,8 +202,8 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
         // variant classification
         parsedData.push({
-            value: transcript.consequenceTerms,
-            key: 'consequenceTerms',
+            value: transcript.variantClassification,
+            key: 'variantClassification',
             category: getMutationTypeClassName(transcript),
         });
         // variant type
