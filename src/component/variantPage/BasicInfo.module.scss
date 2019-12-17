@@ -1,0 +1,79 @@
+@import './functionalPrediction/styles/functionalImpact.scss';
+
+.basic-info-container {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.data-pills {
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+    font-size: 1.05rem;
+    margin-right: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.gene {
+    color: #1d75cd;
+}
+
+.default {
+    // some styles here
+}
+
+.mutation {
+    // some styles here
+}
+
+.oncogene {
+    color: $high; // red, same as gain-of-function
+}
+
+.tsg {
+    color: $medium; // orange, same as loss-of-function
+}
+
+.transcript-table-source {
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.transcript-table-source a,
+.transcript-table-source a:hover,
+.transcript-table-source a:focus,
+.transcript-table-source a:active {
+    color: rgb(44, 62, 80);
+}
+
+.basic-info-pills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.missense-mutation {
+    color: #008000;
+    font-weight: bold;
+}
+.trunc-mutation {
+    color: #000000;
+    font-weight: bold;
+}
+.inframe-mutation {
+    color: #8b4513;
+    font-weight: bold;
+}
+.other-mutation {
+    color: #8b00c9;
+    font-weight: bold;
+}
+.default-mutation {
+    color: #bb0000;
+    font-weight: bold;
+}

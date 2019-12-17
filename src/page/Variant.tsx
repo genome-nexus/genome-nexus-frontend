@@ -6,7 +6,6 @@ import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
 import { VariantStore } from './VariantStore';
-import TranscriptSummaryTable from '../component/variantPage/TranscriptSummaryTable';
 import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
@@ -54,6 +53,11 @@ class Variant extends React.Component<IVariantProps> {
     @computed
     private get oncokb() {
         return this.props.store.oncokbData.result;
+    }
+
+    @computed
+    private get oncokbVariant() {
+        return this.props.store.oncokbVariant.result;
     }
 
     @computed
@@ -305,28 +309,29 @@ class Variant extends React.Component<IVariantProps> {
                     </Col>
                     {/* change to lg="10" if have side bar */}
                     <Col className="variant-page">
-                        {/* remove this row if have side bar */}
-                        <Row>
-                            <Col style={{ fontSize: '1.3rem' }}>
-                                {this.props.variant}
-                            </Col>
-                        </Row>
                         <Row>
                             <Col>
                                 {
                                     <BasicInfo
                                         annotation={this.annotationSummary}
+                                        mutation={
+                                            this.variantToMutation(
+                                                this.annotationSummary
+                                            )[0]
+                                        }
+                                        oncokbVariant={this.oncokbVariant}
+                                        variant={this.props.variant}
                                     />
                                 }
                             </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <Col>
                                 <TranscriptSummaryTable
                                     annotation={this.annotationSummary}
                                 />
                             </Col>
-                        </Row>
+                        </Row> */}
                         <Row>
                             <Col className="pb-3 small">
                                 {this.getMutationMapper()}
