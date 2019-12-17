@@ -28,16 +28,15 @@ class ValidatorNotification extends React.Component<
                         <Modal.Title>This variant is invalid</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Currently we only support
+                        Currently we only support&nbsp;
                         <a
                             href="https://varnomen.hgvs.org/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {' '}
                             HGVS
-                        </a>{' '}
-                        format.
+                        </a>
+                        &nbsp;format.
                         <p>
                             For example:&nbsp;
                             <Link to={'/variant/7:g.140453136A>T'}>
