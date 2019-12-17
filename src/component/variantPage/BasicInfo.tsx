@@ -33,6 +33,8 @@ type OncogeneTsg = {
     tsg?: boolean | undefined;
 };
 
+// MAIN_MUTATION_TYPE_MAP comes from react-mutation-mapper
+// TODO probably should get this from cbioportal-frontend-commons or react-mutation-mapper
 export const MAIN_MUTATION_TYPE_MAP: { [key: string]: MutationTypeFormat } = {
     missense: {
         label: 'Missense',
@@ -307,47 +309,36 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     private haveTranscriptTable(
         annotation: VariantAnnotationSummary | undefined
     ): boolean {
-        if (
-            annotation &&
+        return (
+            annotation !== undefined &&
             annotation.transcriptConsequenceSummary !== undefined &&
             annotation.transcriptConsequenceSummaries !== undefined &&
             annotation.transcriptConsequenceSummaries.length > 1
-        ) {
-            return true;
-        }
-        return false;
+        );
     }
 
     private transcriptsButton(isOpened: boolean) {
-        if (isOpened === false) {
-            return (
-                <Button
-                    onClick={this.onButtonClick}
-                    aria-controls="table-content"
-                    variant="outline-secondary"
-                    className="btn-sm"
-                >
-                    <span>
-                        All transcripts&nbsp;
-                        <i className="fa fa-chevron-circle-down" />
-                    </span>
-                </Button>
-            );
-        } else {
-            return (
-                <Button
-                    onClick={this.onButtonClick}
-                    aria-controls="table-content"
-                    variant="outline-secondary"
-                    className="btn-sm"
-                >
+        return (
+            <Button
+                onClick={this.onButtonClick}
+                aria-controls="table-content"
+                variant="outline-secondary"
+                className="btn-sm"
+            >
+                {isOpened && (
                     <span>
                         Close table&nbsp;
                         <i className="fa fa-chevron-circle-up" />
                     </span>
-                </Button>
-            );
-        }
+                )}
+                {!isOpened && (
+                    <span>
+                        All transcripts&nbsp;
+                        <i className="fa fa-chevron-circle-down" />
+                    </span>
+                )}
+            </Button>
+        );
     }
 
     @autobind
