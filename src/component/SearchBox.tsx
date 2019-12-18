@@ -40,15 +40,10 @@ export const EXAMPLES: JSX.Element = (
                 &nbsp;(EGFR L747_T751delinsP)
             </li>
             <li>
-                <Link
-                    to={
-                        '/variant/4:g.55593653_55593654insACACAACTTCCTTATGATCAT'
-                    }
-                >
-                    4:g.55593653_55593654insACACAACTTCCTTATGATCAT
+                <Link to={'/variant/12:g.25398287_25398288insCTC'}>
+                    12:g.25398287_25398288insCTC
                 </Link>
-                <br />
-                (KIT T574insTQLPYD)
+                &nbsp;(KRAS G10dup)
             </li>
         </ul>
     </span>
