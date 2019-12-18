@@ -72,7 +72,7 @@ class Home extends React.Component<{ history: any }> {
                     <Row className="justify-content-md-center">
                         <Col lg="2">
                             <Button
-                                href={'/swagger-ui.html'}
+                                href="/swagger-ui.html"
                                 variant="outline-primary"
                             >
                                 Try live API
