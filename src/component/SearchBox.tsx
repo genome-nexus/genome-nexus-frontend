@@ -13,6 +13,47 @@ interface ISearchBoxProps {
     height?: number;
 }
 
+export const EXAMPLES: JSX.Element = (
+    <span className="search-example">
+        <p>
+            Currently only DNA changes in&nbsp;
+            <a
+                href="https://varnomen.hgvs.org/recommendations/DNA/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                HGVS
+            </a>
+            &nbsp;format are supported.
+        </p>
+        Examples:
+        <br />
+        <ul>
+            <li>
+                <Link to={'/variant/7:g.140453136A>T'}>7:g.140453136A>T</Link>
+                &nbsp;(BRAF V600E)
+            </li>
+            <li>
+                <Link to={'/variant/7:g.55242468_55242481delinsAC'}>
+                    7:g.55242468_55242481delinsAC
+                </Link>
+                &nbsp;(EGFR L747_T751delinsP)
+            </li>
+            <li>
+                <Link
+                    to={
+                        '/variant/4:g.55593653_55593654insACACAACTTCCTTATGATCAT'
+                    }
+                >
+                    4:g.55593653_55593654insACACAACTTCCTTATGATCAT
+                </Link>
+                <br />
+                (KIT T574insTQLPYD)
+            </li>
+        </ul>
+    </span>
+);
+
 class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
         searchIconClassName: 'fa fa-search',
@@ -42,23 +83,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                         autoFocus={true}
                     />
                 </InputGroup>
-                <span className="search-example">
-                    Currently we only support&nbsp;
-                    <a
-                        href="https://varnomen.hgvs.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        HGVS
-                    </a>
-                    &nbsp;format.
-                    <br />
-                    Example:&nbsp;
-                    <Link to={'/variant/7:g.140453136A>T'}>
-                        7:g.140453136A>T
-                    </Link>
-                    &nbsp;(BRAF in V600E)
-                </span>
+                {EXAMPLES}
             </div>
         );
     }
