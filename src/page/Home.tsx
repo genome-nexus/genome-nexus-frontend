@@ -12,7 +12,6 @@ import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
-import { Link } from 'react-router-dom';
 
 @observer
 class Home extends React.Component<{ history: any }> {
