@@ -34,16 +34,20 @@ export const EXAMPLES: JSX.Element = (
                 &nbsp;(BRAF V600E)
             </li>
             <li>
+                <Link to={'/variant/7:g.55249071C>T'}>7:g.55249071C>T</Link>
+                &nbsp;(EGFR T790M)
+            </li>
+            <li>
                 <Link to={'/variant/7:g.55242468_55242481delinsAC'}>
                     7:g.55242468_55242481delinsAC
                 </Link>
                 &nbsp;(EGFR L747_T751delinsP)
             </li>
             <li>
-                <Link to={'/variant/12:g.25398287_25398288insCTC'}>
-                    12:g.25398287_25398288insCTC
+                <Link to={'/variant/7:g.55249017_55249018insCCA'}>
+                    7:g.55249017_55249018insCCA
                 </Link>
-                &nbsp;(KRAS G10dup)
+                &nbsp;(EGFR H773dup)
             </li>
         </ul>
     </span>
