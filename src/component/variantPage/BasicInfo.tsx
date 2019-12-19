@@ -299,8 +299,10 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     private getAlteration(annotation: VariantAnnotationSummary | undefined) {
         if (annotation && annotation.transcriptConsequenceSummary) {
             let alteration = annotation.transcriptConsequenceSummary.hgvspShort;
-            let startIndex = alteration.indexOf('p.') + 2; // + 2 will exclude the 'p.' in the result
-            return startIndex !== 1 ? alteration.substr(startIndex) : null; // !== -1 means there is no 'p.' in the string, here because the startIndex was +2 before, so have !== 1 instead
+            let startIndex = alteration && alteration.indexOf('p.') + 2; // + 2 will exclude the 'p.' in the result
+            return startIndex && startIndex !== 1
+                ? alteration.substr(startIndex)
+                : null; // !== -1 means there is no 'p.' in the string, here because the startIndex was +2 before, so have !== 1 instead
         } else {
             return null;
         }

@@ -81,7 +81,11 @@ class Variant extends React.Component<IVariantProps> {
 
     private getMutationMapper() {
         let mutation = this.variantToMutation(this.annotationSummary);
-        if (mutation[0].gene && mutation[0].gene.hugoGeneSymbol.length !== 0) {
+        if (
+            mutation[0] &&
+            mutation[0].gene &&
+            mutation[0].gene.hugoGeneSymbol.length !== 0
+        ) {
             return (
                 <GenomeNexusMutationMapper
                     genomeNexusUrl={genomeNexusApiRoot}
