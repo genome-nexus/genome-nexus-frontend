@@ -301,7 +301,7 @@ class Variant extends React.Component<IVariantProps> {
             return this.isError ? (
                 <ErrorScreen />
             ) : (
-                <Row>
+                <Row className="variant-page-container">
                     {/* TODO: the height should automatically change with the content */}
                     {/* remove the d-none if have sidebar */}
                     <Col
