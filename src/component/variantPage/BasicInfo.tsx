@@ -202,8 +202,8 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
         // variant classification
         parsedData.push({
-            value: transcript.consequenceTerms,
-            key: 'consequenceTerms',
+            value: transcript.variantClassification,
+            key: 'variantClassification',
             category: getMutationTypeClassName(transcript),
         });
         // variant type
@@ -216,7 +216,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         parsedData.push({
             value: this.props.variant,
             key: 'hgvsg',
-            category: 'default',
+            category: 'hgvsg',
         });
         //hgvsc
         parsedData.push({
@@ -299,8 +299,17 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     private getAlteration(annotation: VariantAnnotationSummary | undefined) {
         if (annotation && annotation.transcriptConsequenceSummary) {
             let alteration = annotation.transcriptConsequenceSummary.hgvspShort;
-            let startIndex = alteration.indexOf('p.') + 2; // + 2 will exclude the 'p.' in the result
-            return startIndex !== 1 ? alteration.substr(startIndex) : null; // !== -1 means there is no 'p.' in the string, here because the startIndex was +2 before, so have !== 1 instead
+            if (alteration) {
+                let startIndex = alteration.indexOf('p.');
+                if (startIndex === -1) {
+                    // if no 'p.' in alteration, return original alteration string
+                    return alteration;
+                } else {
+                    // if has 'p.' in alteration
+                    return alteration.substr(startIndex + 2); // remove "p." by "startIndex + 2"
+                }
+            }
+            return null;
         } else {
             return null;
         }

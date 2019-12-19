@@ -151,7 +151,7 @@ class TherapeuticImplication extends React.Component<
         if (oncokb && oncokb.query && oncokb.query.hugoSymbol) {
             oncokbUrl = `https://oncokb.org/gene/${oncokb.query.hugoSymbol}`;
         } else {
-            oncokbUrl = 'https://oncokb.org/gene/BRCA1';
+            oncokbUrl = 'https://oncokb.org/';
         }
         return (
             <DefaultTooltip
@@ -176,10 +176,7 @@ class TherapeuticImplication extends React.Component<
                 }
             >
                 <span
-                    className={classNames(
-                        functionalGroupsStyle['data-source'],
-                        therapeuticImplication['data-source']
-                    )}
+                    className={classNames(functionalGroupsStyle['data-source'])}
                 >
                     <a
                         href={oncokbUrl}
@@ -197,25 +194,24 @@ class TherapeuticImplication extends React.Component<
         const sensitiveDrugs = this.sensitiveDrugs(this.props.oncokb);
         const resistantDrugs = this.resistantDrugs(this.props.oncokb);
         return sensitiveDrugs || resistantDrugs ? (
-            <Row
-                className={classNames(
-                    functionalGroupsStyle['data-content'],
-                    therapeuticImplication['data-content']
-                )}
-            >
-                {this.oncokbToolTip(this.props.oncokb)}
-                {sensitiveDrugs}
-                {resistantDrugs}
+            <Row className={functionalGroupsStyle['data-content']}>
+                <span className={functionalGroupsStyle['data-group-gap']}>
+                    {this.oncokbToolTip(this.props.oncokb)}
+                    {sensitiveDrugs}
+                    {resistantDrugs}
+                </span>
             </Row>
         ) : (
-            <span
-                className={classNames(
-                    functionalGroupsStyle['data-content'],
-                    functionalGroupsStyle['no-data']
-                )}
-            >
-                No data available
-            </span>
+            <Row className={functionalGroupsStyle['data-content']}>
+                <div className={functionalGroupsStyle['data-group-gap']}>
+                    {this.oncokbToolTip(this.props.oncokb)}
+                    <span
+                        className={classNames(functionalGroupsStyle['oncokb'])}
+                    >
+                        N/A
+                    </span>
+                </div>
+            </Row>
         );
     }
 }
