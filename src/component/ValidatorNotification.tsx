@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { EXAMPLES } from './SearchBox';
 
 interface IValidatorNotificationProps {
     showAlert: boolean;
@@ -27,17 +28,8 @@ class ValidatorNotification extends React.Component<
                         <Modal.Title>This variant is invalid</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Currently we only support
-                        <a
-                            href="https://varnomen.hgvs.org/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {' '}
-                            HGVS
-                        </a>{' '}
-                        format.
-                        <p>For example: 17:g.41242962_41242963insGA</p>
+                        <p>{EXAMPLES}</p>
+                        <p>Other formats will be supported soon.</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button

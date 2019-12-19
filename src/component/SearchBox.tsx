@@ -13,6 +13,46 @@ interface ISearchBoxProps {
     height?: number;
 }
 
+export const EXAMPLES: JSX.Element = (
+    <span className="search-example">
+        <p>
+            Currently only DNA changes in&nbsp;
+            <a
+                href="https://varnomen.hgvs.org/recommendations/DNA/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                HGVS
+            </a>
+            &nbsp;format are supported.
+        </p>
+        Examples:
+        <br />
+        <ul>
+            <li>
+                <Link to={'/variant/7:g.140453136A>T'}>7:g.140453136A>T</Link>
+                &nbsp;(BRAF V600E)
+            </li>
+            <li>
+                <Link to={'/variant/7:g.55249071C>T'}>7:g.55249071C>T</Link>
+                &nbsp;(EGFR T790M)
+            </li>
+            <li>
+                <Link to={'/variant/7:g.55242468_55242481delinsAC'}>
+                    7:g.55242468_55242481delinsAC
+                </Link>
+                &nbsp;(EGFR L747_T751delinsP)
+            </li>
+            <li>
+                <Link to={'/variant/7:g.55249017_55249018insCCA'}>
+                    7:g.55249017_55249018insCCA
+                </Link>
+                &nbsp;(EGFR H773dup)
+            </li>
+        </ul>
+    </span>
+);
+
 class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
         searchIconClassName: 'fa fa-search',
@@ -42,13 +82,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                         autoFocus={true}
                     />
                 </InputGroup>
-                <span className="search-example">
-                    Example:
-                    <Link to={'/variant/17:g.7577094G>A'}>
-                        {' '}
-                        17:g.7577094G>A
-                    </Link>
-                </span>
+                {EXAMPLES}
             </div>
         );
     }
