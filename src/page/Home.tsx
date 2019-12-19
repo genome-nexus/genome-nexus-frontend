@@ -6,7 +6,7 @@ import { Col, Row, Button, Image } from 'react-bootstrap';
 import SearchBox from '../component/SearchBox';
 import './Home.css';
 import QueryExamples from '../component/QueryExamples';
-import logo from '../image/logo/home_page_logo.png';
+import logo from '../image/logo/home_page_logo_small_size_1752x232.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
