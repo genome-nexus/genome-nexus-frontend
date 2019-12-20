@@ -56,11 +56,6 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     @computed
-    private get oncokbVariant() {
-        return this.props.store.oncokbVariant.result;
-    }
-
-    @computed
     private get variantAnnotation() {
         return this.props.store.annotation.result
             ? this.props.store.annotation.result
@@ -68,7 +63,10 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     protected get isLoading() {
-        return this.props.store.annotation.isPending;
+        return (
+            this.props.store.annotation.isPending ||
+            this.props.store.oncokbGenesMap.isPending
+        );
     }
 
     protected get loadingIndicator() {
@@ -315,27 +313,20 @@ class Variant extends React.Component<IVariantProps> {
                     <Col className="variant-page">
                         <Row>
                             <Col>
-                                {
-                                    <BasicInfo
-                                        annotation={this.annotationSummary}
-                                        mutation={
-                                            this.variantToMutation(
-                                                this.annotationSummary
-                                            )[0]
-                                        }
-                                        oncokbVariant={this.oncokbVariant}
-                                        variant={this.props.variant}
-                                    />
-                                }
-                            </Col>
-                        </Row>
-                        {/* <Row>
-                            <Col>
-                                <TranscriptSummaryTable
+                                <BasicInfo
                                     annotation={this.annotationSummary}
+                                    mutation={
+                                        this.variantToMutation(
+                                            this.annotationSummary
+                                        )[0]
+                                    }
+                                    variant={this.props.variant}
+                                    oncokbGenesMap={
+                                        this.props.store.oncokbGenesMap.result
+                                    }
                                 />
                             </Col>
-                        </Row> */}
+                        </Row>
                         <Row>
                             <Col className="pb-3 small">
                                 {this.getMutationMapper()}
