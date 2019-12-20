@@ -380,22 +380,18 @@ function getOncogeneFromOncokbGenesMap(
     oncokbGenesMap: { [hugoSymbol: string]: Gene },
     gene?: string
 ): string | null {
-    if (gene && oncokbGenesMap[gene]) {
-        if (oncokbGenesMap[gene].oncogene === true) {
-            return 'Oncogene';
-        }
-    }
-    return null;
+    return gene &&
+        oncokbGenesMap[gene] &&
+        oncokbGenesMap[gene].oncogene === true
+        ? 'Oncogene'
+        : null;
 }
 
 function getTsgFromOncokbGenesMap(
     oncokbGenesMap: { [hugoSymbol: string]: Gene },
     gene?: string
 ): string | null {
-    if (gene && oncokbGenesMap[gene]) {
-        if (oncokbGenesMap[gene].tsg === true) {
-            return 'TSG';
-        }
-    }
-    return null;
+    return gene && oncokbGenesMap[gene] && oncokbGenesMap[gene].tsg === true
+        ? 'TSG'
+        : null;
 }
