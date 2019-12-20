@@ -5,8 +5,9 @@ import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
 import {
     IndicatorQueryResp,
-    Alteration,
+    Gene,
 } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+import _ from 'lodash';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -64,14 +65,23 @@ export class VariantStore {
         },
     });
 
-    readonly oncokbVariant: MobxPromise<Array<Alteration>> = remoteData({
+    readonly oncokbGenes = remoteData<Gene[]>({
+        await: () => [],
         invoke: async () => {
-            return await oncokbClient.variantsLookupGetUsingGET({
-                hgvs: this.variant,
-            });
+            return oncokbClient.genesGetUsingGET({});
         },
-        onError: () => {
-            // fail silently, leave the error handling responsibility to the data consumer
+        onError: error => {},
+        default: [],
+    });
+
+    readonly oncokbGenesMap = remoteData<{ [hugoSymbol: string]: Gene }>({
+        await: () => [this.oncokbGenes],
+        invoke: async () => {
+            return Promise.resolve(
+                _.keyBy(this.oncokbGenes.result, gene => gene.hugoSymbol)
+            );
         },
+        onError: error => {},
+        default: {},
     });
 }

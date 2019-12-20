@@ -10,7 +10,7 @@ import {
     getCanonicalMutationType,
     DefaultTooltip,
 } from 'cbioportal-frontend-commons';
-import { Alteration } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+import { Gene } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import { Mutation } from 'react-mutation-mapper';
 import basicInfo from './BasicInfo.module.scss';
 import { Button } from 'react-bootstrap';
@@ -19,8 +19,8 @@ import TranscriptSummaryTable from './TranscriptSummaryTable';
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
     mutation: Mutation;
-    oncokbVariant?: Alteration[];
     variant: string;
+    oncokbGenesMap: { [hugoSymbol: string]: Gene };
 }
 
 type MutationTypeFormat = {
@@ -173,9 +173,6 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             return null;
         }
         let parsedData: BasicInfoData[] = [];
-        const oncokbOncogeneTsg = this.findOncokbVariant(
-            this.props.oncokbVariant
-        );
         // gene
         parsedData.push({
             value: transcript.hugoGeneSymbol,
@@ -184,13 +181,19 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
         // oncogene
         parsedData.push({
-            value: this.getOncogene(oncokbOncogeneTsg),
+            value: getOncogeneFromOncokbGenesMap(
+                this.props.oncokbGenesMap,
+                transcript.hugoGeneSymbol
+            ),
             key: 'oncogene',
             category: 'oncogene',
         });
         // tsg
         parsedData.push({
-            value: this.getTsg(oncokbOncogeneTsg),
+            value: getTsgFromOncokbGenesMap(
+                this.props.oncokbGenesMap,
+                transcript.hugoGeneSymbol
+            ),
             key: 'tsg',
             category: 'tsg',
         });
@@ -248,71 +251,6 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             return startIndex !== -1 ? hgvsc.substr(startIndex) : null;
         }
         return null;
-    }
-
-    // find the target variant by alteration
-    private findOncokbVariant(
-        oncokb: Alteration[] | undefined
-    ): OncogeneTsg | null {
-        if (oncokb) {
-            const alterationName = this.getAlteration(this.props.annotation);
-            let oncogeneTsg: OncogeneTsg = {};
-            // find the variant with same alteration
-            const targetVariant = _.find(oncokb, variant => {
-                if (alterationName && variant.alteration === alterationName) {
-                    if (
-                        variant.gene &&
-                        (variant.gene.oncogene || variant.gene.tsg)
-                    ) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-            if (targetVariant) {
-                oncogeneTsg = {
-                    oncogene: targetVariant.gene.oncogene,
-                    tsg: targetVariant.gene.tsg,
-                };
-            }
-            return oncogeneTsg;
-        }
-        return null;
-    }
-
-    private getOncogene(oncogeneData: OncogeneTsg | null) {
-        if (oncogeneData) {
-            return oncogeneData.oncogene === true ? 'Oncogene' : null;
-        } else {
-            return null;
-        }
-    }
-
-    private getTsg(oncogeneData: OncogeneTsg | null) {
-        if (oncogeneData) {
-            return oncogeneData.tsg === true ? 'TSG' : null;
-        } else {
-            return null;
-        }
-    }
-
-    private getAlteration(annotation: VariantAnnotationSummary | undefined) {
-        if (annotation && annotation.transcriptConsequenceSummary) {
-            let alteration = annotation.transcriptConsequenceSummary.hgvspShort;
-            if (alteration) {
-                let startIndex = alteration.indexOf('p.');
-                if (startIndex === -1) {
-                    // if no 'p.' in alteration, return original alteration string
-                    return alteration;
-                } else {
-                    // if has 'p.' in alteration
-                    return alteration.substr(startIndex + 2); // remove "p." by "startIndex + 2"
-                }
-            }
-            return null;
-        } else {
-            return null;
-        }
     }
 
     private haveTranscriptTable(
@@ -436,4 +374,28 @@ function getMapEntry(mutationType: string | undefined) {
     } else {
         return undefined;
     }
+}
+
+function getOncogeneFromOncokbGenesMap(
+    oncokbGenesMap: { [hugoSymbol: string]: Gene },
+    gene?: string
+): string | null {
+    if (gene && oncokbGenesMap[gene]) {
+        if (oncokbGenesMap[gene].oncogene === true) {
+            return 'Oncogene';
+        }
+    }
+    return null;
+}
+
+function getTsgFromOncokbGenesMap(
+    oncokbGenesMap: { [hugoSymbol: string]: Gene },
+    gene?: string
+): string | null {
+    if (gene && oncokbGenesMap[gene]) {
+        if (oncokbGenesMap[gene].tsg === true) {
+            return 'TSG';
+        }
+    }
+    return null;
 }
