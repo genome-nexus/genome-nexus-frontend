@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
 import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
+import ErrorScreen from '../component/ErrorScreen';
 import './Variant.css';
 import { VariantStore } from './VariantStore';
 import {
@@ -69,6 +70,10 @@ class Variant extends React.Component<IVariantProps> {
 
     protected get isLoading() {
         return this.props.store.annotation.isPending;
+    }
+
+    protected get isError() {
+        return this.props.store.annotation.isError;
     }
 
     protected get loadingIndicator() {
@@ -294,10 +299,12 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     public render(): React.ReactNode {
-        return this.isLoading ? (
-            this.loadingIndicator
-        ) : (
-            <div>
+        if (this.isLoading) {
+            return this.loadingIndicator;
+        } else {
+            return this.isError ? (
+                <ErrorScreen />
+            ) : (
                 <Row className="variant-page-container">
                     {/* TODO: the height should automatically change with the content */}
                     {/* remove the d-none if have sidebar */}
@@ -397,8 +404,8 @@ class Variant extends React.Component<IVariantProps> {
                         </Row>
                     </Col>
                 </Row>
-            </div>
-        );
+            );
+        }
     }
 }
 
