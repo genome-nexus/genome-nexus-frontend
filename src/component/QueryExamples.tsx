@@ -9,41 +9,41 @@ type QueryExample = {
 
 const QUERY_EXAMPLES: QueryExample[] = [
     {
-        url: 'http://genomenexus.org/annotation/17:g.41242962_41242963insGA',
+        url: '/annotation/17:g.41242962_41242963insGA',
         description: 'Retrieves VEP annotation for the provided variant',
     },
     {
-        url: 'http://genomenexus.org/annotation/dbsnp/rs116035550',
+        url: '/annotation/dbsnp/rs116035550',
         description: 'Retrieves VEP annotation for the give dbSNP id',
     },
     {
         url:
-            'http://genomenexus.org/annotation/genomic/7,140453136,140453136,A,T',
+            '/annotation/genomic/7,140453136,140453136,A,T',
         description:
             'Retrieves VEP annotation for the provided genomic location',
     },
     {
         url:
-            'http://genomenexus.org/ptm/experimental?ensemblTranscriptId=ENST00000646891',
+            '/ptm/experimental?ensemblTranscriptId=ENST00000646891',
         description: 'Retrieves PTM entries by Ensembl Transcript ID',
     },
     {
-        url: 'http://genomenexus.org/cancer_hotspots/hgvs/7:g.140453136A>T',
+        url: '/cancer_hotspots/hgvs/7:g.140453136A>T',
         description: 'Retrieves hotspot annotations for a specific variant',
     },
     {
         url:
-            'http://genomenexus.org/cancer_hotspots/transcript/ENST00000288602',
+            '/cancer_hotspots/transcript/ENST00000288602',
         description:
             'Retrieves hotspot annotations for the provided transcript ID',
     },
     {
-        url: 'http://genomenexus.org/mutation_assessor/7:g.140453136A>T',
+        url: '/mutation_assessor/7:g.140453136A>T',
         description:
             'Retrieves mutation assessor information for the provided variant',
     },
     {
-        url: 'http://genomenexus.org/my_variant_info/variant/7:g.140453136A>T',
+        url: '/my_variant_info/variant/7:g.140453136A>T',
         description: 'Retrieves myvariant information for the provided variant',
     },
 ];

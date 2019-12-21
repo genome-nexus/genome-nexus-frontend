@@ -78,7 +78,7 @@ class Home extends React.Component<{ history: any }> {
                                 href="#home-example-container"
                                 variant="link"
                             >
-                                See examples
+                                See Examples
                             </Button>
                         </Col>
                     </Row>
@@ -87,7 +87,7 @@ class Home extends React.Component<{ history: any }> {
                 <div id="home-example-container">
                     <Row>
                         <Col id="home-query-example-header">
-                            API Query Examples
+                            API Examples
                         </Col>
                     </Row>
                     <Row>
