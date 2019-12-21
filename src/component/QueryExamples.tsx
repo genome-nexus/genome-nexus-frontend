@@ -17,14 +17,12 @@ const QUERY_EXAMPLES: QueryExample[] = [
         description: 'Retrieves VEP annotation for the give dbSNP id',
     },
     {
-        url:
-            '/annotation/genomic/7,140453136,140453136,A,T',
+        url: '/annotation/genomic/7,140453136,140453136,A,T',
         description:
             'Retrieves VEP annotation for the provided genomic location',
     },
     {
-        url:
-            '/ptm/experimental?ensemblTranscriptId=ENST00000646891',
+        url: '/ptm/experimental?ensemblTranscriptId=ENST00000646891',
         description: 'Retrieves PTM entries by Ensembl Transcript ID',
     },
     {
@@ -32,8 +30,7 @@ const QUERY_EXAMPLES: QueryExample[] = [
         description: 'Retrieves hotspot annotations for a specific variant',
     },
     {
-        url:
-            '/cancer_hotspots/transcript/ENST00000288602',
+        url: '/cancer_hotspots/transcript/ENST00000288602',
         description:
             'Retrieves hotspot annotations for the provided transcript ID',
     },

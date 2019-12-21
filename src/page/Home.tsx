@@ -56,8 +56,8 @@ class Home extends React.Component<{ history: any }> {
                     <Row>
                         <Col lg="5" id="home-function-description">
                             Genome Nexus integrates genetic variant information
-                            from a variety of resources. For a comprehensive overview
-                            see the{' '}
+                            from a variety of resources. For a comprehensive
+                            overview see the{' '}
                             <a href="https://docs.genomenexus.org/annotation-sources">
                                 documentation
                             </a>
@@ -86,9 +86,7 @@ class Home extends React.Component<{ history: any }> {
 
                 <div id="home-example-container">
                     <Row>
-                        <Col id="home-query-example-header">
-                            API Examples
-                        </Col>
+                        <Col id="home-query-example-header">API Examples</Col>
                     </Row>
                     <Row>
                         <Col lg="10" id="home-query-example-table">
