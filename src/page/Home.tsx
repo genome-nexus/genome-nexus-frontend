@@ -56,13 +56,8 @@ class Home extends React.Component<{ history: any }> {
                     <Row>
                         <Col lg="5" id="home-function-description">
                             Genome Nexus integrates genetic variant information
-                            from a variety of resources, including databases
-                            that convert DNA changes to protein changes, predict
-                            the functional effects of protein mutations, serve
-                            information about mutation frequencies in
-                            populations, gene function, variant effects, and
-                            clinical actionability. For a comprehensive overview
-                            of all the annotation sources see the{' '}
+                            from a variety of resources. For a comprehensive
+                            overview see the{' '}
                             <a href="https://docs.genomenexus.org/annotation-sources">
                                 documentation
                             </a>
@@ -83,7 +78,7 @@ class Home extends React.Component<{ history: any }> {
                                 href="#home-example-container"
                                 variant="link"
                             >
-                                See examples
+                                See Examples
                             </Button>
                         </Col>
                     </Row>
@@ -91,9 +86,7 @@ class Home extends React.Component<{ history: any }> {
 
                 <div id="home-example-container">
                     <Row>
-                        <Col id="home-query-example-header">
-                            API Query Examples
-                        </Col>
+                        <Col id="home-query-example-header">API Examples</Col>
                     </Row>
                     <Row>
                         <Col lg="10" id="home-query-example-table">
