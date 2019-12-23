@@ -10,6 +10,7 @@ import {
 } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import _ from 'lodash';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb'
 import classNames from 'classnames';
 
 interface ITherapeuticImplicationProps {
@@ -158,20 +159,18 @@ class TherapeuticImplication extends React.Component<
                 placement="top"
                 overlay={
                     <span>
-                        OncoKB is a precision oncology knowledge base and
+                        <a
+                            href={ONCOKB_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            OncoKB
+                        </a>&nbsp;is a precision oncology knowledge base and
                         contains
                         <br />
                         information about the effects and treatment implications
                         <br />
                         of specific cancer gene alterations.
-                        <br />
-                        <a
-                            href={oncokbUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span>Click to see variant on OncoKB website.</span>
-                        </a>
                     </span>
                 }
             >
@@ -193,23 +192,36 @@ class TherapeuticImplication extends React.Component<
     public render() {
         const sensitiveDrugs = this.sensitiveDrugs(this.props.oncokb);
         const resistantDrugs = this.resistantDrugs(this.props.oncokb);
+        const oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         return sensitiveDrugs || resistantDrugs ? (
             <Row className={functionalGroupsStyle['data-content']}>
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.oncokbToolTip(this.props.oncokb)}
-                    {sensitiveDrugs}
-                    {resistantDrugs}
+                <span className={classNames(functionalGroupsStyle['data-group-gap'], functionalGroupsStyle['link']) }>
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.oncokbToolTip(this.props.oncokb)}
+                        {sensitiveDrugs}
+                        {resistantDrugs}
+                    </a>
                 </span>
             </Row>
         ) : (
             <Row className={functionalGroupsStyle['data-content']}>
-                <div className={functionalGroupsStyle['data-group-gap']}>
-                    {this.oncokbToolTip(this.props.oncokb)}
-                    <span
-                        className={classNames(functionalGroupsStyle['oncokb'])}
+                <div className={classNames(functionalGroupsStyle['data-group-gap'], functionalGroupsStyle['link'])}>
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        N/A
-                    </span>
+                        {this.oncokbToolTip(this.props.oncokb)}
+                        <span
+                            className={classNames(functionalGroupsStyle['oncokb'])}
+                        >
+                            N/A
+                        </span>
+                    </a>
                 </div>
             </Row>
         );
