@@ -327,9 +327,15 @@ export default class MutationAssessor extends React.Component<
         return (
             <span className={functionalGroupsStyle['data-group-gap']}>
                 {this.mutationAssessorTooltip(
-                    <span>
-                        {dataSource}
-                        {maContent}
+                    <span className={functionalGroupsStyle['link']}>
+                        <a
+                            href={MutationAssessor.MUTATION_ASSESSOR_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                            {maContent}
+                        </a>
                     </span>
                 )}
             </span>

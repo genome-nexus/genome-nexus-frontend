@@ -193,13 +193,7 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
 
         const dataSource = (
             <span className={functionalGroupsStyle['data-source']}>
-                <a
-                    href={PolyPhen2.POLYPHEN2_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    PolyPhen-2
-                </a>
+                PolyPhen-2
             </span>
         );
 
@@ -240,9 +234,15 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         return (
             <span className={functionalGroupsStyle['data-group-gap']}>
                 {this.polyPhenTooltip(
-                    <span>
-                        {dataSource}
-                        {polyPhen2content}
+                    <span className={functionalGroupsStyle['link']}>
+                        <a
+                            href={PolyPhen2.POLYPHEN2_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                            {polyPhen2content}
+                        </a>
                     </span>
                 )}
             </span>

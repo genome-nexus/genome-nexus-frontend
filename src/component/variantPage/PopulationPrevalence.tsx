@@ -136,7 +136,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         }
     }
 
-    public dbsnpToolTip(dbsnpUrl: string, tooltipTrigger: JSX.Element) {
+    public dbsnpToolTip(dbsnpUrl: string, content: JSX.Element) {
         return (
             <DefaultTooltip
                 placement="top"
@@ -158,17 +158,17 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>
-                    <span className={functionalGroupsStyle['data-source']}>
-                        <a
-                            href={dbsnpUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                <span className={functionalGroupsStyle['link']}>
+                    <a
+                        href={dbsnpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span className={functionalGroupsStyle['data-source']}>
                             dbSNP
-                        </a>
-                    </span>
-                    {tooltipTrigger}
+                        </span>
+                        {content}
+                    </a>
                 </span>
             </DefaultTooltip>
         );
