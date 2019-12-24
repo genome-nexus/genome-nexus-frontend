@@ -147,14 +147,14 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public oncokbToolTip() {
+    public oncokbToolTip(onccokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
                         <a
-                            href={ONCOKB_URL}
+                            href={onccokbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -195,7 +195,7 @@ class TherapeuticImplication extends React.Component<
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbToolTip()}
+                        {this.oncokbToolTip(oncokbUrl)}
                         {sensitiveDrugs}
                         {resistantDrugs}
                     </a>
@@ -214,7 +214,7 @@ class TherapeuticImplication extends React.Component<
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbToolTip()}
+                        {this.oncokbToolTip(oncokbUrl)}
                         <span
                             className={classNames(
                                 functionalGroupsStyle['oncokb']

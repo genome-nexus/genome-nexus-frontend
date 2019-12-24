@@ -87,14 +87,14 @@ export default class Oncokb extends React.Component<IOncokbProps> {
             );
         }
     }
-    public oncokbTooltip() {
+    public oncokbTooltip(oncokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
                         <a
-                            href={ONCOKB_URL}
+                            href={oncokbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -147,6 +147,7 @@ export default class Oncokb extends React.Component<IOncokbProps> {
         }
     }
     public render() {
+        var oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         if (this.props.oncokb) {
             return (
                 <span
@@ -156,11 +157,11 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                     )}
                 >
                     <a
-                        href={generateOncokbLink(ONCOKB_URL, this.props.oncokb)}
+                        href={oncokbUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbTooltip()}
+                        {this.oncokbTooltip(oncokbUrl)}
                         {this.mutationEffect(this.props.oncokb)}
                         {this.oncogenicity(this.props.oncokb)}
                     </a>
@@ -170,11 +171,11 @@ export default class Oncokb extends React.Component<IOncokbProps> {
             return (
                 <span className={functionalGroupsStyle['link']}>
                     <a
-                        href={generateOncokbLink(ONCOKB_URL, this.props.oncokb)}
+                        href={oncokbUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbTooltip()}
+                        {this.oncokbTooltip(oncokbUrl)}
                         <span
                             className={classNames(
                                 functionalGroupsStyle['data-content'],
