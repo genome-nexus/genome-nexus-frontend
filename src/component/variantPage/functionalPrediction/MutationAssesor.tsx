@@ -66,16 +66,18 @@ export default class MutationAssessor extends React.Component<
                     <table className={tooltipStyles['ma-tooltip-table']}>
                         {(maData.functionalImpactScore ||
                             maData.functionalImpactScore === 0) && (
-                            <tr>
-                                <td>Score</td>
-                                <td>
-                                    <b>
-                                        {maData.functionalImpactScore.toFixed(
-                                            2
-                                        )}
-                                    </b>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Score</td>
+                                    <td>
+                                        <b>
+                                            {maData.functionalImpactScore.toFixed(
+                                                2
+                                            )}
+                                        </b>
+                                    </td>
+                                </tr>
+                            </tbody>
                         )}
                     </table>
                     <span>
@@ -280,13 +282,7 @@ export default class MutationAssessor extends React.Component<
         );
         const dataSource = (
             <span className={functionalGroupsStyle['data-source']}>
-                <a
-                    href={MutationAssessor.MUTATION_ASSESSOR_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Mutation Assessor
-                </a>
+                Mutation Assessor
             </span>
         );
 

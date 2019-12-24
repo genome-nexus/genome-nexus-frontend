@@ -47,12 +47,14 @@ export default class Sift extends React.Component<ISiftProps, {}> {
             <div>
                 <table className={tooltipStyles['sift-tooltip-table']}>
                     {(this.props.siftScore || this.props.siftScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{this.props.siftScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>Score</td>
+                                <td>
+                                    <b>{this.props.siftScore.toFixed(2)}</b>
+                                </td>
+                            </tr>
+                        </tbody>
                     )}
                 </table>
                 <span>

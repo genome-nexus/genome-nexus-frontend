@@ -65,7 +65,6 @@ export const ONCOKB_URL = 'https://oncokb.org';
 
 @observer
 export default class Oncokb extends React.Component<IOncokbProps> {
-
     public oncogenicity(oncokb: IndicatorQueryResp) {
         if (oncokb.oncogenic && oncokb.oncogenic !== '') {
             return (
@@ -157,10 +156,7 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                     )}
                 >
                     <a
-                        href={generateOncokbLink(
-                            ONCOKB_URL,
-                            this.props.oncokb
-                        )}
+                        href={generateOncokbLink(ONCOKB_URL, this.props.oncokb)}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -174,10 +170,7 @@ export default class Oncokb extends React.Component<IOncokbProps> {
             return (
                 <span className={functionalGroupsStyle['link']}>
                     <a
-                        href={generateOncokbLink(
-                            ONCOKB_URL,
-                            this.props.oncokb
-                        )}
+                        href={generateOncokbLink(ONCOKB_URL, this.props.oncokb)}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -204,7 +197,7 @@ export function generateOncokbLink(
     let url = link;
     const hugoSymbol = oncokb && oncokb.query && oncokb.query.hugoSymbol;
     const alteration = oncokb && oncokb.query && oncokb.query.alteration;
-    if (hugoSymbol && alteration && hugoSymbol !== '') {
+    if (hugoSymbol && alteration) {
         url = `${url}/gene/${hugoSymbol}/${alteration}`;
     }
     return url;

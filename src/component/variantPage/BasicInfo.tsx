@@ -10,17 +10,23 @@ import {
     getCanonicalMutationType,
     DefaultTooltip,
 } from 'cbioportal-frontend-commons';
-import { Gene } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+import {
+    Gene,
+    IndicatorQueryResp,
+} from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import { Mutation } from 'react-mutation-mapper';
 import basicInfo from './BasicInfo.module.scss';
 import { Button } from 'react-bootstrap';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
+import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
+import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
     mutation: Mutation;
     variant: string;
     oncokbGenesMap: { [hugoSymbol: string]: Gene };
+    oncokb: IndicatorQueryResp | undefined;
 }
 
 type MutationTypeFormat = {
@@ -128,7 +134,11 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 renderData = renderData.filter(data => data.value != null); // remove null fields
             }
             let basicInfoList = _.map(renderData, data => {
-                return BasicInfoUnit(data.value, data.key, data.category);
+                return this.generateBasicInfoPills(
+                    data.value,
+                    data.key,
+                    data.category
+                );
             });
 
             return (
@@ -288,69 +298,76 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
+    public generateBasicInfoPills(
+        value: string | null,
+        key: string,
+        category: string | undefined
+    ) {
+        if (key === 'oncogene' || key === 'tsg') {
+            const oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
+            return (
+                <DefaultTooltip
+                    placement="top"
+                    overlay={
+                        <span>
+                            As categorised by&nbsp;
+                            <a
+                                href={oncokbUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <span
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    OncoKB
+                                    <img
+                                        height={12}
+                                        src={require('./biologicalFunction/oncokb.png')}
+                                        alt="oncokb"
+                                    />
+                                </span>
+                            </a>
+                        </span>
+                    }
+                >
+                    <span
+                        className={classNames(
+                            basicInfo[`${category}`],
+                            basicInfo[`data-pills`]
+                        )}
+                    >
+                        <a
+                            href={oncokbUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {value}
+                        </a>
+                    </span>
+                </DefaultTooltip>
+            );
+        }
+
+        return (
+            <span
+                className={classNames(
+                    basicInfo[`${category}`],
+                    basicInfo[`data-pills`]
+                )}
+            >
+                {value}
+            </span>
+        );
+    }
+
     @autobind
     @action
     onButtonClick() {
         this.showAllTranscripts = !this.showAllTranscripts;
     }
-}
-
-function BasicInfoUnit(
-    value: string | null,
-    key: string,
-    category: string | undefined
-) {
-    if (key === 'oncogene' || key === 'tsg') {
-        return (
-            <DefaultTooltip
-                placement="top"
-                overlay={
-                    <span>
-                        As categorised by&nbsp;
-                        <a
-                            href={'https://www.oncokb.org/'} // TODO goes to oncokb variant page?
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                OncoKB
-                                <img
-                                    height={12}
-                                    src={require('./biologicalFunction/oncokb.png')}
-                                    alt="oncokb"
-                                />
-                            </span>
-                        </a>
-                    </span>
-                }
-            >
-                <span
-                    className={classNames(
-                        basicInfo[`${category}`],
-                        basicInfo[`data-pills`]
-                    )}
-                >
-                    {value}
-                </span>
-            </DefaultTooltip>
-        );
-    }
-
-    return (
-        <span
-            className={classNames(
-                basicInfo[`${category}`],
-                basicInfo[`data-pills`]
-            )}
-        >
-            {value}
-        </span>
-    );
 }
 
 // logic is from react-mutation-mapper
