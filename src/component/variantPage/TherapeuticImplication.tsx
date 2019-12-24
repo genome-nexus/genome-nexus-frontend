@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
-
-import functionalGroupsStyle from './functionalGroups.module.scss';
-import therapeuticImplication from './TherapeuticImplication.module.scss';
+import _ from 'lodash';
+import classNames from 'classnames';
 import {
     IndicatorQueryResp,
     IndicatorQueryTreatment,
 } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
-import _ from 'lodash';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
-import classNames from 'classnames';
+
+import functionalGroupsStyle from './functionalGroups.module.scss';
+import therapeuticImplication from './TherapeuticImplication.module.scss';
 
 interface ITherapeuticImplicationProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -147,13 +147,7 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public oncokbToolTip(oncokb: IndicatorQueryResp | undefined) {
-        let oncokbUrl = '';
-        if (oncokb && oncokb.query && oncokb.query.hugoSymbol) {
-            oncokbUrl = `https://oncokb.org/gene/${oncokb.query.hugoSymbol}`;
-        } else {
-            oncokbUrl = 'https://oncokb.org/';
-        }
+    public oncokbToolTip() {
         return (
             <DefaultTooltip
                 placement="top"
@@ -201,7 +195,7 @@ class TherapeuticImplication extends React.Component<
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbToolTip(this.props.oncokb)}
+                        {this.oncokbToolTip()}
                         {sensitiveDrugs}
                         {resistantDrugs}
                     </a>
@@ -220,7 +214,7 @@ class TherapeuticImplication extends React.Component<
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbToolTip(this.props.oncokb)}
+                        {this.oncokbToolTip()}
                         <span
                             className={classNames(
                                 functionalGroupsStyle['oncokb']

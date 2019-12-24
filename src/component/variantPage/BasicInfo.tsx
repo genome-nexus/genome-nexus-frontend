@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import autobind from 'autobind-decorator';
 import { observable, action } from 'mobx';
+import { Button } from 'react-bootstrap';
 import {
     VariantAnnotationSummary,
     TranscriptConsequenceSummary,
@@ -15,11 +16,10 @@ import {
     IndicatorQueryResp,
 } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import { Mutation } from 'react-mutation-mapper';
-import basicInfo from './BasicInfo.module.scss';
-import { Button } from 'react-bootstrap';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
-import functionalGroupsStyle from './functionalGroups.module.scss';
+
+import basicInfo from './BasicInfo.module.scss';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
