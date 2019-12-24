@@ -61,10 +61,10 @@ export const MUTATION_EFFECT_CLASS_NAMES: {
     [MUTATION_EFFECT.UNKNOWN]: 'unknown',
 };
 
-@observer
-class Oncokb extends React.Component<IOncokbProps> {
-    static ONCOKB_URL: string = 'https://oncokb.org/';
+export const ONCOKB_URL = 'https://oncokb.org';
 
+@observer
+export default class Oncokb extends React.Component<IOncokbProps> {
     public oncogenicity(oncokb: IndicatorQueryResp) {
         if (oncokb.oncogenic && oncokb.oncogenic !== '') {
             return (
@@ -87,14 +87,14 @@ class Oncokb extends React.Component<IOncokbProps> {
             );
         }
     }
-    public oncokbTooltip() {
+    public oncokbTooltip(oncokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
                         <a
-                            href={'https://www.oncokb.org/'}
+                            href={oncokbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -109,13 +109,7 @@ class Oncokb extends React.Component<IOncokbProps> {
                 }
             >
                 <span className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={Oncokb.ONCOKB_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        OncoKB
-                    </a>
+                    OncoKB
                 </span>
             </DefaultTooltip>
         );
@@ -153,30 +147,59 @@ class Oncokb extends React.Component<IOncokbProps> {
         }
     }
     public render() {
+        var oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         if (this.props.oncokb) {
             return (
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.oncokbTooltip()}
-                    {this.mutationEffect(this.props.oncokb)}
-                    {this.oncogenicity(this.props.oncokb)}
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-group-gap'],
+                        functionalGroupsStyle['link']
+                    )}
+                >
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.oncokbTooltip(oncokbUrl)}
+                        {this.mutationEffect(this.props.oncokb)}
+                        {this.oncogenicity(this.props.oncokb)}
+                    </a>
                 </span>
             );
         } else {
             return (
-                <span>
-                    {this.oncokbTooltip()}
-                    <span
-                        className={classNames(
-                            functionalGroupsStyle['data-content'],
-                            functionalGroupsStyle['oncokb']
-                        )}
+                <span className={functionalGroupsStyle['link']}>
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        N/A
-                    </span>
+                        {this.oncokbTooltip(oncokbUrl)}
+                        <span
+                            className={classNames(
+                                functionalGroupsStyle['data-content'],
+                                functionalGroupsStyle['oncokb']
+                            )}
+                        >
+                            N/A
+                        </span>
+                    </a>
                 </span>
             );
         }
     }
 }
 
-export default Oncokb;
+export function generateOncokbLink(
+    link: string,
+    oncokb: IndicatorQueryResp | undefined
+): string {
+    let url = link;
+    const hugoSymbol = oncokb && oncokb.query && oncokb.query.hugoSymbol;
+    const alteration = oncokb && oncokb.query && oncokb.query.alteration;
+    if (hugoSymbol && alteration) {
+        url = `${url}/gene/${hugoSymbol}/${alteration}`;
+    }
+    return url;
+}

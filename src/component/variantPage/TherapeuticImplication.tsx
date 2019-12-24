@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
-
-import functionalGroupsStyle from './functionalGroups.module.scss';
-import therapeuticImplication from './TherapeuticImplication.module.scss';
+import _ from 'lodash';
+import classNames from 'classnames';
 import {
     IndicatorQueryResp,
     IndicatorQueryTreatment,
 } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
-import _ from 'lodash';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import classNames from 'classnames';
+import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
+
+import functionalGroupsStyle from './functionalGroups.module.scss';
+import therapeuticImplication from './TherapeuticImplication.module.scss';
 
 interface ITherapeuticImplicationProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -146,45 +147,32 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public oncokbToolTip(oncokb: IndicatorQueryResp | undefined) {
-        let oncokbUrl = '';
-        if (oncokb && oncokb.query && oncokb.query.hugoSymbol) {
-            oncokbUrl = `https://oncokb.org/gene/${oncokb.query.hugoSymbol}`;
-        } else {
-            oncokbUrl = 'https://oncokb.org/';
-        }
+    public oncokbToolTip(onccokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
-                        OncoKB is a precision oncology knowledge base and
+                        <a
+                            href={onccokbUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            OncoKB
+                        </a>
+                        &nbsp;is a precision oncology knowledge base and
                         contains
                         <br />
                         information about the effects and treatment implications
                         <br />
                         of specific cancer gene alterations.
-                        <br />
-                        <a
-                            href={oncokbUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span>Click to see variant on OncoKB website.</span>
-                        </a>
                     </span>
                 }
             >
                 <span
                     className={classNames(functionalGroupsStyle['data-source'])}
                 >
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        OncoKB
-                    </a>
+                    OncoKB
                 </span>
             </DefaultTooltip>
         );
@@ -193,23 +181,48 @@ class TherapeuticImplication extends React.Component<
     public render() {
         const sensitiveDrugs = this.sensitiveDrugs(this.props.oncokb);
         const resistantDrugs = this.resistantDrugs(this.props.oncokb);
+        const oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         return sensitiveDrugs || resistantDrugs ? (
             <Row className={functionalGroupsStyle['data-content']}>
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.oncokbToolTip(this.props.oncokb)}
-                    {sensitiveDrugs}
-                    {resistantDrugs}
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-group-gap'],
+                        functionalGroupsStyle['link']
+                    )}
+                >
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.oncokbToolTip(oncokbUrl)}
+                        {sensitiveDrugs}
+                        {resistantDrugs}
+                    </a>
                 </span>
             </Row>
         ) : (
             <Row className={functionalGroupsStyle['data-content']}>
-                <div className={functionalGroupsStyle['data-group-gap']}>
-                    {this.oncokbToolTip(this.props.oncokb)}
-                    <span
-                        className={classNames(functionalGroupsStyle['oncokb'])}
+                <div
+                    className={classNames(
+                        functionalGroupsStyle['data-group-gap'],
+                        functionalGroupsStyle['link']
+                    )}
+                >
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        N/A
-                    </span>
+                        {this.oncokbToolTip(oncokbUrl)}
+                        <span
+                            className={classNames(
+                                functionalGroupsStyle['oncokb']
+                            )}
+                        >
+                            N/A
+                        </span>
+                    </a>
                 </div>
             </Row>
         );

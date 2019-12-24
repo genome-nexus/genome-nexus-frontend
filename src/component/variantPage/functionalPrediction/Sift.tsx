@@ -47,12 +47,14 @@ export default class Sift extends React.Component<ISiftProps, {}> {
             <div>
                 <table className={tooltipStyles['sift-tooltip-table']}>
                     {(this.props.siftScore || this.props.siftScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{this.props.siftScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>Score</td>
+                                <td>
+                                    <b>{this.props.siftScore.toFixed(2)}</b>
+                                </td>
+                            </tr>
+                        </tbody>
                     )}
                 </table>
                 <span>
@@ -192,15 +194,7 @@ export default class Sift extends React.Component<ISiftProps, {}> {
             <span className={`${annotationStyles['annotation-item-text']}`} />
         );
         const dataSource = (
-            <span className={functionalGroupsStyle['data-source']}>
-                <a
-                    href={Sift.SIFT_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    SIFT
-                </a>
-            </span>
+            <span className={functionalGroupsStyle['data-source']}>SIFT</span>
         );
 
         if (this.props.siftPrediction && this.props.siftPrediction.length > 0) {
@@ -235,9 +229,15 @@ export default class Sift extends React.Component<ISiftProps, {}> {
         return (
             <span className={functionalGroupsStyle['data-group-gap']}>
                 {this.siftTooltip(
-                    <span>
-                        {dataSource}
-                        {siftContent}
+                    <span className={functionalGroupsStyle['link']}>
+                        <a
+                            href={Sift.SIFT_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                            {siftContent}
+                        </a>
                     </span>
                 )}
             </span>

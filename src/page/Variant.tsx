@@ -324,6 +324,7 @@ class Variant extends React.Component<IVariantProps> {
                                     oncokbGenesMap={
                                         this.props.store.oncokbGenesMap.result
                                     }
+                                    oncokb={this.oncokb}
                                 />
                             </Col>
                         </Row>

@@ -34,6 +34,8 @@
     font-size: 1rem;
     margin-right: 5px;
     color: black;
+    text-decoration: underline;
+    font-style: italic;
 }
 
 .data-source a,
@@ -65,6 +67,16 @@
 .dbsnp {
     font-size: 1rem;
     font-weight: bold;
+}
+
+.link a,
+.link a:hover,
+.link a:focus,
+.link a:active,
+.link a:visited {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* functional prediction */

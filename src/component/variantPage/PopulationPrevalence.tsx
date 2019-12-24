@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 import { GnomadFrequency } from 'react-mutation-mapper';
+import classNames from 'classnames';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
 
@@ -19,42 +20,11 @@ type Vcf = {
 };
 @observer
 class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
-    public gnomad() {
-        if (
-            this.props.myVariantInfo &&
-            (this.props.myVariantInfo.gnomadExome ||
-                this.props.myVariantInfo.gnomadGenome)
-        ) {
-            return (
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.gnomadTooltip(
-                        this.props.myVariantInfo,
-                        this.props.chromosome
-                    )}
-                    <span className={functionalGroupsStyle['gnomad']}>
-                        <GnomadFrequency
-                            myVariantInfo={this.props.myVariantInfo}
-                        />
-                    </span>
-                </span>
-            );
-        } else {
-            return (
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.gnomadTooltip(
-                        this.props.myVariantInfo,
-                        this.props.chromosome
-                    )}
-                    <span className={functionalGroupsStyle['gnomad']}>N/A</span>
-                </span>
-            );
-        }
-    }
-
-    public gnomadTooltip(
+    public gnomad(
         myVariantInfo: MyVariantInfo | undefined,
         chromosome: string | null
     ) {
+        // generate gnomad url
         let gnomadUrl = '';
         if (myVariantInfo && myVariantInfo.vcf && chromosome) {
             const vcfVariant: Vcf = {
@@ -65,36 +35,81 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             };
             gnomadUrl = `https://gnomad.broadinstitute.org/variant/${vcfVariant.chrom}-${vcfVariant.pos}-${vcfVariant.ref}-${vcfVariant.alt}`;
         } else {
-            gnomadUrl = 'https://www.ncbi.nlm.nih.gov/snp/';
+            gnomadUrl = 'https://gnomad.broadinstitute.org/';
         }
-        return (
-            <DefaultTooltip
-                placement="top"
-                overlay={
-                    <span>
-                        gnomAD population allele frequencies. Overall population
-                        <br />
-                        allele frequency is shown. Hover over a frequency to see
-                        <br />
-                        the frequency for each specific population. <br />
-                        <a
-                            href={gnomadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span>Click to see variant on gnomAD website.</span>
-                        </a>
-                    </span>
-                }
-            >
-                <span className={functionalGroupsStyle['data-source']}>
+
+        if (
+            this.props.myVariantInfo &&
+            (this.props.myVariantInfo.gnomadExome ||
+                this.props.myVariantInfo.gnomadGenome)
+        ) {
+            return (
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-group-gap'],
+                        functionalGroupsStyle['link']
+                    )}
+                >
                     <a
                         href={gnomadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        gnomAD
+                        {this.gnomadTooltip(gnomadUrl)}
+                        <span className={functionalGroupsStyle['gnomad']}>
+                            <GnomadFrequency
+                                myVariantInfo={this.props.myVariantInfo}
+                            />
+                        </span>
                     </a>
+                </span>
+            );
+        } else {
+            return (
+                <span
+                    className={classNames(
+                        functionalGroupsStyle['data-group-gap'],
+                        functionalGroupsStyle['link']
+                    )}
+                >
+                    <a
+                        href={gnomadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.gnomadTooltip(gnomadUrl)}
+                        <span className={functionalGroupsStyle['gnomad']}>
+                            N/A
+                        </span>
+                    </a>
+                </span>
+            );
+        }
+    }
+
+    public gnomadTooltip(gnomadUrl: string) {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <span>
+                        <a
+                            href={gnomadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            gnomAD
+                        </a>
+                        &nbsp;population allele frequencies. Overall population
+                        <br />
+                        allele frequency is shown. Hover over a frequency to see
+                        <br />
+                        the frequency for each specific population.
+                    </span>
+                }
+            >
+                <span className={functionalGroupsStyle['data-source']}>
+                    gnomAD
                 </span>
             </DefaultTooltip>
         );
@@ -136,30 +151,13 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         }
     }
 
-    public dbsnpToolTip(dbsnpUrl: string, tooltipTrigger: JSX.Element) {
+    public dbsnpToolTip(dbsnpUrl: string, content: JSX.Element) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
-                        The Single Nucleotide Polymorphism Database (dbSNP)
-                        <br />
-                        is a free public archive for genetic variation within
-                        and
-                        <br />
-                        across different species. <br />
-                        <a
-                            href={dbsnpUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span>Click to see variant on dbSNP website.</span>
-                        </a>
-                    </span>
-                }
-            >
-                <span>
-                    <span className={functionalGroupsStyle['data-source']}>
+                        The Single Nucleotide Polymorphism Database (
                         <a
                             href={dbsnpUrl}
                             target="_blank"
@@ -167,8 +165,25 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                         >
                             dbSNP
                         </a>
+                        )<br />
+                        is a free public archive for genetic variation within
+                        and
+                        <br />
+                        across different species.
                     </span>
-                    {tooltipTrigger}
+                }
+            >
+                <span className={functionalGroupsStyle['link']}>
+                    <a
+                        href={dbsnpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span className={functionalGroupsStyle['data-source']}>
+                            dbSNP
+                        </span>
+                        {content}
+                    </a>
                 </span>
             </DefaultTooltip>
         );
@@ -177,7 +192,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
     public render() {
         return (
             <Row className={functionalGroupsStyle['data-content']}>
-                {this.gnomad()}
+                {this.gnomad(this.props.myVariantInfo, this.props.chromosome)}
                 {this.dbsnp(this.props.myVariantInfo)}
             </Row>
         );
