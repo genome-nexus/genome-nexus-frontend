@@ -2,10 +2,10 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
-import { GnomadFrequency } from 'react-mutation-mapper';
 import classNames from 'classnames';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
+import GnomadData from './GnomadData';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;
@@ -38,53 +38,24 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             gnomadUrl = 'https://gnomad.broadinstitute.org/';
         }
 
-        if (
-            this.props.myVariantInfo &&
-            (this.props.myVariantInfo.gnomadExome ||
-                this.props.myVariantInfo.gnomadGenome)
-        ) {
-            return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
-                    <a
-                        href={gnomadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.gnomadTooltip(gnomadUrl)}
-                        <span className={functionalGroupsStyle['gnomad']}>
-                            <GnomadFrequency
-                                myVariantInfo={this.props.myVariantInfo}
-                            />
-                        </span>
-                    </a>
-                </span>
-            );
-        } else {
-            return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
-                    <a
-                        href={gnomadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.gnomadTooltip(gnomadUrl)}
-                        <span className={functionalGroupsStyle['gnomad']}>
-                            N/A
-                        </span>
-                    </a>
-                </span>
-            );
-        }
+        return (
+            <span
+                className={classNames(
+                    functionalGroupsStyle['data-group-gap'],
+                    functionalGroupsStyle['link']
+                )}
+            >
+                <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
+                    {this.gnomadTooltip(gnomadUrl)}
+                    <span className={functionalGroupsStyle['gnomad']}>
+                        <GnomadData
+                            myVariantInfo={this.props.myVariantInfo}
+                            gnomadUrl={gnomadUrl}
+                        />
+                    </span>
+                </a>
+            </span>
+        );
     }
 
     public gnomadTooltip(gnomadUrl: string) {
