@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './Footer.css';
 
@@ -39,9 +40,9 @@ class Footer extends React.Component<{}> {
     public get internalLinks() {
         return (
             <div>
-                <a href="/swagger-ui.html" target="_top">
+                <Link to="/swagger-ui.html" target="_self">
                     API
-                </a>
+                </Link>
                 <a href="https://docs.genomenexus.org" target="_top">
                     Documentation
                 </a>
