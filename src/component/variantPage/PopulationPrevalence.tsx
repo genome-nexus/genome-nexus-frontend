@@ -46,7 +46,6 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 )}
             >
                 <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
-                    {this.gnomadTooltip(gnomadUrl)}
                     <span className={functionalGroupsStyle['gnomad']}>
                         <GnomadData
                             myVariantInfo={this.props.myVariantInfo}
@@ -55,34 +54,6 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 </a>
             </span>
-        );
-    }
-
-    public gnomadTooltip(gnomadUrl: string) {
-        return (
-            <DefaultTooltip
-                placement="top"
-                overlay={
-                    <span>
-                        <a
-                            href={gnomadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            gnomAD
-                        </a>
-                        &nbsp;population allele frequencies. Overall population
-                        <br />
-                        allele frequency is shown. Hover over a frequency to see
-                        <br />
-                        the frequency for each specific population.
-                    </span>
-                }
-            >
-                <span className={functionalGroupsStyle['data-source']}>
-                    gnomAD
-                </span>
-            </DefaultTooltip>
         );
     }
 

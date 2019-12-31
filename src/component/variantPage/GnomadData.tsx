@@ -125,8 +125,6 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
             myVariantInfo &&
             (myVariantInfo.gnomadExome || myVariantInfo.gnomadGenome)
         ) {
-            // get gnomad link from chrom, location, ref and alt
-
             const gnomadExome: { [key: string]: GnomadSummary } = {};
             const gnomadGenome: { [key: string]: GnomadSummary } = {};
             const gnomadResult: { [key: string]: GnomadSummary } = {};
@@ -255,7 +253,12 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                 trigger={['hover', 'focus']}
                 destroyTooltipOnHide={true}
             >
-                {this.gnomad().display}
+                <span>
+                    <span className={functionalGroupsStyle['data-source']}>
+                        gnomAD
+                    </span>
+                    {this.gnomad().display}
+                </span>
             </DefaultTooltip>
         );
     }
