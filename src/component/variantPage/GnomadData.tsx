@@ -1,3 +1,7 @@
+// Most of code comes from react mutation mapper: GnomadFrequency.tsx.
+// Some parts are modified.
+// Modified parts are marked with "// MODIFIED".
+
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import {
@@ -11,23 +15,15 @@ import {
     Gnomad,
 } from 'cbioportal-frontend-commons';
 import { GnomadFrequencyTable } from 'react-mutation-mapper';
-
-import functionalGroupsStyle from './functionalGroups.module.scss';
 import { GnomadSummary } from 'react-mutation-mapper/dist/model/GnomadSummary';
 import _ from 'lodash';
+
+import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IGnomadDataProps {
     myVariantInfo?: MyVariantInfo;
     annotation?: VariantAnnotation;
-    gnomadUrl: string;
 }
-
-type Vcf = {
-    chrom: string;
-    ref: string;
-    alt: string;
-    pos: number;
-};
 
 const GNOMAD_POPULATION_NAME: { [key: string]: string } = {
     African: 'afr',
@@ -60,6 +56,19 @@ export function calculateAlleleFrequency(
         return count && totalNumber && totalNumber !== 0
             ? count / totalNumber
             : 0;
+    }
+}
+
+export function generateGnomadUrl(
+    chromosome: string | null,
+    position: string | null,
+    reference: string | null,
+    variant: string | null
+) {
+    if (chromosome && position && reference && variant) {
+        return `https://gnomad.broadinstitute.org/variant/${chromosome}-${position}-${reference}-${variant}`;
+    } else {
+        return 'https://gnomad.broadinstitute.org/';
     }
 }
 
@@ -116,6 +125,7 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
     public gnomad() {
         const myVariantInfo = this.props.myVariantInfo;
 
+        let gnomadUrl = '';
         let display: JSX.Element;
         let overlay: (() => JSX.Element) | null = null;
         let result: { [key: string]: GnomadSummary } = {};
@@ -125,6 +135,19 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
             myVariantInfo &&
             (myVariantInfo.gnomadExome || myVariantInfo.gnomadGenome)
         ) {
+            // get gnomad link from chrom, location, ref and alt
+            gnomadUrl =
+                myVariantInfo && myVariantInfo.vcf
+                    ? generateGnomadUrl(
+                          this.props.annotation
+                              ? this.props.annotation.seq_region_name
+                              : null,
+                          myVariantInfo.vcf.position,
+                          myVariantInfo.vcf.ref,
+                          myVariantInfo.vcf.alt
+                      )
+                    : '';
+
             const gnomadExome: { [key: string]: GnomadSummary } = {};
             const gnomadGenome: { [key: string]: GnomadSummary } = {};
             const gnomadResult: { [key: string]: GnomadSummary } = {};
@@ -197,15 +220,16 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                 display = <span>0</span>;
             } else {
                 display = (
-                    <span>{result['Total'].alleleFrequency.toFixed(6)}</span>
+                    <span>{result['Total'].alleleFrequency.toFixed(6)}</span> // MODIFIED: add toFIxed() to show 0.xxxxxx
                 );
             }
 
             overlay = () => (
+                // MODIFIED: add a description on the top of table
                 <div>
                     <div style={{ height: '35px' }}>
                         <a
-                            href={this.props.gnomadUrl}
+                            href={gnomadUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -214,10 +238,7 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                         &nbsp;population allele frequencies. Overall population
                         allele frequency is shown.
                     </div>
-                    <GnomadFrequencyTable
-                        data={sorted}
-                        gnomadUrl={this.props.gnomadUrl}
-                    />
+                    <GnomadFrequencyTable data={sorted} gnomadUrl={gnomadUrl} />
                 </div>
             );
         } else {
@@ -225,10 +246,11 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                 <span className={functionalGroupsStyle['gnomad']}>N/A</span>
             );
             overlay = () => (
+                // MODIFIED: add a description on the top of table
                 <div>
                     <span>
                         <a
-                            href={this.props.gnomadUrl}
+                            href={gnomadUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -242,14 +264,17 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
             );
         }
 
-        return { overlay, display };
+        return { overlay, display }; // MODIFIED: add return { overlay, display } since it was moved out as a method
     }
 
     public render() {
+        // MODIFIED: move out the code as a method, only leave return here.
+        // MODIFIED: add data source - 'gnomAD'. Don't need it in react mutation mapper.
         return (
+            // MODIFIED: using result from method
             <DefaultTooltip
                 overlay={this.gnomad().overlay}
-                placement="top"
+                placement="top" // MODIFIED: change to 'top' to be consistent with other components in genome nexus. Probably don't need to change in react mutation mapper.
                 trigger={['hover', 'focus']}
                 destroyTooltipOnHide={true}
             >

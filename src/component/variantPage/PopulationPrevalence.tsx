@@ -5,7 +5,7 @@ import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 import classNames from 'classnames';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
-import GnomadData from './GnomadData';
+import GnomadData, { generateGnomadUrl } from './GnomadData';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;
@@ -25,19 +25,18 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         chromosome: string | null
     ) {
         // generate gnomad url
-        let gnomadUrl = '';
+        let gnomadUrl = 'https://gnomad.broadinstitute.org/';
         if (myVariantInfo && myVariantInfo.vcf && chromosome) {
-            const vcfVariant: Vcf = {
-                chrom: chromosome,
-                ref: myVariantInfo.vcf.ref,
-                alt: myVariantInfo.vcf.alt,
-                pos: Number(myVariantInfo.vcf.position),
-            };
-            gnomadUrl = `https://gnomad.broadinstitute.org/variant/${vcfVariant.chrom}-${vcfVariant.pos}-${vcfVariant.ref}-${vcfVariant.alt}`;
-        } else {
-            gnomadUrl = 'https://gnomad.broadinstitute.org/';
+            gnomadUrl =
+                myVariantInfo && myVariantInfo.vcf
+                    ? generateGnomadUrl(
+                          chromosome,
+                          myVariantInfo.vcf.position,
+                          myVariantInfo.vcf.ref,
+                          myVariantInfo.vcf.alt
+                      )
+                    : '';
         }
-
         return (
             <span
                 className={classNames(
@@ -47,10 +46,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             >
                 <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
                     <span className={functionalGroupsStyle['gnomad']}>
-                        <GnomadData
-                            myVariantInfo={this.props.myVariantInfo}
-                            gnomadUrl={gnomadUrl}
-                        />
+                        <GnomadData myVariantInfo={this.props.myVariantInfo} />
                     </span>
                 </a>
             </span>
