@@ -46,7 +46,10 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             >
                 <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
                     <span className={functionalGroupsStyle['gnomad']}>
-                        <GnomadData myVariantInfo={this.props.myVariantInfo} />
+                        <GnomadData
+                            myVariantInfo={this.props.myVariantInfo}
+                            chromosome={this.props.chromosome}
+                        />
                     </span>
                 </a>
             </span>

@@ -63,6 +63,12 @@
     font-weight: bold;
 }
 
+.gnomad-frequency-table {
+    .rt-table .rt-tbody .rt-td {
+        padding: 4px 5px;
+    }
+}
+
 /* dbsnp */
 .dbsnp {
     font-size: 1rem;

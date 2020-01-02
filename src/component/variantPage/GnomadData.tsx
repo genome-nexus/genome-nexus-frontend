@@ -7,22 +7,21 @@ import { observer } from 'mobx-react';
 import {
     MyVariantInfo,
     DefaultTooltip,
-    VariantAnnotation,
     AlleleCount,
     AlleleNumber,
     Homozygotes,
     AlleleFrequency,
     Gnomad,
 } from 'cbioportal-frontend-commons';
-import { GnomadFrequencyTable } from 'react-mutation-mapper';
 import { GnomadSummary } from 'react-mutation-mapper/dist/model/GnomadSummary';
 import _ from 'lodash';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
+import GnomadFrequencyTable from './GnomadFrequencyTable';
 
 interface IGnomadDataProps {
     myVariantInfo?: MyVariantInfo;
-    annotation?: VariantAnnotation;
+    chromosome: string | null;
 }
 
 const GNOMAD_POPULATION_NAME: { [key: string]: string } = {
@@ -139,9 +138,7 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
             gnomadUrl =
                 myVariantInfo && myVariantInfo.vcf
                     ? generateGnomadUrl(
-                          this.props.annotation
-                              ? this.props.annotation.seq_region_name
-                              : null,
+                          this.props.chromosome,
                           myVariantInfo.vcf.position,
                           myVariantInfo.vcf.ref,
                           myVariantInfo.vcf.alt
@@ -220,7 +217,7 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                 display = <span>0</span>;
             } else {
                 display = (
-                    <span>{result['Total'].alleleFrequency.toFixed(6)}</span> // MODIFIED: add toFIxed() to show 0.xxxxxx
+                    <span>{result['Total'].alleleFrequency.toFixed(9)}</span> // MODIFIED: add toFIxed() to show 0.xxxxxxxxx
                 );
             }
 
