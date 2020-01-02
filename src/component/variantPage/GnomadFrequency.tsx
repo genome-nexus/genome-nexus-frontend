@@ -19,7 +19,7 @@ import _ from 'lodash';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 import GnomadFrequencyTable from './GnomadFrequencyTable';
 
-interface IGnomadDataProps {
+interface IGnomadFrequencyProps {
     myVariantInfo?: MyVariantInfo;
     chromosome: string | null;
 }
@@ -119,8 +119,24 @@ export function setGnomadTableData(
     } as GnomadSummary;
 }
 
+// MODIFIED: new function to return customized significant digits after decimal point, could be in Utils when move to mutation mapper
+// refer to: https://stackoverflow.com/questions/27220908
+export function significantDigits(data: number, length: number) {
+    // data: the original number, length: how many significant digits in return
+    if (data === 0) {
+        return data;
+    }
+    var numDigits = Math.ceil(Math.log10(Math.abs(data)));
+    var rounded =
+        Math.round(data * Math.pow(10, length - numDigits)) *
+        Math.pow(10, numDigits - length);
+    return rounded.toFixed(Math.max(length - numDigits, 0));
+}
+
 @observer
-export default class GnomadData extends React.Component<IGnomadDataProps> {
+export default class GnomadFrequency extends React.Component<
+    IGnomadFrequencyProps
+> {
     public gnomad() {
         const myVariantInfo = this.props.myVariantInfo;
 
@@ -217,7 +233,9 @@ export default class GnomadData extends React.Component<IGnomadDataProps> {
                 display = <span>0</span>;
             } else {
                 display = (
-                    <span>{result['Total'].alleleFrequency.toFixed(9)}</span> // MODIFIED: add toFIxed() to show 0.xxxxxxxxx
+                    <span>
+                        {significantDigits(result['Total'].alleleFrequency, 4)}
+                    </span> // MODIFIED: show frequency as number with 4 significant digits
                 );
             }
 

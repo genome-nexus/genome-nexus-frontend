@@ -3,6 +3,7 @@ import * as React from 'react';
 import ReactTable, { RowInfo } from 'react-table';
 import { GnomadSummary } from 'react-mutation-mapper/dist/model/GnomadSummary';
 import { ColumnHeader } from 'react-mutation-mapper';
+import { significantDigits } from './GnomadFrequency';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
 
@@ -15,7 +16,7 @@ export function frequencyOutput(frequency: number) {
     if (frequency === 0) {
         return <span>0</span>;
     } else {
-        return <span>{frequency.toFixed(9)}</span>; // MODIFIED: show frequency in number
+        return <span>{significantDigits(frequency, 4)}</span>; // MODIFIED: show frequency in number with 4 significant digits, import 'significantDigits'
     }
 }
 

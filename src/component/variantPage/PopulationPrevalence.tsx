@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 import classNames from 'classnames';
+import GnomadFrequency, { generateGnomadUrl } from './GnomadFrequency';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
-import GnomadData, { generateGnomadUrl } from './GnomadData';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;
@@ -46,7 +46,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             >
                 <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
                     <span className={functionalGroupsStyle['gnomad']}>
-                        <GnomadData
+                        <GnomadFrequency
                             myVariantInfo={this.props.myVariantInfo}
                             chromosome={this.props.chromosome}
                         />
