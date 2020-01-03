@@ -16,6 +16,7 @@
 
 .variant-page {
     max-width: 1391px !important;
+    margin: 0 auto;
 }
 
 .variant-page-container {

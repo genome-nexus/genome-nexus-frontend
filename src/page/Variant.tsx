@@ -15,6 +15,8 @@ import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
+import Spinner from 'react-spinkit';
+
 interface IVariantProps {
     variant: string;
     store: VariantStore;
@@ -72,7 +74,13 @@ class Variant extends React.Component<IVariantProps> {
     protected get loadingIndicator() {
         return (
             this.props.mainLoadingIndicator || (
-                <i className="fa fa-spinner fa-pulse fa-2x" />
+                <div className={'loadingIndicator'}>
+                    <Spinner
+                        fadeIn={'none'}
+                        name="ball-scale-multiple"
+                        color="aqua"
+                    />
+                </div>
             )
         );
     }
@@ -295,100 +303,109 @@ class Variant extends React.Component<IVariantProps> {
         return this.isLoading ? (
             this.loadingIndicator
         ) : (
-            <div>
-                <Row className="variant-page-container">
-                    {/* TODO: the height should automatically change with the content */}
-                    {/* remove the d-none if have sidebar */}
-                    <Col
-                        lg="2"
-                        className="mt-0 sidebar d-none"
-                        style={{ height: '1050px' }}
-                    >
-                        <SideBar
-                            store={this.props.store}
-                            variant={this.variant}
-                        />
-                    </Col>
-                    {/* change to lg="10" if have side bar */}
-                    <Col className="variant-page">
-                        <Row>
-                            <Col>
-                                <BasicInfo
-                                    annotation={this.annotationSummary}
-                                    mutation={
-                                        this.variantToMutation(
-                                            this.annotationSummary
-                                        )[0]
-                                    }
-                                    variant={this.props.variant}
-                                    oncokbGenesMap={
-                                        this.props.store.oncokbGenesMap.result
-                                    }
-                                    oncokb={this.oncokb}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="pb-3 small">
-                                {this.getMutationMapper()}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <FunctionalGroups
-                                    myVariantInfo={this.myVariantInfo}
-                                    annotationInternal={this.annotationSummary}
-                                    variantAnnotation={this.variantAnnotation}
-                                    oncokb={this.oncokb}
-                                />
-                            </Col>
-                        </Row>
+            <div className={'variant-page'}>
+                <div className={'page-section'}>
+                    <Row>
+                        {/* TODO: the height should automatically change with the content */}
                         {/* remove the d-none if have sidebar */}
-                        {/* the content for each resources */}
-                        <Row className="d-none">
-                            <Col>
-                                {/* add resouce components */}
-                                {this.props.store.allResources.map(
-                                    (resource, index) => {
-                                        return (
-                                            this.props.store.selectedResources.includes(
-                                                resource
-                                            ) && (
-                                                <Row id={resource} key={index}>
-                                                    <Col
-                                                        lg="12"
-                                                        className="pl-5"
-                                                    >
-                                                        {variantComponentHeader(
-                                                            resource
-                                                        )}
-                                                        {this.getComponentByRescource(
-                                                            resource
-                                                        )}
-                                                    </Col>
-                                                </Row>
-                                            )
-                                        );
-                                    }
-                                )}
+                        <Col
+                            lg="2"
+                            className="mt-0 sidebar d-none"
+                            style={{ height: '1050px' }}
+                        >
+                            <SideBar
+                                store={this.props.store}
+                                variant={this.variant}
+                            />
+                        </Col>
+                        {/* change to lg="10" if have side bar */}
+                        <Col>
+                            <Row>
+                                <Col>
+                                    <BasicInfo
+                                        annotation={this.annotationSummary}
+                                        mutation={
+                                            this.variantToMutation(
+                                                this.annotationSummary
+                                            )[0]
+                                        }
+                                        variant={this.props.variant}
+                                        oncokbGenesMap={
+                                            this.props.store.oncokbGenesMap
+                                                .result
+                                        }
+                                        oncokb={this.oncokb}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="pb-3 small">
+                                    {this.getMutationMapper()}
+                                </Col>
+                            </Row>
 
-                                {/* show notification when no fields has been selected */}
-                                {this.props.store.selectedResources.length ===
-                                    0 && (
-                                    <div className="pl-4">
-                                        <Alert
-                                            key={'alert'}
-                                            variant={'primary'}
-                                        >
-                                            Use the list on the left to show
-                                            some content.
-                                        </Alert>
-                                    </div>
-                                )}
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                            {/* remove the d-none if have sidebar */}
+                            {/* the content for each resources */}
+                            <Row className="d-none">
+                                <Col>
+                                    {/* add resouce components */}
+                                    {this.props.store.allResources.map(
+                                        (resource, index) => {
+                                            return (
+                                                this.props.store.selectedResources.includes(
+                                                    resource
+                                                ) && (
+                                                    <Row
+                                                        id={resource}
+                                                        key={index}
+                                                    >
+                                                        <Col
+                                                            lg="12"
+                                                            className="pl-5"
+                                                        >
+                                                            {variantComponentHeader(
+                                                                resource
+                                                            )}
+                                                            {this.getComponentByRescource(
+                                                                resource
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                )
+                                            );
+                                        }
+                                    )}
+
+                                    {/* show notification when no fields has been selected */}
+                                    {this.props.store.selectedResources
+                                        .length === 0 && (
+                                        <div className="pl-4">
+                                            <Alert
+                                                key={'alert'}
+                                                variant={'primary'}
+                                            >
+                                                Use the list on the left to show
+                                                some content.
+                                            </Alert>
+                                        </div>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </div>
+                <div className={'page-section'}>
+                    <div className={'row'}>
+                        <Col>
+                            <FunctionalGroups
+                                myVariantInfo={this.myVariantInfo}
+                                annotationInternal={this.annotationSummary}
+                                variantAnnotation={this.variantAnnotation}
+                                oncokb={this.oncokb}
+                            />
+                        </Col>
+                    </div>
+                </div>
             </div>
         );
     }

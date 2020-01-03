@@ -51,7 +51,7 @@ class QueryExamples extends React.Component<{}> {
             (example: QueryExample) => this.queryExampleToElement(example)
         );
         return (
-            <Table responsive>
+            <Table>
                 <thead>
                     <tr>
                         <th>Resource</th>

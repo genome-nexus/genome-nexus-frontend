@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import './Footer.css';
-
 class Footer extends React.Component<{}> {
     public get externalLinkIcon() {
         return <i className="fa fa-external-link" />;

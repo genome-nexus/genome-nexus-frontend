@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import GenomeNexusLogo from './GenomeNexusLogo';
@@ -10,15 +10,16 @@ class Header extends React.Component<{}> {
     public render() {
         return (
             <header>
-                <Navbar
-                    bg="mskcc-header"
-                    expand="lg"
-                    className="navbar-dark main-navbar"
-                >
+                <Navbar bg="mskcc-header" expand="lg" variant="dark">
                     <Container fluid={true}>
                         <Navbar.Brand className="pt-0">
                             <Link to="/" className="brand-title-link">
-                                <GenomeNexusLogo />
+                                <Image
+                                    src={
+                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT3VBLJU2nVi-kGBHMZYqPv8K8Q51HXtqDFzlPFWLN-KsmuBcsH'
+                                    }
+                                />
+                                &nbsp;Genome Nexus
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />

@@ -1,8 +1,10 @@
 .bg-mskcc-header {
-    background-color: #333e47;
+    background-color: #444;
     color: #ffffff;
     font-size: 1rem;
     height: 70px;
+    text-shadow: 0 0 4px black;
+    border-bottom: 1px solid black;
 }
 
 .brand-title-link,
@@ -12,6 +14,16 @@
 .brand-title-link:visited {
     text-decoration: none;
     color: #ffffff;
-    font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    font-family: Futura, sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.brand-title-link img {
+    height: 27px;
+}
+
+.nav-link {
+    color: #fff !important;
 }
