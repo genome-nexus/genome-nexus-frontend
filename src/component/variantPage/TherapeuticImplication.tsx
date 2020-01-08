@@ -51,12 +51,11 @@ class TherapeuticImplication extends React.Component<
                 sensitiveTreatmentLevels
             );
             return (
-                <span className={therapeuticImplication['drugs-container']}>
-                    <span className={therapeuticImplication['sensitive-text']}>
+                <p>
+                    <strong>
                         Sensitive to:
-                    </span>
-                    {sensitiveDrugs}
-                </span>
+                    </strong> {sensitiveDrugs}
+                </p>
             );
         }
         return null;
@@ -79,12 +78,12 @@ class TherapeuticImplication extends React.Component<
                 resistantTreatmentLevels
             );
             return (
-                <span className={therapeuticImplication['drugs-container']}>
+                <p>
                     <span className={therapeuticImplication['resistant-text']}>
                         Resistant to:
                     </span>
                     {resistantDrugs}
-                </span>
+                </p>
             );
         }
         return null;
@@ -110,9 +109,9 @@ class TherapeuticImplication extends React.Component<
             .uniq()
             .value()
             .join(', ');
-        return (
-            <span className={therapeuticImplication['drugs']}>{drugNames}</span>
-        );
+
+        return drugNames;
+
     }
 
     private getTreatmentsGroupByLevel(
@@ -169,10 +168,8 @@ class TherapeuticImplication extends React.Component<
                     </span>
                 }
             >
-                <span
-                    className={classNames(functionalGroupsStyle['data-source'])}
-                >
-                    OncoKB
+                <span>
+                    OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
                 </span>
             </DefaultTooltip>
         );
@@ -183,24 +180,26 @@ class TherapeuticImplication extends React.Component<
         const resistantDrugs = this.resistantDrugs(this.props.oncokb);
         const oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         return sensitiveDrugs || resistantDrugs ? (
-            <Row className={functionalGroupsStyle['data-content']}>
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
+            <table className={"table table-sm table-borderless"}>
+                <tbody>
+                <tr>
+                    <td>
                     <a
                         href={oncokbUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
                         {this.oncokbToolTip(oncokbUrl)}
+                    </a>
+                    </td>
+                    <td>
+                        {sensitiveDrugs}
                         {sensitiveDrugs}
                         {resistantDrugs}
-                    </a>
-                </span>
-            </Row>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         ) : (
             <Row className={functionalGroupsStyle['data-content']}>
                 <div

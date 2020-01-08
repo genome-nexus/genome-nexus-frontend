@@ -24,7 +24,7 @@ interface IFunctionalGroupsProps {
 class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
     public render() {
         return (
-            <>
+            <div className={functionalGroupsStyle["functional-groups"]}>
                 <table className={'table'}>
                     <tr>
                         <th>Therapeutic implication:</th>
@@ -111,7 +111,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                 {/*        </Col>*/}
                 {/*    </Row>*/}
                 {/*</div>*/}
-            </>
+            </div>
         );
     }
 }

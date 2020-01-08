@@ -2,6 +2,18 @@
     padding-top: 10px;
     margin-left: 2%;
     margin-bottom: 5%;
+
+    table {
+        margin-bottom:0;
+    }
+
+    p {
+        margin-bottom:5px;
+    }
+    p:last-child {
+        margin-bottom:0;
+    }
+
 }
 
 .group-name {
