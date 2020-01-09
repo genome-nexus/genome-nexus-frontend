@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Row } from 'react-bootstrap';
 import { VariantAnnotation } from 'cbioportal-frontend-commons';
 import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
-import functionalGroupsStyle from './functionalGroups.module.scss';
-import classNames from 'classnames';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -58,7 +55,7 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     public render() {
         const data = this.getData(this.props.variantAnnotation);
         return data ? (
-            <Row className={functionalGroupsStyle['data-content']}>
+            <div>
                 <PolyPhen2
                     polyPhenScore={data.polyPhenScore}
                     polyPhenPrediction={data.polyPhenPrediction}
@@ -68,14 +65,9 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}
                 />
-            </Row>
+            </div>
         ) : (
-            <span
-                className={classNames(
-                    functionalGroupsStyle['data-content'],
-                    functionalGroupsStyle['no-data']
-                )}
-            >
+            <span>
                 No data available
             </span>
         );

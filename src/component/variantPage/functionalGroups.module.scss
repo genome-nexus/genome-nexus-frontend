@@ -1,21 +1,3 @@
-.functional-groups {
-    padding-top: 10px;
-    margin-left: 2%;
-    margin-bottom: 5%;
-
-    table {
-        margin-bottom:0;
-    }
-
-    p {
-        margin-bottom:5px;
-    }
-    p:last-child {
-        margin-bottom:0;
-    }
-
-}
-
 .group-name {
     background-color: #f2f2f2;
     font-size: 1rem;
@@ -41,23 +23,23 @@
     padding-top: 4px;
 }
 
-.data-source {
-    font-weight: normal;
-    font-size: 1rem;
-    margin-right: 5px;
-    color: black;
-    text-decoration: underline;
-    font-style: italic;
-}
+// .data-source {
+//     font-weight: normal;
+//     font-size: 1rem;
+//     margin-right: 5px;
+//     color: black;
+//     text-decoration: underline;
+//     font-style: italic;
+// }
 
-.data-source a,
-.data-source a:hover,
-.data-source a:focus,
-.data-source a:active,
-.brand-title-link:visited {
-    color: black;
-    // text-decoration: none !important;
-}
+// .data-source a,
+// .data-source a:hover,
+// .data-source a:focus,
+// .data-source a:active,
+// .brand-title-link:visited {
+//     color: black;
+//     // text-decoration: none !important;
+// }
 
 .data-group-gap {
     display: block;
@@ -81,15 +63,15 @@
     font-weight: bold;
 }
 
-.link a,
-.link a:hover,
-.link a:focus,
-.link a:active,
-.link a:visited {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+// .link a,
+// .link a:hover,
+// .link a:focus,
+// .link a:active,
+// .link a:visited {
+//     color: black;
+//     text-decoration: none;
+//     cursor: pointer;
+// }
 
 /* functional prediction */
 .functional-prediction-data {
@@ -107,4 +89,45 @@
 .oncokb {
     font-size: 1rem;
     font-weight: bold;
+}
+
+// redesign from here. remove some of classes above after complete
+.functional-groups {
+    padding-top: 10px;
+    margin-left: 2%;
+    margin-bottom: 5%;
+
+    table {
+        margin-bottom: 0;
+        th {
+            width: 20%;
+        }
+    }
+
+    p {
+        margin-bottom: 5px;
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.data-source {
+    width: 200px;
+}
+
+.functional-group {
+    display: flex;
+}
+
+.data-with-link {
+    a {
+        color: black;
+        &:hover,
+        &:focus,
+        &:active,
+        &:visited {
+            color: black;
+        }
+    }
 }

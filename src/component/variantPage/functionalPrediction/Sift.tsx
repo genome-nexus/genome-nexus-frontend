@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/siftTooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
@@ -190,56 +189,51 @@ export default class Sift extends React.Component<ISiftProps, {}> {
     }
 
     public render() {
-        let siftContent: JSX.Element = (
-            <span className={`${annotationStyles['annotation-item-text']}`} />
-        );
+        let siftContent: JSX.Element = <span />;
         const dataSource = (
-            <span className={functionalGroupsStyle['data-source']}>SIFT</span>
+            <span>
+                SIFT&nbsp;<i className="fas fa-external-link-alt"></i>
+            </span>
         );
 
         if (this.props.siftPrediction && this.props.siftPrediction.length > 0) {
-            siftContent = (
-                <span
-                    className={classNames(
-                        annotationStyles['annotation-item-text'],
-                        tooltipStyles[`sift-${this.props.siftPrediction}`]
-                    )}
-                >
-                    <span
-                        className={
-                            functionalGroupsStyle['functional-prediction-data']
-                        }
-                    >
-                        {this.props.siftPrediction}
-                    </span>
-                </span>
-            );
+            siftContent = <span>{this.props.siftPrediction}</span>;
         } else {
-            siftContent = (
-                <span
-                    className={
-                        functionalGroupsStyle['functional-prediction-no-data']
-                    }
-                >
-                    N/A
-                </span>
-            );
+            siftContent = <span>N/A</span>;
         }
 
         return (
-            <span className={functionalGroupsStyle['data-group-gap']}>
-                {this.siftTooltip(
-                    <span className={functionalGroupsStyle['link']}>
-                        <a
-                            href={Sift.SIFT_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {dataSource}
-                            {siftContent}
-                        </a>
-                    </span>
-                )}
+            <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    <a
+                        href={Sift.SIFT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.siftTooltip(
+                            <a
+                                href={Sift.SIFT_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {dataSource}
+                            </a>
+                        )}
+                    </a>
+                </div>
+                <div>
+                    {this.siftTooltip(
+                        <span className={functionalGroupsStyle['data-with-link']}>
+                            <a
+                                href={Sift.SIFT_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {siftContent}
+                            </a>
+                        </span>
+                    )}
+                </div>
             </span>
         );
     }

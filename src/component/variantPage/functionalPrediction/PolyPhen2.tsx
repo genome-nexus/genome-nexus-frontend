@@ -192,8 +192,8 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         );
 
         const dataSource = (
-            <span className={functionalGroupsStyle['data-source']}>
-                PolyPhen-2
+            <span>
+                PolyPhen-2&nbsp;<i className="fas fa-external-link-alt"></i>
             </span>
         );
 
@@ -201,50 +201,43 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
             this.props.polyPhenPrediction &&
             this.props.polyPhenPrediction.length > 0
         ) {
-            polyPhen2content = (
-                <span
-                    className={classNames(
-                        annotationStyles['annotation-item-text'],
-                        tooltipStyles[
-                            `polyPhen2-${this.props.polyPhenPrediction}`
-                        ]
-                    )}
-                >
-                    <span
-                        className={
-                            functionalGroupsStyle['functional-prediction-data']
-                        }
-                    >
-                        {this.props.polyPhenPrediction}
-                    </span>
-                </span>
-            );
+            polyPhen2content = <span>{this.props.polyPhenPrediction}</span>;
         } else {
-            polyPhen2content = (
-                <span
-                    className={
-                        functionalGroupsStyle['functional-prediction-no-data']
-                    }
-                >
-                    N/A
-                </span>
-            );
+            polyPhen2content = <span>N/A</span>;
         }
 
         return (
-            <span className={functionalGroupsStyle['data-group-gap']}>
-                {this.polyPhenTooltip(
-                    <span className={functionalGroupsStyle['link']}>
-                        <a
-                            href={PolyPhen2.POLYPHEN2_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {dataSource}
-                            {polyPhen2content}
-                        </a>
-                    </span>
-                )}
+            <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    <a
+                        href={PolyPhen2.POLYPHEN2_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {this.polyPhenTooltip(
+                            <a
+                                href={PolyPhen2.POLYPHEN2_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {dataSource}
+                            </a>
+                        )}
+                    </a>
+                </div>
+                <div>
+                    {this.polyPhenTooltip(
+                        <span className={functionalGroupsStyle['data-with-link']}>
+                            <a
+                                href={PolyPhen2.POLYPHEN2_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {polyPhen2content}
+                            </a>
+                        </span>
+                    )}
+                </div>
             </span>
         );
     }
