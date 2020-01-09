@@ -10,8 +10,8 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 // Most of this component comes from cBioPortal-frontend
 
 export interface ISiftProps {
-    siftPrediction: string; // deleterious, deleterious_low_confidence, tolerated, tolerated_low_confidence
-    siftScore: number;
+    siftPrediction: string | undefined; // deleterious, deleterious_low_confidence, tolerated, tolerated_low_confidence
+    siftScore: number | undefined;
 }
 
 export default class Sift extends React.Component<ISiftProps, {}> {
@@ -223,7 +223,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                 </div>
                 <div>
                     {this.siftTooltip(
-                        <span className={functionalGroupsStyle['data-with-link']}>
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
                             <a
                                 href={Sift.SIFT_URL}
                                 target="_blank"

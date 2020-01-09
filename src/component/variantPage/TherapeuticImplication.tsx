@@ -214,7 +214,11 @@ class TherapeuticImplication extends React.Component<
                     </a>
                 </div>
                 <div className={functionalGroupsStyle['data-with-link']}>
-                    <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                    <a
+                        href={oncokbUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         N/A
                     </a>
                 </div>

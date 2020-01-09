@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
@@ -11,8 +10,8 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 // Most of this component comes from cBioPortal-frontend
 
 export interface IPolyPhen2Props {
-    polyPhenPrediction: string; // benign, possibly_damaging, probably_damging
-    polyPhenScore: number;
+    polyPhenPrediction: string | undefined; // benign, possibly_damaging, probably_damging
+    polyPhenScore: number | undefined;
 }
 
 export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
@@ -187,9 +186,7 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
     }
 
     public render() {
-        let polyPhen2content: JSX.Element = (
-            <span className={`${annotationStyles['annotation-item-text']}`} />
-        );
+        let polyPhen2content: JSX.Element = <span />;
 
         const dataSource = (
             <span>
@@ -227,7 +224,9 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                 </div>
                 <div>
                     {this.polyPhenTooltip(
-                        <span className={functionalGroupsStyle['data-with-link']}>
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
                             <a
                                 href={PolyPhen2.POLYPHEN2_URL}
                                 target="_blank"

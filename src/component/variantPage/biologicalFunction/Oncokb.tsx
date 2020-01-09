@@ -123,11 +123,9 @@ export default class Oncokb extends React.Component<IOncokbProps> {
         }
         return (
             <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
-                <p>
-                    {biologicalFunctionData}
-                </p>
+                <p>{biologicalFunctionData}</p>
             </a>
-        )
+        );
     }
 
     public render() {

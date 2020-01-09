@@ -102,19 +102,7 @@ class Home extends React.Component<{ history: any }> {
                     </ValidatorNotification>
                 </div>
 
-                <div className={'page-section container-fluid'} style={{}}>
-                    <div className={'row'}>
-                        <p className={'mx-auto'}>
-                            Genome Nexus integrates genetic variant information
-                            from a variety of resources. For a comprehensive
-                            overview see the{' '}
-                            <a href="https://docs.genomenexus.org/annotation-sources">
-                                documentation
-                            </a>
-                            .
-                        </p>
-                    </div>
-
+                <div className={'page-section container-fluid'}>
                     <div className={'row'}>
                         <div className={'mx-auto'}>
                             <Button

@@ -13,34 +13,36 @@ interface IFunctionalPredictionProps {
 }
 
 interface IFunctionalImpactData {
-    mutationAssessor: MutationAssessorData;
-    siftScore: number;
-    siftPrediction: string;
-    polyPhenScore: number;
-    polyPhenPrediction: string;
+    mutationAssessor: MutationAssessorData | undefined;
+    siftScore: number | undefined;
+    siftPrediction: string | undefined;
+    polyPhenScore: number | undefined;
+    polyPhenPrediction: string | undefined;
 }
 
 @observer
 class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     public getData(
         genomeNexusData: VariantAnnotation | undefined
-    ): IFunctionalImpactData | undefined {
-        if (!genomeNexusData) {
-            return undefined;
-        }
+    ): IFunctionalImpactData {
         const mutationAssessor =
+            genomeNexusData &&
             genomeNexusData.mutation_assessor &&
             genomeNexusData.mutation_assessor.annotation;
         const siftScore =
+            genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].sift_score;
         const siftPrediction =
+            genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].sift_prediction;
         const polyPhenScore =
+            genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].polyphen_score;
         const polyPhenPrediction =
+            genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].polyphen_prediction;
 
@@ -54,7 +56,7 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     }
     public render() {
         const data = this.getData(this.props.variantAnnotation);
-        return data ? (
+        return (
             <div>
                 <PolyPhen2
                     polyPhenScore={data.polyPhenScore}
@@ -66,10 +68,6 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     siftPrediction={data.siftPrediction}
                 />
             </div>
-        ) : (
-            <span>
-                No data available
-            </span>
         );
     }
 }

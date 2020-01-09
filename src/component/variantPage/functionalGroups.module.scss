@@ -23,24 +23,6 @@
     padding-top: 4px;
 }
 
-// .data-source {
-//     font-weight: normal;
-//     font-size: 1rem;
-//     margin-right: 5px;
-//     color: black;
-//     text-decoration: underline;
-//     font-style: italic;
-// }
-
-// .data-source a,
-// .data-source a:hover,
-// .data-source a:focus,
-// .data-source a:active,
-// .brand-title-link:visited {
-//     color: black;
-//     // text-decoration: none !important;
-// }
-
 .data-group-gap {
     display: block;
 }
@@ -62,16 +44,6 @@
     font-size: 1rem;
     font-weight: bold;
 }
-
-// .link a,
-// .link a:hover,
-// .link a:focus,
-// .link a:active,
-// .link a:visited {
-//     color: black;
-//     text-decoration: none;
-//     cursor: pointer;
-// }
 
 /* functional prediction */
 .functional-prediction-data {
@@ -113,7 +85,7 @@
 }
 
 .data-source {
-    width: 200px;
+    min-width: 200px;
 }
 
 .functional-group {

@@ -11,15 +11,7 @@ interface IBiologicalFunctionProps {
 @observer
 class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
     public render() {
-        if (this.props.oncokb) {
-            return <Oncokb oncokb={this.props.oncokb}></Oncokb>;
-        } else {
-            return (
-                <span>
-                    No data available.
-                </span>
-            );
-        }
+        return <Oncokb oncokb={this.props.oncokb}></Oncokb>;
     }
 }
 

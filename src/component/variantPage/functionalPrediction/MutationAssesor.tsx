@@ -315,7 +315,9 @@ export default class MutationAssessor extends React.Component<
                 </div>
                 <div>
                     {this.mutationAssessorTooltip(
-                        <span className={functionalGroupsStyle['data-with-link']}>
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
                             <a
                                 href={MutationAssessor.MUTATION_ASSESSOR_URL}
                                 target="_blank"
