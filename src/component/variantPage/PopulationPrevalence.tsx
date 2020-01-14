@@ -40,15 +40,9 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 this.props.myVariantInfo.gnomadGenome)
         ) {
             return (
-                <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['functional-group']}>
                     <div className={functionalGroupsStyle['data-source']}>
-                        <a
-                            href={gnomadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {this.gnomadTooltip(gnomadUrl)}
-                        </a>
+                        {this.gnomadTooltip(gnomadUrl)}
                     </div>
                     <div className={functionalGroupsStyle['data-with-link']}>
                         <a
@@ -61,19 +55,13 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                             />
                         </a>
                     </div>
-                </span>
+                </div>
             );
         } else {
             return (
-                <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['functional-group']}>
                     <div className={functionalGroupsStyle['data-source']}>
-                        <a
-                            href={gnomadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {this.gnomadTooltip(gnomadUrl)}
-                        </a>
+                        {this.gnomadTooltip(gnomadUrl)}
                     </div>
                     <div className={functionalGroupsStyle['data-with-link']}>
                         <a
@@ -84,7 +72,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                             N/A
                         </a>
                     </div>
-                </span>
+                </div>
             );
         }
     }
@@ -110,9 +98,9 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>
+                <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
                     gnomAD&nbsp;<i className="fas fa-external-link-alt"></i>
-                </span>
+                </a>
             </DefaultTooltip>
         );
     }
@@ -128,15 +116,9 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
             this.props.myVariantInfo.dbsnp.rsid
         ) {
             return (
-                <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['functional-group']}>
                     <div className={functionalGroupsStyle['data-source']}>
-                        <a
-                            href={dbsnpUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {this.dbsnpToolTip(dbsnpUrl)}
-                        </a>
+                        {this.dbsnpToolTip(dbsnpUrl)}
                     </div>
                     <div className={functionalGroupsStyle['data-with-link']}>
                         <a
@@ -147,19 +129,13 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                             {this.props.myVariantInfo.dbsnp.rsid}
                         </a>
                     </div>
-                </span>
+                </div>
             );
         } else {
             return (
-                <span className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['functional-group']}>
                     <div className={functionalGroupsStyle['data-source']}>
-                        <a
-                            href={dbsnpUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {this.dbsnpToolTip(dbsnpUrl)}
-                        </a>
+                        {this.dbsnpToolTip(dbsnpUrl)}
                     </div>
                     <div className={functionalGroupsStyle['data-with-link']}>
                         <a
@@ -170,7 +146,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                             N/A
                         </a>
                     </div>
-                </span>
+                </div>
             );
         }
     }
@@ -197,15 +173,9 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span>
-                    <a
-                        href={dbsnpUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        dbSNP&nbsp;<i className="fas fa-external-link-alt"></i>
-                    </a>
-                </span>
+                <a href={dbsnpUrl} target="_blank" rel="noopener noreferrer">
+                    dbSNP&nbsp;<i className="fas fa-external-link-alt"></i>
+                </a>
             </DefaultTooltip>
         );
     }

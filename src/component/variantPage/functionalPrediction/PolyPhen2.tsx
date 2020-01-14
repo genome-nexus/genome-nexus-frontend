@@ -189,9 +189,9 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         let polyPhen2content: JSX.Element = <span />;
 
         const dataSource = (
-            <span>
+            <>
                 PolyPhen-2&nbsp;<i className="fas fa-external-link-alt"></i>
-            </span>
+            </>
         );
 
         if (
@@ -204,23 +204,17 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         }
 
         return (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={PolyPhen2.POLYPHEN2_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.polyPhenTooltip(
-                            <a
-                                href={PolyPhen2.POLYPHEN2_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {dataSource}
-                            </a>
-                        )}
-                    </a>
+                    {this.polyPhenTooltip(
+                        <a
+                            href={PolyPhen2.POLYPHEN2_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                        </a>
+                    )}
                 </div>
                 <div>
                     {this.polyPhenTooltip(
@@ -237,7 +231,7 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
                         </span>
                     )}
                 </div>
-            </span>
+            </div>
         );
     }
 }

@@ -191,9 +191,9 @@ export default class Sift extends React.Component<ISiftProps, {}> {
     public render() {
         let siftContent: JSX.Element = <span />;
         const dataSource = (
-            <span>
+            <>
                 SIFT&nbsp;<i className="fas fa-external-link-alt"></i>
-            </span>
+            </>
         );
 
         if (this.props.siftPrediction && this.props.siftPrediction.length > 0) {
@@ -203,23 +203,17 @@ export default class Sift extends React.Component<ISiftProps, {}> {
         }
 
         return (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={Sift.SIFT_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.siftTooltip(
-                            <a
-                                href={Sift.SIFT_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {dataSource}
-                            </a>
-                        )}
-                    </a>
+                    {this.siftTooltip(
+                        <a
+                            href={Sift.SIFT_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                        </a>
+                    )}
                 </div>
                 <div>
                     {this.siftTooltip(
@@ -236,7 +230,7 @@ export default class Sift extends React.Component<ISiftProps, {}> {
                         </span>
                     )}
                 </div>
-            </span>
+            </div>
         );
     }
 }

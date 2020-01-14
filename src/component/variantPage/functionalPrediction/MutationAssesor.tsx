@@ -277,10 +277,10 @@ export default class MutationAssessor extends React.Component<
     public render() {
         let maContent: JSX.Element = <span />;
         const dataSource = (
-            <span>
+            <>
                 Mutation Assessor&nbsp;
                 <i className="fas fa-external-link-alt"></i>
-            </span>
+            </>
         );
 
         if (
@@ -295,23 +295,17 @@ export default class MutationAssessor extends React.Component<
         }
 
         return (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={MutationAssessor.MUTATION_ASSESSOR_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.mutationAssessorTooltip(
-                            <a
-                                href={MutationAssessor.MUTATION_ASSESSOR_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {dataSource}
-                            </a>
-                        )}
-                    </a>
+                    {this.mutationAssessorTooltip(
+                        <a
+                            href={MutationAssessor.MUTATION_ASSESSOR_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {dataSource}
+                        </a>
+                    )}
                 </div>
                 <div>
                     {this.mutationAssessorTooltip(
@@ -328,7 +322,7 @@ export default class MutationAssessor extends React.Component<
                         </span>
                     )}
                 </div>
-            </span>
+            </div>
         );
     }
 

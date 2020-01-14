@@ -147,14 +147,14 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public oncokbTooltip(onccokbUrl: string) {
+    public oncokbTooltip(oncokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
                         <a
-                            href={onccokbUrl}
+                            href={oncokbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -169,9 +169,9 @@ class TherapeuticImplication extends React.Component<
                     </span>
                 }
             >
-                <span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
                     OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
-                </span>
+                </a>
             </DefaultTooltip>
         );
     }
@@ -187,31 +187,19 @@ class TherapeuticImplication extends React.Component<
             oncokbUrl
         );
         return sensitiveDrugs || resistantDrugs ? (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                    </a>
+                    {this.oncokbTooltip(oncokbUrl)}
                 </div>
                 <div className={functionalGroupsStyle['data-with-link']}>
                     {sensitiveDrugs}
                     {resistantDrugs}
                 </div>
-            </span>
+            </div>
         ) : (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                    </a>
+                    {this.oncokbTooltip(oncokbUrl)}
                 </div>
                 <div className={functionalGroupsStyle['data-with-link']}>
                     <a
@@ -222,7 +210,7 @@ class TherapeuticImplication extends React.Component<
                         N/A
                     </a>
                 </div>
-            </span>
+            </div>
         );
     }
 }

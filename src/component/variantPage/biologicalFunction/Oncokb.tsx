@@ -91,9 +91,9 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                     </span>
                 }
             >
-                <span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
                     OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
-                </span>
+                </a>
             </DefaultTooltip>
         );
     }
@@ -131,15 +131,9 @@ export default class Oncokb extends React.Component<IOncokbProps> {
     public render() {
         var oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
         return this.props.oncokb ? (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                    </a>
+                    {this.oncokbTooltip(oncokbUrl)}
                 </div>
                 <div className={functionalGroupsStyle['data-with-link']}>
                     {this.biologicalFunctionData(
@@ -148,20 +142,14 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                         oncokbUrl
                     )}
                 </div>
-            </span>
+            </div>
         ) : (
-            <span className={functionalGroupsStyle['functional-group']}>
+            <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                    </a>
+                    {this.oncokbTooltip(oncokbUrl)}
                 </div>
                 <div>N/A</div>
-            </span>
+            </div>
         );
     }
 }
