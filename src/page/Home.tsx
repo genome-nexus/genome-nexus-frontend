@@ -1,18 +1,16 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Col, Row, Button, Image } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 
 import SearchBox from '../component/SearchBox';
 import './Home.scss';
-import QueryExamples from '../component/QueryExamples';
 import logo from '../image/home_page_logo.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
-import { Link } from 'react-router-dom';
 
 const EXAMPLE_DATA = [
     {
@@ -83,8 +81,7 @@ class Home extends React.Component<{ history: any }> {
                     >
                         <table className={'table'}>
                             <tbody>
-                            {
-                                EXAMPLE_DATA.map(example => {
+                                {EXAMPLE_DATA.map(example => {
                                     return (
                                         <tr>
                                             <td>{example.label}</td>
@@ -99,26 +96,13 @@ class Home extends React.Component<{ history: any }> {
                                             </td>
                                         </tr>
                                     );
-                                })
-                            }
+                                })}
                             </tbody>
                         </table>
                     </ValidatorNotification>
                 </div>
 
-                <div className={'page-section container-fluid'} style={{}}>
-                    <div className={'row'}>
-                        <p className={'mx-auto'}>
-                            Genome Nexus integrates genetic variant information
-                            from a variety of resources. For a comprehensive
-                            overview see the{' '}
-                            <a href="https://docs.genomenexus.org/annotation-sources">
-                                documentation
-                            </a>
-                            .
-                        </p>
-                    </div>
-
+                <div className={'page-section container-fluid'}>
                     <div className={'row'}>
                         <div className={'mx-auto'}>
                             <Button

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Row, Col } from 'react-bootstrap';
 import {
     VariantAnnotationSummary,
     VariantAnnotation,
@@ -24,7 +23,7 @@ interface IFunctionalGroupsProps {
 class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
     public render() {
         return (
-            <div className={functionalGroupsStyle["functional-groups"]}>
+            <div className={functionalGroupsStyle['functional-groups']}>
                 <table className={'table'}>
                     <tr>
                         <th>Therapeutic implication:</th>

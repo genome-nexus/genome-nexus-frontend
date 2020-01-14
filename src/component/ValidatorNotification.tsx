@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { EXAMPLES } from './SearchBox';
 
 interface IValidatorNotificationProps {
     showAlert: boolean;
@@ -25,7 +24,9 @@ class ValidatorNotification extends React.Component<
                     centered
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>The variant you entered is invalid</Modal.Title>
+                        <Modal.Title>
+                            The variant you entered is invalid
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>{this.props.children}</Modal.Body>
                     <Modal.Footer>

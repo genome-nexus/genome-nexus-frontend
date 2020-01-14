@@ -4,9 +4,7 @@ import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-co
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
-import mutationAssessorColumn from './styles/mutationAssessor.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
@@ -277,13 +275,12 @@ export default class MutationAssessor extends React.Component<
     }
 
     public render() {
-        let maContent: JSX.Element = (
-            <span className={`${annotationStyles['annotation-item-text']}`} />
-        );
+        let maContent: JSX.Element = <span />;
         const dataSource = (
-            <span className={functionalGroupsStyle['data-source']}>
-                Mutation Assessor
-            </span>
+            <>
+                Mutation Assessor&nbsp;
+                <i className="fas fa-external-link-alt"></i>
+            </>
         );
 
         if (
@@ -292,49 +289,40 @@ export default class MutationAssessor extends React.Component<
             this.props.mutationAssessor.functionalImpact !== ''
         ) {
             const maData = this.props.mutationAssessor;
-            maContent = (
-                <span
-                    className={classNames(
-                        annotationStyles['annotation-item-text'],
-                        mutationAssessorColumn[`ma-${maData.functionalImpact}`]
-                    )}
-                >
-                    <span
-                        className={
-                            functionalGroupsStyle['functional-prediction-data']
-                        }
-                    >
-                        {maData.functionalImpact}
-                    </span>
-                </span>
-            );
+            maContent = <span>{maData.functionalImpact}</span>;
         } else {
-            maContent = (
-                <span
-                    className={
-                        functionalGroupsStyle['functional-prediction-no-data']
-                    }
-                >
-                    N/A
-                </span>
-            );
+            maContent = <span>N/A</span>;
         }
 
         return (
-            <span className={functionalGroupsStyle['data-group-gap']}>
-                {this.mutationAssessorTooltip(
-                    <span className={functionalGroupsStyle['link']}>
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.mutationAssessorTooltip(
                         <a
                             href={MutationAssessor.MUTATION_ASSESSOR_URL}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             {dataSource}
-                            {maContent}
                         </a>
-                    </span>
-                )}
-            </span>
+                    )}
+                </div>
+                <div>
+                    {this.mutationAssessorTooltip(
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
+                            <a
+                                href={MutationAssessor.MUTATION_ASSESSOR_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {maContent}
+                            </a>
+                        </span>
+                    )}
+                </div>
+            </div>
         );
     }
 

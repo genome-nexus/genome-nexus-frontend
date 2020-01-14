@@ -1,10 +1,9 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { FormEvent } from 'react';
-import { Button, FormControl, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import './SearchBox.css';
 import { Link } from 'react-router-dom';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { observer } from 'mobx-react';
 import { computed, observable } from 'mobx';
 import _ from 'lodash';
@@ -100,15 +99,17 @@ class SearchBox extends React.Component<ISearchBoxProps> {
     @computed get exampleOptions() {
         const options = this.props.exampleData;
 
-        const withCustomHolder = _.concat(options, [{
-            value: '',
-            label: 'custom',
-        }]);
+        const withCustomHolder = _.concat(options, [
+            {
+                value: '',
+                label: 'custom',
+            },
+        ]);
 
         return [
             {
                 label: 'Example queries:',
-                options:withCustomHolder,
+                options: withCustomHolder,
             },
         ];
     }
@@ -139,7 +140,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                         this.selectRef = ref;
                     }}
                     onKeyDown={(e: any) => {
-                        if (e.keyCode == 13 && this.currentValue) {
+                        if (e.keyCode === 13 && this.currentValue) {
                             this.onChange(this.currentValue);
                             this.props.onSearch();
                         }

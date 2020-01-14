@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Row } from 'react-bootstrap';
 import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
 import { GnomadFrequency } from 'react-mutation-mapper';
-import classNames from 'classnames';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
 
@@ -25,7 +23,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         chromosome: string | null
     ) {
         // generate gnomad url
-        let gnomadUrl = '';
+        let gnomadUrl = 'https://gnomad.broadinstitute.org/';
         if (myVariantInfo && myVariantInfo.vcf && chromosome) {
             const vcfVariant: Vcf = {
                 chrom: chromosome,
@@ -34,8 +32,6 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 pos: Number(myVariantInfo.vcf.position),
             };
             gnomadUrl = `https://gnomad.broadinstitute.org/variant/${vcfVariant.chrom}-${vcfVariant.pos}-${vcfVariant.ref}-${vcfVariant.alt}`;
-        } else {
-            gnomadUrl = 'https://gnomad.broadinstitute.org/';
         }
 
         if (
@@ -44,45 +40,39 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 this.props.myVariantInfo.gnomadGenome)
         ) {
             return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
-                    <a
-                        href={gnomadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                <div className={functionalGroupsStyle['functional-group']}>
+                    <div className={functionalGroupsStyle['data-source']}>
                         {this.gnomadTooltip(gnomadUrl)}
-                        <span className={functionalGroupsStyle['gnomad']}>
+                    </div>
+                    <div className={functionalGroupsStyle['data-with-link']}>
+                        <a
+                            href={gnomadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <GnomadFrequency
                                 myVariantInfo={this.props.myVariantInfo}
                             />
-                        </span>
-                    </a>
-                </span>
+                        </a>
+                    </div>
+                </div>
             );
         } else {
             return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
-                    <a
-                        href={gnomadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                <div className={functionalGroupsStyle['functional-group']}>
+                    <div className={functionalGroupsStyle['data-source']}>
                         {this.gnomadTooltip(gnomadUrl)}
-                        <span className={functionalGroupsStyle['gnomad']}>
+                    </div>
+                    <div className={functionalGroupsStyle['data-with-link']}>
+                        <a
+                            href={gnomadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             N/A
-                        </span>
-                    </a>
-                </span>
+                        </a>
+                    </div>
+                </div>
             );
         }
     }
@@ -108,50 +98,60 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span className={functionalGroupsStyle['data-source']}>
-                    gnomAD
-                </span>
+                <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
+                    gnomAD&nbsp;<i className="fas fa-external-link-alt"></i>
+                </a>
             </DefaultTooltip>
         );
     }
 
     public dbsnp(myVariantInfo: MyVariantInfo | undefined) {
-        let dbsnpUrl = '';
-        if (myVariantInfo && myVariantInfo.dbsnp && myVariantInfo.dbsnp.rsid) {
-            dbsnpUrl = `https://www.ncbi.nlm.nih.gov/snp/${myVariantInfo.dbsnp.rsid}`;
-        } else {
-            dbsnpUrl = 'https://www.ncbi.nlm.nih.gov/snp/';
-        }
+        const dbsnpUrl =
+            myVariantInfo && myVariantInfo.dbsnp && myVariantInfo.dbsnp.rsid
+                ? `https://www.ncbi.nlm.nih.gov/snp/${myVariantInfo.dbsnp.rsid}`
+                : 'https://www.ncbi.nlm.nih.gov/snp/';
         if (
             this.props.myVariantInfo &&
             this.props.myVariantInfo.dbsnp &&
             this.props.myVariantInfo.dbsnp.rsid
         ) {
             return (
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.dbsnpToolTip(
-                        dbsnpUrl,
-                        <span className={functionalGroupsStyle['dbsnp']}>
+                <div className={functionalGroupsStyle['functional-group']}>
+                    <div className={functionalGroupsStyle['data-source']}>
+                        {this.dbsnpToolTip(dbsnpUrl)}
+                    </div>
+                    <div className={functionalGroupsStyle['data-with-link']}>
+                        <a
+                            href={dbsnpUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {this.props.myVariantInfo.dbsnp.rsid}
-                        </span>
-                    )}
-                </span>
+                        </a>
+                    </div>
+                </div>
             );
         } else {
             return (
-                <span className={functionalGroupsStyle['data-group-gap']}>
-                    {this.dbsnpToolTip(
-                        dbsnpUrl,
-                        <span className={functionalGroupsStyle['dbsnp']}>
+                <div className={functionalGroupsStyle['functional-group']}>
+                    <div className={functionalGroupsStyle['data-source']}>
+                        {this.dbsnpToolTip(dbsnpUrl)}
+                    </div>
+                    <div className={functionalGroupsStyle['data-with-link']}>
+                        <a
+                            href={dbsnpUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             N/A
-                        </span>
-                    )}
-                </span>
+                        </a>
+                    </div>
+                </div>
             );
         }
     }
 
-    public dbsnpToolTip(dbsnpUrl: string, content: JSX.Element) {
+    public dbsnpToolTip(dbsnpUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
@@ -173,28 +173,19 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     </span>
                 }
             >
-                <span className={functionalGroupsStyle['link']}>
-                    <a
-                        href={dbsnpUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <span className={functionalGroupsStyle['data-source']}>
-                            dbSNP
-                        </span>
-                        {content}
-                    </a>
-                </span>
+                <a href={dbsnpUrl} target="_blank" rel="noopener noreferrer">
+                    dbSNP&nbsp;<i className="fas fa-external-link-alt"></i>
+                </a>
             </DefaultTooltip>
         );
     }
 
     public render() {
         return (
-            <Row className={functionalGroupsStyle['data-content']}>
+            <div>
                 {this.gnomad(this.props.myVariantInfo, this.props.chromosome)}
                 {this.dbsnp(this.props.myVariantInfo)}
-            </Row>
+            </div>
         );
     }
 }
