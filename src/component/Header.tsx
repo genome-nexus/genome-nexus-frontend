@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import squareLogo from '../image/logo/logo_square_white_background_with_padding.png';
 
 import './Header.css';
 
@@ -13,9 +14,7 @@ class Header extends React.Component<{}> {
                         <Navbar.Brand className="pt-0">
                             <Link to="/" className="brand-title-link">
                                 <Image
-                                    src={
-                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT3VBLJU2nVi-kGBHMZYqPv8K8Q51HXtqDFzlPFWLN-KsmuBcsH'
-                                    }
+                                    src={squareLogo}
                                 />
                                 &nbsp;Genome Nexus
                             </Link>
