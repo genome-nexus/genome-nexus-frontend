@@ -12,7 +12,6 @@
     padding-right: 10px;
     border-radius: 4px;
     background-color: #f2f2f2;
-    font-size: 0.8rem;
     margin-right: 5px;
     margin-top: 2px;
     margin-bottom: 3px;
@@ -61,6 +60,7 @@
 .transcript-table-source {
     font-size: 0.875rem;
     text-decoration: none;
+    position: relative;
 }
 
 .transcript-table-source a,

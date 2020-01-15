@@ -303,7 +303,7 @@ class Variant extends React.Component<IVariantProps> {
         return this.isLoading ? (
             this.loadingIndicator
         ) : (
-            <div className={'variant-page'}>
+            <div className={'page-body variant-page'}>
                 <div className={'page-section'}>
                     <Row>
                         {/* TODO: the height should automatically change with the content */}
@@ -393,9 +393,7 @@ class Variant extends React.Component<IVariantProps> {
                             </Row>
                         </Col>
                     </Row>
-                </div>
-                <div className={'page-section'}>
-                    <div className={'row'}>
+                    <Row>
                         <Col>
                             <FunctionalGroups
                                 myVariantInfo={this.myVariantInfo}
@@ -404,7 +402,7 @@ class Variant extends React.Component<IVariantProps> {
                                 oncokb={this.oncokb}
                             />
                         </Col>
-                    </div>
+                    </Row>
                 </div>
             </div>
         );
