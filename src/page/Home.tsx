@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Button, Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 import SearchBox from '../component/SearchBox';
 import './Home.scss';
@@ -79,20 +79,22 @@ class Home extends React.Component<{ history: any }> {
                         type={this.alertType}
                         onClose={this.onClose}
                     >
-                        <table className={'table'}>
+                        <table className={'table validator-notification'}>
                             <tbody>
                                 {EXAMPLE_DATA.map(example => {
                                     return (
                                         <tr>
                                             <td>{example.label}</td>
                                             <td>
-                                                <button
+                                                <a
+                                                    href={`/variant/${example.value}`}
                                                     className={
                                                         'btn btn-primary btn-sm'
                                                     }
+                                                    role={'button'}
                                                 >
                                                     Try it
-                                                </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     );
@@ -100,26 +102,6 @@ class Home extends React.Component<{ history: any }> {
                             </tbody>
                         </table>
                     </ValidatorNotification>
-                </div>
-
-                <div className={'page-section container-fluid'}>
-                    <div className={'row'}>
-                        <div className={'mx-auto'}>
-                            <Button
-                                href="/swagger-ui.html"
-                                variant="outline-primary"
-                            >
-                                Try live API
-                            </Button>
-
-                            <Button
-                                href="#home-example-container"
-                                variant="link"
-                            >
-                                See Examples
-                            </Button>
-                        </div>
-                    </div>
                 </div>
             </div>
         );

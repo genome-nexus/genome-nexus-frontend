@@ -28,7 +28,25 @@ class ValidatorNotification extends React.Component<
                             The variant you entered is invalid
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>{this.props.children}</Modal.Body>
+                    <Modal.Body>
+                        {this.props.children}
+                        <div
+                            className={'small'}
+                            style={{ paddingLeft: '12px' }}
+                        >
+                            Currently only DNA changes in&nbsp;
+                            <a
+                                href="https://varnomen.hgvs.org/recommendations/DNA/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                HGVS
+                            </a>
+                            &nbsp;format are supported.
+                            <br />
+                            Other formats will be supported soon.
+                        </div>
+                    </Modal.Body>
                     <Modal.Footer>
                         <Button
                             variant="secondary"

@@ -135,7 +135,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     defaultMenuIsOpen={true}
                     autoFocus={true}
                     filterOption={(opt: ExampleData) => opt.label !== 'custom'}
-                    placeholder={'Type a query'}
+                    placeholder={'Query a variant'}
                     ref={(ref: any) => {
                         this.selectRef = ref;
                     }}
