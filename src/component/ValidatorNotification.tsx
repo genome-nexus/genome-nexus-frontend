@@ -30,7 +30,10 @@ class ValidatorNotification extends React.Component<
                     </Modal.Header>
                     <Modal.Body>
                         {this.props.children}
-                        <div className={'small'} style={{paddingLeft:"12px"}}>
+                        <div
+                            className={'small'}
+                            style={{ paddingLeft: '12px' }}
+                        >
                             Currently only DNA changes in&nbsp;
                             <a
                                 href="https://varnomen.hgvs.org/recommendations/DNA/"
@@ -39,7 +42,8 @@ class ValidatorNotification extends React.Component<
                             >
                                 HGVS
                             </a>
-                            &nbsp;format are supported.<br />
+                            &nbsp;format are supported.
+                            <br />
                             Other formats will be supported soon.
                         </div>
                     </Modal.Body>

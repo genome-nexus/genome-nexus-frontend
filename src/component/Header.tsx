@@ -13,9 +13,7 @@ class Header extends React.Component<{}> {
                     <Container fluid={true}>
                         <Navbar.Brand className="pt-0">
                             <Link to="/" className="brand-title-link">
-                                <Image
-                                    src={squareLogo}
-                                />
+                                <Image src={squareLogo} />
                                 &nbsp;Genome Nexus
                             </Link>
                         </Navbar.Brand>

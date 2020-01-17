@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Button, Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 import SearchBox from '../component/SearchBox';
 import './Home.scss';
@@ -88,8 +88,10 @@ class Home extends React.Component<{ history: any }> {
                                             <td>
                                                 <a
                                                     href={`/variant/${example.value}`}
-                                                    className={"btn btn-primary btn-sm"}
-                                                    role={"button"}
+                                                    className={
+                                                        'btn btn-primary btn-sm'
+                                                    }
+                                                    role={'button'}
                                                 >
                                                     Try it
                                                 </a>
