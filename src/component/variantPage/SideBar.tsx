@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { computed, action, observable } from 'mobx';
-import SearchBox from '../SearchBox';
 import { withRouter, RouteComponentProps } from 'react-router';
 import CheckBoxContainer from './CheckBoxContainer';
 import './SideBar.css';
@@ -54,11 +53,11 @@ class SideBar extends React.Component<SideBarProps> {
                 </Row>
                 <Row className="d-flex justify-content-center">
                     <Col lg="11" className="searchBox">
-                        <SearchBox
-                            onChange={this.onTextChange}
-                            onSearch={this.onSearch}
-                            placeholder="Search variant"
-                        />
+                        {/*<SearchBox*/}
+                        {/*    onChange={this.onTextChange}*/}
+                        {/*    onSearch={this.onSearch}*/}
+                        {/*    placeholder="Search variant"*/}
+                        {/*/>*/}
                     </Col>
                 </Row>
                 <Row>

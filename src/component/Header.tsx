@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-import GenomeNexusLogo from './GenomeNexusLogo';
+import squareLogo from '../image/logo/logo_square_white_background_with_padding.png';
 
 import './Header.css';
 
@@ -10,15 +9,14 @@ class Header extends React.Component<{}> {
     public render() {
         return (
             <header>
-                <Navbar
-                    bg="mskcc-header"
-                    expand="lg"
-                    className="navbar-dark main-navbar"
-                >
+                <Navbar bg="mskcc-header" expand="lg" variant="dark">
                     <Container fluid={true}>
                         <Navbar.Brand className="pt-0">
                             <Link to="/" className="brand-title-link">
-                                <GenomeNexusLogo />
+                                <Image
+                                    src={squareLogo}
+                                />
+                                &nbsp;Genome Nexus
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />

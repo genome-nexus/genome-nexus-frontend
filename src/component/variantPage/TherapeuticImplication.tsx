@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Row } from 'react-bootstrap';
 import _ from 'lodash';
-import classNames from 'classnames';
 import {
     IndicatorQueryResp,
     IndicatorQueryTreatment,
@@ -11,7 +9,6 @@ import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
-import therapeuticImplication from './TherapeuticImplication.module.scss';
 
 interface ITherapeuticImplicationProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -34,7 +31,10 @@ export const RESISTANT_LEVELS = ['LEVEL_R1', 'LEVEL_R2', 'LEVEL_R3'];
 class TherapeuticImplication extends React.Component<
     ITherapeuticImplicationProps
 > {
-    public sensitiveDrugs(oncokbData: IndicatorQueryResp | undefined) {
+    public sensitiveDrugs(
+        oncokbData: IndicatorQueryResp | undefined,
+        oncokbUrl: string
+    ) {
         const treatmentsGroupByLevel = this.getTreatmentsGroupByLevel(
             oncokbData
         ); // group treatments by level
@@ -51,18 +51,20 @@ class TherapeuticImplication extends React.Component<
                 sensitiveTreatmentLevels
             );
             return (
-                <span className={therapeuticImplication['drugs-container']}>
-                    <span className={therapeuticImplication['sensitive-text']}>
-                        Sensitive to:
-                    </span>
-                    {sensitiveDrugs}
-                </span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                    <p>
+                        <strong>Sensitive to:</strong> {sensitiveDrugs}
+                    </p>
+                </a>
             );
         }
         return null;
     }
 
-    public resistantDrugs(oncokbData: IndicatorQueryResp | undefined) {
+    public resistantDrugs(
+        oncokbData: IndicatorQueryResp | undefined,
+        oncokbUrl: string
+    ) {
         const treatmentsGroupByLevel = this.getTreatmentsGroupByLevel(
             oncokbData
         ); // group treatments by level
@@ -79,12 +81,11 @@ class TherapeuticImplication extends React.Component<
                 resistantTreatmentLevels
             );
             return (
-                <span className={therapeuticImplication['drugs-container']}>
-                    <span className={therapeuticImplication['resistant-text']}>
-                        Resistant to:
-                    </span>
-                    {resistantDrugs}
-                </span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                    <p>
+                        <strong>Resistant to:</strong> {resistantDrugs}
+                    </p>
+                </a>
             );
         }
         return null;
@@ -110,9 +111,8 @@ class TherapeuticImplication extends React.Component<
             .uniq()
             .value()
             .join(', ');
-        return (
-            <span className={therapeuticImplication['drugs']}>{drugNames}</span>
-        );
+
+        return drugNames;
     }
 
     private getTreatmentsGroupByLevel(
@@ -147,14 +147,14 @@ class TherapeuticImplication extends React.Component<
             .value();
     }
 
-    public oncokbToolTip(onccokbUrl: string) {
+    public oncokbTooltip(oncokbUrl: string) {
         return (
             <DefaultTooltip
                 placement="top"
                 overlay={
                     <span>
                         <a
-                            href={onccokbUrl}
+                            href={oncokbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -169,62 +169,48 @@ class TherapeuticImplication extends React.Component<
                     </span>
                 }
             >
-                <span
-                    className={classNames(functionalGroupsStyle['data-source'])}
-                >
-                    OncoKB
-                </span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                    OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
+                </a>
             </DefaultTooltip>
         );
     }
 
     public render() {
-        const sensitiveDrugs = this.sensitiveDrugs(this.props.oncokb);
-        const resistantDrugs = this.resistantDrugs(this.props.oncokb);
         const oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
+        const sensitiveDrugs = this.sensitiveDrugs(
+            this.props.oncokb,
+            oncokbUrl
+        );
+        const resistantDrugs = this.resistantDrugs(
+            this.props.oncokb,
+            oncokbUrl
+        );
         return sensitiveDrugs || resistantDrugs ? (
-            <Row className={functionalGroupsStyle['data-content']}>
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbToolTip(oncokbUrl)}
-                        {sensitiveDrugs}
-                        {resistantDrugs}
-                    </a>
-                </span>
-            </Row>
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.oncokbTooltip(oncokbUrl)}
+                </div>
+                <div className={functionalGroupsStyle['data-with-link']}>
+                    {sensitiveDrugs}
+                    {resistantDrugs}
+                </div>
+            </div>
         ) : (
-            <Row className={functionalGroupsStyle['data-content']}>
-                <div
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
-                    )}
-                >
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.oncokbTooltip(oncokbUrl)}
+                </div>
+                <div className={functionalGroupsStyle['data-with-link']}>
                     <a
                         href={oncokbUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {this.oncokbToolTip(oncokbUrl)}
-                        <span
-                            className={classNames(
-                                functionalGroupsStyle['oncokb']
-                            )}
-                        >
-                            N/A
-                        </span>
+                        N/A
                     </a>
                 </div>
-            </Row>
+            </div>
         );
     }
 }

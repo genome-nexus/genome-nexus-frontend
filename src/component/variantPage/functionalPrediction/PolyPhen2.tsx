@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
-import annotationStyles from './styles/annotation.module.scss';
 import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
@@ -11,8 +10,8 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 // Most of this component comes from cBioPortal-frontend
 
 export interface IPolyPhen2Props {
-    polyPhenPrediction: string; // benign, possibly_damaging, probably_damging
-    polyPhenScore: number;
+    polyPhenPrediction: string | undefined; // benign, possibly_damaging, probably_damging
+    polyPhenScore: number | undefined;
 }
 
 export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
@@ -187,65 +186,52 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
     }
 
     public render() {
-        let polyPhen2content: JSX.Element = (
-            <span className={`${annotationStyles['annotation-item-text']}`} />
-        );
+        let polyPhen2content: JSX.Element = <span />;
 
         const dataSource = (
-            <span className={functionalGroupsStyle['data-source']}>
-                PolyPhen-2
-            </span>
+            <>
+                PolyPhen-2&nbsp;<i className="fas fa-external-link-alt"></i>
+            </>
         );
 
         if (
             this.props.polyPhenPrediction &&
             this.props.polyPhenPrediction.length > 0
         ) {
-            polyPhen2content = (
-                <span
-                    className={classNames(
-                        annotationStyles['annotation-item-text'],
-                        tooltipStyles[
-                            `polyPhen2-${this.props.polyPhenPrediction}`
-                        ]
-                    )}
-                >
-                    <span
-                        className={
-                            functionalGroupsStyle['functional-prediction-data']
-                        }
-                    >
-                        {this.props.polyPhenPrediction}
-                    </span>
-                </span>
-            );
+            polyPhen2content = <span>{this.props.polyPhenPrediction}</span>;
         } else {
-            polyPhen2content = (
-                <span
-                    className={
-                        functionalGroupsStyle['functional-prediction-no-data']
-                    }
-                >
-                    N/A
-                </span>
-            );
+            polyPhen2content = <span>N/A</span>;
         }
 
         return (
-            <span className={functionalGroupsStyle['data-group-gap']}>
-                {this.polyPhenTooltip(
-                    <span className={functionalGroupsStyle['link']}>
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.polyPhenTooltip(
                         <a
                             href={PolyPhen2.POLYPHEN2_URL}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             {dataSource}
-                            {polyPhen2content}
                         </a>
-                    </span>
-                )}
-            </span>
+                    )}
+                </div>
+                <div>
+                    {this.polyPhenTooltip(
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
+                            <a
+                                href={PolyPhen2.POLYPHEN2_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {polyPhen2content}
+                            </a>
+                        </span>
+                    )}
+                </div>
+            </div>
         );
     }
 }

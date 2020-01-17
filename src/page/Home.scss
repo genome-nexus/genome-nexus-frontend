@@ -6,7 +6,13 @@
     max-width: 700px;
     color: #7b7979;
     text-align: center;
-    font-size: calc(14px + 0.3vw);
+}
+
+#home-logo h2 {
+    font-size: 80px;
+    font-family: Georgia;
+    color: darkolivegreen;
+    text-shadow: 1px 1px 1px #999;
 }
 
 #home-example-container {
@@ -39,4 +45,15 @@
 #search-box-container {
     font-size: 1.1rem;
     max-width: 600px;
+}
+
+.home-banner {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h2 {
+        font-family: Futura, sans-serif;
+        font-size: 80px;
+        text-shadow: 0 0 4px #ccc;
+    }
 }

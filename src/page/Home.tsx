@@ -1,17 +1,32 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Col, Row, Button, Image } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 
 import SearchBox from '../component/SearchBox';
-import './Home.css';
-import QueryExamples from '../component/QueryExamples';
-import logo from '../image/logo/home_page_logo_small_size_1752x232.png';
+import './Home.scss';
+import logo from '../image/home_page_logo.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
+
+const EXAMPLE_DATA = [
+    {
+        value: '7:g.140453136A>T',
+        label: '7:g.140453136A>T (BRAF V600E)',
+    },
+    { value: '7:g.55249071C>T', label: '7:g.55249071C>T (EGFR T790M)' },
+    {
+        value: '7:g.55242468_55242481delinsAC',
+        label: '7:g.55242468_55242481delinsAC (EGFR L747_T751delinsP)',
+    },
+    {
+        value: '7:g.55249017_55249018insCCA ',
+        label: '7:g.55249017_55249018insCCA (EGFR H773dup)',
+    },
+];
 
 @observer
 class Home extends React.Component<{ history: any }> {
@@ -27,72 +42,84 @@ class Home extends React.Component<{ history: any }> {
     public render() {
         return (
             <div>
-                <div className="text-center">
-                    <Row>
-                        <Col lg="5" xs="8" id="home-logo">
-                            <Image src={logo} fluid />
-                            Annotation and Interpretation of Genetic Variants in
-                            Cancer
-                        </Col>
-                    </Row>
-                    <Row className="d-flex justify-content-center">
-                        <Col lg="5" xs="8" id="search-box-container">
-                            <SearchBox
-                                onChange={this.onTextChange}
-                                onSearch={this.onSearch}
-                                height={44}
+                <div className={'container-fluid page-section'}>
+                    <div
+                        className={'home-banner text-center position-relative'}
+                    >
+                        <h2>
+                            Genome Ne<span className={'d-none'}>X</span>
+                            <Image
+                                src={logo}
+                                fluid
+                                style={{
+                                    height: 63,
+                                    verticalAlign: 'baseline',
+                                    position: 'relative',
+                                    top: 5,
+                                }}
                             />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <ValidatorNotification
-                                showAlert={this.alert}
-                                type={this.alertType}
-                                onClose={this.onClose}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg="5" id="home-function-description">
-                            Genome Nexus integrates genetic variant information
-                            from a variety of resources. For a comprehensive
-                            overview see the{' '}
-                            <a href="https://docs.genomenexus.org/annotation-sources">
-                                documentation
-                            </a>
-                            .
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-md-center">
-                        <Col lg="2">
+                            us
+                        </h2>
+                        Annotation and Interpretation of Genetic Variants in
+                        Cancer
+                    </div>
+
+                    <div className={'mx-auto'} style={{ width: 600 }}>
+                        <SearchBox
+                            onChange={this.onTextChange}
+                            onSearch={this.onSearch}
+                            height={44}
+                            exampleData={EXAMPLE_DATA}
+                            placeholder={'e.g.: 7:g.140453136A>T '}
+                        />
+                    </div>
+
+                    <ValidatorNotification
+                        showAlert={this.alert}
+                        type={this.alertType}
+                        onClose={this.onClose}
+                    >
+                        <table className={'table'}>
+                            <tbody>
+                                {EXAMPLE_DATA.map(example => {
+                                    return (
+                                        <tr>
+                                            <td>{example.label}</td>
+                                            <td>
+                                                <button
+                                                    className={
+                                                        'btn btn-primary btn-sm'
+                                                    }
+                                                >
+                                                    Try it
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </ValidatorNotification>
+                </div>
+
+                <div className={'page-section container-fluid'}>
+                    <div className={'row'}>
+                        <div className={'mx-auto'}>
                             <Button
                                 href="/swagger-ui.html"
                                 variant="outline-primary"
                             >
                                 Try live API
                             </Button>
-                        </Col>
-                        <Col lg="2">
+
                             <Button
                                 href="#home-example-container"
                                 variant="link"
                             >
                                 See Examples
                             </Button>
-                        </Col>
-                    </Row>
-                </div>
-
-                <div id="home-example-container">
-                    <Row>
-                        <Col id="home-query-example-header">API Examples</Col>
-                    </Row>
-                    <Row>
-                        <Col lg="10" id="home-query-example-table">
-                            <QueryExamples />
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -129,4 +156,5 @@ class Home extends React.Component<{ history: any }> {
         this.alert = false;
     }
 }
+
 export default Home;

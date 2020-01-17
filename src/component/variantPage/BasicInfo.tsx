@@ -153,20 +153,29 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                         isOpen={this.showAllTranscripts}
                     />
                     {this.showAllTranscripts && haveTranscriptTable && (
-                        <span className={basicInfo['transcript-table-source']}>
-                            Data in the table comes from&nbsp;
-                            <a
-                                href={
-                                    'https://useast.ensembl.org/info/docs/tools/vep/index.html'
-                                } // TODO goes to VEP variant page
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                VEP
-                            </a>
+                        <div className={basicInfo['transcript-table-source']}>
+                            <span className={'text-muted small'}>
+                                Data in the table comes from&nbsp;
+                                <a
+                                    href={
+                                        'https://useast.ensembl.org/info/docs/tools/vep/index.html'
+                                    } // TODO goes to VEP variant page
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    VEP
+                                </a>
+                            </span>
                             .&nbsp;&nbsp;&nbsp;
-                            {this.transcriptsButton(this.showAllTranscripts)}
-                        </span>
+                            <div
+                                className={'position-absolute'}
+                                style={{ left: '50%', top: 0 }}
+                            >
+                                {this.transcriptsButton(
+                                    this.showAllTranscripts
+                                )}
+                            </div>
+                        </div>
                     )}
                 </div>
             );
@@ -279,7 +288,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             <Button
                 onClick={this.onButtonClick}
                 aria-controls="table-content"
-                variant="outline-secondary"
+                variant="link"
                 className="btn-sm"
             >
                 {isOpened && (

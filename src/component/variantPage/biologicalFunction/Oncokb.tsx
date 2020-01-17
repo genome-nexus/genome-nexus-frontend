@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import classNames from 'classnames';
 
-import BiologicalFunctionStyles from './BiologicalFunction.module.scss';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
@@ -61,30 +59,15 @@ export const MUTATION_EFFECT_CLASS_NAMES: {
     [MUTATION_EFFECT.UNKNOWN]: 'unknown',
 };
 
-export const ONCOKB_URL = 'https://oncokb.org';
+export const ONCOKB_URL = 'https://www.oncokb.org';
 
 @observer
 export default class Oncokb extends React.Component<IOncokbProps> {
     public oncogenicity(oncokb: IndicatorQueryResp) {
         if (oncokb.oncogenic && oncokb.oncogenic !== '') {
-            return (
-                <span
-                    className={classNames(
-                        BiologicalFunctionStyles[
-                            `oncogenicity-${
-                                ONCOGENICITY_CLASS_NAMES[oncokb.oncogenic]
-                            }`
-                        ],
-                        BiologicalFunctionStyles['oncogenicity-text']
-                    )}
-                >
-                    {oncokb.oncogenic}
-                </span>
-            );
+            return oncokb.oncogenic;
         } else {
-            return (
-                <span className={functionalGroupsStyle['data-content']}></span>
-            );
+            return null;
         }
     }
     public oncokbTooltip(oncokbUrl: string) {
@@ -108,86 +91,66 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                     </span>
                 }
             >
-                <span className={functionalGroupsStyle['data-source']}>
-                    OncoKB
-                </span>
+                <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                    OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
+                </a>
             </DefaultTooltip>
         );
     }
 
     public mutationEffect(oncokb: IndicatorQueryResp) {
         if (oncokb.mutationEffect && oncokb.mutationEffect.knownEffect !== '') {
-            return (
-                <span
-                    className={classNames(
-                        BiologicalFunctionStyles[
-                            `mutation-effect-${
-                                MUTATION_EFFECT_CLASS_NAMES[
-                                    oncokb.mutationEffect.knownEffect
-                                ]
-                            }`
-                        ],
-                        BiologicalFunctionStyles['mutation-effect-text']
-                    )}
-                >
-                    {oncokb.mutationEffect.knownEffect}
-                </span>
-            );
+            return oncokb.mutationEffect.knownEffect;
         } else {
-            return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-content'],
-                        functionalGroupsStyle['oncokb']
-                    )}
-                >
-                    N/A
-                </span>
-            );
+            return null;
         }
     }
+
+    private biologicalFunctionData(
+        mutationEffect: string | null,
+        oncogenicity: string | null,
+        oncokbUrl: string
+    ) {
+        let biologicalFunctionData: string | null = null;
+        if (mutationEffect && oncogenicity) {
+            biologicalFunctionData = `${mutationEffect}, ${oncogenicity}`;
+        } else if (mutationEffect) {
+            biologicalFunctionData = oncogenicity;
+        } else if (oncogenicity) {
+            biologicalFunctionData = mutationEffect;
+        } else {
+            biologicalFunctionData = 'N/A';
+        }
+        return (
+            <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
+                <p>{biologicalFunctionData}</p>
+            </a>
+        );
+    }
+
     public render() {
         var oncokbUrl = generateOncokbLink(ONCOKB_URL, this.props.oncokb);
-        if (this.props.oncokb) {
-            return (
-                <span
-                    className={classNames(
-                        functionalGroupsStyle['data-group-gap'],
-                        functionalGroupsStyle['link']
+        return this.props.oncokb ? (
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.oncokbTooltip(oncokbUrl)}
+                </div>
+                <div className={functionalGroupsStyle['data-with-link']}>
+                    {this.biologicalFunctionData(
+                        this.mutationEffect(this.props.oncokb),
+                        this.oncogenicity(this.props.oncokb),
+                        oncokbUrl
                     )}
-                >
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                        {this.mutationEffect(this.props.oncokb)}
-                        {this.oncogenicity(this.props.oncokb)}
-                    </a>
-                </span>
-            );
-        } else {
-            return (
-                <span className={functionalGroupsStyle['link']}>
-                    <a
-                        href={oncokbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {this.oncokbTooltip(oncokbUrl)}
-                        <span
-                            className={classNames(
-                                functionalGroupsStyle['data-content'],
-                                functionalGroupsStyle['oncokb']
-                            )}
-                        >
-                            N/A
-                        </span>
-                    </a>
-                </span>
-            );
-        }
+                </div>
+            </div>
+        ) : (
+            <div className={functionalGroupsStyle['functional-group']}>
+                <div className={functionalGroupsStyle['data-source']}>
+                    {this.oncokbTooltip(oncokbUrl)}
+                </div>
+                <div>N/A</div>
+            </div>
+        );
     }
 }
 
