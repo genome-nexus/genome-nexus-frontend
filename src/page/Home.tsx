@@ -23,7 +23,7 @@ const EXAMPLE_DATA = [
         label: '7:g.55242468_55242481delinsAC (EGFR L747_T751delinsP)',
     },
     {
-        value: '7:g.55249017_55249018insCCA ',
+        value: '7:g.55249017_55249018insCCA',
         label: '7:g.55249017_55249018insCCA (EGFR H773dup)',
     },
 ];
@@ -127,7 +127,7 @@ class Home extends React.Component<{ history: any }> {
 
     @action.bound
     private onTextChange(input: string) {
-        this.inputText = input;
+        this.inputText = input.trim();
     }
 
     @action.bound
