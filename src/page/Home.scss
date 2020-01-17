@@ -65,8 +65,7 @@
     tr:first-child td {
         border-top: none;
     }
-
     tr:last-child td {
-        border-bottom: thick;
+        border-bottom: 1px solid #dee2e6;
     }
 }
