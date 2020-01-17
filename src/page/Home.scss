@@ -57,3 +57,16 @@
         text-shadow: 0 0 4px #ccc;
     }
 }
+
+.validator-notification {
+    a {
+        width: max-content;
+    }
+    tr:first-child td {
+        border-top: none;
+    }
+
+    tr:last-child td {
+        border-bottom: thick;
+    }
+}
