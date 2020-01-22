@@ -14,8 +14,8 @@ import ValidatorNotification, {
 
 const EXAMPLE_DATA = [
     {
-        value: '7:g.140453136A>T',
-        label: '7:g.140453136A>T (BRAF V600E)',
+        value: '17:g.37880220T>C',
+        label: '17:g.37880220T>C (ERBB2 L755S)',
     },
     { value: '7:g.55249071C>T', label: '7:g.55249071C>T (EGFR T790M)' },
     {
