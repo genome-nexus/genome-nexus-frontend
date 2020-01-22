@@ -29,10 +29,10 @@ export const EXAMPLES: JSX.Element = (
             <div className={'card-body'}>
                 <table className={'table table-borderless text-left'}>
                     <tr>
-                        <td>(BRAF V600E)</td>
+                        <td>(ERBB2 L755S)</td>
                         <td>
-                            <Link to={'/variant/7:g.140453136A>T'}>
-                                7:g.140453136A>T
+                            <Link to={'/variant/17:g.37880220T>C'}>
+                                17:g.37880220T>C
                             </Link>
                             &nbsp;
                         </td>

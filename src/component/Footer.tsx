@@ -47,6 +47,9 @@ class Footer extends React.Component<{}> {
                 <a href="mailto:info@genomenexus.org" target="_top">
                     Contact
                 </a>
+                <a href="https://github.com/genome-nexus" target="_top">
+                    <i className="fab fa-github" />
+                </a>
             </div>
         );
     }

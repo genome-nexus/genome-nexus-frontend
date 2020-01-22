@@ -32,6 +32,18 @@ class Header extends React.Component<{}> {
                                 >
                                     Documentation
                                 </Nav.Link>
+                                <Nav.Link
+                                    href="https://docs.genomenexus.org/tools"
+                                    className="ml-5"
+                                >
+                                    Tools
+                                </Nav.Link>
+                                <Nav.Link
+                                    href="https://github.com/genome-nexus"
+                                    className="ml-5"
+                                >
+                                    GitHub
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
