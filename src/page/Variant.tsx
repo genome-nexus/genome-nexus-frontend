@@ -128,7 +128,7 @@ class Variant extends React.Component<IVariantProps> {
                     // set lollipop height
                     plotTopYAxisDefaultMax={1}
                     // set plot height
-                    plotLollipopHeight={150}
+                    plotVizHeight={150}
                     // select the lollipop by default
                     selectionFilters={[
                         {
@@ -136,6 +136,7 @@ class Variant extends React.Component<IVariantProps> {
                             values: [mutation[0].proteinPosStart],
                         },
                     ]}
+                    oncoKbUrl={'https://www.cbioportal.org/proxy/oncokb'}
                 />
             );
         } else {
