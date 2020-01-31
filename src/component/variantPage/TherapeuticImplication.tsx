@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
+import { IndicatorQueryTreatment } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
 import {
+    DefaultTooltip,
     IndicatorQueryResp,
-    IndicatorQueryTreatment,
-} from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
-import { DefaultTooltip } from 'cbioportal-frontend-commons';
+} from 'cbioportal-frontend-commons';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
@@ -17,15 +17,13 @@ interface ITherapeuticImplicationProps {
 export const SENSITIVE_LEVELS = [
     'LEVEL_1',
     'LEVEL_2',
-    'LEVEL_2A',
-    'LEVEL_2B',
     'LEVEL_3',
     'LEVEL_3A',
     'LEVEL_3B',
     'LEVEL_4',
 ];
 
-export const RESISTANT_LEVELS = ['LEVEL_R1', 'LEVEL_R2', 'LEVEL_R3'];
+export const RESISTANT_LEVELS = ['LEVEL_R1', 'LEVEL_R2'];
 
 @observer
 class TherapeuticImplication extends React.Component<

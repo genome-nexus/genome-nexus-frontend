@@ -1,7 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
-import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import {
+    DefaultTooltip,
+    MutationAssessor as MutationAssessorData,
+} from 'cbioportal-frontend-commons';
 import { Table } from 'react-bootstrap';
 
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';

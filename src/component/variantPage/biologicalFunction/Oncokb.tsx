@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import {
+    DefaultTooltip,
+    IndicatorQueryResp,
+} from 'cbioportal-frontend-commons';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
-import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 
 interface IOncokbProps {
     oncokb: IndicatorQueryResp | undefined;
