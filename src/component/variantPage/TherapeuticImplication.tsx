@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
+// TODO remove the IndicatorQueryTreatment import after exposed in cbioportal-frontend-commons
 import { IndicatorQueryTreatment } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
 import {
     DefaultTooltip,
