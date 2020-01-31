@@ -3,11 +3,11 @@ import {
     remoteData,
     VariantAnnotation,
     IndicatorQueryResp,
+    OncoKbGene,
 } from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
 import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
-import { Gene } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
 import _ from 'lodash';
 
 export interface VariantStoreConfig {
@@ -66,7 +66,7 @@ export class VariantStore {
         },
     });
 
-    readonly oncokbGenes = remoteData<Gene[]>({
+    readonly oncokbGenes = remoteData<OncoKbGene[]>({
         await: () => [],
         invoke: async () => {
             return oncokbClient.genesGetUsingGET({});
@@ -75,7 +75,7 @@ export class VariantStore {
         default: [],
     });
 
-    readonly oncokbGenesMap = remoteData<{ [hugoSymbol: string]: Gene }>({
+    readonly oncokbGenesMap = remoteData<{ [hugoSymbol: string]: OncoKbGene }>({
         await: () => [this.oncokbGenes],
         invoke: async () => {
             return Promise.resolve(
