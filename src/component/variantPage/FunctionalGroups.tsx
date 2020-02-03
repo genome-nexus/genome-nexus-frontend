@@ -4,12 +4,12 @@ import {
     VariantAnnotationSummary,
     VariantAnnotation,
     MyVariantInfo,
+    IndicatorQueryResp,
 } from 'cbioportal-frontend-commons';
 import PopulationPrevalence from './PopulationPrevalence';
 import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
-import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import TherapeuticImplication from './TherapeuticImplication';
 
 interface IFunctionalGroupsProps {

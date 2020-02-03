@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import Oncokb from './biologicalFunction/Oncokb';
-import { IndicatorQueryResp } from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+import { IndicatorQueryResp } from 'cbioportal-frontend-commons';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;

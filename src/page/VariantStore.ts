@@ -1,12 +1,13 @@
 import { observable } from 'mobx';
-import { remoteData, VariantAnnotation } from 'cbioportal-frontend-commons';
+import {
+    remoteData,
+    VariantAnnotation,
+    IndicatorQueryResp,
+    OncoKbGene,
+} from 'cbioportal-frontend-commons';
 import client from './genomeNexusClientInstance';
 import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
-import {
-    IndicatorQueryResp,
-    Gene,
-} from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
 import _ from 'lodash';
 
 export interface VariantStoreConfig {
@@ -56,7 +57,7 @@ export class VariantStore {
 
     readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
         invoke: async () => {
-            return await oncokbClient.annotateMutationsByHGVSgGetUsingGET({
+            return await oncokbClient.annotateMutationsByHGVSgGetUsingGET_1({
                 hgvsg: this.variant,
             });
         },
@@ -65,7 +66,7 @@ export class VariantStore {
         },
     });
 
-    readonly oncokbGenes = remoteData<Gene[]>({
+    readonly oncokbGenes = remoteData<OncoKbGene[]>({
         await: () => [],
         invoke: async () => {
             return oncokbClient.genesGetUsingGET({});
@@ -74,7 +75,7 @@ export class VariantStore {
         default: [],
     });
 
-    readonly oncokbGenesMap = remoteData<{ [hugoSymbol: string]: Gene }>({
+    readonly oncokbGenesMap = remoteData<{ [hugoSymbol: string]: OncoKbGene }>({
         await: () => [this.oncokbGenes],
         invoke: async () => {
             return Promise.resolve(

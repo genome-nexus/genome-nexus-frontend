@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { VariantAnnotation } from 'cbioportal-frontend-commons';
-import { MutationAssessor as MutationAssessorData } from 'cbioportal-frontend-commons/api/generated/GenomeNexusAPI';
+import {
+    VariantAnnotation,
+    MutationAssessor as MutationAssessorData,
+} from 'cbioportal-frontend-commons';
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';

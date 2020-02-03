@@ -34,3 +34,7 @@ target/classes
 node
 .project
 .classpath
+
+# yarn
+.yarn
+.yarnrc

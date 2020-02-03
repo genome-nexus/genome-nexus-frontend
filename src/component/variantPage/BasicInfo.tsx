@@ -10,11 +10,9 @@ import {
     TranscriptConsequenceSummary,
     getCanonicalMutationType,
     DefaultTooltip,
-} from 'cbioportal-frontend-commons';
-import {
-    Gene,
     IndicatorQueryResp,
-} from 'cbioportal-frontend-commons/api/generated/OncoKbAPI';
+} from 'cbioportal-frontend-commons';
+import { Gene } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
 import { Mutation } from 'react-mutation-mapper';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
