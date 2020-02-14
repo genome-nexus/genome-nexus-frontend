@@ -44,6 +44,12 @@ class Header extends React.Component<{}> {
                                 >
                                     GitHub
                                 </Nav.Link>
+                                <Nav.Link
+                                    href="https://docs.genomenexus.org/about"
+                                    className="ml-5"
+                                >
+                                    About
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
