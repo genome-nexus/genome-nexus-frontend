@@ -168,7 +168,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     >
                         HGVS
                     </a>
-                    &nbsp;format are supported.
+                    &nbsp;format for GRCh37 (hg19) are supported.
                 </p>
             </div>
         );
