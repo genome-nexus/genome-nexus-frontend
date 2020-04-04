@@ -1,5 +1,11 @@
 # Genome-Nexus Frontend
 
+### Genome Build
+Genome Nexus supports both GRCh37 and GRCh38, by default Genome Nexus website will use the public GRCh37 Genome Nexus API.
+
+#### GRCh38
+To use GRCh38 Genome Nexus API, uncomment `REACT_APP_GENOME_NEXUS_URL=https://grch38.genomenexus.org` and comment `REACT_APP_GENOME_NEXUS_URL=https://www.genomenexus.org` in the `.env` file.
+
 ### Query examples
 - 7:g.55249071C>T (showing sensitive and resistant on Therapeutic Implication)
 - 1:g.115256529T>C (long name on Therapeutic Implication)  
