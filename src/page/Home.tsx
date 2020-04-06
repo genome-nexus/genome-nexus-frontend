@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image } from 'react-bootstrap';
@@ -11,8 +11,13 @@ import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
+import { VariantAnnotation } from 'cbioportal-frontend-commons';
 
-const EXAMPLE_DATA = [
+enum GENOME_BUILD {
+    GRCh37 = 'GRCh37',
+    GRCh38 = 'GRCh38',
+}
+const EXAMPLE_DATA_GRCh37 = [
     {
         value: '17:g.37880220T>C',
         label: '17:g.37880220T>C (ERBB2 L755S)',
@@ -28,6 +33,22 @@ const EXAMPLE_DATA = [
     },
 ];
 
+const EXAMPLE_DATA_GRCh38 = [
+    {
+        value: '17:g.39723967T>C',
+        label: '17:g.39723967T>C (ERBB2 L755S)',
+    },
+    { value: '7:g.55181378C>T', label: '7:g.55181378C>T (EGFR T790M)' },
+    {
+        value: '7:g.55174775_55174788delinsAC',
+        label: '7:g.55174775_55174788delinsAC (EGFR L747_T751delinsP)',
+    },
+    {
+        value: '7:g.55181324_55181325insCCA',
+        label: '7:g.55181324_55181325insCCA (EGFR H773dup)',
+    },
+];
+
 @observer
 class Home extends React.Component<{ history: any }> {
     @observable
@@ -38,6 +59,26 @@ class Home extends React.Component<{ history: any }> {
 
     @observable
     protected alertType: ErrorType = ErrorType.INVALID;
+
+    @observable
+    protected genomeBuild: string = '';
+
+    componentWillMount() {
+        this.getGenomeBuild();
+    }
+
+    async getGenomeBuild() {
+        // get genome build
+        // check if the variant has response
+        let response;
+        response = await client.fetchVariantAnnotationGET({
+            variant: '17:g.41242962_41242963insGA',
+        });
+
+        if (response) {
+            this.genomeBuild = (response as VariantAnnotation).assembly_name;
+        }
+    }
 
     public render() {
         return (
@@ -69,8 +110,8 @@ class Home extends React.Component<{ history: any }> {
                             onChange={this.onTextChange}
                             onSearch={this.onSearch}
                             height={44}
-                            exampleData={EXAMPLE_DATA}
-                            placeholder={'e.g.: 7:g.140453136A>T '}
+                            exampleData={this.exampleData}
+                            placeholder={this.genomeBuild}
                         />
                     </div>
 
@@ -81,7 +122,7 @@ class Home extends React.Component<{ history: any }> {
                     >
                         <table className={'table validator-notification'}>
                             <tbody>
-                                {EXAMPLE_DATA.map(example => {
+                                {this.exampleData.map(example => {
                                     return (
                                         <tr>
                                             <td>{example.label}</td>
@@ -136,6 +177,17 @@ class Home extends React.Component<{ history: any }> {
     @action.bound
     private onClose() {
         this.alert = false;
+    }
+
+    @computed
+    get exampleData() {
+        if (this.genomeBuild === GENOME_BUILD.GRCh37) {
+            return EXAMPLE_DATA_GRCh37;
+        } else if (this.genomeBuild === GENOME_BUILD.GRCh38) {
+            return EXAMPLE_DATA_GRCh38;
+        } else {
+            return [];
+        }
     }
 }
 
