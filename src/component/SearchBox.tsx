@@ -135,7 +135,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     defaultMenuIsOpen={true}
                     autoFocus={true}
                     filterOption={(opt: ExampleData) => opt.label !== 'custom'}
-                    placeholder={'Query a variant'}
+                    placeholder={`Query a ${this.props.placeholder} variant`}
                     ref={(ref: any) => {
                         this.selectRef = ref;
                     }}
@@ -168,7 +168,7 @@ class SearchBox extends React.Component<ISearchBoxProps> {
                     >
                         HGVS
                     </a>
-                    &nbsp;format for GRCh37 (hg19) are supported.
+                    &nbsp;format are supported.
                 </p>
             </div>
         );

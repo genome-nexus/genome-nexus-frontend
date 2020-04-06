@@ -103,7 +103,6 @@ class Home extends React.Component<{ history: any }> {
                         </h2>
                         Annotation and Interpretation of Genetic Variants in
                         Cancer
-                        <h1>{this.genomeBuild}</h1>
                     </div>
 
                     <div className={'mx-auto'} style={{ width: 600 }}>
@@ -112,7 +111,7 @@ class Home extends React.Component<{ history: any }> {
                             onSearch={this.onSearch}
                             height={44}
                             exampleData={this.exampleData}
-                            placeholder={'e.g.: 7:g.140453136A>T '}
+                            placeholder={this.genomeBuild}
                         />
                     </div>
 
