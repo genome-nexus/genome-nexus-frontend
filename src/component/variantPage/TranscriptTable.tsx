@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './TranscriptSummaryTable.css';
 import { observer } from 'mobx-react';
-import { Collapse, Table } from 'react-bootstrap';
+import { Collapse, Table, Button } from 'react-bootstrap';
 import _ from 'lodash';
 import { Transcript } from './TranscriptSummaryTable';
 
@@ -9,6 +9,8 @@ interface ITranscriptTableProps {
     canonicalTranscript: Transcript;
     otherTranscripts?: Transcript[];
     isOpen: boolean;
+    allValidTranscripts: string[];
+    onTranscriptSelect(transcriptId: string): void;
 }
 
 @observer
@@ -109,7 +111,25 @@ class TranscriptTable extends React.Component<ITranscriptTableProps> {
                                     return (
                                         <tr>
                                             <td>{index + 1}</td>
-                                            <td>{transcript.transcript}</td>
+                                            {this.props.allValidTranscripts.includes(
+                                                transcript.transcript!
+                                            ) ? (
+                                                <td>
+                                                    <Button
+                                                        variant="link"
+                                                        className="transcript-link"
+                                                        onClick={() =>
+                                                            this.props.onTranscriptSelect(
+                                                                transcript.transcript!
+                                                            )
+                                                        }
+                                                    >
+                                                        {transcript.transcript}
+                                                    </Button>
+                                                </td>
+                                            ) : (
+                                                <td>{transcript.transcript}</td>
+                                            )}
                                             <td>{transcript.hugoGeneSymbol}</td>
                                             <td>{transcript.hgvsShort}</td>
                                             <td>{transcript.refSeq}</td>

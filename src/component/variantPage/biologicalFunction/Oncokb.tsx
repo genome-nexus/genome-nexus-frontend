@@ -95,6 +95,7 @@ export default class Oncokb extends React.Component<IOncokbProps> {
             >
                 <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
                     OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
+                    &nbsp;*
                 </a>
             </DefaultTooltip>
         );

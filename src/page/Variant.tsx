@@ -1,4 +1,4 @@
-import { computed } from 'mobx';
+import { computed, action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
@@ -10,12 +10,19 @@ import {
     VariantAnnotationSummary,
     getProteinPositionFromProteinChange,
 } from 'cbioportal-frontend-commons';
-import { Mutation, TrackName, DataFilterType } from 'react-mutation-mapper';
+import {
+    Mutation,
+    TrackName,
+    DataFilterType,
+    initDefaultMutationMapperStore,
+    DataFilter,
+} from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
+import _ from 'lodash';
 
 interface IVariantProps {
     variant: string;
@@ -85,17 +92,68 @@ class Variant extends React.Component<IVariantProps> {
         );
     }
 
-    private getMutationMapper() {
+    @computed
+    private get getMutationMapperStore() {
         let mutation = this.variantToMutation(this.annotationSummary);
         if (
             mutation[0] &&
             mutation[0].gene &&
             mutation[0].gene.hugoGeneSymbol.length !== 0
         ) {
+            return initDefaultMutationMapperStore({
+                genomeNexusUrl: genomeNexusApiRoot,
+                data: mutation,
+                hugoSymbol: getTranscriptConsequenceSummary(
+                    this.annotationSummary
+                ).hugoGeneSymbol,
+                oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
+                // select the lollipop by default
+                selectionFilters: [
+                    {
+                        type: DataFilterType.POSITION,
+                        values: [mutation[0].proteinPosStart],
+                    },
+                ],
+            });
+        }
+        return undefined;
+    }
+
+    @computed get allValidTranscripts() {
+        if (
+            this.getMutationMapperStore!.transcriptsWithAnnotations.result &&
+            this.getMutationMapperStore!.transcriptsWithAnnotations.result
+                .length > 0
+        ) {
+            return this.getMutationMapperStore!.transcriptsWithAnnotations
+                .result;
+        }
+        return [];
+    }
+
+    @action.bound
+    private setActiveTranscript(transcriptId: string) {
+        const allValidTranscripts = this.allValidTranscripts;
+        if (allValidTranscripts.includes(transcriptId)) {
+            this.getMutationMapperStore!.activeTranscript = transcriptId;
+            // set selectedTranscript in variant store
+            this.props.store.selectedTranscript = transcriptId;
+        }
+    }
+
+    private getMutationMapper() {
+        let mutation = this.variantToMutation(this.annotationSummary);
+        if (
+            mutation[0] &&
+            mutation[0].gene &&
+            mutation[0].gene.hugoGeneSymbol.length !== 0 &&
+            this.getMutationMapperStore != undefined
+        ) {
             return (
                 <GenomeNexusMutationMapper
                     genomeNexusUrl={genomeNexusApiRoot}
                     data={mutation}
+                    store={this.getMutationMapperStore}
                     tracks={[
                         TrackName.CancerHotspots,
                         TrackName.OncoKB,
@@ -336,11 +394,22 @@ class Variant extends React.Component<IVariantProps> {
                                                 .result
                                         }
                                         oncokb={this.oncokb}
+                                        selectedTranscript={
+                                            this.props.store.selectedTranscript
+                                        }
+                                        allValidTranscripts={
+                                            this.allValidTranscripts
+                                        }
+                                        onTranscriptSelect={transcriptId =>
+                                            this.setActiveTranscript(
+                                                transcriptId
+                                            )
+                                        }
                                     />
                                 </Col>
                             </Row>
                             <Row>
-                                <Col className="pb-3 small">
+                                <Col className="pb-3 small gn-mutation-mapper">
                                     {this.getMutationMapper()}
                                 </Col>
                             </Row>
@@ -404,6 +473,11 @@ class Variant extends React.Component<IVariantProps> {
                             />
                         </Col>
                     </Row>
+                    <div>
+                        * For the following resources, the transcript is based
+                        on different annotation, but the genomic change is the
+                        same.
+                    </div>
                 </div>
             </div>
         );

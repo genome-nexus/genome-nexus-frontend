@@ -23,3 +23,9 @@
     display: flex;
     justify-content: center;
 }
+
+/* hide mutation mapper meta column */
+/* we cannot disable the whole meta column because we need the computed data */
+.gn-mutation-mapper .mutationMapperMetaColumn {
+    display: none;
+}

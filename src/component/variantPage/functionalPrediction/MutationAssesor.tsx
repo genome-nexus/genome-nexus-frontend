@@ -281,7 +281,7 @@ export default class MutationAssessor extends React.Component<
         const dataSource = (
             <>
                 Mutation Assessor&nbsp;
-                <i className="fas fa-external-link-alt"></i>
+                <i className="fas fa-external-link-alt"></i>&nbsp;*
             </>
         );
 

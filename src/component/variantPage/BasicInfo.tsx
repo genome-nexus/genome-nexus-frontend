@@ -25,6 +25,9 @@ interface IBasicInfoProps {
     variant: string;
     oncokbGenesMap: { [hugoSymbol: string]: Gene };
     oncokb: IndicatorQueryResp | undefined;
+    selectedTranscript: string;
+    allValidTranscripts: string[];
+    onTranscriptSelect(transcriptId: string): void;
 }
 
 type MutationTypeFormat = {
@@ -116,6 +119,17 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         const haveTranscriptTable = this.haveTranscriptTable(
             this.props.annotation
         );
+        const selectedTranscript =
+            this.props.annotation &&
+            _.find(
+                this.props.annotation.transcriptConsequenceSummaries,
+                consequenceSummary => {
+                    return (
+                        consequenceSummary.transcriptId ==
+                        this.props.selectedTranscript
+                    );
+                }
+            );
         const canonicalTranscript =
             this.props.annotation &&
             this.props.annotation.transcriptConsequenceSummary;
@@ -123,7 +137,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             let renderData:
                 | BasicInfoData[]
                 | null = this.getDataFromTranscriptConsequenceSummary(
-                canonicalTranscript
+                selectedTranscript || canonicalTranscript
             );
             if (renderData === null) {
                 return null;
@@ -149,6 +163,8 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     <TranscriptSummaryTable
                         annotation={this.props.annotation}
                         isOpen={this.showAllTranscripts}
+                        allValidTranscripts={this.props.allValidTranscripts}
+                        onTranscriptSelect={this.props.onTranscriptSelect}
                     />
                     {this.showAllTranscripts && haveTranscriptTable && (
                         <div className={basicInfo['transcript-table-source']}>

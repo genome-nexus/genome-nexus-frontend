@@ -38,6 +38,7 @@ export class VariantStore {
     ];
     @observable public selectedResources: string[] = this.allResources;
     @observable public variant: string = '';
+    @observable public selectedTranscript: string = '';
 
     readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {

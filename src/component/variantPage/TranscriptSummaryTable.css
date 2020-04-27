@@ -9,3 +9,8 @@
 .table-content .table-responsive .table {
     margin-bottom: 3px;
 }
+
+.transcript-link {
+    font-size: 12.8px !important;
+    padding: 0px !important;
+}
