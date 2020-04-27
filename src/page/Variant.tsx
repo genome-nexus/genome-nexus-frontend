@@ -15,14 +15,12 @@ import {
     TrackName,
     DataFilterType,
     initDefaultMutationMapperStore,
-    DataFilter,
 } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
-import _ from 'lodash';
 
 interface IVariantProps {
     variant: string;
@@ -147,7 +145,7 @@ class Variant extends React.Component<IVariantProps> {
             mutation[0] &&
             mutation[0].gene &&
             mutation[0].gene.hugoGeneSymbol.length !== 0 &&
-            this.getMutationMapperStore != undefined
+            this.getMutationMapperStore !== undefined
         ) {
             return (
                 <GenomeNexusMutationMapper
