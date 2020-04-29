@@ -7,20 +7,15 @@ import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
 import { VariantStore } from './VariantStore';
 import {
-    VariantAnnotationSummary,
-    getProteinPositionFromProteinChange,
-} from 'cbioportal-frontend-commons';
-import {
-    Mutation,
     TrackName,
-    DataFilterType,
-    initDefaultMutationMapperStore,
+    DataFilterType
 } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
+import { variantToMutation } from '../util/variantUtils';
 
 interface IVariantProps {
     variant: string;
@@ -40,13 +35,6 @@ class Variant extends React.Component<IVariantProps> {
     @computed
     private get variant() {
         return this.props.variant;
-    }
-
-    @computed
-    private get annotationSummary() {
-        return this.props.store.annotation.result
-            ? this.props.store.annotation.result.annotation_summary
-            : undefined;
     }
 
     @computed
@@ -90,40 +78,13 @@ class Variant extends React.Component<IVariantProps> {
         );
     }
 
-    @computed
-    private get getMutationMapperStore() {
-        let mutation = this.variantToMutation(this.annotationSummary);
-        if (
-            mutation[0] &&
-            mutation[0].gene &&
-            mutation[0].gene.hugoGeneSymbol.length !== 0
-        ) {
-            return initDefaultMutationMapperStore({
-                genomeNexusUrl: genomeNexusApiRoot,
-                data: mutation,
-                hugoSymbol: getTranscriptConsequenceSummary(
-                    this.annotationSummary
-                ).hugoGeneSymbol,
-                oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
-                // select the lollipop by default
-                selectionFilters: [
-                    {
-                        type: DataFilterType.POSITION,
-                        values: [mutation[0].proteinPosStart],
-                    },
-                ],
-            });
-        }
-        return undefined;
-    }
-
     @computed get allValidTranscripts() {
         if (
-            this.getMutationMapperStore!.transcriptsWithAnnotations.result &&
-            this.getMutationMapperStore!.transcriptsWithAnnotations.result
+            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations.result &&
+            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations.result
                 .length > 0
         ) {
-            return this.getMutationMapperStore!.transcriptsWithAnnotations
+            return this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
                 .result;
         }
         return [];
@@ -131,27 +92,31 @@ class Variant extends React.Component<IVariantProps> {
 
     @action.bound
     private setActiveTranscript(transcriptId: string) {
-        const allValidTranscripts = this.allValidTranscripts;
-        if (allValidTranscripts.includes(transcriptId)) {
-            this.getMutationMapperStore!.activeTranscript = transcriptId;
-            // set selectedTranscript in variant store
-            this.props.store.selectedTranscript = transcriptId;
-        }
+        // return <Redirect push to={`/variant/${this.variant}/${transcriptId}`} />;
+
+        // set mutation mapper active transcript
+        this.props.store.getMutationMapperStore!.activeTranscript = transcriptId;
+        // set variant page active transcript
+        this.props.store.selectedTranscript = transcriptId;
+        var transcriptIdQuery = '?transcriptId=' +  transcriptId;
+        win.history.pushState({transcriptId: transcriptIdQuery, title: document.title}, document.title, transcriptIdQuery)
+        // console.log(win.history);
+        //this.props.history.replace(`/variant/${this.variant}/${transcriptId}`);
     }
 
     private getMutationMapper() {
-        let mutation = this.variantToMutation(this.annotationSummary);
+        let mutation = variantToMutation(this.props.store.annotationSummary);
         if (
             mutation[0] &&
             mutation[0].gene &&
             mutation[0].gene.hugoGeneSymbol.length !== 0 &&
-            this.getMutationMapperStore !== undefined
+            this.props.store.getMutationMapperStore !== undefined
         ) {
             return (
                 <GenomeNexusMutationMapper
                     genomeNexusUrl={genomeNexusApiRoot}
                     data={mutation}
-                    store={this.getMutationMapperStore}
+                    store={this.props.store.getMutationMapperStore}
                     tracks={[
                         TrackName.CancerHotspots,
                         TrackName.OncoKB,
@@ -164,11 +129,11 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.PTM]: 'visible',
                     }}
                     hugoSymbol={
-                        getTranscriptConsequenceSummary(this.annotationSummary)
+                        getTranscriptConsequenceSummary(this.props.store.annotationSummary)
                             .hugoGeneSymbol
                     }
                     entrezGeneId={Number(
-                        getTranscriptConsequenceSummary(this.annotationSummary)
+                        getTranscriptConsequenceSummary(this.props.store.annotationSummary)
                             .entrezGeneId
                     )}
                     showPlotLegendToggle={false}
@@ -309,53 +274,6 @@ class Variant extends React.Component<IVariantProps> {
         }
     }
 
-    private variantToMutation(
-        data: VariantAnnotationSummary | undefined
-    ): Mutation[] {
-        let mutations = [];
-        let mutation: Mutation;
-        if (data !== undefined) {
-            let transcriptConsequenceSummary = getTranscriptConsequenceSummary(
-                data
-            );
-            mutation = {
-                gene: {
-                    hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
-                    entrezGeneId: Number(
-                        transcriptConsequenceSummary.entrezGeneId
-                    ),
-                },
-                chromosome: data.genomicLocation.chromosome,
-                startPosition: data.genomicLocation.start,
-                endPosition: data.genomicLocation.end,
-                referenceAllele: data.genomicLocation.referenceAllele,
-                variantAllele: data.genomicLocation.variantAllele,
-                // TODO: is it ok to return "" if no protein change data?
-                proteinChange: transcriptConsequenceSummary.hgvspShort,
-                proteinPosStart: transcriptConsequenceSummary.proteinPosition
-                    ? transcriptConsequenceSummary.proteinPosition.start
-                    : this.getProteinPosStart(
-                          transcriptConsequenceSummary.hgvspShort
-                      ),
-                proteinPosEnd: transcriptConsequenceSummary.proteinPosition
-                    ? transcriptConsequenceSummary.proteinPosition.end
-                    : undefined,
-                mutationType:
-                    transcriptConsequenceSummary.variantClassification,
-            };
-            mutations.push(mutation);
-        }
-        return mutations;
-    }
-
-    private getProteinPosStart(proteinChange: string | undefined) {
-        var proteinPosition = getProteinPositionFromProteinChange(
-            proteinChange
-        );
-        // TODO: is it ok to return 0 if no protein change data?
-        return proteinPosition ? proteinPosition.start : 0;
-    }
-
     public render(): React.ReactNode {
         return this.isLoading ? (
             this.loadingIndicator
@@ -380,10 +298,10 @@ class Variant extends React.Component<IVariantProps> {
                             <Row>
                                 <Col>
                                     <BasicInfo
-                                        annotation={this.annotationSummary}
+                                        annotation={this.props.store.annotationSummary}
                                         mutation={
-                                            this.variantToMutation(
-                                                this.annotationSummary
+                                            variantToMutation(
+                                                this.props.store.annotationSummary
                                             )[0]
                                         }
                                         variant={this.props.variant}
@@ -465,7 +383,7 @@ class Variant extends React.Component<IVariantProps> {
                         <Col>
                             <FunctionalGroups
                                 myVariantInfo={this.myVariantInfo}
-                                annotationInternal={this.annotationSummary}
+                                annotationInternal={this.props.store.annotationSummary}
                                 variantAnnotation={this.variantAnnotation}
                                 oncokb={this.oncokb}
                             />
