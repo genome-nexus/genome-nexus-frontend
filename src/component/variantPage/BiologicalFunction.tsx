@@ -6,12 +6,16 @@ import { IndicatorQueryResp } from 'cbioportal-frontend-commons';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 @observer
 class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
     public render() {
-        return <Oncokb oncokb={this.props.oncokb}></Oncokb>;
+        return <Oncokb
+                    oncokb={this.props.oncokb}
+                    isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}>
+                </Oncokb>;
     }
 }
 

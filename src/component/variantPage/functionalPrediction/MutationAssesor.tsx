@@ -14,6 +14,7 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 export interface IMutationAssessorProps {
     mutationAssessor: MutationAssessorData | undefined;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 export function hideArrow(tooltipEl: any) {
@@ -281,7 +282,10 @@ export default class MutationAssessor extends React.Component<
         const dataSource = (
             <>
                 Mutation Assessor&nbsp;
-                <i className="fas fa-external-link-alt"></i>&nbsp;*
+                <i className="fas fa-external-link-alt"></i>
+                {!this.props.isCanonicalTranscriptSelected && (
+                    <span>&nbsp;*</span>
+                )}
             </>
         );
 

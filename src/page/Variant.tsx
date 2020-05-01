@@ -57,6 +57,17 @@ class Variant extends React.Component<IVariantProps> {
             : undefined;
     }
 
+    @computed
+    get isCanonicalTranscriptSelected() {
+        if (this.props.store.annotationSummary) {
+            // no selection, canonical transcript will be selected as default
+            return this.props.store.selectedTranscript === '' || 
+                   this.props.store.selectedTranscript === this.props.store.annotationSummary.canonicalTranscriptId;
+        } else {
+            return undefined;
+        }
+    }
+
     protected get isLoading() {
         return (
             this.props.store.annotation.isPending ||
@@ -313,6 +324,7 @@ class Variant extends React.Component<IVariantProps> {
                                         selectedTranscript={
                                             this.props.store.selectedTranscript
                                         }
+                                        isCanonicalTranscriptSelected={this.isCanonicalTranscriptSelected}
                                         allValidTranscripts={
                                             this.allValidTranscripts
                                         }
@@ -386,14 +398,19 @@ class Variant extends React.Component<IVariantProps> {
                                 annotationInternal={this.props.store.annotationSummary}
                                 variantAnnotation={this.variantAnnotation}
                                 oncokb={this.oncokb}
+                                isCanonicalTranscriptSelected={this.isCanonicalTranscriptSelected!}
                             />
                         </Col>
                     </Row>
-                    <div>
-                        * For the following resources, the transcript is based
-                        on different annotation, but the genomic change is the
-                        same.
-                    </div>
+                    {
+                        (!this.isCanonicalTranscriptSelected) && (
+                            <div>
+                                * For the following resources, the transcript is based
+                                on different annotation, but the genomic change is the
+                                same.
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         );

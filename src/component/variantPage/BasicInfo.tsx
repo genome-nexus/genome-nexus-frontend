@@ -26,6 +26,7 @@ interface IBasicInfoProps {
     oncokbGenesMap: { [hugoSymbol: string]: Gene };
     oncokb: IndicatorQueryResp | undefined;
     selectedTranscript: string;
+    isCanonicalTranscriptSelected?: boolean | undefined;
     allValidTranscripts: string[];
     onTranscriptSelect(transcriptId: string): void;
 }

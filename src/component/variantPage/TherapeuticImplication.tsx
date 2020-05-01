@@ -13,6 +13,7 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface ITherapeuticImplicationProps {
     oncokb: IndicatorQueryResp | undefined;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 export const SENSITIVE_LEVELS = [
@@ -170,7 +171,9 @@ class TherapeuticImplication extends React.Component<
             >
                 <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
                     OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
-                    &nbsp;*
+                    {!this.props.isCanonicalTranscriptSelected && (
+                        <span>&nbsp;*</span>
+                    )}
                 </a>
             </DefaultTooltip>
         );

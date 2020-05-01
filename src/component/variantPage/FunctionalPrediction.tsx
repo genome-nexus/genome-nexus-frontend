@@ -12,6 +12,7 @@ import PolyPhen2 from './functionalPrediction/PolyPhen2';
 
 interface IFunctionalPredictionProps {
     variantAnnotation?: VariantAnnotation;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 interface IFunctionalImpactData {
@@ -64,7 +65,10 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     polyPhenScore={data.polyPhenScore}
                     polyPhenPrediction={data.polyPhenPrediction}
                 />
-                <MutationAssessor mutationAssessor={data.mutationAssessor} />
+                <MutationAssessor
+                    mutationAssessor={data.mutationAssessor}
+                    isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}
+                />
                 <Sift
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}
