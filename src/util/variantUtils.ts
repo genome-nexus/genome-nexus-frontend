@@ -1,6 +1,9 @@
-import { getProteinPositionFromProteinChange, VariantAnnotationSummary } from "cbioportal-frontend-commons";
-import { Mutation } from "react-mutation-mapper";
-import { getTranscriptConsequenceSummary } from "./AnnotationSummaryUtil";
+import {
+    getProteinPositionFromProteinChange,
+    VariantAnnotationSummary,
+} from 'cbioportal-frontend-commons';
+import { Mutation } from 'react-mutation-mapper';
+import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(
     data: VariantAnnotationSummary | undefined
@@ -14,27 +17,21 @@ export function variantToMutation(
         mutation = {
             gene: {
                 hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
-                entrezGeneId: Number(
-                    transcriptConsequenceSummary.entrezGeneId
-                ),
+                entrezGeneId: Number(transcriptConsequenceSummary.entrezGeneId),
             },
             chromosome: data.genomicLocation.chromosome,
             startPosition: data.genomicLocation.start,
             endPosition: data.genomicLocation.end,
             referenceAllele: data.genomicLocation.referenceAllele,
             variantAllele: data.genomicLocation.variantAllele,
-            // TODO: is it ok to return "" if no protein change data?
             proteinChange: transcriptConsequenceSummary.hgvspShort,
             proteinPosStart: transcriptConsequenceSummary.proteinPosition
                 ? transcriptConsequenceSummary.proteinPosition.start
-                : getProteinPosStart(
-                      transcriptConsequenceSummary.hgvspShort
-                  ),
+                : getProteinPosStart(transcriptConsequenceSummary.hgvspShort),
             proteinPosEnd: transcriptConsequenceSummary.proteinPosition
                 ? transcriptConsequenceSummary.proteinPosition.end
                 : undefined,
-            mutationType:
-                transcriptConsequenceSummary.variantClassification,
+            mutationType: transcriptConsequenceSummary.variantClassification,
         };
         mutations.push(mutation);
     }
@@ -42,9 +39,6 @@ export function variantToMutation(
 }
 
 export function getProteinPosStart(proteinChange: string | undefined) {
-    var proteinPosition = getProteinPositionFromProteinChange(
-        proteinChange
-    );
-    // TODO: is it ok to return 0 if no protein change data?
+    var proteinPosition = getProteinPositionFromProteinChange(proteinChange);
     return proteinPosition ? proteinPosition.start : 0;
 }

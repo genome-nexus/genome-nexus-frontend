@@ -12,10 +12,14 @@ interface IBiologicalFunctionProps {
 @observer
 class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
     public render() {
-        return <Oncokb
-                    oncokb={this.props.oncokb}
-                    isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}>
-                </Oncokb>;
+        return (
+            <Oncokb
+                oncokb={this.props.oncokb}
+                isCanonicalTranscriptSelected={
+                    this.props.isCanonicalTranscriptSelected
+                }
+            ></Oncokb>
+        );
     }
 }
 

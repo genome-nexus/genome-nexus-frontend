@@ -283,9 +283,7 @@ export default class MutationAssessor extends React.Component<
             <>
                 Mutation Assessor&nbsp;
                 <i className="fas fa-external-link-alt"></i>
-                {!this.props.isCanonicalTranscriptSelected && (
-                    <span>&nbsp;*</span>
-                )}
+                {!this.props.isCanonicalTranscriptSelected && <span> *</span>}
             </>
         );
 

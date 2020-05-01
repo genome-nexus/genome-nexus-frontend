@@ -31,7 +31,9 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                         <td>
                             <TherapeuticImplication
                                 oncokb={this.props.oncokb}
-                                isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}
+                                isCanonicalTranscriptSelected={
+                                    this.props.isCanonicalTranscriptSelected
+                                }
                             />
                         </td>
                     </tr>
@@ -40,8 +42,10 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                         <th>Biological function:</th>
                         <td>
                             <BiologicalFunction
-                                oncokb={this.props.oncokb} 
-                                isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}
+                                oncokb={this.props.oncokb}
+                                isCanonicalTranscriptSelected={
+                                    this.props.isCanonicalTranscriptSelected
+                                }
                             />
                         </td>
                     </tr>
@@ -51,7 +55,9 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                         <td>
                             <FunctionalPrediction
                                 variantAnnotation={this.props.variantAnnotation}
-                                isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}
+                                isCanonicalTranscriptSelected={
+                                    this.props.isCanonicalTranscriptSelected
+                                }
                             />
                         </td>
                     </tr>

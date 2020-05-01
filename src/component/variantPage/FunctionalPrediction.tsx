@@ -67,7 +67,9 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                 />
                 <MutationAssessor
                     mutationAssessor={data.mutationAssessor}
-                    isCanonicalTranscriptSelected={this.props.isCanonicalTranscriptSelected}
+                    isCanonicalTranscriptSelected={
+                        this.props.isCanonicalTranscriptSelected
+                    }
                 />
                 <Sift
                     siftScore={data.siftScore}

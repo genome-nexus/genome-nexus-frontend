@@ -18,11 +18,11 @@ class Main extends React.Component<{}> {
             <Variant
                 variant={props.match.params.variant}
                 store={
-                        new VariantStore(
-                            props.match.params.variant,
-                            props.location.search
-                        )
-                    }
+                    new VariantStore(
+                        props.match.params.variant,
+                        props.location.search
+                    )
+                }
             />
         );
 

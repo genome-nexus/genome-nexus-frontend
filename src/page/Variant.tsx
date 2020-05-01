@@ -6,10 +6,7 @@ import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
 import { VariantStore } from './VariantStore';
-import {
-    TrackName,
-    DataFilterType
-} from 'react-mutation-mapper';
+import { TrackName, DataFilterType } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { genomeNexusApiRoot } from './genomeNexusClientInstance';
@@ -61,8 +58,11 @@ class Variant extends React.Component<IVariantProps> {
     get isCanonicalTranscriptSelected() {
         if (this.props.store.annotationSummary) {
             // no selection, canonical transcript will be selected as default
-            return this.props.store.selectedTranscript === '' || 
-                   this.props.store.selectedTranscript === this.props.store.annotationSummary.canonicalTranscriptId;
+            return (
+                this.props.store.selectedTranscript === '' ||
+                this.props.store.selectedTranscript ===
+                    this.props.store.annotationSummary.canonicalTranscriptId
+            );
         } else {
             return undefined;
         }
@@ -91,28 +91,29 @@ class Variant extends React.Component<IVariantProps> {
 
     @computed get allValidTranscripts() {
         if (
-            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations.result &&
-            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations.result
-                .length > 0
+            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
+                .result &&
+            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
+                .result.length > 0
         ) {
-            return this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
-                .result;
+            return this.props.store.getMutationMapperStore!
+                .transcriptsWithAnnotations.result;
         }
         return [];
     }
 
     @action.bound
     private setActiveTranscript(transcriptId: string) {
-        // return <Redirect push to={`/variant/${this.variant}/${transcriptId}`} />;
-
         // set mutation mapper active transcript
         this.props.store.getMutationMapperStore!.activeTranscript = transcriptId;
         // set variant page active transcript
         this.props.store.selectedTranscript = transcriptId;
-        var transcriptIdQuery = '?transcriptId=' +  transcriptId;
-        win.history.pushState({transcriptId: transcriptIdQuery, title: document.title}, document.title, transcriptIdQuery)
-        // console.log(win.history);
-        //this.props.history.replace(`/variant/${this.variant}/${transcriptId}`);
+        var transcriptIdQuery = '?transcriptId=' + transcriptId;
+        win.history.pushState(
+            { transcriptId: transcriptIdQuery, title: document.title },
+            document.title,
+            transcriptIdQuery
+        );
     }
 
     private getMutationMapper() {
@@ -140,12 +141,14 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.PTM]: 'visible',
                     }}
                     hugoSymbol={
-                        getTranscriptConsequenceSummary(this.props.store.annotationSummary)
-                            .hugoGeneSymbol
+                        getTranscriptConsequenceSummary(
+                            this.props.store.annotationSummary
+                        ).hugoGeneSymbol
                     }
                     entrezGeneId={Number(
-                        getTranscriptConsequenceSummary(this.props.store.annotationSummary)
-                            .entrezGeneId
+                        getTranscriptConsequenceSummary(
+                            this.props.store.annotationSummary
+                        ).entrezGeneId
                     )}
                     showPlotLegendToggle={false}
                     showPlotDownloadControls={false}
@@ -309,10 +312,13 @@ class Variant extends React.Component<IVariantProps> {
                             <Row>
                                 <Col>
                                     <BasicInfo
-                                        annotation={this.props.store.annotationSummary}
+                                        annotation={
+                                            this.props.store.annotationSummary
+                                        }
                                         mutation={
                                             variantToMutation(
-                                                this.props.store.annotationSummary
+                                                this.props.store
+                                                    .annotationSummary
                                             )[0]
                                         }
                                         variant={this.props.variant}
@@ -324,7 +330,9 @@ class Variant extends React.Component<IVariantProps> {
                                         selectedTranscript={
                                             this.props.store.selectedTranscript
                                         }
-                                        isCanonicalTranscriptSelected={this.isCanonicalTranscriptSelected}
+                                        isCanonicalTranscriptSelected={
+                                            this.isCanonicalTranscriptSelected
+                                        }
                                         allValidTranscripts={
                                             this.allValidTranscripts
                                         }
@@ -395,22 +403,24 @@ class Variant extends React.Component<IVariantProps> {
                         <Col>
                             <FunctionalGroups
                                 myVariantInfo={this.myVariantInfo}
-                                annotationInternal={this.props.store.annotationSummary}
+                                annotationInternal={
+                                    this.props.store.annotationSummary
+                                }
                                 variantAnnotation={this.variantAnnotation}
                                 oncokb={this.oncokb}
-                                isCanonicalTranscriptSelected={this.isCanonicalTranscriptSelected!}
+                                isCanonicalTranscriptSelected={
+                                    this.isCanonicalTranscriptSelected!
+                                }
                             />
                         </Col>
                     </Row>
-                    {
-                        (!this.isCanonicalTranscriptSelected) && (
-                            <div>
-                                * For the following resources, the transcript is based
-                                on different annotation, but the genomic change is the
-                                same.
-                            </div>
-                        )
-                    }
+                    {!this.isCanonicalTranscriptSelected && (
+                        <div>
+                            * This resource's annotation is based on a different
+                            transcript than the displayed one, but the genomic
+                            change is the same.
+                        </div>
+                    )}
                 </div>
             </div>
         );

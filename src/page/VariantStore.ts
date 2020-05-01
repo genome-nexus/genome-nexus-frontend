@@ -11,7 +11,10 @@ import MobxPromise from 'mobxpromise';
 import _ from 'lodash';
 import qs from 'qs';
 import { variantToMutation } from '../util/variantUtils';
-import { initDefaultMutationMapperStore, DataFilterType } from 'react-mutation-mapper';
+import {
+    initDefaultMutationMapperStore,
+    DataFilterType,
+} from 'react-mutation-mapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 
 export interface VariantStoreConfig {
@@ -21,26 +24,24 @@ export class VariantStore {
     public query: any;
     constructor(public variantId: string, public queryString: string) {
         this.variant = variantId;
-        this.query = qs.parse(this.queryString,{ ignoreQueryPrefix: true });
-
+        this.query = qs.parse(this.queryString, { ignoreQueryPrefix: true });
         this.parseUrl();
-
         // set activeTranscript when MutationMapperStore is created
         reaction(
             () => this.getMutationMapperStore,
-            (store) => {
-                if (store != undefined) {
+            store => {
+                if (store !== undefined) {
                     this.getMutationMapperStore!.activeTranscript = this.query.transcriptId;
                 }
             }
         );
     }
 
-    private parseUrl() {        
+    private parseUrl() {
         if (this.query.transcriptId) {
             this.selectedTranscript = this.query.transcriptId;
         }
-    } 
+    }
 
     @observable public allResources: string[] = [
         'Cancer Hotspots',

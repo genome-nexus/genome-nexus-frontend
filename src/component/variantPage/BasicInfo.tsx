@@ -124,12 +124,9 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             this.props.annotation &&
             _.find(
                 this.props.annotation.transcriptConsequenceSummaries,
-                consequenceSummary => {
-                    return (
-                        consequenceSummary.transcriptId ===
-                        this.props.selectedTranscript
-                    );
-                }
+                consequenceSummary =>
+                    consequenceSummary.transcriptId ===
+                    this.props.selectedTranscript
             );
         const canonicalTranscript =
             this.props.annotation &&
