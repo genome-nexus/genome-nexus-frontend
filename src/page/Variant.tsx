@@ -416,9 +416,8 @@ class Variant extends React.Component<IVariantProps> {
                     </Row>
                     {!this.isCanonicalTranscriptSelected && (
                         <div>
-                            * This resource's annotation is based on a different
-                            transcript than the displayed one, but the genomic
-                            change is the same.
+                            * This resource uses a transcript different from the
+                            displayed one, but the genomic change is the same.
                         </div>
                     )}
                 </div>
