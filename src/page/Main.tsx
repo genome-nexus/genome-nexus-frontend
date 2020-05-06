@@ -17,7 +17,12 @@ class Main extends React.Component<{}> {
         const VariantPage = (props: any) => (
             <Variant
                 variant={props.match.params.variant}
-                store={new VariantStore(props.match.params.variant)}
+                store={
+                    new VariantStore(
+                        props.match.params.variant,
+                        props.location.search
+                    )
+                }
             />
         );
 

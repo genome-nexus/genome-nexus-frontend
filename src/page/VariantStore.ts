@@ -1,21 +1,46 @@
-import { observable } from 'mobx';
+import { observable, computed, reaction } from 'mobx';
 import {
     remoteData,
     VariantAnnotation,
     IndicatorQueryResp,
     OncoKbGene,
 } from 'cbioportal-frontend-commons';
-import client from './genomeNexusClientInstance';
+import client, { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
 import _ from 'lodash';
+import qs from 'qs';
+import { variantToMutation } from '../util/variantUtils';
+import {
+    initDefaultMutationMapperStore,
+    DataFilterType,
+} from 'react-mutation-mapper';
+import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 
 export interface VariantStoreConfig {
     variant: string;
 }
 export class VariantStore {
-    constructor(public variantId: string) {
+    public query: any;
+    constructor(public variantId: string, public queryString: string) {
         this.variant = variantId;
+        this.query = qs.parse(this.queryString, { ignoreQueryPrefix: true });
+        this.parseUrl();
+        // set activeTranscript when MutationMapperStore is created
+        reaction(
+            () => this.getMutationMapperStore,
+            store => {
+                if (store !== undefined) {
+                    this.getMutationMapperStore!.activeTranscript = this.query.transcriptId;
+                }
+            }
+        );
+    }
+
+    private parseUrl() {
+        if (this.query.transcriptId) {
+            this.selectedTranscript = this.query.transcriptId;
+        }
     }
 
     @observable public allResources: string[] = [
@@ -38,6 +63,7 @@ export class VariantStore {
     ];
     @observable public selectedResources: string[] = this.allResources;
     @observable public variant: string = '';
+    @observable public selectedTranscript: string = '';
 
     readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {
@@ -85,4 +111,39 @@ export class VariantStore {
         onError: error => {},
         default: {},
     });
+
+    @computed
+    get annotationSummary() {
+        return this.annotation.result
+            ? this.annotation.result.annotation_summary
+            : undefined;
+    }
+
+    @computed
+    get getMutationMapperStore() {
+        let mutation = variantToMutation(this.annotationSummary);
+        if (
+            mutation[0] &&
+            mutation[0].gene &&
+            mutation[0].gene.hugoGeneSymbol.length !== 0
+        ) {
+            const store = initDefaultMutationMapperStore({
+                genomeNexusUrl: genomeNexusApiRoot,
+                data: mutation,
+                hugoSymbol: getTranscriptConsequenceSummary(
+                    this.annotationSummary
+                ).hugoGeneSymbol,
+                oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
+                // select the lollipop by default
+                selectionFilters: [
+                    {
+                        type: DataFilterType.POSITION,
+                        values: [mutation[0].proteinPosStart],
+                    },
+                ],
+            });
+            return store;
+        }
+        return undefined;
+    }
 }

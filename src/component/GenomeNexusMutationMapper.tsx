@@ -18,10 +18,6 @@ class GenomeNexusMutationMapper extends ReactMutationMapper<
         return null;
     }
 
-    protected get geneSummary() {
-        return null;
-    }
-
     @computed
     protected get geneWidth() {
         if (this.lollipopPlotGeneX) {

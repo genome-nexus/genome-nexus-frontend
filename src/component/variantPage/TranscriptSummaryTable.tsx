@@ -10,6 +10,8 @@ import './TranscriptSummaryTable.css';
 interface ITranscriptSummaryTableProps {
     annotation: VariantAnnotationSummary | undefined;
     isOpen: boolean;
+    allValidTranscripts: string[];
+    onTranscriptSelect(transcriptId: string): void;
 }
 
 export type Transcript = {
@@ -91,6 +93,8 @@ class TranscriptSummaryTable extends React.Component<
                     otherTranscripts={this.putOtherTranscriptsInTable(
                         this.props.annotation
                     )}
+                    allValidTranscripts={this.props.allValidTranscripts}
+                    onTranscriptSelect={this.props.onTranscriptSelect}
                 />
             </div>
         );

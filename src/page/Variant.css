@@ -23,3 +23,10 @@
     display: flex;
     justify-content: center;
 }
+
+/* hide mutation mapper meta column */
+/* we cannot disable the whole meta column because we need the computed data */
+/* TODO There might be a better way to trigger the computation of those values instead of rendering the whole column */
+.gn-mutation-mapper .mutationMapperMetaColumn {
+    display: none;
+}
