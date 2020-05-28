@@ -18,6 +18,7 @@ import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import basicInfo from './BasicInfo.module.scss';
+import { Link } from 'react-router-dom';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -369,6 +370,33 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                         </a>
                     </span>
                 </DefaultTooltip>
+            );
+        }
+
+        if (key === 'hgvsg' && value) {
+            return (
+                <span
+                    className={classNames(
+                        basicInfo[`${category}`],
+                        basicInfo[`data-pills`]
+                    )}
+                >
+                    {value}{' '}
+                    <Link
+                        to={
+                            '/annotation/' +
+                            value +
+                            '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
+                        }
+                        target="_self"
+                    >
+                        <img
+                            height={14}
+                            src={require('../../image/logo/json_logo.svg')}
+                            alt="json_logo"
+                        />
+                    </Link>
+                </span>
             );
         }
 
