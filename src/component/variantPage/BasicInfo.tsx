@@ -156,6 +156,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
                         {basicInfoList}
+                        {this.jsonButton()}
                         {haveTranscriptTable &&
                             this.transcriptsButton(this.showAllTranscripts)}
                     </span>
@@ -320,6 +321,41 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
+    private jsonButton() {
+        return (
+            <Button variant="link" className="btn-sm">
+                <Link
+                    to={
+                        '/annotation/' +
+                        this.props.variant +
+                        '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
+                    }
+                    target="_self"
+                >
+                    <i className="far fa-file-code"></i>
+                    {'   '}
+                    <i className="far fa-file"></i>
+                    {'   '}
+                    <i className="far fa-file-alt"></i>
+                    {'   '}
+                    <i className="fas fa-file-export"></i>
+                    {'   '}
+                    <img
+                        height={14}
+                        src={require('../../image/logo/json_file_logo.svg')}
+                        alt="json_logo"
+                    />
+                    {'   '}
+                    <img
+                        height={14}
+                        src={require('../../image/logo/json_logo.svg')}
+                        alt="json_logo"
+                    />
+                </Link>
+            </Button>
+        );
+    }
+
     public generateBasicInfoPills(
         value: string | null,
         key: string,
@@ -373,32 +409,32 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             );
         }
 
-        if (key === 'hgvsg' && value) {
-            return (
-                <span
-                    className={classNames(
-                        basicInfo[`${category}`],
-                        basicInfo[`data-pills`]
-                    )}
-                >
-                    {value}{' '}
-                    <Link
-                        to={
-                            '/annotation/' +
-                            value +
-                            '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
-                        }
-                        target="_self"
-                    >
-                        <img
-                            height={14}
-                            src={require('../../image/logo/json_logo.svg')}
-                            alt="json_logo"
-                        />
-                    </Link>
-                </span>
-            );
-        }
+        // if (key === 'hgvsg' && value) {
+        //     return (
+        //         <span
+        //             className={classNames(
+        //                 basicInfo[`${category}`],
+        //                 basicInfo[`data-pills`]
+        //             )}
+        //         >
+        //             {value}{' '}
+        //             <Link
+        //                 to={
+        //                     '/annotation/' +
+        //                     value +
+        //                     '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
+        //                 }
+        //                 target="_self"
+        //             >
+        //                 <img
+        //                     height={14}
+        //                     src={require('../../image/logo/json_logo.svg')}
+        //                     alt="json_logo"
+        //                 />
+        //             </Link>
+        //         </span>
+        //     );
+        // }
 
         return (
             <span
