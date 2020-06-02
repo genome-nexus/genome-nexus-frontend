@@ -323,36 +323,25 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
 
     private jsonButton() {
         return (
-            <Button variant="link" className="btn-sm">
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <span>Click to read more about the raw API response</span>
+                }
+            >
                 <Link
                     to={
                         '/annotation/' +
                         this.props.variant +
-                        '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
+                        '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms%2Cannotation_summary'
                     }
-                    target="_self"
+                    target="_blank"
+                    style={{ paddingLeft: '8px', paddingRight: '8px' }}
                 >
-                    <i className="far fa-file-code"></i>
-                    {'   '}
-                    <i className="far fa-file"></i>
-                    {'   '}
-                    <i className="far fa-file-alt"></i>
-                    {'   '}
-                    <i className="fas fa-file-export"></i>
-                    {'   '}
-                    <img
-                        height={14}
-                        src={require('../../image/logo/json_file_logo.svg')}
-                        alt="json_logo"
-                    />
-                    {'   '}
-                    <img
-                        height={14}
-                        src={require('../../image/logo/json_logo.svg')}
-                        alt="json_logo"
-                    />
+                    {'{JSON} '}
+                    <i className="fa fa-external-link" />
                 </Link>
-            </Button>
+            </DefaultTooltip>
         );
     }
 
@@ -408,34 +397,6 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 </DefaultTooltip>
             );
         }
-
-        // if (key === 'hgvsg' && value) {
-        //     return (
-        //         <span
-        //             className={classNames(
-        //                 basicInfo[`${category}`],
-        //                 basicInfo[`data-pills`]
-        //             )}
-        //         >
-        //             {value}{' '}
-        //             <Link
-        //                 to={
-        //                     '/annotation/' +
-        //                     value +
-        //                     '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms'
-        //                 }
-        //                 target="_self"
-        //             >
-        //                 <img
-        //                     height={14}
-        //                     src={require('../../image/logo/json_logo.svg')}
-        //                     alt="json_logo"
-        //                 />
-        //             </Link>
-        //         </span>
-        //     );
-        // }
-
         return (
             <span
                 className={classNames(
