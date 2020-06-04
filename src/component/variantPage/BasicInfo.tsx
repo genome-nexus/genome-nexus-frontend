@@ -326,7 +326,14 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             <DefaultTooltip
                 placement="top"
                 overlay={
-                    <span>Click to read more about the raw API response</span>
+                    <span>
+                        Click to view the raw API query response
+                        <br />
+                        <br />
+                        Click{' '}
+                        <a href="https://docs.genomenexus.org/api">here</a> for
+                        more info about the API{' '}
+                    </span>
                 }
             >
                 <Link
@@ -338,7 +345,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     target="_blank"
                     style={{ paddingLeft: '8px', paddingRight: '8px' }}
                 >
-                    {'{JSON} '}
+                    {'JSON '}
                     <i className="fa fa-external-link" />
                 </Link>
             </DefaultTooltip>
