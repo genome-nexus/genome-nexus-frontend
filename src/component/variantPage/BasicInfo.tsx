@@ -18,6 +18,7 @@ import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import basicInfo from './BasicInfo.module.scss';
+import { Link } from 'react-router-dom';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -155,6 +156,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
                         {basicInfoList}
+                        {this.jsonButton()}
                         {haveTranscriptTable &&
                             this.transcriptsButton(this.showAllTranscripts)}
                     </span>
@@ -319,6 +321,37 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
+    private jsonButton() {
+        return (
+            <DefaultTooltip
+                placement="top"
+                overlay={
+                    <span>
+                        Click to view the raw API query response
+                        <br />
+                        <br />
+                        Click{' '}
+                        <a href="https://docs.genomenexus.org/api">here</a> for
+                        more info about the API{' '}
+                    </span>
+                }
+            >
+                <Link
+                    to={
+                        '/annotation/' +
+                        this.props.variant +
+                        '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms%2Cannotation_summary'
+                    }
+                    target="_blank"
+                    style={{ paddingLeft: '8px', paddingRight: '8px' }}
+                >
+                    {'JSON '}
+                    <i className="fa fa-external-link" />
+                </Link>
+            </DefaultTooltip>
+        );
+    }
+
     public generateBasicInfoPills(
         value: string | null,
         key: string,
@@ -371,7 +404,6 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 </DefaultTooltip>
             );
         }
-
         return (
             <span
                 className={classNames(
