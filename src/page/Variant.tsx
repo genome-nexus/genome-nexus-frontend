@@ -1,7 +1,7 @@
-import { computed, action } from 'mobx';
+import { computed, action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Row, Col, Alert } from 'react-bootstrap';
+import { Row, Col, Alert, Modal, Button } from 'react-bootstrap';
 import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
@@ -13,6 +13,7 @@ import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
 import { variantToMutation } from '../util/variantUtils';
+import autobind from 'autobind-decorator';
 
 interface IVariantProps {
     variant: string;
@@ -28,6 +29,8 @@ class Variant extends React.Component<IVariantProps> {
         super(props);
         win.props = props;
     }
+
+    @observable shouldOpenWarningWindow = true;
 
     @computed
     private get variant() {
@@ -71,7 +74,8 @@ class Variant extends React.Component<IVariantProps> {
     protected get isLoading() {
         return (
             this.props.store.annotation.isPending ||
-            this.props.store.oncokbGenesMap.isPending
+            this.props.store.oncokbGenesMap.isPending ||
+            this.props.store.isAnnotatedSuccessfully.isPending
         );
     }
 
@@ -91,12 +95,15 @@ class Variant extends React.Component<IVariantProps> {
 
     @computed get allValidTranscripts() {
         if (
-            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
+            this.props.store.isAnnotatedSuccessfully.isComplete &&
+            this.props.store.isAnnotatedSuccessfully.result === true &&
+            this.props.store.getMutationMapperStore &&
+            this.props.store.getMutationMapperStore.transcriptsWithAnnotations
                 .result &&
-            this.props.store.getMutationMapperStore!.transcriptsWithAnnotations
+            this.props.store.getMutationMapperStore.transcriptsWithAnnotations
                 .result.length > 0
         ) {
-            return this.props.store.getMutationMapperStore!
+            return this.props.store.getMutationMapperStore
                 .transcriptsWithAnnotations.result;
         }
         return [];
@@ -292,136 +299,174 @@ class Variant extends React.Component<IVariantProps> {
         return this.isLoading ? (
             this.loadingIndicator
         ) : (
-            <div className={'page-body variant-page'}>
-                <div className={'page-section'}>
-                    <Row>
-                        {/* TODO: the height should automatically change with the content */}
-                        {/* remove the d-none if have sidebar */}
-                        <Col
-                            lg="2"
-                            className="mt-0 sidebar d-none"
-                            style={{ height: '1050px' }}
-                        >
-                            <SideBar
-                                store={this.props.store}
-                                variant={this.variant}
-                            />
-                        </Col>
-                        {/* change to lg="10" if have side bar */}
-                        <Col>
-                            <Row>
-                                <Col>
-                                    <BasicInfo
-                                        annotation={
-                                            this.props.store.annotationSummary
-                                        }
-                                        mutation={
-                                            variantToMutation(
+            <div>
+                <Modal
+                    show={this.showWarningWindow}
+                    onHide={this.onClose}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>No annotation result</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        This variant can't be annotated, please try another
+                        variant.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.onClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <div className={'page-body variant-page'}>
+                    <div className={'page-section'}>
+                        <Row>
+                            {/* TODO: the height should automatically change with the content */}
+                            {/* remove the d-none if have sidebar */}
+                            <Col
+                                lg="2"
+                                className="mt-0 sidebar d-none"
+                                style={{ height: '1050px' }}
+                            >
+                                <SideBar
+                                    store={this.props.store}
+                                    variant={this.variant}
+                                />
+                            </Col>
+                            {/* change to lg="10" if have side bar */}
+                            <Col>
+                                <Row>
+                                    <Col>
+                                        <BasicInfo
+                                            annotation={
                                                 this.props.store
                                                     .annotationSummary
-                                            )[0]
-                                        }
-                                        variant={this.props.variant}
-                                        oncokbGenesMap={
-                                            this.props.store.oncokbGenesMap
-                                                .result
-                                        }
-                                        oncokb={this.oncokb}
-                                        selectedTranscript={
-                                            this.props.store.selectedTranscript
-                                        }
-                                        isCanonicalTranscriptSelected={
-                                            this.isCanonicalTranscriptSelected
-                                        }
-                                        allValidTranscripts={
-                                            this.allValidTranscripts
-                                        }
-                                        onTranscriptSelect={transcriptId =>
-                                            this.setActiveTranscript(
-                                                transcriptId
-                                            )
-                                        }
-                                    />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="pb-3 small gn-mutation-mapper">
-                                    {this.getMutationMapper()}
-                                </Col>
-                            </Row>
-
-                            {/* remove the d-none if have sidebar */}
-                            {/* the content for each resources */}
-                            <Row className="d-none">
-                                <Col>
-                                    {/* add resouce components */}
-                                    {this.props.store.allResources.map(
-                                        (resource, index) => {
-                                            return (
-                                                this.props.store.selectedResources.includes(
-                                                    resource
-                                                ) && (
-                                                    <Row
-                                                        id={resource}
-                                                        key={index}
-                                                    >
-                                                        <Col
-                                                            lg="12"
-                                                            className="pl-5"
-                                                        >
-                                                            {variantComponentHeader(
-                                                                resource
-                                                            )}
-                                                            {this.getComponentByRescource(
-                                                                resource
-                                                            )}
-                                                        </Col>
-                                                    </Row>
+                                            }
+                                            mutation={
+                                                variantToMutation(
+                                                    this.props.store
+                                                        .annotationSummary
+                                                )[0]
+                                            }
+                                            variant={this.props.variant}
+                                            oncokbGenesMap={
+                                                this.props.store.oncokbGenesMap
+                                                    .result
+                                            }
+                                            oncokb={this.oncokb}
+                                            selectedTranscript={
+                                                this.props.store
+                                                    .selectedTranscript
+                                            }
+                                            isCanonicalTranscriptSelected={
+                                                this
+                                                    .isCanonicalTranscriptSelected
+                                            }
+                                            allValidTranscripts={
+                                                this.allValidTranscripts
+                                            }
+                                            onTranscriptSelect={transcriptId =>
+                                                this.setActiveTranscript(
+                                                    transcriptId
                                                 )
-                                            );
-                                        }
-                                    )}
+                                            }
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="pb-3 small gn-mutation-mapper">
+                                        {this.getMutationMapper()}
+                                    </Col>
+                                </Row>
 
-                                    {/* show notification when no fields has been selected */}
-                                    {this.props.store.selectedResources
-                                        .length === 0 && (
-                                        <div className="pl-4">
-                                            <Alert
-                                                key={'alert'}
-                                                variant={'primary'}
-                                            >
-                                                Use the list on the left to show
-                                                some content.
-                                            </Alert>
-                                        </div>
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FunctionalGroups
-                                myVariantInfo={this.myVariantInfo}
-                                annotationInternal={
-                                    this.props.store.annotationSummary
-                                }
-                                variantAnnotation={this.variantAnnotation}
-                                oncokb={this.oncokb}
-                                isCanonicalTranscriptSelected={
-                                    this.isCanonicalTranscriptSelected!
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    {!this.isCanonicalTranscriptSelected && (
-                        <div>
-                            * This resource uses a transcript different from the
-                            displayed one, but the genomic change is the same.
-                        </div>
-                    )}
+                                {/* remove the d-none if have sidebar */}
+                                {/* the content for each resources */}
+                                <Row className="d-none">
+                                    <Col>
+                                        {/* add resouce components */}
+                                        {this.props.store.allResources.map(
+                                            (resource, index) => {
+                                                return (
+                                                    this.props.store.selectedResources.includes(
+                                                        resource
+                                                    ) && (
+                                                        <Row
+                                                            id={resource}
+                                                            key={index}
+                                                        >
+                                                            <Col
+                                                                lg="12"
+                                                                className="pl-5"
+                                                            >
+                                                                {variantComponentHeader(
+                                                                    resource
+                                                                )}
+                                                                {this.getComponentByRescource(
+                                                                    resource
+                                                                )}
+                                                            </Col>
+                                                        </Row>
+                                                    )
+                                                );
+                                            }
+                                        )}
+
+                                        {/* show notification when no fields has been selected */}
+                                        {this.props.store.selectedResources
+                                            .length === 0 && (
+                                            <div className="pl-4">
+                                                <Alert
+                                                    key={'alert'}
+                                                    variant={'primary'}
+                                                >
+                                                    Use the list on the left to
+                                                    show some content.
+                                                </Alert>
+                                            </div>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FunctionalGroups
+                                    myVariantInfo={this.myVariantInfo}
+                                    annotationInternal={
+                                        this.props.store.annotationSummary
+                                    }
+                                    variantAnnotation={this.variantAnnotation}
+                                    oncokb={this.oncokb}
+                                    isCanonicalTranscriptSelected={
+                                        this.isCanonicalTranscriptSelected!
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        {!this.isCanonicalTranscriptSelected && (
+                            <div>
+                                * This resource uses a transcript different from
+                                the displayed one, but the genomic change is the
+                                same.
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
+        );
+    }
+
+    @autobind
+    @action
+    onClose() {
+        this.shouldOpenWarningWindow = !this.shouldOpenWarningWindow;
+    }
+
+    @computed
+    get showWarningWindow(): boolean {
+        return (
+            this.shouldOpenWarningWindow &&
+            !this.props.store.isAnnotatedSuccessfully.result!
         );
     }
 }
