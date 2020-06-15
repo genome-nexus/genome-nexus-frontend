@@ -1,7 +1,7 @@
-import { computed, action, observable } from 'mobx';
+import { computed, action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Row, Col, Alert, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Alert } from 'react-bootstrap';
 import SideBar from '../component/variantPage/SideBar';
 import BasicInfo from '../component/variantPage/BasicInfo';
 import './Variant.css';
@@ -13,7 +13,6 @@ import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
 import { variantToMutation } from '../util/variantUtils';
-import autobind from 'autobind-decorator';
 
 interface IVariantProps {
     variant: string;
@@ -29,8 +28,6 @@ class Variant extends React.Component<IVariantProps> {
         super(props);
         win.props = props;
     }
-
-    @observable shouldOpenWarningWindow = true;
 
     @computed
     private get variant() {
@@ -300,24 +297,6 @@ class Variant extends React.Component<IVariantProps> {
             this.loadingIndicator
         ) : (
             <div>
-                <Modal
-                    show={this.showWarningWindow}
-                    onHide={this.onClose}
-                    centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>No annotation result</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        This variant can't be annotated, please try another
-                        variant.
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.onClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
                 <div className={'page-body variant-page'}>
                     <div className={'page-section'}>
                         <Row>
@@ -453,20 +432,6 @@ class Variant extends React.Component<IVariantProps> {
                     </div>
                 </div>
             </div>
-        );
-    }
-
-    @autobind
-    @action
-    onClose() {
-        this.shouldOpenWarningWindow = !this.shouldOpenWarningWindow;
-    }
-
-    @computed
-    get showWarningWindow(): boolean {
-        return (
-            this.shouldOpenWarningWindow &&
-            !this.props.store.isAnnotatedSuccessfully.result!
         );
     }
 }
