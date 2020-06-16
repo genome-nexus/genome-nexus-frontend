@@ -156,18 +156,9 @@ class Home extends React.Component<{ history: any }> {
     @action.bound
     async onSearch() {
         if (isVariantValid(`${this.inputText}`).isValid) {
-            // check if the variant has response
-            const response = await client
-                .fetchVariantAnnotationGET({ variant: this.inputText! })
-                .catch(ex => {
-                    this.alertType = ErrorType.NO_RESULT;
-                });
-
-            if (response) {
-                this.alert = false;
-                this.props.history.push(`/variant/${this.inputText}`);
-                return;
-            }
+            this.alert = false;
+            this.props.history.push(`/variant/${this.inputText}`);
+            return;
         } else {
             this.alertType = ErrorType.INVALID;
         }

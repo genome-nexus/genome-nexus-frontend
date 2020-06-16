@@ -146,4 +146,26 @@ export class VariantStore {
         }
         return undefined;
     }
+
+    readonly isAnnotatedSuccessfully = remoteData<boolean>({
+        await: () => [this.annotation],
+        invoke: () => {
+            // TODO use successfully_annotated instead of checking genomicLocation
+            return Promise.resolve(
+                this.annotation.result &&
+                    this.annotation.result.annotation_summary.genomicLocation
+                        .chromosome &&
+                    this.annotation.result.annotation_summary.genomicLocation
+                        .start &&
+                    this.annotation.result.annotation_summary.genomicLocation
+                        .end &&
+                    this.annotation.result.annotation_summary.genomicLocation
+                        .referenceAllele &&
+                    this.annotation.result.annotation_summary.genomicLocation
+                        .variantAllele
+                    ? true
+                    : false
+            );
+        },
+    });
 }
