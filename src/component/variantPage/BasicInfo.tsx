@@ -340,7 +340,9 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     to={
                         '/annotation/' +
                         this.props.variant +
-                        '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms%2Cannotation_summary'
+                        // remove mutation assessor for now
+                        // '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms%2Cannotation_summary'
+                        '?fields=hotspots%2Cmy_variant_info%2Cptms%2Cannotation_summary'
                     }
                     target="_blank"
                     style={{ paddingLeft: '8px', paddingRight: '8px' }}
