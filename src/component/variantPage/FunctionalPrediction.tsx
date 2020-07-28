@@ -23,6 +23,10 @@ interface IFunctionalImpactData {
     polyPhenPrediction: string | undefined;
 }
 
+// hide mutation assessor for now since their server is down
+// in order to show mutation assessor, set "SHOW_MUTATION_ASSESSOR = true", uncomment 'mutation_assessor' in VariantStore.ts
+const SHOW_MUTATION_ASSESSOR = false;
+
 @observer
 class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     public getData(
@@ -65,12 +69,14 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     polyPhenScore={data.polyPhenScore}
                     polyPhenPrediction={data.polyPhenPrediction}
                 />
-                <MutationAssessor
-                    mutationAssessor={data.mutationAssessor}
-                    isCanonicalTranscriptSelected={
-                        this.props.isCanonicalTranscriptSelected
-                    }
-                />
+                {SHOW_MUTATION_ASSESSOR && (
+                    <MutationAssessor
+                        mutationAssessor={data.mutationAssessor}
+                        isCanonicalTranscriptSelected={
+                            this.props.isCanonicalTranscriptSelected
+                        }
+                    />
+                )}
                 <Sift
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}

@@ -72,7 +72,8 @@ export class VariantStore {
                 fields: [
                     'annotation_summary',
                     'my_variant_info',
-                    'mutation_assessor',
+                    // TODO: uncomment mutation assessor when their server is back
+                    // 'mutation_assessor',
                 ],
             });
         },
