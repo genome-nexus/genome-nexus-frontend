@@ -16,6 +16,7 @@ import {
     DataFilterType,
 } from 'react-mutation-mapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+import { ANNOTATION_QUERY_FIELDS } from '../config/configDefaults';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -69,12 +70,7 @@ export class VariantStore {
         invoke: async () => {
             return await client.fetchVariantAnnotationGET({
                 variant: this.variant,
-                fields: [
-                    'annotation_summary',
-                    'my_variant_info',
-                    // TODO: uncomment mutation assessor when their server is back
-                    // 'mutation_assessor',
-                ],
+                fields: ANNOTATION_QUERY_FIELDS,
             });
         },
         onError: (err: Error) => {

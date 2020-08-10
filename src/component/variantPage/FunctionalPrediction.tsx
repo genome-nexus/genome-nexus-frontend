@@ -7,6 +7,7 @@ import {
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
+import { SHOW_MUTATION_ASSESSOR } from '../../config/configDefaults';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -22,10 +23,6 @@ interface IFunctionalImpactData {
     polyPhenScore: number | undefined;
     polyPhenPrediction: string | undefined;
 }
-
-// hide mutation assessor for now since their server is down
-// in order to show mutation assessor, set "SHOW_MUTATION_ASSESSOR = true", uncomment 'mutation_assessor' in VariantStore.ts
-const SHOW_MUTATION_ASSESSOR = false;
 
 @observer
 class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
