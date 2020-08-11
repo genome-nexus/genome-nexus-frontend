@@ -19,6 +19,7 @@ import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
+import { ANNOTATION_QUERY_FIELDS } from '../../config/configDefaults';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -337,13 +338,9 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 }
             >
                 <Link
-                    to={
-                        '/annotation/' +
-                        this.props.variant +
-                        // remove mutation assessor for now
-                        // '?fields=hotspots%2Cmutation_assessor%2Cmy_variant_info%2Cptms%2Cannotation_summary'
-                        '?fields=hotspots%2Cmy_variant_info%2Cptms%2Cannotation_summary'
-                    }
+                    to={`/annotation/${
+                        this.props.variant
+                    }?fields=${ANNOTATION_QUERY_FIELDS.join(',')}`}
                     target="_blank"
                     style={{ paddingLeft: '8px', paddingRight: '8px' }}
                 >
