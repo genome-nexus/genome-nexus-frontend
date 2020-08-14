@@ -70,6 +70,7 @@ export class VariantStore {
         invoke: async () => {
             return await client.fetchVariantAnnotationGET({
                 variant: this.variant,
+                isoformOverrideSource: 'uniprot',
                 fields: ANNOTATION_QUERY_FIELDS,
             });
         },

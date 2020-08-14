@@ -340,7 +340,9 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 <Link
                     to={`/annotation/${
                         this.props.variant
-                    }?fields=${ANNOTATION_QUERY_FIELDS.join(',')}`}
+                    }?isoformOverrideSource=uniprot?fields=${ANNOTATION_QUERY_FIELDS.join(
+                        ','
+                    )}`}
                     target="_blank"
                     style={{ paddingLeft: '8px', paddingRight: '8px' }}
                 >
