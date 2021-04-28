@@ -1,8 +1,6 @@
 import autobind from 'autobind-decorator';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import './SearchBox.css';
-import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { observer } from 'mobx-react';
 import { computed, observable } from 'mobx';
@@ -21,71 +19,6 @@ export type ExampleData = {
     value: string;
     label: string;
 };
-
-export const EXAMPLES: JSX.Element = (
-    <>
-        <div className={'card'}>
-            <h5 className="card-header">Examples</h5>
-            <div className={'card-body'}>
-                <table className={'table table-borderless text-left'}>
-                    <tr>
-                        <td>(ERBB2 L755S)</td>
-                        <td>
-                            <Link to={'/variant/17:g.37880220T>C'}>
-                                17:g.37880220T>C
-                            </Link>
-                            &nbsp;
-                        </td>
-                        <td>
-                            <Button variant={'secondary'} size={'sm'}>
-                                Try it
-                            </Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>(EGFR T790M)</td>
-                        <td>
-                            <Link to={'/variant/7:g.55249071C>T'}>
-                                7:g.55249071C>T
-                            </Link>
-                        </td>
-                        <td>
-                            <Button variant={'secondary'} size={'sm'}>
-                                Try it
-                            </Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>(EGFR L747_T751delinsP)</td>
-                        <td>
-                            <Link to={'/variant/7:g.55242468_55242481delinsAC'}>
-                                7:g.55242468_55242481delinsAC
-                            </Link>
-                        </td>
-                        <td>
-                            <Button variant={'secondary'} size={'sm'}>
-                                Try it
-                            </Button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>(EGFR H773dup)</td>
-                        <td>
-                            <Link to={'/variant/7:g.55249017_55249018insCCA'}>
-                                7:g.55249017_55249018insCCA
-                            </Link>
-                        </td>
-                        <td>
-                            <Button variant={'secondary'} size={'sm'}>
-                                Try it
-                            </Button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </>
-);
 
 @observer
 class SearchBox extends React.Component<ISearchBoxProps> {

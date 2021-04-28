@@ -19,17 +19,20 @@ enum GENOME_BUILD {
 }
 const EXAMPLE_DATA_GRCh37 = [
     {
-        value: '17:g.37880220T>C',
-        label: '17:g.37880220T>C (ERBB2 L755S)',
-    },
-    { value: '7:g.55249071C>T', label: '7:g.55249071C>T (EGFR T790M)' },
-    {
-        value: '7:g.55242468_55242481delinsAC',
-        label: '7:g.55242468_55242481delinsAC (EGFR L747_T751delinsP)',
+        value: '7:g.140453136A>T',
+        label: '7:g.140453136A>T (BRAF p.V600E)',
     },
     {
-        value: '7:g.55249017_55249018insCCA',
-        label: '7:g.55249017_55249018insCCA (EGFR H773dup)',
+        value: '5:g.1295228G>A',
+        label: '5:g.1295228G>A (TERT Promotor mutation)',
+    },
+    {
+        value: '17:g.41276045_41276046del',
+        label: '17:g.41276045_41276046del (BRCA1 c.68_69del/p.E23Vfs)',
+    },
+    {
+        value: '17:g.7577121G>A',
+        label: '17:g.7577121G>A (TP53 p.R273C)',
     },
 ];
 
