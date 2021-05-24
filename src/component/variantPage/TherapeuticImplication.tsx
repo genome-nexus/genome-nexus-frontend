@@ -2,11 +2,11 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
 // TODO remove the IndicatorQueryTreatment import after exposed in cbioportal-frontend-commons
-import { IndicatorQueryTreatment } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
 import {
-    DefaultTooltip,
     IndicatorQueryResp,
-} from 'cbioportal-frontend-commons';
+    IndicatorQueryTreatment,
+} from 'oncokb-ts-api-client';
+import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
@@ -170,7 +170,8 @@ class TherapeuticImplication extends React.Component<
                 }
             >
                 <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
-                    OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
+                    OncoKB&nbsp;
+                    <i className="fas fa-external-link-alt" />
                     {!this.props.isCanonicalTranscriptSelected && (
                         <span> *</span>
                     )}

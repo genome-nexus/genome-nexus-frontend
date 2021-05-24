@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import Oncokb from './biologicalFunction/Oncokb';
-import { IndicatorQueryResp } from 'cbioportal-frontend-commons';
+import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -18,7 +18,7 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
                 isCanonicalTranscriptSelected={
                     this.props.isCanonicalTranscriptSelected
                 }
-            ></Oncokb>
+            />
         );
     }
 }

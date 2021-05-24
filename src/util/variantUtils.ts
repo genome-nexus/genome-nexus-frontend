@@ -1,7 +1,5 @@
-import {
-    getProteinPositionFromProteinChange,
-    VariantAnnotationSummary,
-} from 'cbioportal-frontend-commons';
+import { getProteinPositionFromProteinChange } from 'cbioportal-utils';
+import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
 import { Mutation } from 'react-mutation-mapper';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
@@ -39,6 +37,6 @@ export function variantToMutation(
 }
 
 export function getProteinPosStart(proteinChange: string | undefined) {
-    var proteinPosition = getProteinPositionFromProteinChange(proteinChange);
+    const proteinPosition = getProteinPositionFromProteinChange(proteinChange);
     return proteinPosition ? proteinPosition.start : 0;
 }

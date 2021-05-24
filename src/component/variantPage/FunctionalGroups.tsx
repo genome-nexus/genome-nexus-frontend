@@ -4,8 +4,9 @@ import {
     VariantAnnotationSummary,
     VariantAnnotation,
     MyVariantInfo,
-    IndicatorQueryResp,
-} from 'cbioportal-frontend-commons';
+} from 'genome-nexus-ts-api-client';
+import { IndicatorQueryResp } from 'oncokb-ts-api-client';
+
 import PopulationPrevalence from './PopulationPrevalence';
 import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';

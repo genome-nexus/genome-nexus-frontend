@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { MyVariantInfo, DefaultTooltip } from 'cbioportal-frontend-commons';
+import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { MyVariantInfo } from 'genome-nexus-ts-api-client';
 import { GnomadFrequency } from 'react-mutation-mapper';
 
 import functionalGroupsStyle from './functionalGroups.module.scss';
@@ -99,7 +100,8 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 }
             >
                 <a href={gnomadUrl} target="_blank" rel="noopener noreferrer">
-                    gnomAD&nbsp;<i className="fas fa-external-link-alt"></i>
+                    gnomAD&nbsp;
+                    <i className="fas fa-external-link-alt" />
                 </a>
             </DefaultTooltip>
         );
@@ -174,7 +176,8 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                 }
             >
                 <a href={dbsnpUrl} target="_blank" rel="noopener noreferrer">
-                    dbSNP&nbsp;<i className="fas fa-external-link-alt"></i>
+                    dbSNP&nbsp;
+                    <i className="fas fa-external-link-alt" />
                 </a>
             </DefaultTooltip>
         );

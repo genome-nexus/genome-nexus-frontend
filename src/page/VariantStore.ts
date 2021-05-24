@@ -1,10 +1,10 @@
-import { observable, computed, reaction } from 'mobx';
+import { observable, computed, reaction, makeObservable } from 'mobx';
+import { remoteData } from 'cbioportal-frontend-commons';
+import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import {
-    remoteData,
-    VariantAnnotation,
     IndicatorQueryResp,
-    OncoKbGene,
-} from 'cbioportal-frontend-commons';
+    CancerGene as OncoKbGene,
+} from 'oncokb-ts-api-client';
 import client, { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
@@ -24,6 +24,7 @@ export interface VariantStoreConfig {
 export class VariantStore {
     public query: any;
     constructor(public variantId: string, public queryString: string) {
+        makeObservable(this);
         this.variant = variantId;
         this.query = qs.parse(this.queryString, { ignoreQueryPrefix: true });
         this.parseUrl();
@@ -32,7 +33,9 @@ export class VariantStore {
             () => this.getMutationMapperStore,
             store => {
                 if (store !== undefined) {
-                    this.getMutationMapperStore!.activeTranscript = this.query.transcriptId;
+                    this.getMutationMapperStore!.setSelectedTranscript(
+                        this.query.transcriptId
+                    );
                 }
             }
         );
@@ -92,7 +95,7 @@ export class VariantStore {
     readonly oncokbGenes = remoteData<OncoKbGene[]>({
         await: () => [],
         invoke: async () => {
-            return oncokbClient.genesGetUsingGET({});
+            return oncokbClient.utilsCancerGeneListGetUsingGET_1({});
         },
         onError: error => {},
         default: [],

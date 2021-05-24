@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { computed, action, observable } from 'mobx';
+import { computed, action, observable, makeObservable } from 'mobx';
 import { withRouter, RouteComponentProps } from 'react-router';
 import CheckBoxContainer from './CheckBoxContainer';
 import './SideBar.css';
@@ -24,6 +24,11 @@ type SideBarProps = RouteComponentProps<PathParamsType> & {
 
 @observer
 class SideBar extends React.Component<SideBarProps> {
+    constructor(props: SideBarProps) {
+        super(props);
+        makeObservable(this);
+    }
+
     public static defaultProps = {
         placeholder: 'Search Genes',
         searchIconClassName: 'fa fa-search',
@@ -86,13 +91,13 @@ class SideBar extends React.Component<SideBarProps> {
         );
     }
 
-    @action.bound
-    private onTextChange(input: string) {
+    @action
+    private onTextChange = (input: string) => {
         this.inputText = input;
-    }
+    };
 
-    @action.bound
-    async onSearch() {
+    @action
+    onSearch = async () => {
         if (isVariantValid(`${this.inputText}`).isValid) {
             const response = await client
                 .fetchVariantAnnotationGET({ variant: this.inputText! })
@@ -109,12 +114,12 @@ class SideBar extends React.Component<SideBarProps> {
             this.alertType = ErrorType.INVALID;
         }
         this.alert = true;
-    }
+    };
 
-    @action.bound
-    private onClose() {
+    @action
+    private onClose = () => {
         this.alert = false;
-    }
+    };
 }
 
 export default withRouter(SideBar);

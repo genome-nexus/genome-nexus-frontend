@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import {
-    DefaultTooltip,
-    IndicatorQueryResp,
-} from 'cbioportal-frontend-commons';
+import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { IndicatorQueryResp } from 'oncokb-ts-api-client';
+
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 interface IOncokbProps {
@@ -95,7 +94,8 @@ export default class Oncokb extends React.Component<IOncokbProps> {
                 }
             >
                 <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
-                    OncoKB&nbsp;<i className="fas fa-external-link-alt"></i>
+                    OncoKB&nbsp;
+                    <i className="fas fa-external-link-alt" />
                     {!this.props.isCanonicalTranscriptSelected && (
                         <span> *</span>
                     )}

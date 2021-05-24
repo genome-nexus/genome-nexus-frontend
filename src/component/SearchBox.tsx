@@ -1,9 +1,8 @@
-import autobind from 'autobind-decorator';
 import * as React from 'react';
 import './SearchBox.css';
 import Select from 'react-select';
 import { observer } from 'mobx-react';
-import { computed, observable } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 import _ from 'lodash';
 
 interface ISearchBoxProps {
@@ -25,6 +24,11 @@ class SearchBox extends React.Component<ISearchBoxProps> {
     public static defaultProps = {
         searchIconClassName: 'fa fa-search',
     };
+
+    constructor(props: ISearchBoxProps) {
+        super(props);
+        makeObservable(this);
+    }
 
     @observable
     currentValue: string | null = null;
@@ -107,12 +111,11 @@ class SearchBox extends React.Component<ISearchBoxProps> {
         );
     }
 
-    @autobind
-    private onChange(value: string) {
+    private onChange = (value: string) => {
         if (this.props.onChange) {
             this.props.onChange(value);
         }
-    }
+    };
 }
 
 export default SearchBox;
