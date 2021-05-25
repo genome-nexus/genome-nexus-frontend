@@ -134,6 +134,7 @@ export class VariantStore {
                     this.annotationSummary
                 ).hugoGeneSymbol,
                 oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
+                enableOncoKb: true,
                 // select the lollipop by default
                 selectionFilters: [
                     {
