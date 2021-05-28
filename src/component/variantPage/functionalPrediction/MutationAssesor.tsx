@@ -1,9 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import {
-    DefaultTooltip,
-    MutationAssessor as MutationAssessorData,
-} from 'cbioportal-frontend-commons';
+import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { MutationAssessor as MutationAssessorData } from 'genome-nexus-ts-api-client';
 import { Table } from 'react-bootstrap';
 
 import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
@@ -216,7 +214,7 @@ export default class MutationAssessor extends React.Component<
                                             'fa fa-circle'
                                         )}
                                         aria-hidden="true"
-                                    ></i>
+                                    />
                                 </span>
                             </td>
                             <td>
@@ -232,7 +230,7 @@ export default class MutationAssessor extends React.Component<
                                             'fa fa-circle'
                                         )}
                                         aria-hidden="true"
-                                    ></i>
+                                    />
                                 </span>
                             </td>
                             <td>
@@ -248,7 +246,7 @@ export default class MutationAssessor extends React.Component<
                                             'fa fa-circle'
                                         )}
                                         aria-hidden="true"
-                                    ></i>
+                                    />
                                 </span>
                             </td>
                             <td>
@@ -264,7 +262,7 @@ export default class MutationAssessor extends React.Component<
                                             'fa fa-circle'
                                         )}
                                         aria-hidden="true"
-                                    ></i>
+                                    />
                                 </span>
                             </td>
                             <td>
@@ -282,7 +280,7 @@ export default class MutationAssessor extends React.Component<
         const dataSource = (
             <>
                 Mutation Assessor&nbsp;
-                <i className="fas fa-external-link-alt"></i>
+                <i className="fas fa-external-link-alt" />
                 {!this.props.isCanonicalTranscriptSelected && <span> *</span>}
             </>
         );

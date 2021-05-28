@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import {
     VariantAnnotation,
     MutationAssessor as MutationAssessorData,
-} from 'cbioportal-frontend-commons';
+} from 'genome-nexus-ts-api-client';
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';

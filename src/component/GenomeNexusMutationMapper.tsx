@@ -1,10 +1,10 @@
+import { override } from 'mobx';
 import { observer } from 'mobx-react';
-import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
+import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
 import {
     MutationMapper as ReactMutationMapper,
     MutationMapperProps,
 } from 'react-mutation-mapper';
-import { computed } from 'mobx';
 interface IGenomeNexusMutationMapperProps extends MutationMapperProps {
     variantData?: VariantAnnotationSummary | undefined;
     onInit?: (mutationMapper: GenomeNexusMutationMapper) => void;
@@ -18,7 +18,7 @@ class GenomeNexusMutationMapper extends ReactMutationMapper<
         return null;
     }
 
-    @computed
+    @override
     protected get geneWidth() {
         if (this.lollipopPlotGeneX) {
             if (this.windowWrapper.size.width >= 1391) {

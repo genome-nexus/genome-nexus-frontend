@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormEvent } from 'react';
 import './CheckBox.css';
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, makeObservable } from 'mobx';
 import { Form } from 'react-bootstrap';
 import { Link } from 'react-scroll';
 
@@ -15,6 +15,11 @@ interface ICheckBoxProps {
 
 @observer
 class CheckBox extends React.Component<ICheckBoxProps> {
+    constructor(props: ICheckBoxProps) {
+        super(props);
+        makeObservable(this);
+    }
+
     @computed get className() {
         if (this.props.className) {
             return this.props.className;

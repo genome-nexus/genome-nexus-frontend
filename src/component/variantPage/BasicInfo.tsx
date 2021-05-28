@@ -2,17 +2,17 @@ import * as React from 'react';
 import _ from 'lodash';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import autobind from 'autobind-decorator';
-import { observable, action } from 'mobx';
+import { observable, action, makeObservable } from 'mobx';
 import { Button } from 'react-bootstrap';
+import {
+    getCanonicalMutationType,
+    DefaultTooltip,
+} from 'cbioportal-frontend-commons';
 import {
     VariantAnnotationSummary,
     TranscriptConsequenceSummary,
-    getCanonicalMutationType,
-    DefaultTooltip,
-    IndicatorQueryResp,
-} from 'cbioportal-frontend-commons';
-import { Gene } from 'cbioportal-frontend-commons/dist/api/generated/OncoKbAPI';
+} from 'genome-nexus-ts-api-client';
+import { CancerGene as Gene, IndicatorQueryResp } from 'oncokb-ts-api-client';
 import { Mutation } from 'react-mutation-mapper';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
@@ -117,6 +117,11 @@ export type BasicInfoData = {
 @observer
 export default class BasicInfo extends React.Component<IBasicInfoProps> {
     @observable showAllTranscripts = false;
+
+    constructor(props: IBasicInfoProps) {
+        super(props);
+        makeObservable(this);
+    }
 
     public render() {
         const haveTranscriptTable = this.haveTranscriptTable(
@@ -415,11 +420,10 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
-    @autobind
     @action
-    onButtonClick() {
+    onButtonClick = () => {
         this.showAllTranscripts = !this.showAllTranscripts;
-    }
+    };
 }
 
 // logic is from react-mutation-mapper

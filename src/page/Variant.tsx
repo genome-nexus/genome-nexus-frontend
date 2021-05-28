@@ -1,4 +1,4 @@
-import { computed, action } from 'mobx';
+import { computed, action, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Row, Col, Alert } from 'react-bootstrap';
@@ -26,6 +26,7 @@ const win: any = window as any;
 class Variant extends React.Component<IVariantProps> {
     constructor(props: IVariantProps) {
         super(props);
+        makeObservable(this);
         win.props = props;
     }
 
@@ -106,10 +107,12 @@ class Variant extends React.Component<IVariantProps> {
         return [];
     }
 
-    @action.bound
-    private setActiveTranscript(transcriptId: string) {
+    @action
+    private setActiveTranscript = (transcriptId: string) => {
         // set mutation mapper active transcript
-        this.props.store.getMutationMapperStore!.activeTranscript = transcriptId;
+        this.props.store.getMutationMapperStore!.setSelectedTranscript(
+            transcriptId
+        );
         // set variant page active transcript
         this.props.store.selectedTranscript = transcriptId;
         var transcriptIdQuery = '?transcriptId=' + transcriptId;
@@ -118,7 +121,7 @@ class Variant extends React.Component<IVariantProps> {
             document.title,
             transcriptIdQuery
         );
-    }
+    };
 
     private getMutationMapper() {
         let mutation = variantToMutation(this.props.store.annotationSummary);

@@ -1,7 +1,8 @@
-import { action, observable, computed } from 'mobx';
+import { action, observable, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image } from 'react-bootstrap';
+import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 
 import SearchBox from '../component/SearchBox';
 import './Home.scss';
@@ -11,7 +12,6 @@ import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
-import { VariantAnnotation } from 'cbioportal-frontend-commons';
 
 enum GENOME_BUILD {
     GRCh37 = 'GRCh37',
@@ -65,6 +65,11 @@ class Home extends React.Component<{ history: any }> {
 
     @observable
     protected genomeBuild: string = '';
+
+    constructor(props: { history: any }) {
+        super(props);
+        makeObservable(this);
+    }
 
     componentWillMount() {
         this.getGenomeBuild();
@@ -151,13 +156,13 @@ class Home extends React.Component<{ history: any }> {
         );
     }
 
-    @action.bound
-    private onTextChange(input: string) {
+    @action
+    private onTextChange = (input: string) => {
         this.inputText = input.trim();
-    }
+    };
 
-    @action.bound
-    async onSearch() {
+    @action
+    onSearch = async () => {
         if (isVariantValid(`${this.inputText}`).isValid) {
             this.alert = false;
             this.props.history.push(`/variant/${this.inputText}`);
@@ -166,12 +171,12 @@ class Home extends React.Component<{ history: any }> {
             this.alertType = ErrorType.INVALID;
         }
         this.alert = true;
-    }
+    };
 
-    @action.bound
-    private onClose() {
+    @action
+    private onClose = () => {
         this.alert = false;
-    }
+    };
 
     @computed
     get exampleData() {

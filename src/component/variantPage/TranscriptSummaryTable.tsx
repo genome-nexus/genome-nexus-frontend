@@ -1,8 +1,7 @@
-import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
-import { VariantAnnotationSummary } from 'cbioportal-frontend-commons';
+import { action, makeObservable, observable } from 'mobx';
+import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
 import TranscriptTable from './TranscriptTable';
 import { getTranscriptConsequenceSummary } from '../../util/AnnotationSummaryUtil';
 import './TranscriptSummaryTable.css';
@@ -31,14 +30,19 @@ class TranscriptSummaryTable extends React.Component<
 > {
     @observable showAllTranscript = false;
 
+    constructor(props: ITranscriptSummaryTableProps) {
+        super(props);
+        makeObservable(this);
+    }
+
     private putCanonicalTranscriptInTable(
         annotation: VariantAnnotationSummary | undefined
     ) {
-        let transcriptConsequenceSummary = getTranscriptConsequenceSummary(
+        const transcriptConsequenceSummary = getTranscriptConsequenceSummary(
             annotation
         );
 
-        let canonicalTranscript = {
+        return {
             transcript: transcriptConsequenceSummary.transcriptId,
             hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
             hgvsShort: transcriptConsequenceSummary.hgvspShort,
@@ -49,8 +53,6 @@ class TranscriptSummaryTable extends React.Component<
             consequenceTerms: transcriptConsequenceSummary.consequenceTerms,
             exon: transcriptConsequenceSummary.exon,
         };
-
-        return canonicalTranscript;
     }
 
     private putOtherTranscriptsInTable(
@@ -100,11 +102,10 @@ class TranscriptSummaryTable extends React.Component<
         );
     }
 
-    @autobind
     @action
-    onButtonClick() {
+    onButtonClick = () => {
         this.showAllTranscript = !this.showAllTranscript;
-    }
+    };
 }
 
 export default TranscriptSummaryTable;

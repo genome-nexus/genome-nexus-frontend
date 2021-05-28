@@ -1,9 +1,8 @@
-import autobind from 'autobind-decorator';
 import * as React from 'react';
 import { FormEvent } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import CheckBox from './CheckBox';
-import { action, computed } from 'mobx';
+import { action, computed, makeObservable } from 'mobx';
 import { toggleIncluded } from '../../util/ArrayUtils';
 import { observer } from 'mobx-react';
 import './CheckboxContainer.css';
@@ -16,6 +15,11 @@ interface ICheckContainerProps {
 
 @observer
 class CheckBoxContainer extends React.Component<ICheckContainerProps> {
+    constructor(props: ICheckContainerProps) {
+        super(props);
+        makeObservable(this);
+    }
+
     public render() {
         return (
             <div>
@@ -87,31 +91,28 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps> {
         return this.selectedCheckboxNames.length === 0;
     }
 
-    @autobind
-    private onSelectionChange(event: FormEvent<any>) {
-        this.toggleSelection(event.currentTarget.value);
-    }
-
-    @autobind
     @action
-    private toggleSelection(selection: string) {
+    private onSelectionChange = (event: FormEvent<any>) => {
+        this.toggleSelection(event.currentTarget.value);
+    };
+
+    @action
+    private toggleSelection = (selection: string) => {
         this.props.store.selectedResources = toggleIncluded(
             selection,
             this.props.store.selectedResources
         );
-    }
+    };
 
-    @autobind
     @action
-    private onSelectAll() {
+    private onSelectAll = () => {
         this.props.store.selectedResources = this.props.allCheckboxNames;
-    }
+    };
 
-    @autobind
     @action
-    private onRemoveAll() {
+    private onRemoveAll = () => {
         this.props.store.selectedResources = [];
-    }
+    };
 }
 
 export default CheckBoxContainer;

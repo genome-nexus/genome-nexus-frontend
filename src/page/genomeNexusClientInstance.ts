@@ -1,4 +1,4 @@
-import { GenomeNexusAPI } from 'cbioportal-frontend-commons';
+import { GenomeNexusAPI } from 'genome-nexus-ts-api-client';
 
 export const genomeNexusApiRoot =
     process.env.NODE_ENV === 'production' &&
