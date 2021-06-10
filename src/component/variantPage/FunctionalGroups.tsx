@@ -12,6 +12,7 @@ import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 import TherapeuticImplication from './TherapeuticImplication';
+import { computed } from 'mobx';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -23,6 +24,12 @@ interface IFunctionalGroupsProps {
 
 @observer
 class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
+    @computed get clinvar() {
+        return this.props.variantAnnotation &&
+            this.props.variantAnnotation.clinvar
+            ? this.props.variantAnnotation.clinvar.annotation
+            : undefined;
+    }
     public render() {
         return (
             <div className={functionalGroupsStyle['functional-groups']}>
@@ -47,6 +54,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                 isCanonicalTranscriptSelected={
                                     this.props.isCanonicalTranscriptSelected
                                 }
+                                clinvar={this.clinvar}
                             />
                         </td>
                     </tr>

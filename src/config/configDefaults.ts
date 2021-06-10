@@ -5,4 +5,5 @@ export const ANNOTATION_QUERY_FIELDS = [
     'annotation_summary',
     'my_variant_info',
     'mutation_assessor',
+    'clinvar',
 ];
