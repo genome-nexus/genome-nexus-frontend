@@ -82,14 +82,27 @@ export default class ClinvarInterpretation extends React.Component<
                 <div className={functionalGroupsStyle['data-source']}>
                     <DefaultTooltip
                         placement="top"
-                        overlay={<span>ClinVar Interpretation</span>}
+                        overlay={
+                            <span>
+                                <a
+                                    href={this.clinvarLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {`ClinVar `}
+                                </a>{' '}
+                                aggregates information about genomic variation
+                                and its relationship to human health.
+                            </span>
+                        }
                     >
                         <a
                             href={this.clinvarLink}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            ClinVar
+                            {`ClinVar `}
+                            <i className="fas fa-external-link-alt" />
                         </a>
                     </DefaultTooltip>
                 </div>
