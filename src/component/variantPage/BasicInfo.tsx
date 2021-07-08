@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import { observable, action, makeObservable } from 'mobx';
-import { Button } from 'react-bootstrap';
 import {
     getCanonicalMutationType,
     DefaultTooltip,
@@ -13,13 +12,14 @@ import {
     TranscriptConsequenceSummary,
 } from 'genome-nexus-ts-api-client';
 import { CancerGene as Gene, IndicatorQueryResp } from 'oncokb-ts-api-client';
-import { Mutation } from 'react-mutation-mapper';
+import { Mutation } from 'cbioportal-utils';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { ANNOTATION_QUERY_FIELDS } from '../../config/configDefaults';
+import Toggle from '../Toggle';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -131,7 +131,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             this.props.annotation &&
             _.find(
                 this.props.annotation.transcriptConsequenceSummaries,
-                consequenceSummary =>
+                (consequenceSummary) =>
                     consequenceSummary.transcriptId ===
                     this.props.selectedTranscript
             );
@@ -139,18 +139,17 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             this.props.annotation &&
             this.props.annotation.transcriptConsequenceSummary;
         if (this.props.annotation) {
-            let renderData:
-                | BasicInfoData[]
-                | null = this.getDataFromTranscriptConsequenceSummary(
-                selectedTranscript || canonicalTranscript
-            );
+            let renderData: BasicInfoData[] | null =
+                this.getDataFromTranscriptConsequenceSummary(
+                    selectedTranscript || canonicalTranscript
+                );
             if (renderData === null) {
                 return null;
             }
             if (renderData) {
-                renderData = renderData.filter(data => data.value != null); // remove null fields
+                renderData = renderData.filter((data) => data.value != null); // remove null fields
             }
-            let basicInfoList = _.map(renderData, data => {
+            let basicInfoList = _.map(renderData, (data) => {
                 return this.generateBasicInfoPills(
                     data.value,
                     data.key,
@@ -305,25 +304,12 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
 
     private transcriptsButton(isOpened: boolean) {
         return (
-            <Button
-                onClick={this.onButtonClick}
-                aria-controls="table-content"
-                variant="link"
-                className="btn-sm"
-            >
-                {isOpened && (
-                    <span>
-                        Close table&nbsp;
-                        <i className="fa fa-chevron-circle-up" />
-                    </span>
-                )}
-                {!isOpened && (
-                    <span>
-                        All transcripts&nbsp;
-                        <i className="fa fa-chevron-circle-down" />
-                    </span>
-                )}
-            </Button>
+            <Toggle
+                isOpen={isOpened}
+                textWhenOpen="Close table"
+                textWhenClosed="All transcripts"
+                onToggle={this.onButtonClick}
+            />
         );
     }
 

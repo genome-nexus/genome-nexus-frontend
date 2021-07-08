@@ -1,5 +1,11 @@
 import { observable, computed, reaction, makeObservable } from 'mobx';
 import { remoteData } from 'cbioportal-frontend-commons';
+import {
+    fetchCivicVariants,
+    getCivicGenes,
+    ICivicGeneIndex,
+    ICivicVariantIndex,
+} from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import {
     IndicatorQueryResp,
@@ -31,7 +37,7 @@ export class VariantStore {
         // set activeTranscript when MutationMapperStore is created
         reaction(
             () => this.getMutationMapperStore,
-            store => {
+            (store) => {
                 if (store !== undefined) {
                     this.getMutationMapperStore!.setSelectedTranscript(
                         this.query.transcriptId
@@ -97,7 +103,7 @@ export class VariantStore {
         invoke: async () => {
             return oncokbClient.utilsCancerGeneListGetUsingGET_1({});
         },
-        onError: error => {},
+        onError: (error) => {},
         default: [],
     });
 
@@ -105,11 +111,49 @@ export class VariantStore {
         await: () => [this.oncokbGenes],
         invoke: async () => {
             return Promise.resolve(
-                _.keyBy(this.oncokbGenes.result, gene => gene.hugoSymbol)
+                _.keyBy(this.oncokbGenes.result, (gene) => gene.hugoSymbol)
             );
         },
-        onError: error => {},
+        onError: (error) => {},
         default: {},
+    });
+
+    readonly civicGenes = remoteData<ICivicGeneIndex | undefined>({
+        await: () => [this.annotation],
+        invoke: async () =>
+            getCivicGenes([
+                Number(
+                    getTranscriptConsequenceSummary(this.annotationSummary)
+                        .entrezGeneId
+                ),
+            ]),
+        onError: () => {},
+    });
+
+    readonly civicVariants = remoteData<ICivicVariantIndex | undefined>({
+        await: () => [this.civicGenes],
+        invoke: async () => {
+            if (this.civicGenes.result) {
+                const mutations = variantToMutation(this.annotationSummary);
+
+                mutations.forEach((mutation) => {
+                    // fetchCivicVariants cannot handle protein change values starting with 'p.'
+                    if (mutation.proteinChange) {
+                        mutation.proteinChange = mutation.proteinChange.replace(
+                            'p.',
+                            ''
+                        );
+                    } else {
+                        mutation.proteinChange = '';
+                    }
+                });
+
+                return fetchCivicVariants(this.civicGenes.result, mutations);
+            } else {
+                return {};
+            }
+        },
+        onError: () => {},
     });
 
     @computed

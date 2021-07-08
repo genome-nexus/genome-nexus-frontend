@@ -10,9 +10,7 @@ interface IClinvarInterpretationProps {
 }
 
 @observer
-export default class ClinvarInterpretation extends React.Component<
-    IClinvarInterpretationProps
-> {
+export default class ClinvarInterpretation extends React.Component<IClinvarInterpretationProps> {
     @computed get clinvarLink() {
         return this.props.clinvar
             ? `https://www.ncbi.nlm.nih.gov/clinvar/variation/${this.props.clinvar.clinvarId}/`

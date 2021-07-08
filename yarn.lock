@@ -1955,6 +1955,11 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
+"@types/pluralize@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/pluralize/-/pluralize-0.0.29.tgz#6ffa33ed1fc8813c469b859681d09707eb40d03c"
+  integrity sha512-BYOID+l2Aco2nBik+iYS4SZX0Lf20KPILP5RGmM1IgzdwNdTs0eebiFriOPcej1sX9mLnSoiNte5zcFxssgpGA==
+
 "@types/prop-types@*":
   version "15.7.1"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
@@ -4223,20 +4228,20 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cbioportal-frontend-commons@^0.4.18:
-  version "0.4.18"
-  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.4.18.tgz#d2ec8ba316988cdbf86d4de76b33a7249858af01"
-  integrity sha512-X8V43RrAuk73q+yA39VpSCT9zbDtfEyX5XV0JnZFxleJPAclwoCYgC27IBJH8WKJJcibPz8WkkOt/aAXfn9+HA==
+cbioportal-frontend-commons@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.4.tgz#1634f52e257a7e339d22277e5cff8e9c15aa87dd"
+  integrity sha512-NbJa+xu1/17++K0pZpbVuz/QO1HgYKdd4kedJ5SrVJiKuXhmFFLh7PfRn0OCSuEH+u+FZu0G6fLOXMWveEKAkg==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-utils "^0.2.32"
+    cbioportal-utils "^0.3.3"
     classnames "^2.2.5"
     jquery "^3.2.1"
     lodash "^4.17.11"
     measure-text "0.0.4"
     mobxpromise "github:cbioportal/mobxpromise#303db72588860bff0a6862a4f07a4e8a3578c94f"
     object-sizeof "^1.2.0"
-    oncokb-ts-api-client "^1.1.6"
+    oncokb-ts-api-client "^1.1.7"
     rc-tooltip "^5.0.2"
     rc-trigger "^5.2.1"
     rc-util "^5.8.0"
@@ -4251,14 +4256,14 @@ cbioportal-frontend-commons@^0.4.18:
     url "^0.11.0"
     victory "30.0.0"
 
-cbioportal-utils@^0.2.32:
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.2.32.tgz#d17806321ab1ed8860534340c2111ffeb7eb929d"
-  integrity sha512-MBROR8ChkiHrXbdEKkaO39sBoJXHainy9j0dJiOEU0FRKuIvy/lKMg+kiOclgJOHsP5OY0POTneNijbcYPeF+g==
+cbioportal-utils@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.3.3.tgz#ebe320940650672efea04fef79763aa36ee48538"
+  integrity sha512-iQyHW6bPZgXl7hiqr/gKGGXgpETm+XdEJ2PLh3tBKh/BqbNwQ4/w5K4n2hvFUj7nePs0TuOWNzfhj38OILS4Wg==
   dependencies:
-    genome-nexus-ts-api-client "^1.1.15"
+    genome-nexus-ts-api-client "^1.1.16"
     lodash "^4.17.11"
-    oncokb-ts-api-client "^1.1.6"
+    oncokb-ts-api-client "^1.1.7"
     superagent "^3.8.3"
     typescript "4.0.3"
 
@@ -6818,10 +6823,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-genome-nexus-ts-api-client@^1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.15.tgz#24b9e3c3f5d5115d4b0a458c8af62dec01bf5633"
-  integrity sha512-ki1gTG+8HqRt3kHJhhhI4EE0MRnbbWaMrJjr9uCOZvatXfONJjzgK1kIKo9v/KE0AVyFG7xfDzOYZ6J+ngUMLg==
+genome-nexus-ts-api-client@^1.1.16:
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.16.tgz#8a2e2b59f6322be61596ba08b177cf9b58d4c11e"
+  integrity sha512-CneWeiEgHEnRaZhjU9J+Auk3v7g0hzUq1eE/PpjEe+sCLOa0MOGmm0n2ab4GISjCAP4UmJalisJ+6uEMXomuCw==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"
@@ -10027,10 +10032,10 @@ oncokb-styles@~1.1.0:
   resolved "https://registry.yarnpkg.com/oncokb-styles/-/oncokb-styles-1.1.0.tgz#2817ed1ed18720e18384ebf1e99c7706bac514e4"
   integrity sha512-GSfqB2uGfJD9HefZJXlmNHXYJe0TbfKwAE1y0E5xc/ZKuL2Wle+KoesLL0iIxCyOc89uovnCXDYxSbIBxzgLGA==
 
-oncokb-ts-api-client@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/oncokb-ts-api-client/-/oncokb-ts-api-client-1.1.6.tgz#8b24236db6671a8278ad09069ad1c810d3438f4e"
-  integrity sha512-CinpCwzbnrRzWgci3Vjnb/TeugNE/gm2Lwt0r2bsoYd6BAk7c5mDhqF2vRg3SZ0h93bWz1J/4r7UiOzKUS6lcA==
+oncokb-ts-api-client@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/oncokb-ts-api-client/-/oncokb-ts-api-client-1.1.7.tgz#539e88ec738650befe9bc911cb06df60fab9c910"
+  integrity sha512-0CGCj8lD5N1OV+++UTIDOB1Bx8hwGIyFr+O2Dsz5hbDiPz14beeWS/B/IsseI00HyVS8tCkU1KNOPI/mQ5/GmA==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"
@@ -10518,6 +10523,11 @@ pkg-up@3.1.0, pkg-up@^3.1.0:
   integrity sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
   dependencies:
     find-up "^3.0.0"
+
+pluralize@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
+  integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
 
 pn@^1.1.0:
   version "1.1.0"
@@ -11517,10 +11527,10 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
-prettier@^1.18.2:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
-  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 pretty-bytes@^5.1.0:
   version "5.2.0"
@@ -11982,22 +11992,22 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-mutation-mapper@^0.7.27:
-  version "0.7.27"
-  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.7.27.tgz#6c59451a57083577b84b29d2e1134f66481bdc11"
-  integrity sha512-v5wJqTQ0SwihjaXxsLUKYS0dTKVvIoPENee8W2UC4GuCOdBNlUto6JwZBpcAxeoopIf42BAhJiDIb9f3tYm15w==
+react-mutation-mapper@^0.8.6:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.6.tgz#4b0eeec0b18ff014be53caeaf5e96642042b0a87"
+  integrity sha512-Ok7/w1tUjYyk0NZyfpRLCnVaqQZ7mQfM05Vz9ivdIqxzm4mc8TIr88NSN/LODo1haLrdhTtJKUXCReVH3za6Qw==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-frontend-commons "^0.4.18"
-    cbioportal-utils "^0.2.32"
+    cbioportal-frontend-commons "^0.5.4"
+    cbioportal-utils "^0.3.3"
     classnames "^2.2.5"
-    genome-nexus-ts-api-client "^1.1.15"
+    genome-nexus-ts-api-client "^1.1.16"
     jquery "^3.2.1"
     lodash "^4.17.11"
     memoize-weak-decorator "^1.0.3"
     mobxpromise "github:cbioportal/mobxpromise#303db72588860bff0a6862a4f07a4e8a3578c94f"
     oncokb-styles "~1.1.0"
-    oncokb-ts-api-client "^1.1.6"
+    oncokb-ts-api-client "^1.1.7"
     react-collapse "^4.0.3"
     react-if "^2.1.0"
     react-motion "^0.5.2"

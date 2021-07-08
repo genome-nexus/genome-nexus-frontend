@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { computed } from 'mobx';
 import { observer } from 'mobx-react';
+import { ICivicVariantIndex } from 'cbioportal-utils';
 import {
     VariantAnnotationSummary,
     VariantAnnotation,
@@ -11,14 +13,14 @@ import PopulationPrevalence from './PopulationPrevalence';
 import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
-import TherapeuticImplication from './TherapeuticImplication';
-import { computed } from 'mobx';
+import ClinicalImplication from './ClinicalImplication';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
     variantAnnotation?: VariantAnnotation;
     oncokb?: IndicatorQueryResp;
+    civic?: ICivicVariantIndex;
     isCanonicalTranscriptSelected: boolean;
 }
 
@@ -30,15 +32,17 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
             ? this.props.variantAnnotation.clinvar.annotation
             : undefined;
     }
+
     public render() {
         return (
             <div className={functionalGroupsStyle['functional-groups']}>
                 <table className={'table'}>
                     <tr>
-                        <th>Therapeutic implication:</th>
+                        <th>Clinical implication:</th>
                         <td>
-                            <TherapeuticImplication
+                            <ClinicalImplication
                                 oncokb={this.props.oncokb}
+                                civic={this.props.civic}
                                 isCanonicalTranscriptSelected={
                                     this.props.isCanonicalTranscriptSelected
                                 }

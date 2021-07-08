@@ -4,6 +4,7 @@ import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { MyVariantInfo } from 'genome-nexus-ts-api-client';
 import { GnomadFrequency } from 'react-mutation-mapper';
 
+import Separator from '../Separator';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 
 interface IPopulationPrevalenceProps {
@@ -187,6 +188,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
         return (
             <div>
                 {this.gnomad(this.props.myVariantInfo, this.props.chromosome)}
+                <Separator />
                 {this.dbsnp(this.props.myVariantInfo)}
             </div>
         );

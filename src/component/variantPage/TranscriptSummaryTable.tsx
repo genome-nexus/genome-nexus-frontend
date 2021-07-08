@@ -25,9 +25,7 @@ export type Transcript = {
 };
 
 @observer
-class TranscriptSummaryTable extends React.Component<
-    ITranscriptSummaryTableProps
-> {
+class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProps> {
     @observable showAllTranscript = false;
 
     constructor(props: ITranscriptSummaryTableProps) {
@@ -38,9 +36,8 @@ class TranscriptSummaryTable extends React.Component<
     private putCanonicalTranscriptInTable(
         annotation: VariantAnnotationSummary | undefined
     ) {
-        const transcriptConsequenceSummary = getTranscriptConsequenceSummary(
-            annotation
-        );
+        const transcriptConsequenceSummary =
+            getTranscriptConsequenceSummary(annotation);
 
         return {
             transcript: transcriptConsequenceSummary.transcriptId,
@@ -59,14 +56,13 @@ class TranscriptSummaryTable extends React.Component<
         annotation: VariantAnnotationSummary | undefined
     ) {
         let otherTranscript: Transcript[] = [];
-        let canonicalTranscriptId = this.putCanonicalTranscriptInTable(
-            annotation
-        ).transcript;
+        let canonicalTranscriptId =
+            this.putCanonicalTranscriptInTable(annotation).transcript;
         if (
             annotation !== undefined &&
             annotation.transcriptConsequenceSummaries
         ) {
-            annotation.transcriptConsequenceSummaries.forEach(transcript => {
+            annotation.transcriptConsequenceSummaries.forEach((transcript) => {
                 if (transcript.transcriptId !== canonicalTranscriptId) {
                     otherTranscript.push({
                         transcript: transcript.transcriptId,

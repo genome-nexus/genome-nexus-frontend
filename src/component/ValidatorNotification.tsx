@@ -12,9 +12,7 @@ export enum ErrorType {
     NO_RESULT = 'no result',
 }
 
-class ValidatorNotification extends React.Component<
-    IValidatorNotificationProps
-> {
+class ValidatorNotification extends React.Component<IValidatorNotificationProps> {
     public render() {
         if (this.props.type === ErrorType.INVALID) {
             return (

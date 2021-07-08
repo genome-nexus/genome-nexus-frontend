@@ -1,6 +1,8 @@
-import { getProteinPositionFromProteinChange } from 'cbioportal-utils';
+import {
+    getProteinPositionFromProteinChange,
+    Mutation,
+} from 'cbioportal-utils';
 import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
-import { Mutation } from 'react-mutation-mapper';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(
@@ -9,9 +11,8 @@ export function variantToMutation(
     let mutations = [];
     let mutation: Mutation;
     if (data !== undefined) {
-        let transcriptConsequenceSummary = getTranscriptConsequenceSummary(
-            data
-        );
+        let transcriptConsequenceSummary =
+            getTranscriptConsequenceSummary(data);
         mutation = {
             gene: {
                 hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
