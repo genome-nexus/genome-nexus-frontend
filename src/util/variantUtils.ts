@@ -1,6 +1,8 @@
-import { getProteinPositionFromProteinChange } from 'cbioportal-utils';
+import {
+    getProteinPositionFromProteinChange,
+    Mutation,
+} from 'cbioportal-utils';
 import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
-import { Mutation } from 'react-mutation-mapper';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(

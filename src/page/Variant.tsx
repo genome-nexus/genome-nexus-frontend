@@ -49,6 +49,11 @@ class Variant extends React.Component<IVariantProps> {
     }
 
     @computed
+    private get civic() {
+        return this.props.store.civicVariants.result;
+    }
+
+    @computed
     private get variantAnnotation() {
         return this.props.store.annotation.result
             ? this.props.store.annotation.result
@@ -73,6 +78,7 @@ class Variant extends React.Component<IVariantProps> {
         return (
             this.props.store.annotation.isPending ||
             this.props.store.oncokbGenesMap.isPending ||
+            this.props.store.civicVariants.isPending ||
             this.props.store.isAnnotatedSuccessfully.isPending
         );
     }
@@ -139,13 +145,13 @@ class Variant extends React.Component<IVariantProps> {
                     tracks={[
                         TrackName.CancerHotspots,
                         TrackName.OncoKB,
-                        TrackName.PTM,
+                        TrackName.dbPTM,
                     ]}
                     // allow default tracks to show up
                     trackVisibility={{
                         [TrackName.CancerHotspots]: 'visible',
                         [TrackName.OncoKB]: 'visible',
-                        [TrackName.PTM]: 'visible',
+                        [TrackName.dbPTM]: 'visible',
                     }}
                     hugoSymbol={
                         getTranscriptConsequenceSummary(
@@ -419,6 +425,7 @@ class Variant extends React.Component<IVariantProps> {
                                     }
                                     variantAnnotation={this.variantAnnotation}
                                     oncokb={this.oncokb}
+                                    civic={this.civic}
                                     isCanonicalTranscriptSelected={
                                         this.isCanonicalTranscriptSelected!
                                     }

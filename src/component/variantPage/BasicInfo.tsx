@@ -13,7 +13,7 @@ import {
     TranscriptConsequenceSummary,
 } from 'genome-nexus-ts-api-client';
 import { CancerGene as Gene, IndicatorQueryResp } from 'oncokb-ts-api-client';
-import { Mutation } from 'react-mutation-mapper';
+import { Mutation } from 'cbioportal-utils';
 import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 

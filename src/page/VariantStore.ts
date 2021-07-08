@@ -1,5 +1,11 @@
 import { observable, computed, reaction, makeObservable } from 'mobx';
 import { remoteData } from 'cbioportal-frontend-commons';
+import {
+    fetchCivicVariants,
+    getCivicGenes,
+    ICivicGeneIndex,
+    ICivicVariantIndex,
+} from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import {
     IndicatorQueryResp,
@@ -110,6 +116,44 @@ export class VariantStore {
         },
         onError: error => {},
         default: {},
+    });
+
+    readonly civicGenes = remoteData<ICivicGeneIndex | undefined>({
+        await: () => [this.annotation],
+        invoke: async () =>
+            getCivicGenes([
+                Number(
+                    getTranscriptConsequenceSummary(this.annotationSummary)
+                        .entrezGeneId
+                ),
+            ]),
+        onError: () => {},
+    });
+
+    readonly civicVariants = remoteData<ICivicVariantIndex | undefined>({
+        await: () => [this.civicGenes],
+        invoke: async () => {
+            if (this.civicGenes.result) {
+                const mutations = variantToMutation(this.annotationSummary);
+
+                mutations.forEach(mutation => {
+                    // fetchCivicVariants cannot handle protein change values starting with 'p.'
+                    if (mutation.proteinChange) {
+                        mutation.proteinChange = mutation.proteinChange.replace(
+                            'p.',
+                            ''
+                        );
+                    } else {
+                        mutation.proteinChange = '';
+                    }
+                });
+
+                return fetchCivicVariants(this.civicGenes.result, mutations);
+            } else {
+                return {};
+            }
+        },
+        onError: () => {},
     });
 
     @computed
