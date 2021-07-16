@@ -3604,10 +3604,10 @@ cbioportal-frontend-commons@^0.4.23:
     url "^0.11.0"
     victory "30.0.0"
 
-cbioportal-utils@^0.2.32:
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.2.32.tgz#d17806321ab1ed8860534340c2111ffeb7eb929d"
-  integrity sha512-MBROR8ChkiHrXbdEKkaO39sBoJXHainy9j0dJiOEU0FRKuIvy/lKMg+kiOclgJOHsP5OY0POTneNijbcYPeF+g==
+cbioportal-utils@^0.2.36:
+  version "0.2.36"
+  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.2.36.tgz#15e14b41bf72349175761f72e35e1ef57490cefb"
+  integrity sha512-9eTvoXF/HPY6ucl+Z97+mFMETRUM3s8Z0kCjW4fnb6Zuet0v1KCUIDyZ46TGLSnQSOmrLR+WVpB5dRzqgzDC+A==
   dependencies:
     genome-nexus-ts-api-client "^1.1.15"
     lodash "^4.17.11"
@@ -3615,10 +3615,10 @@ cbioportal-utils@^0.2.32:
     superagent "^3.8.3"
     typescript "4.0.3"
 
-cbioportal-utils@^0.2.36:
-  version "0.2.36"
-  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.2.36.tgz#15e14b41bf72349175761f72e35e1ef57490cefb"
-  integrity sha512-9eTvoXF/HPY6ucl+Z97+mFMETRUM3s8Z0kCjW4fnb6Zuet0v1KCUIDyZ46TGLSnQSOmrLR+WVpB5dRzqgzDC+A==
+cbioportal-utils@^0.2.37-beta.0:
+  version "0.2.37-beta.0"
+  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.2.37-beta.0.tgz#7a29ecbf62d01f7e36df275914e6329e847a09e0"
+  integrity sha512-WWN8PDTikbtByEfXtgwK5DpkmQo8IK0Aksspgl/Z2cbOh2nPadVtXtVGxwsj8Ppz9gqCUSd1RrwyhWnQBfdoBQ==
   dependencies:
     genome-nexus-ts-api-client "^1.1.15"
     lodash "^4.17.11"
