@@ -23,13 +23,13 @@
     "cbioportal-frontend-commons": "^0.4.18",
     "cbioportal-utils": "^0.2.32",
     "classnames": "^2.2.6",
-    "file-loader": "^4.1.0",
+    "file-loader": "^4.3.0",
     "font-awesome": "^4.7.0",
     "genome-nexus-ts-api-client": "^1.1.15",
     "lodash": "^4.17.21",
     "mobx": "^6.0.0",
     "mobx-react": "^6.0.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.14.1",
     "oncokb-styles": "^0.1.2",
     "oncokb-ts-api-client": "^1.1.6",
     "prettier": "^1.18.2",
@@ -41,17 +41,17 @@
     "react-mutation-mapper": "^0.7.27",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^3.4.4",
     "react-scroll": "^1.7.14",
     "react-select": "^3.0.8",
     "react-spinkit": "^3.0.0",
     "react-table": "^6.10.0",
     "typeface-open-sans": "^0.0.54",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.5"
   },
   "engines": {
-    "node": ">=8.12.0",
-    "yarn": ">=1.22.4"
+    "node": ">=15.2.1",
+    "yarn": ">=1.22.5"
   },
   "scripts": {
     "start": "PORT=3088 react-scripts start",
