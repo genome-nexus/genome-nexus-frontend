@@ -71,7 +71,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
 
         // DEL
         else if (variant.includes(VARIANT_OPERATOR.DEL)) {
-            pattern = /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*_[0-9]*(del)$/i;
+            pattern = /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(del)$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,

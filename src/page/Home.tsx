@@ -114,13 +114,14 @@ class Home extends React.Component<{ history: any }> {
                     </div>
 
                     <div className={'mx-auto'} style={{ width: 600 }}>
-                        <SearchBox
+                        {/* <SearchBox
                             onChange={this.onTextChange}
                             onSearch={this.onSearch}
                             height={44}
                             exampleData={this.exampleData}
                             placeholder={this.genomeBuild}
-                        />
+                        /> */}
+                        <SearchBox onChange={this.onTextChange} onSearch={this.onSearch} exampleOptions={this.exampleData}/>
                     </div>
 
                     <ValidatorNotification
