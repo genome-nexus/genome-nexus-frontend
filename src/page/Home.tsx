@@ -1,7 +1,7 @@
 import { action, observable, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image } from 'react-bootstrap';
+import { Col, Image, Row } from 'react-bootstrap';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 
 import SearchBox from '../component/SearchBox';
@@ -12,6 +12,7 @@ import client from './genomeNexusClientInstance';
 import ValidatorNotification, {
     ErrorType,
 } from '../component/ValidatorNotification';
+import { Link } from 'react-router-dom';
 
 enum GENOME_BUILD {
     GRCh37 = 'GRCh37',
@@ -113,17 +114,20 @@ class Home extends React.Component<{ history: any }> {
                         Cancer
                     </div>
 
-                    <div className={'mx-auto'} style={{ width: 600 }}>
-                        {/* <SearchBox
-                            onChange={this.onTextChange}
-                            onSearch={this.onSearch}
-                            height={44}
-                            exampleData={this.exampleData}
-                            placeholder={this.genomeBuild}
-                        /> */}
-                        <SearchBox onChange={this.onTextChange} onSearch={this.onSearch} exampleOptions={this.exampleData}/>
-                    </div>
-
+                    <Row className="mb-1">
+                        <Col md={6} className="mx-auto">
+                            <SearchBox onChange={this.onTextChange} onSearch={this.onSearch} exampleOptions={this.exampleData}/>
+                        </Col>
+                    </Row>
+                    <Row className="mb-5">
+                        <Col md={10} className="mx-auto text-center">
+                            <strong>Examples</strong>:{' '}
+                            <Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link>,{' '}
+                            <Link to={`/variant/5:g.1295228G>A`}>5:g.1295228G{'>'}A</Link>,{' '}
+                            <Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link>,{' '}
+                            <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
+                        </Col>
+                    </Row>
                     <ValidatorNotification
                         showAlert={this.alert}
                         type={this.alertType}
