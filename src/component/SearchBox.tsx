@@ -23,6 +23,25 @@ function searchProteinChangeByKeyword(
     keyword: string,
 ): Promise<any>
 {
+    if (/:/i.test(keyword) && keyword.split(':').length - 1 === 1) {
+        const seperaterIndex = keyword.indexOf(':');
+        let firstPart = keyword.split(':')[0];
+        let secondPart = keyword.split(':')[1];
+        let type = '';
+        if (seperaterIndex > 1 && seperaterIndex < keyword.length - 1 && /[pcg]./i.test(keyword)) {
+            firstPart = keyword.slice(0, seperaterIndex);
+            secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
+            type = keyword.slice(seperaterIndex + 1, seperaterIndex + 3);
+        }
+        if (/del/i.test(keyword)) {
+            keyword = `${_.toUpper(firstPart)}:${type}${secondPart}`;
+        }
+        else {
+            keyword = `${_.toUpper(firstPart)}:${type}${_.toUpper(secondPart)}`;
+        }
+        
+    }
+    
     // TODO support grch38
     return fetch(`https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`);
 }
