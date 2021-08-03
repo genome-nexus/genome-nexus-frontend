@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 interface ISearchBoxProps {
@@ -40,14 +41,19 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     private debouncedFetch = _.debounce((searchTerm, callback) => {
             let keyword = this.keyword;
             let options: Option[] = [];
-            if (this.keyword.includes(' ') || this.keyword.includes(':') || this.keyword.startsWith("rs") ) {
-                if (this.keyword.includes(' ') && !this.keyword.includes('c.')) {
+            // input should have whitespace or ":" in between or start with "rs"
+            if (/\s|:/i.test(this.keyword) || this.keyword.startsWith("rs") ) {
+                // if input contains whitespace, transform to correct format
+                if (/\s/i.test(this.keyword)) {
                     let gene = this.keyword.split(' ')[0];
                     let proteinChange = this.keyword.split(' ')[1];
-                    keyword = gene + ":p." + proteinChange;
-                    console.log(keyword);
-                    console.log(this.keyword);
-                    
+                    // if input contains "c." or "p.", extract type and generate query
+                    if (/[cp]./i.test(proteinChange)) {
+                        keyword = `${gene}:${proteinChange.split('.')[0]}.${proteinChange.split('.')[1]}`;
+                    }
+                    else {
+                        keyword = `${gene}:p.${proteinChange}`;
+                    }
                 }
                 this.getOptions(keyword)
                 .then(response => 
@@ -105,10 +111,8 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     @computed
-    get exampleOptions() {
-        if (this.keyword.length === 0) {
-            return this.props.exampleOptions;
-        } else if (this.options.length > 0) {
+    get dropdownOptions() {
+        if (this.options.length > 0) {
             return this.options;
         } else {
             return [];
@@ -116,12 +120,22 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     render() {
+        const Menu: React.FunctionComponent<any> = observer((props: any) => {
+            if (!_.isEmpty(this.keyword)) {
+                return (
+                    <components.Menu {...props} />
+                );
+            } else {
+                return null;
+            }
+        });
+        
         return (
             <AsyncSelect
                 cacheOptions
                 isClearable
                 loadOptions={this.debouncedFetch}
-                defaultOptions={this.exampleOptions}
+                defaultOptions={this.dropdownOptions}
                 onChange={(option: any) => this.onChange(option)}
                 inputValue={this.keyword}
                 onInputChange={this.handleInputChange}
@@ -142,6 +156,11 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                             textAlign: 'center',
                         };
                     },
+                }}
+                components={{
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null,
+                    Menu
                 }}
             />
         );
