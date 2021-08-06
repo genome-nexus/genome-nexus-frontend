@@ -148,7 +148,21 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                 return null;
             }
         });
-        
+
+        const NoOptionsMessage: React.FunctionComponent<any> = observer((props: any) => {
+            if (this.keyword) {
+                return (
+                    <components.Option {...props}>
+                        <span className="mr-2" style={{color: 'grey'}}>
+                            No variant found for {this.keyword}. See supported formats <a href="https://docs.genomenexus.org" target="_top">here</a>.
+                        </span>
+                    </components.Option>
+                );
+            } else {
+                return null;
+            }
+        });
+
         return (
             <AsyncSelect
                 cacheOptions
@@ -159,7 +173,6 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                 inputValue={this.keyword}
                 onInputChange={this.handleInputChange}
                 placeholder={`Search variant in HGVS / rs id / Gene:Protein change`}
-                noOptionsMessage={() => 'No variants'}
                 styles={{
                     input(styles) {
                         return {
@@ -185,7 +198,8 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                 components={{
                     DropdownIndicator: () => null,
                     IndicatorSeparator: () => null,
-                    Menu
+                    Menu,
+                    NoOptionsMessage
                 }}
             />
         );
