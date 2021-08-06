@@ -175,6 +175,12 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                             textAlign: 'center',
                         };
                     },
+                    container(styles) {
+                        return {
+                            ...styles,
+                            flex: 1
+                        };
+                    }
                 }}
                 components={{
                     DropdownIndicator: () => null,
