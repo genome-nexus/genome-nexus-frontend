@@ -153,7 +153,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
             if (this.keyword) {
                 return (
                     <components.Option {...props}>
-                        <span className="mr-2" style={{color: 'grey'}}>
+                        <span className="mr-2">
                             No variant found for {this.keyword}. See supported formats <a href="https://docs.genomenexus.org" target="_top">here</a>.
                         </span>
                     </components.Option>

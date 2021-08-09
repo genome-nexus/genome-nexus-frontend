@@ -53,74 +53,6 @@ const EXAMPLE_DATA_GRCh38 = [
     },
 ];
 
-const searchExample = (
-    <Popover
-        id="popover-basic"
-        placement="right"
-        title="How to search on Genome Nexus"
-        style={{maxWidth:"none"}}
-    >
-        <strong>Valid input:</strong>
-        <Table bordered hover size="sm">
-            <thead>
-                <tr>
-                    <th>Format</th>
-                    <th>Example</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Gene:p.Protein-change</td>
-                    <td><Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link></td>
-                </tr>
-                <tr>
-                    <td>Gene p.Protein-change</td>
-                    <td><Link to={`/variant/7:g.55249071C>T`}>EGFR p.T790M</Link></td>
-                </tr>
-                <tr>
-                    <td>Gene Protein-change</td>
-                    <td><Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link></td>
-                </tr>
-                <tr>
-                    <td>Gene:c.cDNA</td>
-                    <td><Link to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}>BRCA1:c.68_69del</Link></td>
-                </tr>
-                <tr>
-                    <td>Gene c.cDNA</td>
-                    <td><Link to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}>BRCA1 c.68_69del</Link></td>
-                </tr>
-                <tr>
-                    <td>HGVSg</td>
-                    <td><Link to={`/variant/7:g.55259515T>G`}>7:g.55259515T{'>'}G</Link></td>
-                </tr>
-                <tr>
-                    <td>HGVSc</td>
-                    <td><Link to={`/variant/7:g.140453136A>T?transcriptId=ENST00000288602`}>ENST00000288602.6:c.1799T{'>'}A</Link></td>
-                </tr>
-                <tr>
-                    <td>rs id</td>
-                    <td><Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link></td>
-                </tr>
-            </tbody>
-        </Table>
-        <strong>More examples:</strong>
-        <div><Link to={`/variant/5:g.1295228G>A`}>5:g.1295228G{'>'}A</Link> (TERT Promotor mutation)</div>
-        <div style={{marginTop: 10}}>For more information, see documentation{' '}
-            <a href="https://docs.genomenexus.org" target="_top">
-                here
-            </a>.
-        </div>
-    </Popover>
-  );
-  
-  const SearchPopover = () => (
-    <OverlayTrigger trigger="click" placement="right" overlay={searchExample}>
-        <Button variant="link" className="btn btn-xs"  style={{marginLeft: 10}}>
-            <i className="fas fa-info-circle" style={{color: "darkgrey"}}></i>
-        </Button>
-    </OverlayTrigger>
-  );
-
 @observer
 class Home extends React.Component<{ history: any }> {
     @observable
@@ -157,10 +89,90 @@ class Home extends React.Component<{ history: any }> {
         }
     }
 
+    private overlay: any 
+  
+
         
     public render() {
-
-          
+        const searchExample = (
+            <Popover
+                id="popover-basic"
+                placement="right"
+                title={
+                    <>
+                    <span>How to search on Genome Nexus</span>
+                    <Button variant="link" className="btn btn-xs"  style={{marginLeft: 100}} onClick={() => {this.overlay.hide()}}>
+                        <i className="fas fa-times-circle" style={{color: "black"}}></i>
+                    </Button>
+                    </>
+                }
+                style={{maxWidth:"none"}}
+            >
+                 
+                <strong>Valid input:</strong>
+                <Table bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Format</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gene:p.Protein-change</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link></td>
+                        </tr>
+                        <tr>
+                            <td>Gene p.Protein-change</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF p.V600E</Link></td>
+                        </tr>
+                        <tr>
+                            <td>Gene Protein-change</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF V600E</Link></td>
+                        </tr>
+                        <tr>
+                            <td>Gene:c.cDNA</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF:c.1799T{'>'}A</Link></td>
+                        </tr>
+                        <tr>
+                            <td>Gene c.cDNA</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF c.1799T{'>'}A</Link></td>
+                        </tr>
+                        <tr>
+                            <td>HGVSg</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link></td>
+                        </tr>
+                        <tr>
+                            <td>HGVSc</td>
+                            <td><Link to={`/variant/7:g.140453136A>T?transcriptId=ENST00000288602`}>ENST00000288602.6:c.1799T{'>'}A</Link></td>
+                        </tr>
+                        <tr>
+                            <td>rs id</td>
+                            <td><Link to={`/variant/7:g.140453136A>T`}>rs113488022</Link></td>
+                        </tr>
+                    </tbody>
+                </Table>
+                <strong>More examples:</strong>
+                <div><Link to={`/variant/5:g.1295228G>A`}>5:g.1295228G{'>'}A</Link></div>
+                <div><Link to={`/variant/7:g.55249071C>T`}>EGFR p.T790M</Link></div>
+                <div><Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link></div>
+                <div><Link to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}>BRCA1:c.68_69del</Link></div>
+                <div><Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link></div>
+                <div style={{marginTop: 10}}>For more information, see documentation{' '}
+                    <a href="https://docs.genomenexus.org" target="_top">
+                        here
+                    </a>.
+                </div>
+            </Popover>
+          );
+        
+        const SearchPopover = () => (
+            <OverlayTrigger ref={(ref : any) => this.overlay = ref} trigger="click" placement="right" overlay={searchExample}>
+                <Button variant="link" className="btn btn-xs">
+                    <i className="fas fa-info-circle" style={{color: "#49A8E5"}}></i>
+                </Button>
+            </OverlayTrigger>
+          );
 
         return (
             <div>
@@ -196,7 +208,7 @@ class Home extends React.Component<{ history: any }> {
                         <Col md={10} className="mx-auto text-center">
                             <strong>Examples</strong>:{' '}
                             <Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link>,{' '}
-                            <Link to={`/variant/7:g.55259515T>G`}>7:g.55259515T{'>'}G</Link>,{' '}
+                            <Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link>,{' '}
                             <Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link>,{' '}
                             <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
                         </Col>
@@ -243,7 +255,13 @@ class Home extends React.Component<{ history: any }> {
     onSearch = async () => {
         if (isVariantValid(`${this.inputText}`).isValid) {
             this.alert = false;
-            this.props.history.push(`/variant/${this.inputText}`);
+            if (this.inputText && /.c/i.test(this.inputText)) {
+
+                this.props.history.push(`/variant/${this.inputText}`);
+            }
+            else {
+                this.props.history.push(`/variant/${this.inputText}`);
+            }
             return;
         } else {
             this.alertType = ErrorType.INVALID;
