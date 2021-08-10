@@ -1,9 +1,12 @@
+import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
+import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
+import client from '../page/genomeNexusClientInstance';
 
 interface ISearchBoxProps {
     styles?: CSSRule;
@@ -46,6 +49,16 @@ function searchProteinChangeByKeyword(
     return fetch(`https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`);
 }
 
+function getGenomeNexusDataByKeywords(
+    keywords: string[],
+): Promise<any>
+{
+    return client.fetchVariantAnnotationPOST({
+        variants: keywords,
+        fields: SEARCH_QUERY_FIELDS,
+    });
+}
+
 @observer
 export default class SearchBox extends React.Component<ISearchBoxProps> {
     
@@ -78,7 +91,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                 .then(response => 
                     response.json()
                 )
-                .then(result => {
+                .then(async result => {
                     _.forEach(result, (item) => {
                         _.forEach(item, (value, key) => {
                             if (value && value.hgvsg) {
@@ -96,8 +109,18 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                             }
                         });
                     })
-                    this.setOptions(options);
-                    return callback(options);
+
+                    let enrichedOptions: Option[] = options;
+                    await this.getGenomeNexusData(options.map(option => option.value))
+                    .then(annotations => {
+                        enrichedOptions = this.getEnrichedOptions(annotations, options);
+                    })
+                    .catch((error: any) => {
+                        console.log("error fetch Genome Nexus data");
+                    });
+
+                    this.setOptions(enrichedOptions);
+                    return callback(enrichedOptions);
                 })
                 .catch((error: any) => callback([]));
             }
@@ -110,6 +133,22 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     @action
     public getOptions = (keyword: string) => {
         return searchProteinChangeByKeyword(keyword);
+    }
+
+    @action
+    public getGenomeNexusData = (keywords: string[]) => {
+        return getGenomeNexusDataByKeywords(keywords);
+    }
+
+    private getEnrichedOptions(annotations: VariantAnnotation[], options: Option[]) {
+        const optionsByVariant = _.keyBy(options, option => option.value);
+        for (const annotation of annotations) {   
+            if (annotation?.annotation_summary?.transcriptConsequenceSummary?.hugoGeneSymbol && annotation?.annotation_summary?.transcriptConsequenceSummary?.hgvspShort && annotation?.annotation_summary?.variant) {
+                const optionLabel = `${annotation.annotation_summary.variant} (${annotation.annotation_summary.transcriptConsequenceSummary.hugoGeneSymbol} ${annotation.annotation_summary.transcriptConsequenceSummary.hgvspShort})`;
+                optionsByVariant[annotation.annotation_summary.variant].label = optionLabel;
+            }
+        }
+        return _.values(optionsByVariant);
     }
 
     @action

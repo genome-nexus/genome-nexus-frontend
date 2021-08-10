@@ -100,10 +100,8 @@ class Home extends React.Component<{ history: any }> {
                 placement="right"
                 title={
                     <>
-                    <span>How to search on Genome Nexus</span>
-                    <Button variant="link" className="btn btn-xs"  style={{marginLeft: 100}} onClick={() => {this.overlay.hide()}}>
-                        <i className="fas fa-times-circle" style={{color: "black"}}></i>
-                    </Button>
+                        <span>How to search on Genome Nexus</span>
+                        <i className="fas fa-times-circle" style={{color: "black", cursor: 'pointer', float: 'right'}} onClick={() => {this.overlay.hide()}}></i>
                     </>
                 }
                 style={{maxWidth:"none"}}
