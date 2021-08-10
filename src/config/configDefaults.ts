@@ -8,6 +8,4 @@ export const ANNOTATION_QUERY_FIELDS = [
     'clinvar',
 ];
 
-export const SEARCH_QUERY_FIELDS = [
-    'annotation_summary'
-];
+export const SEARCH_QUERY_FIELDS = ['annotation_summary'];

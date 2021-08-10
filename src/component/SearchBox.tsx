@@ -7,6 +7,7 @@ import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
 import client from '../page/genomeNexusClientInstance';
+import { extractHgvsg, isValidInput, transformInputFormat, uniformSearchText } from '../util/SearchUtils';
 
 interface ISearchBoxProps {
     styles?: CSSRule;
@@ -22,43 +23,6 @@ type Option = {
     label: string;
 }
 
-function searchProteinChangeByKeyword(
-    keyword: string,
-): Promise<any>
-{
-    if (/:/i.test(keyword) && keyword.split(':').length - 1 === 1) {
-        const seperaterIndex = keyword.indexOf(':');
-        let firstPart = keyword.split(':')[0];
-        let secondPart = keyword.split(':')[1];
-        let type = '';
-        if (seperaterIndex > 1 && seperaterIndex < keyword.length - 1 && /[pcg]./i.test(keyword)) {
-            firstPart = keyword.slice(0, seperaterIndex);
-            secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
-            type = keyword.slice(seperaterIndex + 1, seperaterIndex + 3);
-        }
-        if (/del/i.test(keyword)) {
-            keyword = `${_.toUpper(firstPart)}:${type}${secondPart}`;
-        }
-        else {
-            keyword = `${_.toUpper(firstPart)}:${type}${_.toUpper(secondPart)}`;
-        }
-        
-    }
-    
-    // TODO support grch38
-    return fetch(`https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`);
-}
-
-function getGenomeNexusDataByKeywords(
-    keywords: string[],
-): Promise<any>
-{
-    return client.fetchVariantAnnotationPOST({
-        variants: keywords,
-        fields: SEARCH_QUERY_FIELDS,
-    });
-}
-
 @observer
 export default class SearchBox extends React.Component<ISearchBoxProps> {
     
@@ -69,24 +33,31 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         super(props);
         makeObservable(this);
     }
-    
+
+    private searchProteinChangeByKeyword(
+        keyword: string,
+    ): Promise<any>
+    {
+        keyword = uniformSearchText(keyword);
+        // TODO support grch38
+        return fetch(`https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`);
+    }
+
+    private getGenomeNexusDataByKeywords(
+        keywords: string[],
+    ): Promise<any>
+    {
+        return client.fetchVariantAnnotationPOST({
+            variants: keywords,
+            fields: SEARCH_QUERY_FIELDS,
+        });
+    }
+
     private debouncedFetch = _.debounce((searchTerm, callback) => {
-            let keyword = this.keyword;
+            let keyword = this.keyword.trim();
             let options: Option[] = [];
-            // input should have whitespace or ":" in between or start with "rs"
-            if (/\s|:/i.test(this.keyword) || this.keyword.startsWith("rs") ) {
-                // if input contains whitespace, transform to correct format
-                if (/\s/i.test(this.keyword)) {
-                    let gene = this.keyword.split(' ')[0];
-                    let proteinChange = this.keyword.split(' ')[1];
-                    // if input contains "c." or "p.", extract type and generate query
-                    if (/[cp]./i.test(proteinChange)) {
-                        keyword = `${gene}:${proteinChange.split('.')[0]}.${proteinChange.split('.')[1]}`;
-                    }
-                    else {
-                        keyword = `${gene}:p.${proteinChange}`;
-                    }
-                }
+            if (isValidInput(keyword)) {
+                keyword = transformInputFormat(keyword);
                 this.getOptions(keyword)
                 .then(response => 
                     response.json()
@@ -96,14 +67,9 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                         _.forEach(item, (value, key) => {
                             if (value && value.hgvsg) {
                                 _.forEach(value.hgvsg, (hgvsg: string) => {
-                                    const splitedHgvsg = hgvsg.split(":");                                
-                                    if (splitedHgvsg.length === 2 && splitedHgvsg[0].startsWith('NC_')) {
-                                        // if chromosome is 1-9, keep the last character, if chromosome is 10-24, keep two charaters
-                                        const chromosome = splitedHgvsg[0].split(".")[0].charAt(splitedHgvsg[0].split(".")[0].length - 2) === '0' ? splitedHgvsg[0].split(".")[0].slice(-1) : splitedHgvsg[0].split(".")[0].slice(-2);                                    
-                                        if (splitedHgvsg[1].charAt(0) === 'g') {
-                                            const optionValue = chromosome + ':' + splitedHgvsg[1];
-                                            options.push({value: optionValue, label: optionValue});
-                                        }
+                                    const optionValue = extractHgvsg(hgvsg);
+                                    if (optionValue) {
+                                        options.push({value: optionValue, label: optionValue});
                                     }
                                 });
                             }
@@ -132,28 +98,29 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
 
     @action
     public getOptions = (keyword: string) => {
-        return searchProteinChangeByKeyword(keyword);
+        return this.searchProteinChangeByKeyword(keyword);
     }
 
     @action
     public getGenomeNexusData = (keywords: string[]) => {
-        return getGenomeNexusDataByKeywords(keywords);
+        return this.getGenomeNexusDataByKeywords(keywords);
     }
 
     private getEnrichedOptions(annotations: VariantAnnotation[], options: Option[]) {
         const optionsByVariant = _.keyBy(options, option => option.value);
-        for (const annotation of annotations) {   
-            if (annotation?.annotation_summary?.transcriptConsequenceSummary?.hugoGeneSymbol && annotation?.annotation_summary?.transcriptConsequenceSummary?.hgvspShort && annotation?.annotation_summary?.variant) {
-                const optionLabel = `${annotation.annotation_summary.variant} (${annotation.annotation_summary.transcriptConsequenceSummary.hugoGeneSymbol} ${annotation.annotation_summary.transcriptConsequenceSummary.hgvspShort})`;
+        for (const annotation of annotations) {
+            let optionLabel = "";
+            if (annotation.annotation_summary?.transcriptConsequenceSummary?.hugoGeneSymbol && annotation.annotation_summary?.variant ) {
+                if (annotation.annotation_summary?.transcriptConsequenceSummary?.hgvspShort) {
+                    optionLabel = `${annotation.annotation_summary.variant} (${annotation.annotation_summary.transcriptConsequenceSummary.hugoGeneSymbol} ${annotation.annotation_summary.transcriptConsequenceSummary.hgvspShort})`;
+                }
+                else if (annotation.annotation_summary?.transcriptConsequenceSummary?.variantClassification) {
+                    optionLabel = `${annotation.annotation_summary.variant} (${annotation.annotation_summary.transcriptConsequenceSummary.hugoGeneSymbol} ${annotation.annotation_summary.transcriptConsequenceSummary.variantClassification})`;
+                }
                 optionsByVariant[annotation.annotation_summary.variant].label = optionLabel;
             }
         }
         return _.values(optionsByVariant);
-    }
-
-    @action
-    public setOptions(options: Option[]) {
-        this.options = options;
     }
 
     private onChange = (option: Option) => {
@@ -162,6 +129,11 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
             this.props.onSearch();
         }
     };
+
+    @action
+    public setOptions(options: Option[]) {
+        this.options = options;
+    }
 
     @action
     private handleInputChange = (keyword: string, action: any) => {

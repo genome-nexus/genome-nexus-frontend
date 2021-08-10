@@ -1,7 +1,15 @@
 import { action, observable, computed, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Button, Col, Image, OverlayTrigger, Popover, Row, Table } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Image,
+    OverlayTrigger,
+    Popover,
+    Row,
+    Table,
+} from 'react-bootstrap';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 
 import SearchBox from '../component/SearchBox';
@@ -89,10 +97,8 @@ class Home extends React.Component<{ history: any }> {
         }
     }
 
-    private overlay: any 
-  
+    private overlay: any;
 
-        
     public render() {
         const searchExample = (
             <Popover
@@ -101,12 +107,21 @@ class Home extends React.Component<{ history: any }> {
                 title={
                     <>
                         <span>How to search on Genome Nexus</span>
-                        <i className="fas fa-times-circle" style={{color: "black", cursor: 'pointer', float: 'right'}} onClick={() => {this.overlay.hide()}}></i>
+                        <i
+                            className="fas fa-times-circle"
+                            style={{
+                                color: 'black',
+                                cursor: 'pointer',
+                                float: 'right',
+                            }}
+                            onClick={() => {
+                                this.overlay.hide();
+                            }}
+                        ></i>
                     </>
                 }
-                style={{maxWidth:"none"}}
+                style={{ maxWidth: 'none' }}
             >
-                 
                 <strong>Valid input:</strong>
                 <Table bordered hover size="sm">
                     <thead>
@@ -118,59 +133,121 @@ class Home extends React.Component<{ history: any }> {
                     <tbody>
                         <tr>
                             <td>Gene:p.Protein-change</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    BRAF:p.V600E
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>Gene p.Protein-change</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF p.V600E</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    BRAF p.V600E
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>Gene Protein-change</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF V600E</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    BRAF V600E
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>Gene:c.cDNA</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF:c.1799T{'>'}A</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    BRAF:c.1799T{'>'}A
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>Gene c.cDNA</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>BRAF c.1799T{'>'}A</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    BRAF c.1799T{'>'}A
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>HGVSg</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    7:g.140453136A{'>'}T
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>HGVSc</td>
-                            <td><Link to={`/variant/7:g.140453136A>T?transcriptId=ENST00000288602`}>ENST00000288602.6:c.1799T{'>'}A</Link></td>
+                            <td>
+                                <Link
+                                    to={`/variant/7:g.140453136A>T?transcriptId=ENST00000288602`}
+                                >
+                                    ENST00000288602.6:c.1799T{'>'}A
+                                </Link>
+                            </td>
                         </tr>
                         <tr>
                             <td>rs id</td>
-                            <td><Link to={`/variant/7:g.140453136A>T`}>rs113488022</Link></td>
+                            <td>
+                                <Link to={`/variant/7:g.140453136A>T`}>
+                                    rs113488022
+                                </Link>
+                            </td>
                         </tr>
                     </tbody>
                 </Table>
                 <strong>More examples:</strong>
-                <div><Link to={`/variant/5:g.1295228G>A`}>5:g.1295228G{'>'}A</Link></div>
-                <div><Link to={`/variant/7:g.55249071C>T`}>EGFR p.T790M</Link></div>
-                <div><Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link></div>
-                <div><Link to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}>BRCA1:c.68_69del</Link></div>
-                <div><Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link></div>
-                <div style={{marginTop: 10}}>For more information, see documentation{' '}
+                <div>
+                    <Link to={`/variant/5:g.1295228G>A`}>
+                        5:g.1295228G{'>'}A
+                    </Link>
+                </div>
+                <div>
+                    <Link to={`/variant/7:g.55249071C>T`}>EGFR p.T790M</Link>
+                </div>
+                <div>
+                    <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
+                </div>
+                <div>
+                    <Link
+                        to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}
+                    >
+                        BRCA1:c.68_69del
+                    </Link>
+                </div>
+                <div>
+                    <Link to={`/variant/17:g.41276045_41276046del`}>
+                        rs397509106
+                    </Link>
+                </div>
+                <div style={{ marginTop: 10 }}>
+                    For more information, see documentation{' '}
                     <a href="https://docs.genomenexus.org" target="_top">
                         here
-                    </a>.
+                    </a>
+                    .
                 </div>
             </Popover>
-          );
-        
-        const SearchPopover = () => (
-            <OverlayTrigger ref={(ref : any) => this.overlay = ref} trigger="click" placement="right" overlay={searchExample}>
+        );
+
+        const SearchExamples = () => (
+            <OverlayTrigger
+                ref={(ref: any) => (this.overlay = ref)}
+                trigger="click"
+                placement="right"
+                overlay={searchExample}
+            >
                 <Button variant="link" className="btn btn-xs">
-                    <i className="fas fa-info-circle" style={{color: "#49A8E5"}}></i>
+                    <i
+                        className="fas fa-info-circle"
+                        style={{ color: '#49A8E5' }}
+                    ></i>
                 </Button>
             </OverlayTrigger>
-          );
+        );
 
         return (
             <div>
@@ -197,48 +274,39 @@ class Home extends React.Component<{ history: any }> {
                     </div>
 
                     <Row className="mb-1">
-                        <Col md={6} className="mx-auto" style={{display: "flex", alignItems: "center"}}>
-                            <SearchBox onChange={this.onTextChange} onSearch={this.onSearch} exampleOptions={this.exampleData}/>
-                            <SearchPopover />
+                        <Col
+                            md={6}
+                            className="mx-auto"
+                            style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <SearchBox
+                                onChange={this.onTextChange}
+                                onSearch={this.onSearch}
+                                exampleOptions={this.exampleData}
+                            />
+                            <SearchExamples />
                         </Col>
                     </Row>
                     <Row className="mb-5">
                         <Col md={10} className="mx-auto text-center">
                             <strong>Examples</strong>:{' '}
-                            <Link to={`/variant/7:g.140453136A>T`}>BRAF:p.V600E</Link>,{' '}
-                            <Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link>,{' '}
-                            <Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link>,{' '}
-                            <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
+                            <Link to={`/variant/7:g.55249071C>T`}>
+                                EGFR:p.T790M
+                            </Link>
+                            ,{' '}
+                            <Link to={`/variant/7:g.140453136A>T`}>
+                                7:g.140453136A{'>'}T
+                            </Link>
+                            ,{' '}
+                            <Link to={`/variant/17:g.41276045_41276046del`}>
+                                rs397509106
+                            </Link>
+                            ,{' '}
+                            <Link to={`/variant/17:g.7577121G>A`}>
+                                TP53 R273C
+                            </Link>
                         </Col>
                     </Row>
-                    <ValidatorNotification
-                        showAlert={this.alert}
-                        type={this.alertType}
-                        onClose={this.onClose}
-                    >
-                        <table className={'table validator-notification'}>
-                            <tbody>
-                                {this.exampleData.map(example => {
-                                    return (
-                                        <tr>
-                                            <td>{example.label}</td>
-                                            <td>
-                                                <a
-                                                    href={`/variant/${example.value}`}
-                                                    className={
-                                                        'btn btn-primary btn-sm'
-                                                    }
-                                                    role={'button'}
-                                                >
-                                                    Try it
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </ValidatorNotification>
                 </div>
             </div>
         );
@@ -253,23 +321,12 @@ class Home extends React.Component<{ history: any }> {
     onSearch = async () => {
         if (isVariantValid(`${this.inputText}`).isValid) {
             this.alert = false;
-            if (this.inputText && /.c/i.test(this.inputText)) {
-
-                this.props.history.push(`/variant/${this.inputText}`);
-            }
-            else {
-                this.props.history.push(`/variant/${this.inputText}`);
-            }
+            this.props.history.push(`/variant/${this.inputText}`);
             return;
         } else {
             this.alertType = ErrorType.INVALID;
         }
         this.alert = true;
-    };
-
-    @action
-    private onClose = () => {
-        this.alert = false;
     };
 
     @computed
