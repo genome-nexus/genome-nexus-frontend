@@ -7,7 +7,7 @@ import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
 import client from '../page/genomeNexusClientInstance';
-import { extractHgvsg, isValidInput, transformInputFormat, uniformSearchText } from '../util/SearchUtils';
+import { extractHgvsg, isValidInput, normalizeInputFormat, normalizeSearchText } from '../util/SearchUtils';
 
 interface ISearchBoxProps {
     styles?: CSSRule;
@@ -38,7 +38,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         keyword: string,
     ): Promise<any>
     {
-        keyword = uniformSearchText(keyword);
+        keyword = normalizeSearchText(keyword);
         // TODO support grch38
         return fetch(`https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`);
     }
@@ -57,7 +57,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
             let keyword = this.keyword.trim();
             let options: Option[] = [];
             if (isValidInput(keyword)) {
-                keyword = transformInputFormat(keyword);
+                keyword = normalizeInputFormat(keyword);
                 this.getOptions(keyword)
                 .then(response => 
                     response.json()
