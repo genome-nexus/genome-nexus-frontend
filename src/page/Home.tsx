@@ -293,7 +293,7 @@ class Home extends React.Component<{ history: any }> {
                                 onSearch={this.onSearch}
                                 exampleOptions={this.exampleData}
                             />
-                            {SearchInstruction()}
+                            <SearchInstruction />
                         </Col>
                     </Row>
                     <Row className="mb-5">
