@@ -29,7 +29,7 @@
     "lodash": "^4.17.21",
     "mobx": "^6.0.0",
     "mobx-react": "^6.0.0",
-    "node-sass": "^4.14.1",
+    "sass": "^1.32.4",
     "oncokb-styles": "^0.1.2",
     "oncokb-ts-api-client": "^1.1.6",
     "prettier": "^1.18.2",
