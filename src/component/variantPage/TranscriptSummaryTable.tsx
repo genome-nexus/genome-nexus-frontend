@@ -40,15 +40,15 @@ class TranscriptSummaryTable extends React.Component<ITranscriptSummaryTableProp
             getTranscriptConsequenceSummary(annotation);
 
         return {
-            transcript: transcriptConsequenceSummary.transcriptId,
-            hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
-            hgvsShort: transcriptConsequenceSummary.hgvspShort,
-            refSeq: transcriptConsequenceSummary.refSeq,
+            transcript: transcriptConsequenceSummary?.transcriptId,
+            hugoGeneSymbol: transcriptConsequenceSummary?.hugoGeneSymbol,
+            hgvsShort: transcriptConsequenceSummary?.hgvspShort,
+            refSeq: transcriptConsequenceSummary?.refSeq,
             variantClassification:
-                transcriptConsequenceSummary.variantClassification,
-            hgvsc: transcriptConsequenceSummary.hgvsc,
-            consequenceTerms: transcriptConsequenceSummary.consequenceTerms,
-            exon: transcriptConsequenceSummary.exon,
+                transcriptConsequenceSummary?.variantClassification,
+            hgvsc: transcriptConsequenceSummary?.hgvsc,
+            consequenceTerms: transcriptConsequenceSummary?.consequenceTerms,
+            exon: transcriptConsequenceSummary?.exon,
         };
     }
 
