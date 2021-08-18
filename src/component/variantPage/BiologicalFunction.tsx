@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import Oncokb from './biologicalFunction/Oncokb';
-import { IndicatorQueryResp } from 'oncokb-ts-api-client';
-import ClinvarInterpretation from './biologicalFunction/ClinvarInterpretation';
 import { Clinvar } from 'genome-nexus-ts-api-client';
+import { IndicatorQueryResp } from 'oncokb-ts-api-client';
+
+import Separator from '../Separator';
+import Oncokb from './biologicalFunction/Oncokb';
+import ClinvarInterpretation from './biologicalFunction/ClinvarInterpretation';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
@@ -23,6 +25,7 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
                         this.props.isCanonicalTranscriptSelected
                     }
                 />
+                <Separator />
                 <ClinvarInterpretation clinvar={this.props.clinvar} />
             </>
         );

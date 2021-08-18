@@ -11,9 +11,7 @@ interface IGenomeNexusMutationMapperProps extends MutationMapperProps {
 }
 
 @observer
-class GenomeNexusMutationMapper extends ReactMutationMapper<
-    IGenomeNexusMutationMapperProps
-> {
+class GenomeNexusMutationMapper extends ReactMutationMapper<IGenomeNexusMutationMapperProps> {
     protected get mutationTableComponent() {
         return null;
     }

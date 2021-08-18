@@ -8,6 +8,7 @@ import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
 import { SHOW_MUTATION_ASSESSOR } from '../../config/configDefaults';
+import Separator from '../Separator';
 
 // Most of this component comes from cBioPortal-frontend
 
@@ -66,13 +67,17 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     polyPhenScore={data.polyPhenScore}
                     polyPhenPrediction={data.polyPhenPrediction}
                 />
+                <Separator />
                 {SHOW_MUTATION_ASSESSOR && (
-                    <MutationAssessor
-                        mutationAssessor={data.mutationAssessor}
-                        isCanonicalTranscriptSelected={
-                            this.props.isCanonicalTranscriptSelected
-                        }
-                    />
+                    <>
+                        <MutationAssessor
+                            mutationAssessor={data.mutationAssessor}
+                            isCanonicalTranscriptSelected={
+                                this.props.isCanonicalTranscriptSelected
+                            }
+                        />
+                        <Separator />
+                    </>
                 )}
                 <Sift
                     siftScore={data.siftScore}

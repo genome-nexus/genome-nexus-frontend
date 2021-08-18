@@ -51,7 +51,7 @@ class CheckBoxContainer extends React.Component<ICheckContainerProps> {
                         </Col>
                     </Row>
                     <div>
-                        {this.props.allCheckboxNames.map(name => {
+                        {this.props.allCheckboxNames.map((name) => {
                             return (
                                 <Row>
                                     <Col>
