@@ -36,7 +36,12 @@ class ClinicalImplication extends React.Component<IClinicalImplicationProps> {
                     }
                 />
                 <Separator />
-                <Civic civic={this.civicVariant} />
+                <Civic
+                    civic={this.civicVariant}
+                    isCanonicalTranscriptSelected={
+                        this.props.isCanonicalTranscriptSelected
+                    }
+                />
             </>
         );
     }

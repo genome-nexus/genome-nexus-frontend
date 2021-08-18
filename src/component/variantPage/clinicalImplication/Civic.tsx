@@ -14,6 +14,7 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 interface ICivicProps {
     civic?: ICivicVariantSummary;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 const DEFAULT_CIVIC_URL = 'https://civicdb.org/';
@@ -22,7 +23,10 @@ function getEvidenceUrl(civic: ICivicVariantSummary, evidenceId: number) {
     return `https://civicdb.org/events/genes/${civic.geneId}/summary/variants/${civic.id}/summary/evidence/${evidenceId}/summary#evidence`;
 }
 
-const CivicInfo: React.FunctionComponent<{ url: string }> = (props) => {
+const CivicInfo: React.FunctionComponent<{
+    url: string;
+    isCanonicalTranscriptSelected: boolean;
+}> = (props) => {
     return (
         <DefaultTooltip
             placement="top"
@@ -44,6 +48,7 @@ const CivicInfo: React.FunctionComponent<{ url: string }> = (props) => {
         >
             <a href={props.url} target="_blank" rel="noopener noreferrer">
                 CIViC <i className="fas fa-external-link-alt" />
+                {!props.isCanonicalTranscriptSelected && <span> *</span>}
             </a>
         </DefaultTooltip>
     );
@@ -83,7 +88,12 @@ export default class Civic extends React.Component<ICivicProps> {
         return (
             <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    <CivicInfo url={url} />
+                    <CivicInfo
+                        url={url}
+                        isCanonicalTranscriptSelected={
+                            this.props.isCanonicalTranscriptSelected
+                        }
+                    />
                 </div>
                 <EvidenceSummary
                     url={url}
