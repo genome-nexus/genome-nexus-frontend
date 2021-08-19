@@ -21,8 +21,8 @@ import {
     initDefaultMutationMapperStore,
     DataFilterType,
 } from 'react-mutation-mapper';
-import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { ANNOTATION_QUERY_FIELDS } from '../config/configDefaults';
+import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -123,8 +123,8 @@ export class VariantStore {
         invoke: async () =>
             getCivicGenes([
                 Number(
-                    getTranscriptConsequenceSummary(this.annotationSummary)
-                        .entrezGeneId
+                    getTranscriptConsequenceSummary(this.annotationSummary)?.entrezGeneId ? 
+                    getTranscriptConsequenceSummary(this.annotationSummary)!.entrezGeneId : 0
                 ),
             ]),
         onError: () => {},
@@ -165,7 +165,7 @@ export class VariantStore {
 
     @computed
     get getMutationMapperStore() {
-        let mutation = variantToMutation(this.annotationSummary);
+        const mutation = variantToMutation(this.annotationSummary, this.selectedTranscript);
         if (
             mutation[0] &&
             mutation[0].gene &&
@@ -174,9 +174,7 @@ export class VariantStore {
             const store = initDefaultMutationMapperStore({
                 genomeNexusUrl: genomeNexusApiRoot,
                 data: mutation,
-                hugoSymbol: getTranscriptConsequenceSummary(
-                    this.annotationSummary
-                ).hugoGeneSymbol,
+                hugoSymbol: mutation[0].gene.hugoGeneSymbol,
                 oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
                 enableOncoKb: true,
                 // select the lollipop by default
@@ -195,10 +193,8 @@ export class VariantStore {
     readonly isAnnotatedSuccessfully = remoteData<boolean>({
         await: () => [this.annotation],
         invoke: () => {
-            // TODO use successfully_annotated instead of checking genomicLocation
             return Promise.resolve(
-                this.annotation.result &&
-                    this.annotation.result.successfully_annotated
+                this.annotation.result?.successfully_annotated 
                     ? true
                     : false
             );

@@ -6,31 +6,34 @@ import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(
-    data: VariantAnnotationSummary | undefined
+    data: VariantAnnotationSummary | undefined,
+    transcript?: string
 ): Mutation[] {
     let mutations = [];
     let mutation: Mutation;
-    if (data !== undefined) {
-        let transcriptConsequenceSummary =
-            getTranscriptConsequenceSummary(data);
+    const transcriptConsequence = getTranscriptConsequenceSummary(
+        data,
+        transcript
+    );
+    if (data && transcriptConsequence) {
         mutation = {
             gene: {
-                hugoGeneSymbol: transcriptConsequenceSummary.hugoGeneSymbol,
-                entrezGeneId: Number(transcriptConsequenceSummary.entrezGeneId),
+                hugoGeneSymbol: transcriptConsequence.hugoGeneSymbol,
+                entrezGeneId: Number(transcriptConsequence.entrezGeneId),
             },
             chromosome: data.genomicLocation.chromosome,
             startPosition: data.genomicLocation.start,
             endPosition: data.genomicLocation.end,
             referenceAllele: data.genomicLocation.referenceAllele,
             variantAllele: data.genomicLocation.variantAllele,
-            proteinChange: transcriptConsequenceSummary.hgvspShort,
-            proteinPosStart: transcriptConsequenceSummary.proteinPosition
-                ? transcriptConsequenceSummary.proteinPosition.start
-                : getProteinPosStart(transcriptConsequenceSummary.hgvspShort),
-            proteinPosEnd: transcriptConsequenceSummary.proteinPosition
-                ? transcriptConsequenceSummary.proteinPosition.end
+            proteinChange: transcriptConsequence.hgvspShort,
+            proteinPosStart: transcriptConsequence.proteinPosition?.start
+                ? transcriptConsequence.proteinPosition.start
+                : getProteinPosStart(transcriptConsequence.hgvspShort),
+            proteinPosEnd: transcriptConsequence.proteinPosition
+                ? transcriptConsequence.proteinPosition.end
                 : undefined,
-            mutationType: transcriptConsequenceSummary.variantClassification,
+            mutationType: transcriptConsequence.variantClassification,
         };
         mutations.push(mutation);
     }
@@ -39,5 +42,5 @@ export function variantToMutation(
 
 export function getProteinPosStart(proteinChange: string | undefined) {
     const proteinPosition = getProteinPositionFromProteinChange(proteinChange);
-    return proteinPosition ? proteinPosition.start : 0;
+    return proteinPosition ? proteinPosition.start : -1;
 }
