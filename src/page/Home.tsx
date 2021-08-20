@@ -171,7 +171,6 @@ const searchExample = (
         <strong>Examples</strong>:{' '}
         <Link to={`/variant/7:g.55249071C>T`}>EGFR:p.T790M</Link>,{' '}
         <Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link>,{' '}
-        <Link to={`/variant/17:g.41276045_41276046del`}>rs397509106</Link>,{' '}
         <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
     </>
 );
