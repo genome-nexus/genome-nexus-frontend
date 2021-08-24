@@ -130,7 +130,10 @@ class Variant extends React.Component<IVariantProps> {
     };
 
     private getMutationMapper() {
-        const mutation = variantToMutation(this.props.store.annotationSummary, this.props.store.selectedTranscript);
+        const mutation = variantToMutation(
+            this.props.store.annotationSummary,
+            this.props.store.selectedTranscript
+        );
         if (
             mutation[0] &&
             mutation[0].gene &&
@@ -153,9 +156,7 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.OncoKB]: 'visible',
                         [TrackName.dbPTM]: 'visible',
                     }}
-                    hugoSymbol={
-                        mutation[0].gene.hugoGeneSymbol
-                    }
+                    hugoSymbol={mutation[0].gene.hugoGeneSymbol}
                     entrezGeneId={Number(
                         getTranscriptConsequenceSummary(
                             this.props.store.annotationSummary,

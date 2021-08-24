@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import { MyVariantInfo } from 'genome-nexus-ts-api-client';
 
 import Separator from '../Separator';
-import Gnomad from "./populationPrevalence/Gnomad";
-import Dbsnp from "./populationPrevalence/Dbsnp";
+import Gnomad from './populationPrevalence/Gnomad';
+import Dbsnp from './populationPrevalence/Dbsnp';
 
 interface IPopulationPrevalenceProps {
     myVariantInfo: MyVariantInfo | undefined;
@@ -13,7 +13,6 @@ interface IPopulationPrevalenceProps {
 
 @observer
 class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
-
     public render() {
         return (
             <div>
@@ -22,7 +21,7 @@ class PopulationPrevalence extends React.Component<IPopulationPrevalenceProps> {
                     chromosome={this.props.chromosome}
                 />
                 <Separator />
-                <Dbsnp myVariantInfo={this.props.myVariantInfo}/>
+                <Dbsnp myVariantInfo={this.props.myVariantInfo} />
             </div>
         );
     }

@@ -1,17 +1,17 @@
-import {action, makeObservable, observable} from "mobx";
+import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {Collapse} from "react-bootstrap";
+import { Collapse } from 'react-bootstrap';
 
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { MyVariantInfo } from 'genome-nexus-ts-api-client';
 import {
     getGnomadData,
     GnomadFrequencyBreakdown,
-    GnomadFrequencyValue
-} from "react-mutation-mapper";
+    GnomadFrequencyValue,
+} from 'react-mutation-mapper';
 
-import Toggle from "../../Toggle";
+import Toggle from '../../Toggle';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 export interface IGnomadProps {
@@ -85,7 +85,6 @@ class Gnomad extends React.Component<IGnomadProps> {
             (this.props.myVariantInfo.gnomadExome ||
                 this.props.myVariantInfo.gnomadGenome)
         ) {
-
             const gnomadData = getGnomadData(this.props.myVariantInfo);
 
             return (
@@ -94,7 +93,9 @@ class Gnomad extends React.Component<IGnomadProps> {
                         <GnomadInfo url={gnomadUrl} />
                     </div>
                     <div>
-                        <span className={functionalGroupsStyle['data-with-link']}>
+                        <span
+                            className={functionalGroupsStyle['data-with-link']}
+                        >
                             <a
                                 href={gnomadUrl}
                                 target="_blank"
@@ -110,7 +111,11 @@ class Gnomad extends React.Component<IGnomadProps> {
                             onToggle={this.onToggleGnomadTable}
                         />
                         <Collapse in={this.showGnomadTable}>
-                            <div className={functionalGroupsStyle['frequency-table']}>
+                            <div
+                                className={
+                                    functionalGroupsStyle['frequency-table']
+                                }
+                            >
                                 <GnomadFrequencyBreakdown
                                     myVariantInfo={this.props.myVariantInfo}
                                     gnomadData={gnomadData}
