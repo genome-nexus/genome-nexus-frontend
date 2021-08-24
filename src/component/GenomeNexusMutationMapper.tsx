@@ -1,4 +1,3 @@
-import { override } from 'mobx';
 import { observer } from 'mobx-react';
 import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
 import {
@@ -16,7 +15,6 @@ class GenomeNexusMutationMapper extends ReactMutationMapper<IGenomeNexusMutation
         return null;
     }
 
-    @override
     protected get geneWidth() {
         if (this.lollipopPlotGeneX) {
             if (this.windowWrapper.size.width >= 1391) {

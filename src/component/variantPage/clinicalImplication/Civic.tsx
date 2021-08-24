@@ -48,7 +48,7 @@ const CivicInfo: React.FunctionComponent<{
         >
             <a href={props.url} target="_blank" rel="noopener noreferrer">
                 CIViC <i className="fas fa-external-link-alt" />
-                {!props.isCanonicalTranscriptSelected && <span> *</span>}
+                {!props.isCanonicalTranscriptSelected && `*`}
             </a>
         </DefaultTooltip>
     );

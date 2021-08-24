@@ -26,7 +26,12 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
                     }
                 />
                 <Separator />
-                <ClinvarInterpretation clinvar={this.props.clinvar} />
+                <ClinvarInterpretation
+                    clinvar={this.props.clinvar}
+                    isCanonicalTranscriptSelected={
+                        this.props.isCanonicalTranscriptSelected
+                    }
+                />
             </>
         );
     }
