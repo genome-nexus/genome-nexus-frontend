@@ -123,8 +123,12 @@ export class VariantStore {
         invoke: async () =>
             getCivicGenes([
                 Number(
-                    getTranscriptConsequenceSummary(this.annotationSummary)?.entrezGeneId ? 
-                    getTranscriptConsequenceSummary(this.annotationSummary)!.entrezGeneId : 0
+                    getTranscriptConsequenceSummary(this.annotationSummary)
+                        ?.entrezGeneId
+                        ? getTranscriptConsequenceSummary(
+                              this.annotationSummary
+                          )!.entrezGeneId
+                        : 0
                 ),
             ]),
         onError: () => {},
@@ -165,7 +169,10 @@ export class VariantStore {
 
     @computed
     get getMutationMapperStore() {
-        const mutation = variantToMutation(this.annotationSummary, this.selectedTranscript);
+        const mutation = variantToMutation(
+            this.annotationSummary,
+            this.selectedTranscript
+        );
         if (
             mutation[0] &&
             mutation[0].gene &&
@@ -194,9 +201,7 @@ export class VariantStore {
         await: () => [this.annotation],
         invoke: () => {
             return Promise.resolve(
-                this.annotation.result?.successfully_annotated 
-                    ? true
-                    : false
+                this.annotation.result?.successfully_annotated ? true : false
             );
         },
     });

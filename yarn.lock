@@ -4228,13 +4228,13 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cbioportal-frontend-commons@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.4.tgz#1634f52e257a7e339d22277e5cff8e9c15aa87dd"
-  integrity sha512-NbJa+xu1/17++K0pZpbVuz/QO1HgYKdd4kedJ5SrVJiKuXhmFFLh7PfRn0OCSuEH+u+FZu0G6fLOXMWveEKAkg==
+cbioportal-frontend-commons@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.5.tgz#723b8560354807a15ba45be72ab4ee82b192db43"
+  integrity sha512-q2s+3t5/excZkm3aN5oF1dH8rdAPY4xyv7kSx+R9uVXgCnyAhrYLStPXHAA9fVWsOva2tDColuFF2nr5n/XNlQ==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-utils "^0.3.3"
+    cbioportal-utils "^0.3.4"
     classnames "^2.2.5"
     jquery "^3.2.1"
     lodash "^4.17.11"
@@ -4256,10 +4256,10 @@ cbioportal-frontend-commons@^0.5.4:
     url "^0.11.0"
     victory "30.0.0"
 
-cbioportal-utils@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.3.3.tgz#ebe320940650672efea04fef79763aa36ee48538"
-  integrity sha512-iQyHW6bPZgXl7hiqr/gKGGXgpETm+XdEJ2PLh3tBKh/BqbNwQ4/w5K4n2hvFUj7nePs0TuOWNzfhj38OILS4Wg==
+cbioportal-utils@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.3.4.tgz#1bae75a624174c2e7a383d1408b68599174acaf7"
+  integrity sha512-wXOMePLzAOq1/B8rrcZ7QimWkfCmRmShxl0SAtpNNMPkXJ4OEpgzO67WYUI66K6KNHtQT8e921StAH7kQuPECQ==
   dependencies:
     genome-nexus-ts-api-client "^1.1.16"
     lodash "^4.17.11"
@@ -11992,14 +11992,14 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-mutation-mapper@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.6.tgz#4b0eeec0b18ff014be53caeaf5e96642042b0a87"
-  integrity sha512-Ok7/w1tUjYyk0NZyfpRLCnVaqQZ7mQfM05Vz9ivdIqxzm4mc8TIr88NSN/LODo1haLrdhTtJKUXCReVH3za6Qw==
+react-mutation-mapper@^0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.9.tgz#db7476ac7da50f1352349d609a055035f66c44cd"
+  integrity sha512-rri4z3X/OwuiLe2hATU1h0NadnhCckoAVEeFmKQjSHDT8pLMoMMibF/xgZqtt/P3w8R3jRn+QaAYpN7cK7v+yw==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-frontend-commons "^0.5.4"
-    cbioportal-utils "^0.3.3"
+    cbioportal-frontend-commons "^0.5.5"
+    cbioportal-utils "^0.3.4"
     classnames "^2.2.5"
     genome-nexus-ts-api-client "^1.1.16"
     jquery "^3.2.1"
