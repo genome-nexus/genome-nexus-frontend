@@ -40,7 +40,7 @@
     "react": "16.14.0",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-dom": "^16.14.0",
-    "react-mutation-mapper": "^0.8.6",
+    "react-mutation-mapper": "^0.8.7-beta.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.4.4",
