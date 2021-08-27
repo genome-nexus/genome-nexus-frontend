@@ -14,6 +14,7 @@ import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
+import { RemoteData } from 'cbioportal-utils';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -22,6 +23,8 @@ interface IFunctionalGroupsProps {
     oncokb?: IndicatorQueryResp;
     civic?: ICivicVariantIndex;
     isCanonicalTranscriptSelected: boolean;
+    variant: string;
+    indexAnnotationsByGenomicLocationPromise: RemoteData<{ [genomicLocation: string]: VariantAnnotation }>
 }
 
 @observer
@@ -86,6 +89,11 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                               .genomicLocation.chromosome
                                         : null
                                 }
+                                variantAnnotation={
+                                    this.props.variantAnnotation
+                                }
+                                variant={this.props.variant}
+                                indexAnnotationsByGenomicLocationPromise={this.props.indexAnnotationsByGenomicLocationPromise}
                             />
                         </td>
                     </tr>
