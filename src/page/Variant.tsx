@@ -13,6 +13,8 @@ import { genomeNexusApiRoot } from './genomeNexusClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
 import { variantToMutation } from '../util/variantUtils';
+import { RemoteData } from 'cbioportal-utils';
+import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 
 interface IVariantProps {
     variant: string;
@@ -79,7 +81,8 @@ class Variant extends React.Component<IVariantProps> {
             this.props.store.annotation.isPending ||
             this.props.store.oncokbGenesMap.isPending ||
             this.props.store.civicVariants.isPending ||
-            this.props.store.isAnnotatedSuccessfully.isPending
+            this.props.store.isAnnotatedSuccessfully.isPending ||
+            this.props.store.indexedAnnotation.isPending
         );
     }
 
@@ -432,6 +435,10 @@ class Variant extends React.Component<IVariantProps> {
                                     isCanonicalTranscriptSelected={
                                         this.isCanonicalTranscriptSelected!
                                     }
+                                    variant={this.props.variant}
+                                    indexAnnotationsByGenomicLocationPromise={this.props.store.indexedAnnotation as RemoteData<{
+                                        [genomicLocation: string]: VariantAnnotation;
+                                    }>}
                                 />
                             </Col>
                         </Row>
