@@ -185,6 +185,7 @@ class Variant extends React.Component<IVariantProps> {
                         },
                     ]}
                     oncoKbUrl={'https://www.cbioportal.org/proxy/oncokb'}
+                    collapsePtmTrack={true}
                 />
             );
         } else {

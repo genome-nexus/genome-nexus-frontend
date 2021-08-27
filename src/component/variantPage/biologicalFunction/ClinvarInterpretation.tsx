@@ -7,6 +7,7 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 interface IClinvarInterpretationProps {
     clinvar?: Clinvar | undefined;
+    isCanonicalTranscriptSelected: boolean;
 }
 
 @observer
@@ -101,6 +102,7 @@ export default class ClinvarInterpretation extends React.Component<IClinvarInter
                         >
                             {`ClinVar `}
                             <i className="fas fa-external-link-alt" />
+                            {!this.props.isCanonicalTranscriptSelected && `*`}
                         </a>
                     </DefaultTooltip>
                 </div>

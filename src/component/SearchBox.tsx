@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
@@ -21,6 +22,7 @@ interface ISearchBoxProps {
     exampleOptions: Option[];
     onChange?: (input: string) => void;
     onSearch: () => void;
+    changeSearchTooltipVisibility: () => void;
 }
 
 type Option = {
@@ -181,15 +183,21 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                     return (
                         <components.Option {...props}>
                             <span className="mr-2">
-                                No variant found for {this.keyword}. See
-                                supported formats{' '}
-                                <a
-                                    href="https://docs.genomenexus.org"
-                                    target="_top"
+                                No variant found for {this.keyword}. Click
+                                <Button
+                                    variant="link"
+                                    className="btn btn-xs"
+                                    onClick={() =>
+                                        this.props.changeSearchTooltipVisibility()
+                                    }
+                                    style={{ padding: 4 }}
                                 >
-                                    here
-                                </a>
-                                .
+                                    <i
+                                        className="fas fa-info-circle"
+                                        style={{ color: '#49A8E5' }}
+                                    />
+                                </Button>
+                                to see supported formats.
                             </span>
                         </components.Option>
                     );
