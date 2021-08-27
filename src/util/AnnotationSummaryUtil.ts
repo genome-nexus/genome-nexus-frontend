@@ -10,9 +10,12 @@ export function getTranscriptConsequenceSummary(
 ): TranscriptConsequenceSummary | undefined {
     let transcriptConsequenceSummary = undefined;
     if (data?.transcriptConsequenceSummaries && transcriptId) {
-        transcriptConsequenceSummary = _.find(data.transcriptConsequenceSummaries, (transcriptConsequence) => transcriptConsequence.transcriptId === transcriptId)
-    }
-    else if (data?.transcriptConsequenceSummary) {
+        transcriptConsequenceSummary = _.find(
+            data.transcriptConsequenceSummaries,
+            (transcriptConsequence) =>
+                transcriptConsequence.transcriptId === transcriptId
+        );
+    } else if (data?.transcriptConsequenceSummary) {
         transcriptConsequenceSummary = data.transcriptConsequenceSummary;
     }
 
