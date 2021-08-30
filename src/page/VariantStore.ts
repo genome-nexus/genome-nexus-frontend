@@ -1,13 +1,11 @@
 import { observable, computed, reaction, makeObservable } from 'mobx';
 import { remoteData } from 'cbioportal-frontend-commons';
 import {
-    extractGenomicLocation,
     fetchCivicVariants,
     genomicLocationString,
     getCivicGenes,
     ICivicGeneIndex,
     ICivicVariantIndex,
-    indexAnnotationsByGenomicLocation,
 } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import {
