@@ -88,12 +88,21 @@ export class VariantStore {
         },
     });
 
-    readonly indexedAnnotation : MobxPromise<{ [genomicLocation: string]: VariantAnnotation }> = remoteData({
+    readonly indexedAnnotation: MobxPromise<{
+        [genomicLocation: string]: VariantAnnotation;
+    }> = remoteData({
         await: () => [this.annotation],
         invoke: () => {
-            const indexedAnnotation: { [genomicLocation: string]: VariantAnnotation } = {};
+            const indexedAnnotation: {
+                [genomicLocation: string]: VariantAnnotation;
+            } = {};
             if (this.annotation.result?.annotation_summary.genomicLocation) {
-                indexedAnnotation[genomicLocationString(this.annotation.result.annotation_summary.genomicLocation)] = this.annotation.result;
+                indexedAnnotation[
+                    genomicLocationString(
+                        this.annotation.result.annotation_summary
+                            .genomicLocation
+                    )
+                ] = this.annotation.result;
             }
             return Promise.resolve(indexedAnnotation);
         },

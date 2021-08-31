@@ -435,10 +435,14 @@ class Variant extends React.Component<IVariantProps> {
                                     isCanonicalTranscriptSelected={
                                         this.isCanonicalTranscriptSelected!
                                     }
-                                    variant={this.props.variant}
-                                    indexAnnotationsByGenomicLocationPromise={this.props.store.indexedAnnotation as RemoteData<{
-                                        [genomicLocation: string]: VariantAnnotation;
-                                    }>}
+                                    indexAnnotationsByGenomicLocationPromise={
+                                        this.props.store
+                                            .indexedAnnotation as RemoteData<{
+                                            [
+                                                genomicLocation: string
+                                            ]: VariantAnnotation;
+                                        }>
+                                    }
                                 />
                             </Col>
                         </Row>

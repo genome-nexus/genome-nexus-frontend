@@ -6,7 +6,7 @@ export const ANNOTATION_QUERY_FIELDS = [
     'my_variant_info',
     'mutation_assessor',
     'clinvar',
-    'signal'
+    'signal',
 ];
 
 export const SEARCH_QUERY_FIELDS = ['annotation_summary'];
