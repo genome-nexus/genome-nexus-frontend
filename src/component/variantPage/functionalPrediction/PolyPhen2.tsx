@@ -1,196 +1,170 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import { Table } from 'react-bootstrap';
+import { action, makeObservable, observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Collapse, Table } from 'react-bootstrap';
 
-import tooltipStyles from './styles/polyPhen2Tooltip.module.scss';
+import Toggle from '../../Toggle';
+
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
 export interface IPolyPhen2Props {
-    polyPhenPrediction: string | undefined; // benign, possibly_damaging, probably_damging
-    polyPhenScore: number | undefined;
+    polyPhenPrediction?: string; // benign, possibly_damaging, probably_damaging
+    polyPhenScore?: number;
 }
 
-export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
-    static POLYPHEN2_URL: string = 'http://genetics.bwh.harvard.edu/pph2/';
+const POLYPHEN2_URL = 'http://genetics.bwh.harvard.edu/pph2/';
 
-    constructor(props: IPolyPhen2Props) {
-        super(props);
-        this.polyPhenData = this.polyPhenData.bind(this);
-    }
+const PolyPhenLegend: React.FunctionComponent = () => {
+    return (
+        <div style={{ minWidth: 450 }}>
+            <Table table-border-top striped bordered hover size="sm">
+                <thead>
+                    <tr>
+                        <th>Legend</th>
+                        <th>
+                            <span
+                                style={{ display: 'inline-block' }}
+                                title="PolyPhen-2"
+                            >
+                                <img
+                                    height={14}
+                                    src={require('./styles/polyPhen-2.png')}
+                                    alt="PolyPhen-2"
+                                />
+                                &nbsp;Qualitative prediction
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span>
+                                <i
+                                    className={classNames(
+                                        functionalImpactColor['high'],
+                                        'fa fa-circle'
+                                    )}
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        </td>
+                        <td>
+                            <b>probably_damaging</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <i
+                                    className={classNames(
+                                        functionalImpactColor['low'],
+                                        'fa fa-circle'
+                                    )}
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        </td>
+                        <td>
+                            <b>possibly_damaging</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <i
+                                    className={classNames(
+                                        functionalImpactColor['neutral'],
+                                        'fa fa-circle'
+                                    )}
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        </td>
+                        <td>
+                            <b>benign</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                <i
+                                    className={classNames(
+                                        functionalImpactColor['unknown']
+                                    )}
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        </td>
+                        <td>
+                            <b>-</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+        </div>
+    );
+};
 
-    public static polyPhenText() {
-        return (
-            <div style={{ width: 450, height: 77 }}>
+const PolyPhenInfo: React.FunctionComponent = () => {
+    return (
+        <div>
+            <a href={POLYPHEN2_URL} target="_blank" rel="noopener noreferrer">
+                PolyPhen-2
+            </a>{' '}
+            (Polymorphism Phenotyping v2) is a tool which predicts possible
+            impact of an amino acid substitution on the structure and function
+            of a human protein using straightforward physical and comparative
+            considerations.
+        </div>
+    );
+};
+
+const PolyPhenValue: React.FunctionComponent<IPolyPhen2Props> = (props) => {
+    return props.polyPhenPrediction ? (
+        <div>
+            {(props.polyPhenScore || props.polyPhenScore === 0) && (
+                <div>
+                    <span className="mr-2">Score</span>
+                    <strong>{props.polyPhenScore.toFixed(2)}</strong>
+                </div>
+            )}
+            <div>
+                Please refer to the score range{' '}
                 <a
-                    href={PolyPhen2.POLYPHEN2_URL}
+                    href="https://useast.ensembl.org/info/genome/variation/prediction/protein_function.html"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    PolyPhen-2
-                </a>{' '}
-                (Polymorphism Phenotyping v2) is a tool which predicts possible
-                impact of an amino acid substitution on the structure and
-                function of a human protein using straightforward physical and
-                comparative considerations.
+                    here
+                </a>
+                .
             </div>
-        );
-    }
+        </div>
+    ) : null;
+};
 
-    public polyPhenData() {
-        const impact = this.props.polyPhenPrediction ? (
-            <div>
-                <table className={tooltipStyles['polyPhen2-tooltip-table']}>
-                    {(this.props.polyPhenScore ||
-                        this.props.polyPhenScore === 0) && (
-                        <tr>
-                            <td>Score</td>
-                            <td>
-                                <b>{this.props.polyPhenScore.toFixed(2)}</b>
-                            </td>
-                        </tr>
-                    )}
-                </table>
-                <span>
-                    Please refer to the score range{' '}
-                    <a
-                        href="https://useast.ensembl.org/info/genome/variation/prediction/protein_function.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        here
-                    </a>
-                    .
-                </span>
-            </div>
-        ) : null;
+@observer
+export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
+    @observable showDetails = false;
 
-        return (
-            <div>
-                {impact}
-                <br />
-            </div>
-        );
-    }
-
-    public polyPhenTooltip(tooltipTrigger: JSX.Element) {
-        return (
-            <DefaultTooltip
-                placement="top"
-                overlay={
-                    <div>
-                        {PolyPhen2.polyPhenText()}
-                        {this.polyPhenData()}
-                        {PolyPhen2.polyPhenTooltipTable()}
-                    </div>
-                }
-            >
-                {tooltipTrigger}
-            </DefaultTooltip>
-        );
-    }
-
-    public static polyPhenTooltipTable() {
-        return (
-            <div>
-                <Table table-border-top striped bordered hover size="sm">
-                    <thead>
-                        <tr>
-                            <th>Legend</th>
-                            <th>
-                                <span
-                                    style={{ display: 'inline-block' }}
-                                    title="PolyPhen-2"
-                                >
-                                    <img
-                                        height={14}
-                                        src={require('./styles/polyPhen-2.png')}
-                                        alt="PolyPhen-2"
-                                    />
-                                    &nbsp;Qualitative prediction
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['high'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>
-                                <b>probably_damaging</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['low'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>
-                                <b>possibly_damaging</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['neutral'],
-                                            'fa fa-circle'
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>
-                                <b>benign</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>
-                                    <i
-                                        className={classNames(
-                                            functionalImpactColor['unknown']
-                                        )}
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                            </td>
-                            <td>
-                                <b>-</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-        );
+    constructor(props: IPolyPhen2Props) {
+        super(props);
+        makeObservable(this);
     }
 
     public render() {
-        let polyPhen2content: JSX.Element = <span />;
+        let polyPhen2content: JSX.Element;
 
         const dataSource = (
             <>
-                PolyPhen-2&nbsp;<i className="fas fa-external-link-alt"></i>
+                PolyPhen-2&nbsp;
+                <i className="fas fa-external-link-alt" />
             </>
         );
 
@@ -206,32 +180,58 @@ export default class PolyPhen2 extends React.Component<IPolyPhen2Props, {}> {
         return (
             <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
-                    {this.polyPhenTooltip(
+                    <DefaultTooltip
+                        placement="top"
+                        overlay={
+                            <div style={{ maxWidth: 450 }}>
+                                <PolyPhenInfo />
+                            </div>
+                        }
+                    >
                         <a
-                            href={PolyPhen2.POLYPHEN2_URL}
+                            href={POLYPHEN2_URL}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             {dataSource}
                         </a>
-                    )}
+                    </DefaultTooltip>
                 </div>
                 <div>
-                    {this.polyPhenTooltip(
-                        <span
-                            className={functionalGroupsStyle['data-with-link']}
+                    <span className={functionalGroupsStyle['data-with-link']}>
+                        <a
+                            href={POLYPHEN2_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            <a
-                                href={PolyPhen2.POLYPHEN2_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {polyPhen2content}
-                            </a>
-                        </span>
-                    )}
+                            {polyPhen2content}
+                        </a>
+                    </span>
+                    <Toggle
+                        isOpen={this.showDetails}
+                        textWhenOpen="Less"
+                        textWhenClosed="More"
+                        onToggle={this.onToggleDetails}
+                    />
+                    <Collapse in={this.showDetails}>
+                        <div className="pt-2">
+                            <PolyPhenValue
+                                polyPhenPrediction={
+                                    this.props.polyPhenPrediction
+                                }
+                                polyPhenScore={this.props.polyPhenScore}
+                            />
+                            <br />
+                            <PolyPhenLegend />
+                        </div>
+                    </Collapse>
                 </div>
             </div>
         );
     }
+
+    @action
+    onToggleDetails = () => {
+        this.showDetails = !this.showDetails;
+    };
 }
