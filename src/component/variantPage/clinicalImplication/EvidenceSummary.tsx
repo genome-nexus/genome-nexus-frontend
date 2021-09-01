@@ -133,7 +133,7 @@ export default class EvidenceSummary extends React.Component<IEvidenceSummaryPro
 
     render() {
         return this.props.evidences?.length ? (
-            <div>
+            <div className={functionalGroupsStyle['data-table']}>
                 <div>
                     {!this.showEvidenceTable && (
                         <TableControls
@@ -145,7 +145,7 @@ export default class EvidenceSummary extends React.Component<IEvidenceSummaryPro
                 </div>
 
                 <Collapse in={this.showEvidenceTable}>
-                    <div className={functionalGroupsStyle['data-table']}>
+                    <div>
                         <EvidenceTable
                             url={this.props.url}
                             evidences={this.props.evidences}
