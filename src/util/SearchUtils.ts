@@ -18,9 +18,9 @@ export function normalizeSearchText(keyword: string) {
             secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
             type = keyword.slice(seperaterIndex + 1, seperaterIndex + 3);
         }
-        // if "del" in search text("del" should be in second part of search text after splitting by ":"), don't convert second part to upper case
+        // if "del" or "dup" in search text("del" or "dup" should be in second part of search text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
-        if (/del/i.test(keyword)) {
+        if (/del|dup/i.test(keyword)) {
             keyword = `${_.toUpper(firstPart)}:${type}${secondPart}`;
         } else {
             keyword = `${_.toUpper(firstPart)}:${type}${_.toUpper(secondPart)}`;
