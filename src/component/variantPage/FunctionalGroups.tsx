@@ -9,11 +9,13 @@ import {
 } from 'genome-nexus-ts-api-client';
 import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 
-import PopulationPrevalence from './PopulationPrevalence';
+import PrevalenceInPopulation from './PrevalenceInPopulation';
 import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
+import { RemoteData } from 'cbioportal-utils';
+import PrevalenceInCancer from './PrevalenceInCancer';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -22,6 +24,9 @@ interface IFunctionalGroupsProps {
     oncokb?: IndicatorQueryResp;
     civic?: ICivicVariantIndex;
     isCanonicalTranscriptSelected: boolean;
+    indexAnnotationsByGenomicLocationPromise: RemoteData<{
+        [genomicLocation: string]: VariantAnnotation;
+    }>;
 }
 
 @observer
@@ -76,15 +81,27 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                     </tr>
 
                     <tr>
-                        <th>Population prevalence:</th>
+                        <th>Prevalence in population:</th>
                         <td>
-                            <PopulationPrevalence
+                            <PrevalenceInPopulation
                                 myVariantInfo={this.props.myVariantInfo}
                                 chromosome={
                                     this.props.annotationInternal
                                         ? this.props.annotationInternal
                                               .genomicLocation.chromosome
                                         : null
+                                }
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Prevalence in cancer:</th>
+                        <td>
+                            <PrevalenceInCancer
+                                variantAnnotation={this.props.variantAnnotation}
+                                indexAnnotationsByGenomicLocationPromise={
+                                    this.props
+                                        .indexAnnotationsByGenomicLocationPromise
                                 }
                             />
                         </td>

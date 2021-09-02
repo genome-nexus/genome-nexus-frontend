@@ -2,6 +2,7 @@ import { observable, computed, reaction, makeObservable } from 'mobx';
 import { remoteData } from 'cbioportal-frontend-commons';
 import {
     fetchCivicVariants,
+    genomicLocationString,
     getCivicGenes,
     ICivicGeneIndex,
     ICivicVariantIndex,
@@ -84,6 +85,29 @@ export class VariantStore {
         },
         onError: (err: Error) => {
             // fail silently
+        },
+    });
+
+    readonly indexedAnnotation: MobxPromise<{
+        [genomicLocation: string]: VariantAnnotation;
+    }> = remoteData({
+        await: () => [this.annotation],
+        invoke: () => {
+            const indexedAnnotation: {
+                [genomicLocation: string]: VariantAnnotation;
+            } = {};
+            if (this.annotation.result?.annotation_summary.genomicLocation) {
+                indexedAnnotation[
+                    genomicLocationString(
+                        this.annotation.result.annotation_summary
+                            .genomicLocation
+                    )
+                ] = this.annotation.result;
+            }
+            return Promise.resolve(indexedAnnotation);
+        },
+        onError: () => {
+            // fail silently, leave the error handling responsibility to the data consumer
         },
     });
 
