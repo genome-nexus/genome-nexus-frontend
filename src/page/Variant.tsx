@@ -152,12 +152,14 @@ class Variant extends React.Component<IVariantProps> {
                         TrackName.CancerHotspots,
                         TrackName.OncoKB,
                         TrackName.dbPTM,
+                        TrackName.Exon,
                     ]}
                     // allow default tracks to show up
                     trackVisibility={{
                         [TrackName.CancerHotspots]: 'visible',
                         [TrackName.OncoKB]: 'visible',
                         [TrackName.dbPTM]: 'visible',
+                        [TrackName.Exon]: 'visible',
                     }}
                     hugoSymbol={mutation[0].gene.hugoGeneSymbol}
                     entrezGeneId={Number(
