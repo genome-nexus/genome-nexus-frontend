@@ -4228,10 +4228,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cbioportal-frontend-commons@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.6.tgz#ad438000ae2c65887f97bb71481430acb1f63b78"
-  integrity sha512-QulpH1h8HTCELx+Bmx0mpZ2rIoIA+pG6C62s98BDH3tHhHTFXwsc76pRuniU6lg/wTAKfWEUCrxenA3Tgn2Dmw==
+cbioportal-frontend-commons@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.7.tgz#706850ac846eb689ae160abc8addd5abe5c45962"
+  integrity sha512-8u9zYPqKQQIrfRkqs5WOng9BWg8kX9y0UzbmwOZyLfnkmfmqyPWiZa2YVPeYM+wamUVtNHvk8fBHJPULflbLUQ==
   dependencies:
     autobind-decorator "^2.1.0"
     cbioportal-utils "^0.3.4"
@@ -11992,13 +11992,13 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-mutation-mapper@^0.8.12:
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.12.tgz#5762659434e9420bdaf65712f1ecba2bc77170b3"
-  integrity sha512-R0xPy2ovhhdarOKqJQ3fNKmV7W6t6EIsRH32fXRujfSvWhS7v4WZiv0NhmcZhQe4AR0yknATDW+Yei0Ac8zYHg==
+react-mutation-mapper@^0.8.15:
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.15.tgz#4f223c68b4236bbcc11c8efe1d1e2b5323cef426"
+  integrity sha512-4yli/H3TK3GfJoAdbWd5AcYPiCoodBxMDcloL5GSQuktHF+ylwS40Y0AIGcfkv4Hoj5+1JuJdf7GbZisCKBvSA==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-frontend-commons "^0.5.6"
+    cbioportal-frontend-commons "^0.5.7"
     cbioportal-utils "^0.3.4"
     classnames "^2.2.5"
     genome-nexus-ts-api-client "^1.1.16"
