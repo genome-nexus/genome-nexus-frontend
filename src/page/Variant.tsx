@@ -153,6 +153,7 @@ class Variant extends React.Component<IVariantProps> {
                         TrackName.OncoKB,
                         TrackName.dbPTM,
                         TrackName.Exon,
+                        TrackName.UniprotTopology,
                     ]}
                     // allow default tracks to show up
                     trackVisibility={{
@@ -160,6 +161,7 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.OncoKB]: 'visible',
                         [TrackName.dbPTM]: 'visible',
                         [TrackName.Exon]: 'visible',
+                        [TrackName.UniprotTopology]: 'visible',
                     }}
                     hugoSymbol={mutation[0].gene.hugoGeneSymbol}
                     entrezGeneId={Number(
@@ -191,6 +193,7 @@ class Variant extends React.Component<IVariantProps> {
                     ]}
                     oncoKbUrl={'https://www.cbioportal.org/proxy/oncokb'}
                     collapsePtmTrack={true}
+                    collapseUniprotTopologyTrack={true}
                 />
             );
         } else {

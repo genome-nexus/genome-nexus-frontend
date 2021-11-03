@@ -215,6 +215,7 @@ export class VariantStore {
                         values: [mutation[0].proteinPosStart],
                     },
                 ],
+                entrezGeneId: mutation[0].gene.entrezGeneId,
             });
             return store;
         }

@@ -41,7 +41,10 @@ class Footer extends React.Component<{}> {
                 <Link to="/swagger-ui.html" target="_self">
                     API
                 </Link>
-                <a href="https://docs.genomenexus.org/annotation-sources#versions" target="_top">
+                <a
+                    href="https://docs.genomenexus.org/annotation-sources#versions"
+                    target="_top"
+                >
                     Data Version
                 </a>
                 <a href="https://docs.genomenexus.org" target="_top">
