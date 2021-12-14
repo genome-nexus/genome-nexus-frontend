@@ -38,7 +38,31 @@ export function isValidInput(keyword: string) {
     }
 }
 
-export function normalizeInputFormat(keyword: string) {
+export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
+    // if input contains whitespace, convert to correct format
+    if (/\s/i.test(keyword)) {
+        const gene = keyword.split(' ')[0];
+        const proteinChange = keyword.split(' ')[1];
+        // if input contains "c." or "p.", extract type and generate query. If no "c." or "p.", add "p." into query string.
+        // whitespace should be replaced to ":"
+        if (/[cp]./i.test(proteinChange)) {
+            keyword = `${gene} ${proteinChange.split('.')[0]}.${
+                proteinChange.split('.')[1]
+            }`;
+        } else {
+            keyword = `${gene} p.${proteinChange}`;
+        }
+    }
+    // if contains ":", repalce to whitespace
+    else if (/:p|:c/i.test(keyword)) {
+        if (!/EN/i.test(keyword)) {
+            keyword = `${keyword.split(':')[0]} ${keyword.split(':')[1]}`
+        }
+    }    
+    return keyword;
+}
+
+export function normalizeInputFormatForOutsideSearch(keyword: string) {
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
         let gene = keyword.split(' ')[0];
