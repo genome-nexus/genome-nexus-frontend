@@ -14,7 +14,7 @@ import {
     isSearchingByHgvsg,
     isSearchingByRsid,
     isValidInput,
-    normalizeInputFormatForInternalDatabaseSearch,
+    normalizeInputFormatForDatabaseSearch,
     normalizeInputFormatForOutsideSearch,
 } from '../util/SearchUtils';
 
@@ -120,16 +120,15 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         }
     };
 
-    private getOptions = remoteData<Option[]>({
+    private getOptionsFromInternalDb = remoteData<Option[]>({
         await: () => [],
         invoke: async () => {
             let keyword = this.keyword.trim();
             let options: Option[] = [];
             let enrichedOptions: Option[] = [];
-            const promises = [];
+
             if (isValidInput(keyword)) {
-                keyword =
-                    normalizeInputFormatForInternalDatabaseSearch(keyword);
+                keyword = normalizeInputFormatForDatabaseSearch(keyword);
                 // if search by hgvsg, directly push to dropdown, don't look up in internal db
                 if (isSearchingByHgvsg(keyword)) {
                     options.push({
@@ -139,104 +138,122 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                 }
                 // if search by rsid, directly search from recoder, because we don't have rsid in index db
                 if (!isSearchingByRsid(keyword)) {
-                    promises.push(
-                        this.getInternalOptions(keyword)
-                            .then((response) => response.json())
-                            .then(async (queryResponse) => {
-                                const variantList = queryResponse[0].results;
-                                _.forEach(variantList, (item) => {
-                                    if (item && item.variant) {
-                                        options.push({
-                                            value: item.variant,
-                                            label: item.variant,
-                                        });
-                                    }
-                                });
-                                // enrich options with gene and protein change
-                                enrichedOptions = options;
-                                await this.getGenomeNexusData(
-                                    options.map((option) => option.value)
-                                )
-                                    .then((annotations) => {
-                                        enrichedOptions =
-                                            this.getEnrichedOptions(
-                                                annotations,
-                                                options
-                                            );
-
-                                        return Promise.resolve(enrichedOptions);
-                                    })
-                                    .catch((error: any) => {
-                                        console.log(
-                                            'error fetch Genome Nexus data'
-                                        );
+                    await this.getInternalOptions(keyword)
+                        .then((response) => response.json())
+                        .then(async (queryResponse) => {
+                            const variantList = queryResponse[0].results;
+                            _.forEach(variantList, (item) => {
+                                if (item && item.variant) {
+                                    options.push({
+                                        value: item.variant,
+                                        label: item.variant,
                                     });
-                            })
-                    );
+                                }
+                            });
+                            // enrich options with gene and protein change
+                            enrichedOptions = options;
+                            await this.getGenomeNexusData(
+                                options.map((option) => option.value)
+                            )
+                                .then((annotations) => {
+                                    enrichedOptions = this.getEnrichedOptions(
+                                        annotations,
+                                        options
+                                    );
+                                })
+                                .catch((error: any) => {
+                                    console.log(
+                                        'error fetch Genome Nexus data'
+                                    );
+                                });
+                        });
                 }
+            }
+
+            return Promise.resolve(enrichedOptions);
+        },
+    });
+
+    private getOptionsFromRecoder = remoteData<Option[]>({
+        await: () => [],
+        invoke: async () => {
+            let keyword = this.keyword.trim();
+            let options: Option[] = [];
+            let enrichedOptions: Option[] = [];
+            if (isValidInput(keyword)) {
+                keyword = normalizeInputFormatForDatabaseSearch(keyword);
 
                 if (this.searchRecoderClicked || isSearchingByRsid(keyword)) {
-                    promises.push(
-                        this.getRecoderOptions(keyword)
-                            .then((response) => response.json())
-                            .then(async (result) => {
-                                _.forEach(result, (item) => {
-                                    _.forEach(item, (value, key) => {
-                                        if (value && value.hgvsg) {
-                                            _.forEach(
-                                                value.hgvsg,
-                                                (hgvsg: string) => {
-                                                    const optionValue =
-                                                        extractHgvsg(hgvsg);
-                                                    if (optionValue) {
-                                                        options.push({
-                                                            value: optionValue,
-                                                            label: optionValue,
-                                                        });
-                                                    }
+                    await this.getRecoderOptions(keyword)
+                        .then((response) => response.json())
+                        .then(async (result) => {
+                            _.forEach(result, (item) => {
+                                _.forEach(item, (value, key) => {
+                                    if (value && value.hgvsg) {
+                                        _.forEach(
+                                            value.hgvsg,
+                                            (hgvsg: string) => {
+                                                const optionValue =
+                                                    extractHgvsg(hgvsg);
+                                                if (optionValue) {
+                                                    options.push({
+                                                        value: optionValue,
+                                                        label: optionValue,
+                                                    });
                                                 }
-                                            );
-                                        }
-                                    });
-                                });
-
-                                enrichedOptions = options;
-                                await this.getGenomeNexusData(
-                                    options.map((option) => option.value)
-                                )
-                                    .then((annotations) => {
-                                        enrichedOptions =
-                                            this.getEnrichedOptions(
-                                                annotations,
-                                                options
-                                            );
-                                        return Promise.resolve(enrichedOptions);
-                                    })
-                                    .catch((error: any) => {
-                                        console.log(
-                                            'error fetch Genome Nexus data'
+                                            }
                                         );
-                                    });
-                            })
-                            .catch((error: any) => Promise.resolve([]))
-                    );
+                                    }
+                                });
+                            });
+
+                            enrichedOptions = options;
+                            await this.getGenomeNexusData(
+                                options.map((option) => option.value)
+                            )
+                                .then((annotations) => {
+                                    enrichedOptions = this.getEnrichedOptions(
+                                        annotations,
+                                        options
+                                    );
+                                })
+                                .catch((error: any) => {
+                                    console.log(
+                                        'error fetch Genome Nexus data'
+                                    );
+                                });
+                        })
+                        .catch((error: any) => Promise.resolve([]));
                 }
-                await Promise.all(promises);
                 if (!this.searchRecoderClicked && !isSearchingByRsid(keyword)) {
                     enrichedOptions = [
                         ...enrichedOptions,
                         {
-                            label: 'Show more searching results',
+                            label: 'Show more search results',
                             value: 'search_recoder',
                         },
                     ];
-                    return Promise.resolve(enrichedOptions);
                 }
-
-                return Promise.resolve(enrichedOptions);
-            } else {
-                return Promise.resolve(options);
             }
+            return Promise.resolve(enrichedOptions);
+        },
+    });
+
+    private getOptions = remoteData<Option[]>({
+        await: () => [
+            this.getOptionsFromInternalDb,
+            this.getOptionsFromRecoder,
+        ],
+        invoke: async () => {
+            return Promise.resolve(
+                _.uniqBy(
+                    _.concat(
+                        this.getOptionsFromInternalDb.result!,
+                        this.getOptionsFromRecoder.result!
+                    ),
+                    (option) => option.value
+                )
+            );
         },
     });
 

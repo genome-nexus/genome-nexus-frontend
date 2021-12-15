@@ -17,7 +17,7 @@ export function normalizeSearchText(keyword: string) {
         if (
             seperaterIndex > 0 &&
             seperaterIndex < keyword.length - 3 &&
-            /[pcg]./i.test(keyword)
+            /[pcg]./i.test(secondPart)
         ) {
             firstPart = keyword.slice(0, seperaterIndex);
             secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
@@ -55,7 +55,7 @@ export function isSearchingByHgvsg(keyword: string) {
     return /:g./i.test(keyword);
 }
 
-export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
+export function normalizeInputFormatForDatabaseSearch(keyword: string) {
     keyword = normalizeSearchText(keyword);
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
