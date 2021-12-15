@@ -2,10 +2,15 @@ import _ from 'lodash';
 
 export function normalizeSearchText(keyword: string) {
     // convert search text to upper case
-    if (/:/i.test(keyword) && keyword.split(':').length - 1 === 1) {
-        const seperaterIndex = keyword.indexOf(':');
-        let firstPart = keyword.split(':')[0];
-        let secondPart = keyword.split(':')[1];
+    if (
+        /:|\s/i.test(keyword) &&
+        (keyword.split(':').length - 1 === 1 ||
+            keyword.split(' ').length - 1 === 1)
+    ) {
+        const separator = /:/i.test(keyword) ? ':' : ' ';
+        const seperaterIndex = keyword.indexOf(separator);
+        let firstPart = keyword.split(separator)[0];
+        let secondPart = keyword.split(separator)[1];
         let type = '';
         // if search text contains "p." / "c." / "g.", extract it out (type needs to be in lower case)
         // ":" should not be start or end of search text
@@ -21,9 +26,11 @@ export function normalizeSearchText(keyword: string) {
         // if "del" or "dup" in search text("del" or "dup" should be in second part of search text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
         if (/del|dup/i.test(keyword)) {
-            keyword = `${_.toUpper(firstPart)}:${type}${secondPart}`;
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${secondPart}`;
         } else {
-            keyword = `${_.toUpper(firstPart)}:${type}${_.toUpper(secondPart)}`;
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+                secondPart
+            )}`;
         }
     }
     return keyword;
@@ -49,6 +56,7 @@ export function isSearchingByHgvsg(keyword: string) {
 }
 
 export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
+    keyword = normalizeSearchText(keyword);
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
         const gene = keyword.split(' ')[0];
@@ -73,6 +81,7 @@ export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
 }
 
 export function normalizeInputFormatForOutsideSearch(keyword: string) {
+    keyword = normalizeSearchText(keyword);
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
         let gene = keyword.split(' ')[0];
