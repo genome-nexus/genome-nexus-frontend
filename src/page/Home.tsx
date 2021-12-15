@@ -150,6 +150,11 @@ const searchTooltipContent = (
             </Link>
         </div>
         <div>
+            <Link to={`/variant/7:g.55249012_55249013insGGGTTA`}>
+                EGFR p.D770_N771insGL
+            </Link>
+        </div>
+        <div>
             <Link to={`/variant/17:g.41276044A>T`}>rs80357410</Link>
         </div>
     </>
