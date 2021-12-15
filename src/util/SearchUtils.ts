@@ -66,9 +66,9 @@ export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
     // if contains ":", repalce to whitespace
     else if (/:p|:c/i.test(keyword)) {
         if (!/EN/i.test(keyword)) {
-            keyword = `${keyword.split(':')[0]} ${keyword.split(':')[1]}`
+            keyword = `${keyword.split(':')[0]} ${keyword.split(':')[1]}`;
         }
-    }    
+    }
     return keyword;
 }
 

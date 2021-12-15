@@ -45,7 +45,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     private searchRecoder(keyword: string): Promise<any> {
-        keyword = normalizeInputFormatForOutsideSearch(keyword);        
+        keyword = normalizeInputFormatForOutsideSearch(keyword);
         // TODO: support grch38
         return fetch(
             `https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`
@@ -54,10 +54,10 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
 
     private searchInternalDb(keyword: string): Promise<any> {
         // TODO: this is temporary, we should do database migration and change to www.genomenexus.org
-        const link = encodeURI(`https://beta.genomenexus.org/search?keyword=${keyword}`);        
-        return fetch(
-            link
+        const link = encodeURI(
+            `https://beta.genomenexus.org/search?keyword=${keyword}`
         );
+        return fetch(link);
     }
 
     private getGenomeNexusDataByKeywords(keywords: string[]): Promise<any> {
@@ -75,7 +75,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     @action
     public getRecoderOptions = (keyword: string) => {
         return this.searchRecoder(keyword);
-    };   
+    };
 
     @action
     public getGenomeNexusData = (keywords: string[]) => {
@@ -113,9 +113,9 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     private onChange = (option: Option) => {
-        if (option && option.value === "search_recoder") {
-            this.searchRecoderClicked = true;           
-        } else if (this.props.onChange && option && option.value) {            
+        if (option && option.value === 'search_recoder') {
+            this.searchRecoderClicked = true;
+        } else if (this.props.onChange && option && option.value) {
             this.props.onChange(option.value);
             this.props.onSearch();
         }
@@ -129,98 +129,113 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
             let enrichedOptions: Option[] = [];
             const promises = [];
             if (isValidInput(keyword)) {
-                keyword = normalizeInputFormatForInternalDatabaseSearch(keyword);
+                keyword =
+                    normalizeInputFormatForInternalDatabaseSearch(keyword);
                 // if search by hgvsg, directly push to dropdown, don't look up in internal db
                 if (isSearchingByHgvsg(keyword)) {
                     options.push({
                         value: keyword,
-                        label: keyword
-                    })
+                        label: keyword,
+                    });
                 }
                 // if search by rsid, directly search from recoder, because we don't have rsid in index db
                 if (!isSearchingByRsid(keyword)) {
                     promises.push(
                         this.getInternalOptions(keyword)
-                    .then((response) => response.json())
-                    .then(async (queryResponse) => {
-                        const variantList = queryResponse[0].results;
-                        _.forEach(variantList, (item) => {
-                            if (item && item.variant) {
-                                options.push({
-                                    value: item.variant,
-                                    label: item.variant,
-                                });       
-                            };
-                        });
-                        // enrich options with gene and protein change
-                        enrichedOptions = options;
-                        await this.getGenomeNexusData(
-                            options.map((option) => option.value)
-                        )
-                            .then((annotations) => {
-                                enrichedOptions = this.getEnrichedOptions(
-                                    annotations,
-                                    options
-                                );
-                                
-                                return Promise.resolve(enrichedOptions);
+                            .then((response) => response.json())
+                            .then(async (queryResponse) => {
+                                const variantList = queryResponse[0].results;
+                                _.forEach(variantList, (item) => {
+                                    if (item && item.variant) {
+                                        options.push({
+                                            value: item.variant,
+                                            label: item.variant,
+                                        });
+                                    }
+                                });
+                                // enrich options with gene and protein change
+                                enrichedOptions = options;
+                                await this.getGenomeNexusData(
+                                    options.map((option) => option.value)
+                                )
+                                    .then((annotations) => {
+                                        enrichedOptions =
+                                            this.getEnrichedOptions(
+                                                annotations,
+                                                options
+                                            );
+
+                                        return Promise.resolve(enrichedOptions);
+                                    })
+                                    .catch((error: any) => {
+                                        console.log(
+                                            'error fetch Genome Nexus data'
+                                        );
+                                    });
                             })
-                            .catch((error: any) => {
-                                console.log('error fetch Genome Nexus data');
-                            });
-                    }));
+                    );
                 }
 
                 if (this.searchRecoderClicked || isSearchingByRsid(keyword)) {
                     promises.push(
                         this.getRecoderOptions(keyword)
-                        .then((response) => response.json())
-                        .then(async (result) => {
-                            _.forEach(result, (item) => {
-                                _.forEach(item, (value, key) => {
-                                    if (value && value.hgvsg) {
-                                        _.forEach(value.hgvsg, (hgvsg: string) => {
-                                            const optionValue = extractHgvsg(hgvsg);                                            
-                                            if (optionValue) {
-                                                options.push({
-                                                    value: optionValue,
-                                                    label: optionValue,
-                                                });
-                                            }
-                                        });
-                                    }
+                            .then((response) => response.json())
+                            .then(async (result) => {
+                                _.forEach(result, (item) => {
+                                    _.forEach(item, (value, key) => {
+                                        if (value && value.hgvsg) {
+                                            _.forEach(
+                                                value.hgvsg,
+                                                (hgvsg: string) => {
+                                                    const optionValue =
+                                                        extractHgvsg(hgvsg);
+                                                    if (optionValue) {
+                                                        options.push({
+                                                            value: optionValue,
+                                                            label: optionValue,
+                                                        });
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    });
                                 });
-                            });
-    
-                            enrichedOptions = options;                            
-                            await this.getGenomeNexusData(
-                                options.map((option) => option.value)
-                            )
-                                .then((annotations) => {
-                                    enrichedOptions = this.getEnrichedOptions(
-                                        annotations,
-                                        options
-                                    );
-                                    return Promise.resolve(enrichedOptions);
-                                })
-                                .catch((error: any) => {
-                                    console.log('error fetch Genome Nexus data');
-                                });
-                        })
-                        .catch((error: any) => Promise.resolve([]))
+
+                                enrichedOptions = options;
+                                await this.getGenomeNexusData(
+                                    options.map((option) => option.value)
+                                )
+                                    .then((annotations) => {
+                                        enrichedOptions =
+                                            this.getEnrichedOptions(
+                                                annotations,
+                                                options
+                                            );
+                                        return Promise.resolve(enrichedOptions);
+                                    })
+                                    .catch((error: any) => {
+                                        console.log(
+                                            'error fetch Genome Nexus data'
+                                        );
+                                    });
+                            })
+                            .catch((error: any) => Promise.resolve([]))
                     );
                 }
                 await Promise.all(promises);
                 if (!this.searchRecoderClicked && !isSearchingByRsid(keyword)) {
                     enrichedOptions = [
                         ...enrichedOptions,
-                        { label: "Show more searching results", value: "search_recoder" }
+                        {
+                            label: 'Show more searching results',
+                            value: 'search_recoder',
+                        },
                     ];
                     return Promise.resolve(enrichedOptions);
                 }
-                
+
                 return Promise.resolve(enrichedOptions);
-            } else {                
+            } else {
                 return Promise.resolve(options);
             }
         },
@@ -231,7 +246,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         if (action.action === 'input-change') {
             this.keyword = keyword;
             this.searchRecoderClicked = false;
-        };
+        }
     };
 
     render() {
@@ -276,11 +291,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         return (
             <Select
                 options={this.getOptions.result || []}
-                // controlShouldRenderValue={false}
                 filterOption={false}
-                // isClearable
-                // loadOptions={this.debouncedFetch}
-                // defaultOptions={this.dropdownOptions}
                 onChange={(option: any) => this.onChange(option)}
                 inputValue={this.keyword}
                 onInputChange={this.handleInputChange}

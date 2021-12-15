@@ -32,13 +32,7 @@ class ValidatorNotification extends React.Component<IValidatorNotificationProps>
                             className={'small'}
                             style={{ paddingLeft: '12px' }}
                         >
-                            If searching by <a
-                                href="https://varnomen.hgvs.org/recommendations/DNA/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                HGVS
-                            </a>, only DNA changes in&nbsp;
+                            If searching by{' '}
                             <a
                                 href="https://varnomen.hgvs.org/recommendations/DNA/"
                                 target="_blank"
@@ -46,8 +40,16 @@ class ValidatorNotification extends React.Component<IValidatorNotificationProps>
                             >
                                 HGVS
                             </a>
-                            &nbsp;format are supported.
-                            Please find other supported formats example under search box.
+                            , only DNA changes in&nbsp;
+                            <a
+                                href="https://varnomen.hgvs.org/recommendations/DNA/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                HGVS
+                            </a>
+                            &nbsp;format are supported. Please find other
+                            supported formats example under search box.
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
