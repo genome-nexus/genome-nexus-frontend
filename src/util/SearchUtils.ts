@@ -38,6 +38,16 @@ export function isValidInput(keyword: string) {
     }
 }
 
+export function isSearchingByRsid(keyword: string) {
+    // input should start with "rs"
+    return keyword.startsWith('rs');
+}
+
+export function isSearchingByHgvsg(keyword: string) {
+    // input should contain ":g."
+    return /:g./i.test(keyword);
+}
+
 export function normalizeInputFormatForInternalDatabaseSearch(keyword: string) {
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
