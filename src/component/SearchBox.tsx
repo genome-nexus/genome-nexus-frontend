@@ -1,18 +1,21 @@
+import { remoteData } from 'cbioportal-frontend-commons';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import _ from 'lodash';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { components } from 'react-select';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
 import client from '../page/genomeNexusClientInstance';
 import {
     extractHgvsg,
+    isSearchingByHgvsg,
+    isSearchingByRsid,
     isValidInput,
-    normalizeInputFormat,
-    normalizeSearchText,
+    normalizeInputFormatForDatabaseSearch,
+    normalizeInputFormatForOutsideSearch,
 } from '../util/SearchUtils';
 
 interface ISearchBoxProps {
@@ -34,17 +37,25 @@ type Option = {
 export default class SearchBox extends React.Component<ISearchBoxProps> {
     @observable keyword: string = '';
     @observable options: Option[] = [];
+    @observable searchRecoderClicked: boolean = false;
 
     constructor(props: ISearchBoxProps) {
         super(props);
         makeObservable(this);
     }
 
-    private searchProteinChangeByKeyword(keyword: string): Promise<any> {
-        keyword = normalizeSearchText(keyword);
-        // TODO support grch38
+    private searchRecoder(keyword: string): Promise<any> {
+        keyword = normalizeInputFormatForOutsideSearch(keyword);
+        // TODO: support grch38
         return fetch(
             `https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`
+        );
+    }
+
+    private searchInternalDb(keyword: string): Promise<any> {
+        // TODO: this is temporary, we should do database migration and change to www.genomenexus.org
+        return fetch(
+            encodeURI(`https://beta.genomenexus.org/search?keyword=${keyword}`)
         );
     }
 
@@ -55,56 +66,14 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         });
     }
 
-    private debouncedFetch = _.debounce((searchTerm, callback) => {
-        let keyword = this.keyword.trim();
-        let options: Option[] = [];
-        if (isValidInput(keyword)) {
-            keyword = normalizeInputFormat(keyword);
-            this.getOptions(keyword)
-                .then((response) => response.json())
-                .then(async (result) => {
-                    _.forEach(result, (item) => {
-                        _.forEach(item, (value, key) => {
-                            if (value && value.hgvsg) {
-                                _.forEach(value.hgvsg, (hgvsg: string) => {
-                                    const optionValue = extractHgvsg(hgvsg);
-                                    if (optionValue) {
-                                        options.push({
-                                            value: optionValue,
-                                            label: optionValue,
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    });
-
-                    let enrichedOptions: Option[] = options;
-                    await this.getGenomeNexusData(
-                        options.map((option) => option.value)
-                    )
-                        .then((annotations) => {
-                            enrichedOptions = this.getEnrichedOptions(
-                                annotations,
-                                options
-                            );
-                        })
-                        .catch((error: any) => {
-                            console.log('error fetch Genome Nexus data');
-                        });
-
-                    this.setOptions(enrichedOptions);
-                    return callback(enrichedOptions);
-                })
-                .catch((error: any) => callback([]));
-        } else {
-            return callback(options);
-        }
-    }, 1000);
+    @action
+    public getInternalOptions = (keyword: string) => {
+        return this.searchInternalDb(keyword);
+    };
 
     @action
-    public getOptions = (keyword: string) => {
-        return this.searchProteinChangeByKeyword(keyword);
+    public getRecoderOptions = (keyword: string) => {
+        return this.searchRecoder(keyword);
     };
 
     @action
@@ -143,30 +112,158 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     private onChange = (option: Option) => {
-        if (this.props.onChange && option && option.value) {
+        if (option && option.value === 'search_recoder') {
+            this.searchRecoderClicked = true;
+        } else if (this.props.onChange && option && option.value) {
             this.props.onChange(option.value);
             this.props.onSearch();
         }
     };
 
-    @action
-    public setOptions(options: Option[]) {
-        this.options = options;
-    }
+    private getOptionsFromInternalDb = remoteData<Option[]>({
+        await: () => [],
+        invoke: async () => {
+            let keyword = this.keyword.trim();
+            let options: Option[] = [];
+            let enrichedOptions: Option[] = [];
+
+            if (isValidInput(keyword)) {
+                keyword = normalizeInputFormatForDatabaseSearch(keyword);
+                // if search by hgvsg, directly push to dropdown, don't look up in internal db
+                if (isSearchingByHgvsg(keyword)) {
+                    options.push({
+                        value: keyword,
+                        label: keyword,
+                    });
+                }
+                // if search by rsid, directly search from recoder, because we don't have rsid in index db
+                if (!isSearchingByRsid(keyword)) {
+                    await this.getInternalOptions(keyword)
+                        .then((response) => response.json())
+                        .then(async (queryResponse) => {
+                            const variantList = queryResponse[0].results;
+                            _.forEach(variantList, (item) => {
+                                if (item && item.variant) {
+                                    options.push({
+                                        value: item.variant,
+                                        label: item.variant,
+                                    });
+                                }
+                            });
+                            // enrich options with gene and protein change
+                            enrichedOptions = options;
+                            await this.getGenomeNexusData(
+                                options.map((option) => option.value)
+                            )
+                                .then((annotations) => {
+                                    enrichedOptions = this.getEnrichedOptions(
+                                        annotations,
+                                        options
+                                    );
+                                })
+                                .catch((error: any) => {
+                                    console.log(
+                                        'error fetch Genome Nexus data'
+                                    );
+                                });
+                        });
+                }
+            }
+
+            return Promise.resolve(enrichedOptions);
+        },
+    });
+
+    private getOptionsFromRecoder = remoteData<Option[]>({
+        await: () => [],
+        invoke: async () => {
+            let keyword = this.keyword.trim();
+            let options: Option[] = [];
+            let enrichedOptions: Option[] = [];
+            if (isValidInput(keyword)) {
+                keyword = normalizeInputFormatForDatabaseSearch(keyword);
+
+                if (this.searchRecoderClicked || isSearchingByRsid(keyword)) {
+                    await this.getRecoderOptions(keyword)
+                        .then((response) => response.json())
+                        .then(async (result) => {
+                            _.forEach(result, (item) => {
+                                _.forEach(item, (value, key) => {
+                                    if (value && value.hgvsg) {
+                                        _.forEach(
+                                            value.hgvsg,
+                                            (hgvsg: string) => {
+                                                const optionValue =
+                                                    extractHgvsg(hgvsg);
+                                                if (optionValue) {
+                                                    options.push({
+                                                        value: optionValue,
+                                                        label: optionValue,
+                                                    });
+                                                }
+                                            }
+                                        );
+                                    }
+                                });
+                            });
+
+                            enrichedOptions = options;
+                            await this.getGenomeNexusData(
+                                options.map((option) => option.value)
+                            )
+                                .then((annotations) => {
+                                    enrichedOptions = this.getEnrichedOptions(
+                                        annotations,
+                                        options
+                                    );
+                                })
+                                .catch((error: any) => {
+                                    console.log(
+                                        'error fetch Genome Nexus data'
+                                    );
+                                });
+                        })
+                        .catch((error: any) => Promise.resolve([]));
+                }
+                if (!this.searchRecoderClicked && !isSearchingByRsid(keyword)) {
+                    enrichedOptions = [
+                        ...enrichedOptions,
+                        {
+                            label: 'Show more search results',
+                            value: 'search_recoder',
+                        },
+                    ];
+                }
+            }
+            return Promise.resolve(enrichedOptions);
+        },
+    });
+
+    private getOptions = remoteData<Option[]>({
+        await: () => [
+            this.getOptionsFromInternalDb,
+            this.getOptionsFromRecoder,
+        ],
+        invoke: async () => {
+            return Promise.resolve(
+                _.uniqBy(
+                    _.concat(
+                        this.getOptionsFromInternalDb.result!,
+                        this.getOptionsFromRecoder.result!
+                    ),
+                    (option) => option.value
+                )
+            );
+        },
+    });
 
     @action
     private handleInputChange = (keyword: string, action: any) => {
-        if (action.action === 'input-change') this.keyword = keyword;
-    };
-
-    @computed
-    get dropdownOptions() {
-        if (this.options.length > 0) {
-            return this.options;
-        } else {
-            return [];
+        if (action.action === 'input-change') {
+            this.keyword = keyword;
+            this.searchRecoderClicked = false;
         }
-    }
+    };
 
     render() {
         const Menu: React.FunctionComponent<any> = observer((props: any) => {
@@ -208,23 +305,23 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         );
 
         return (
-            <AsyncSelect
-                cacheOptions
-                isClearable
-                loadOptions={this.debouncedFetch}
-                defaultOptions={this.dropdownOptions}
+            <Select
+                options={this.getOptions.result || []}
+                filterOption={false}
                 onChange={(option: any) => this.onChange(option)}
                 inputValue={this.keyword}
                 onInputChange={this.handleInputChange}
+                isLoading={this.getOptions.isPending}
                 placeholder={`Search variant in HGVS / rs id / Gene:Protein change`}
+                closeMenuOnSelect={false}
                 styles={{
-                    input(styles) {
+                    input(styles: any) {
                         return {
                             ...styles,
                             lineHeight: '30px',
                         };
                     },
-                    placeholder(styles) {
+                    placeholder(styles: any) {
                         return {
                             ...styles,
                             width: '100%',
@@ -232,7 +329,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                             textAlign: 'center',
                         };
                     },
-                    container(styles) {
+                    container(styles: any) {
                         return {
                             ...styles,
                             flex: 1,

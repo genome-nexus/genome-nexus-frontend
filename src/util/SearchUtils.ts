@@ -2,17 +2,22 @@ import _ from 'lodash';
 
 export function normalizeSearchText(keyword: string) {
     // convert search text to upper case
-    if (/:/i.test(keyword) && keyword.split(':').length - 1 === 1) {
-        const seperaterIndex = keyword.indexOf(':');
-        let firstPart = keyword.split(':')[0];
-        let secondPart = keyword.split(':')[1];
+    if (
+        /:|\s/i.test(keyword) &&
+        (keyword.split(':').length - 1 === 1 ||
+            keyword.split(' ').length - 1 === 1)
+    ) {
+        const separator = /:/i.test(keyword) ? ':' : ' ';
+        const seperaterIndex = keyword.indexOf(separator);
+        let firstPart = keyword.split(separator)[0];
+        let secondPart = keyword.split(separator)[1];
         let type = '';
         // if search text contains "p." / "c." / "g.", extract it out (type needs to be in lower case)
         // ":" should not be start or end of search text
         if (
             seperaterIndex > 0 &&
             seperaterIndex < keyword.length - 3 &&
-            /[pcg]./i.test(keyword)
+            /[pcg]./i.test(secondPart)
         ) {
             firstPart = keyword.slice(0, seperaterIndex);
             secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
@@ -21,9 +26,11 @@ export function normalizeSearchText(keyword: string) {
         // if "del" or "dup" in search text("del" or "dup" should be in second part of search text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
         if (/del|dup/i.test(keyword)) {
-            keyword = `${_.toUpper(firstPart)}:${type}${secondPart}`;
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${secondPart}`;
         } else {
-            keyword = `${_.toUpper(firstPart)}:${type}${_.toUpper(secondPart)}`;
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+                secondPart
+            )}`;
         }
     }
     return keyword;
@@ -38,7 +45,43 @@ export function isValidInput(keyword: string) {
     }
 }
 
-export function normalizeInputFormat(keyword: string) {
+export function isSearchingByRsid(keyword: string) {
+    // input should start with "rs"
+    return keyword.startsWith('rs');
+}
+
+export function isSearchingByHgvsg(keyword: string) {
+    // input should contain ":g."
+    return /:g./i.test(keyword);
+}
+
+export function normalizeInputFormatForDatabaseSearch(keyword: string) {
+    keyword = normalizeSearchText(keyword);
+    // if input contains whitespace, convert to correct format
+    if (/\s/i.test(keyword)) {
+        const gene = keyword.split(' ')[0];
+        const proteinChange = keyword.split(' ')[1];
+        // if input contains "c." or "p.", extract type and generate query. If no "c." or "p.", add "p." into query string.
+        // whitespace should be replaced to ":"
+        if (/[cp]./i.test(proteinChange)) {
+            keyword = `${gene} ${proteinChange.split('.')[0]}.${
+                proteinChange.split('.')[1]
+            }`;
+        } else {
+            keyword = `${gene} p.${proteinChange}`;
+        }
+    }
+    // if contains ":", repalce to whitespace
+    else if (/:p|:c/i.test(keyword)) {
+        if (!/EN/i.test(keyword)) {
+            keyword = `${keyword.split(':')[0]} ${keyword.split(':')[1]}`;
+        }
+    }
+    return keyword;
+}
+
+export function normalizeInputFormatForOutsideSearch(keyword: string) {
+    keyword = normalizeSearchText(keyword);
     // if input contains whitespace, convert to correct format
     if (/\s/i.test(keyword)) {
         let gene = keyword.split(' ')[0];
