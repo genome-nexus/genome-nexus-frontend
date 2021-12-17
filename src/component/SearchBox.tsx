@@ -53,9 +53,8 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     }
 
     private searchInternalDb(keyword: string): Promise<any> {
-        // TODO: this is temporary, we should do database migration and change to www.genomenexus.org
         return fetch(
-            encodeURI(`https://beta.genomenexus.org/search?keyword=${keyword}`)
+            encodeURI(`https://www.genomenexus.org/search?keyword=${keyword}`)
         );
     }
 
