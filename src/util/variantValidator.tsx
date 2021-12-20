@@ -50,7 +50,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         else if (variant.includes(VARIANT_OPERATOR.DELINS)) {
             // chromosome(1-24,X,Y,MT) + start(number) + "_" + end(number) + "delins" + var(ATGC)
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*_[0-9]*(delins)[ATGC]*$/i;
+                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(delins)[ATGC]*$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,

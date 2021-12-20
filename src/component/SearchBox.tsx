@@ -16,7 +16,9 @@ import {
     isValidInput,
     normalizeInputFormatForDatabaseSearch,
     normalizeInputFormatForOutsideSearch,
+    normalizeSearchText,
 } from '../util/SearchUtils';
+import { isVariantValid } from '../util/variantValidator';
 
 interface ISearchBoxProps {
     styles?: CSSRule;
@@ -142,11 +144,20 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                         .then(async (queryResponse) => {
                             const variantList = queryResponse[0].results;
                             _.forEach(variantList, (item) => {
-                                if (item && item.variant) {
-                                    options.push({
-                                        value: item.variant,
-                                        label: item.variant,
-                                    });
+                                if (
+                                    item &&
+                                    item.variant &&
+                                    isVariantValid(item.variant).isValid
+                                ) {
+                                    const hgvsg = normalizeSearchText(
+                                        item.variant
+                                    );
+                                    if (hgvsg) {
+                                        options.push({
+                                            value: hgvsg,
+                                            label: hgvsg,
+                                        });
+                                    }
                                 }
                             });
                             // enrich options with gene and protein change
