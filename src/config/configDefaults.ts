@@ -1,10 +1,17 @@
-export const SHOW_MUTATION_ASSESSOR = true;
+export const SHOW_MUTATION_ASSESSOR = false;
 
-export const ANNOTATION_QUERY_FIELDS = [
+export function annotationQueryFields() {
+    const fields = DEFAULT_ANNOTATION_QUERY_FIELDS;
+    if (SHOW_MUTATION_ASSESSOR) {
+        fields.push('mutation_assessor');
+    }
+    return fields;
+}
+
+export const DEFAULT_ANNOTATION_QUERY_FIELDS = [
     'hotspots',
     'annotation_summary',
     'my_variant_info',
-    'mutation_assessor',
     'clinvar',
     'signal',
 ];

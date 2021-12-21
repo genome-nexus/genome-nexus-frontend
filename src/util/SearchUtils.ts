@@ -8,31 +8,47 @@ export function normalizeSearchText(keyword: string) {
             keyword.split(' ').length - 1 === 1)
     ) {
         const separator = /:/i.test(keyword) ? ':' : ' ';
-        const seperaterIndex = keyword.indexOf(separator);
+        const seperatorIndex = keyword.indexOf(separator);
         let firstPart = keyword.split(separator)[0];
         let secondPart = keyword.split(separator)[1];
         let type = '';
         // if search text contains "p." / "c." / "g.", extract it out (type needs to be in lower case)
         // ":" should not be start or end of search text
         if (
-            seperaterIndex > 0 &&
-            seperaterIndex < keyword.length - 3 &&
-            /[pcg]./i.test(secondPart)
+            seperatorIndex > 0 &&
+            seperatorIndex < keyword.length - 3 &&
+            keyword.match(/[pcg]\./g)?.length === 1
         ) {
-            firstPart = keyword.slice(0, seperaterIndex);
-            secondPart = keyword.slice(seperaterIndex + 3, keyword.length);
-            type = keyword.slice(seperaterIndex + 1, seperaterIndex + 3);
+            firstPart = keyword.slice(0, seperatorIndex);
+            secondPart = keyword.slice(seperatorIndex + 3, keyword.length);
+            type = keyword.slice(seperatorIndex + 1, seperatorIndex + 3);
         }
-        // if "del" or "dup" in search text("del" or "dup" should be in second part of search text after splitting by ":"), don't convert second part to upper case
+        // if "del"/"ins"/"dup" in text(it should be in second part of text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
-        if (/del|dup/i.test(keyword)) {
-            keyword = `${_.toUpper(firstPart)}${separator}${type}${secondPart}`;
+        const match = secondPart.match(/del|dup|ins/g);
+        if (match?.length === 1) {
+            const alternationType = match[0];
+            const location = secondPart.split(alternationType)[0];
+            const alleles = secondPart.split(alternationType)[1];
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+                location
+            )}${alternationType}${_.toUpper(alleles)}`;
+        }
+        // if "delins" in text, convert other parts to uppercase
+        else if (match?.length === 2 && /delins/g.test(secondPart)) {
+            const alternationType = 'delins';
+            const location = secondPart.split(alternationType)[0];
+            const alleles = secondPart.split(alternationType)[1];
+            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+                location
+            )}${alternationType}${_.toUpper(alleles)}`;
         } else {
             keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
                 secondPart
             )}`;
         }
     }
+
     return keyword;
 }
 
@@ -63,7 +79,7 @@ export function normalizeInputFormatForDatabaseSearch(keyword: string) {
         const proteinChange = keyword.split(' ')[1];
         // if input contains "c." or "p.", extract type and generate query. If no "c." or "p.", add "p." into query string.
         // whitespace should be replaced to ":"
-        if (/[cp]./i.test(proteinChange)) {
+        if (/[cp]\./i.test(proteinChange)) {
             keyword = `${gene} ${proteinChange.split('.')[0]}.${
                 proteinChange.split('.')[1]
             }`;
@@ -88,7 +104,7 @@ export function normalizeInputFormatForOutsideSearch(keyword: string) {
         let proteinChange = keyword.split(' ')[1];
         // if input contains "c." or "p.", extract type and generate query. If no "c." or "p.", add "p." into query string.
         // whitespace should be replaced to ":"
-        if (/[cp]./i.test(proteinChange)) {
+        if (/[cp]\./i.test(proteinChange)) {
             keyword = `${gene}:${proteinChange.split('.')[0]}.${
                 proteinChange.split('.')[1]
             }`;

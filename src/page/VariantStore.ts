@@ -22,7 +22,7 @@ import {
     initDefaultMutationMapperStore,
     DataFilterType,
 } from 'react-mutation-mapper';
-import { ANNOTATION_QUERY_FIELDS } from '../config/configDefaults';
+import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 
 export interface VariantStoreConfig {
@@ -80,7 +80,7 @@ export class VariantStore {
         invoke: async () => {
             return await client.fetchVariantAnnotationGET({
                 variant: this.variant,
-                fields: ANNOTATION_QUERY_FIELDS,
+                fields: annotationQueryFields(),
             });
         },
         onError: (err: Error) => {
