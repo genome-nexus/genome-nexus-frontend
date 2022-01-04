@@ -10,36 +10,26 @@ import $ from 'jquery';
 
 @observer
 class News extends React.Component<{}> {
-
     readonly source = remoteData<string>(async () => {
-        return await $.get("https://raw.githubusercontent.com/leexgh/genome-nexus-frontend/news-page/src/doc/News.md");
+        return await $.get(
+            'https://raw.githubusercontent.com/leexgh/genome-nexus-frontend/news-page/src/doc/News.md'
+        );
     });
 
     public render() {
-        // return (
-        //     <ReactMarkdown
-        //         components={{}}
-        //         className={'markdown-body'}
-        //         children={this.source.result!}
-        //         rehypePlugins={[rehypeRaw, rehypeSanitize, remarkGfm]}
-        //     />
-        // );
-
-        const BlogImage = (props: any) => {
-            return <img {...props} style={{ maxWidth: "100%" }} alt=""/>
-        }
-
+        const ContentImage = (props: any) => {
+            return <img {...props} style={{ maxWidth: '100%' }} alt="" />;
+        };
         return (
             <div>
-                {this.source.isComplete &&
-                    (
-                        <ReactMarkdown
-                            components={{ image: BlogImage }}
-                            className={'markdown-body'}
-                            children={this.source.result!}
-                            rehypePlugins={[rehypeRaw, rehypeSanitize, remarkGfm]}
-                        />
-                    )}
+                {this.source.isComplete && (
+                    <ReactMarkdown
+                        components={{ image: ContentImage }}
+                        className={'markdown-body'}
+                        children={this.source.result!}
+                        rehypePlugins={[rehypeRaw, rehypeSanitize, remarkGfm]}
+                    />
+                )}
             </div>
         );
     }

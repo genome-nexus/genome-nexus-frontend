@@ -49,11 +49,7 @@ class Main extends React.Component<{}> {
                                 path="/patient"
                                 component={Patient}
                             />
-                            <Route
-                                exact={true}
-                                path="/news"
-                                component={News}
-                            />
+                            <Route exact={true} path="/news" component={News} />
                             <Route exact={true} path="/api" component={Api} />
                         </Switch>
                     </div>

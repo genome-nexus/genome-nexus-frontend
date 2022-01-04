@@ -62,7 +62,7 @@
   "scripts": {
     "start": "PORT=3088 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-markdown)/\"",
     "eject": "react-scripts eject",
     "prettier": "prettier --config ./.prettierrc.js --write './src/**'",
     "test-prettier": "prettier --config ./.prettierrc.js -c './src/**'"

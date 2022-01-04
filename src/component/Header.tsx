@@ -50,10 +50,7 @@ class Header extends React.Component<{}> {
                                 >
                                     About
                                 </Nav.Link>
-                                <Nav.Link
-                                    href="/news"
-                                    className="ml-5"
-                                >
+                                <Nav.Link href="/news" className="ml-5">
                                     News
                                 </Nav.Link>
                             </Nav>
