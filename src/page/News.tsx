@@ -12,7 +12,7 @@ import $ from 'jquery';
 class News extends React.Component<{}> {
     readonly source = remoteData<string>(async () => {
         return await $.get(
-            'https://raw.githubusercontent.com/leexgh/genome-nexus-frontend/news-page/src/doc/News.md'
+            'https://raw.githubusercontent.com/genome-nexus/genome-nexus-frontend/master/src/doc/News.md'
         );
     });
 
