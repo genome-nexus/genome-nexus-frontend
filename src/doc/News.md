@@ -5,27 +5,32 @@
 
 ## Nov 04, 2021
 
--   **Website New Feature**: Add UniProt topology track to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add UniProt topology track to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148010730-e3d7463b-1cec-4b78-a0bc-2a7e7d8f65eb.png" />
 
 ## Sep 30, 2021
 
--   **Website New Feature**: Add exon track to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add exon track to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148010884-4ed57f8e-cb7b-4357-84b0-1a678a907f8d.png" />
 
 ## Sep 02, 2021
 
--   **Website New Feature**: Add [SIGNAL](https://www.signaldb.org/) to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add [SIGNAL](https://www.signaldb.org/) to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148010990-431f5dc8-fec0-4d92-bfda-1d8039b88158.png" />
 
 ## Aug 18, 2021
 
--   **Website New Feature**: Add CIViC to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add CIViC to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148011094-b9e51146-5e39-4730-b23f-d770036cd4b5.png" />
 
 ## Jun 10, 2021
 
--   **Website New Feature**: Add ClinVar to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add ClinVar to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148011187-29836206-5ddd-41ee-baee-15a00641b11e.png" />
 
 ## Apr 12, 2021
@@ -85,16 +90,18 @@
 ## Feb 04, 2020
 
 -   **API Update**: Add [OncoKB](https://www.oncokb.org/) to annotation endpoints.
-    -   Please get your license fron [OncoKB](https://www.oncokb.org/) first and paste your `token` to API.
+    -   Please get your license from [OncoKB](https://www.oncokb.org/) first and paste your `token` to API.
 
 ## Dec 10, 2019
 
--   **Website New Feature**: Add [OncoKB](https://www.oncokb.org/) to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add [OncoKB](https://www.oncokb.org/) to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148015041-92655b1f-a9c3-40d4-9c19-036ca7c1df89.png" />
 
 ## Dec 03, 2019
 
--   **Website New Feature**: Add Functional prediction and Population prevalence to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add Functional prediction and Population prevalence to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148015515-2fe48e0b-da87-4406-a46e-d877bf524bcb.png" />
 
 ## Oct 18, 2019
@@ -104,17 +111,19 @@
 
 ## Sep 18, 2019
 
--   **Website New Feature**: Add mutation mapper lollipop to variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add mutation mapper lollipop to variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148015718-c0cfe2bb-dc6a-4a7d-b4b6-71a65e3e635a.png" />
 
 ## Sep 18, 2019
 
--   **Website New Feature**: Add variant page. \* [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+-   **Website New Feature**: Add variant page. 
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
     <img src="https://user-images.githubusercontent.com/16869603/148015822-887a52f4-bfa3-4ae9-b00d-7e27aff90bd3.png" />
 
 ## Aug 15, 2019
 
--   **API Update**: Add an API end point for MSK Insight (SIGNAL) mutations.
+-   **API Update**: Add an API endpoint for MSK Insight (SIGNAL) mutations.
     -   [Example: BRCA1](https://www.genomenexus.org/signal/mutation?hugoGeneSymbol=BRCA1)
 
 ## May 08, 2019
