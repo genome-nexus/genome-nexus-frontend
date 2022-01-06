@@ -10,6 +10,7 @@ import Variant from './Variant';
 import Api from './Api';
 import { VariantStore } from './VariantStore';
 import { observer } from 'mobx-react';
+import News from './News';
 
 @observer
 class Main extends React.Component<{}> {
@@ -48,6 +49,7 @@ class Main extends React.Component<{}> {
                                 path="/patient"
                                 component={Patient}
                             />
+                            <Route exact={true} path="/news" component={News} />
                             <Route exact={true} path="/api" component={Api} />
                         </Switch>
                     </div>
