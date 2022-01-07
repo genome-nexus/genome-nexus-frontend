@@ -143,11 +143,18 @@ class Variant extends React.Component<IVariantProps> {
             mutation[0].gene.hugoGeneSymbol.length !== 0 &&
             this.props.store.getMutationMapperStore !== undefined
         ) {
+            const store = this.props.store.getMutationMapperStore;
+            store.setSelectedTranscript(
+                getTranscriptConsequenceSummary(
+                    this.props.store.annotationSummary,
+                    this.props.store.selectedTranscript
+                )?.transcriptId
+            );
             return (
                 <GenomeNexusMutationMapper
                     genomeNexusUrl={genomeNexusApiRoot}
                     data={mutation}
-                    store={this.props.store.getMutationMapperStore}
+                    store={store}
                     tracks={[
                         TrackName.CancerHotspots,
                         TrackName.OncoKB,
