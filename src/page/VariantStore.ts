@@ -96,7 +96,7 @@ export class VariantStore {
             const indexedAnnotation: {
                 [genomicLocation: string]: VariantAnnotation;
             } = {};
-            if (this.annotation.result?.annotation_summary.genomicLocation) {
+            if (this.annotation.result?.annotation_summary?.genomicLocation) {
                 indexedAnnotation[
                     genomicLocationString(
                         this.annotation.result.annotation_summary
