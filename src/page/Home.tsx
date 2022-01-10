@@ -8,7 +8,9 @@ import './Home.scss';
 import logo from '../image/home_page_logo.png';
 import { isVariantValid } from '../util/variantValidator';
 import client from './genomeNexusClientInstance';
-import { ErrorType } from '../component/ValidatorNotification';
+import ValidatorNotification, {
+    ErrorType,
+} from '../component/ValidatorNotification';
 import { Link } from 'react-router-dom';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 
@@ -270,6 +272,11 @@ class Home extends React.Component<{ history: any }> {
                             {searchExample}
                         </Col>
                     </Row>
+                    <ValidatorNotification
+                        showAlert={this.alert}
+                        type={this.alertType}
+                        onClose={this.onClose}
+                    />
                 </div>
             </div>
         );
