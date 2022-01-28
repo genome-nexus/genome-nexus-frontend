@@ -2,14 +2,14 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
-import { SignalTable } from 'react-mutation-mapper';
+import { getSingleSignalValue, SignalTable } from 'react-mutation-mapper';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 import { variantToMutation } from '../../../util/variantUtils';
-import { RemoteData } from 'cbioportal-utils';
-import { getSignalValue } from 'react-mutation-mapper';
+import { Mutation, Pathogenicity, RemoteData } from 'cbioportal-utils';
 import Toggle from '../../Toggle';
 import { action, makeObservable, observable } from 'mobx';
 import { Collapse } from 'react-bootstrap';
+import _ from 'lodash';
 
 const DEFAULT_SIGNAL_URL = 'https://www.signaldb.org/';
 
@@ -57,9 +57,54 @@ const SignalInfo: React.FunctionComponent<{
     );
 };
 
+const FrequencyRow: React.FunctionComponent<{
+    mutationType: Pathogenicity;
+    frequency: number;
+    signalUrl: string;
+    mutation: Mutation;
+    isSignalTableOpen: boolean;
+    onToggleSignalTable: () => void;
+    indexAnnotationsByGenomicLocationPromise: RemoteData<{
+        [genomicLocation: string]: VariantAnnotation;
+    }>;
+}> = (props) => {
+    return (
+        <div>
+            <span className={functionalGroupsStyle['data-with-link']}>
+                <a
+                    href={props.signalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {`${_.upperFirst(props.mutationType)}: `}
+                    {props.frequency}
+                </a>
+            </span>
+            <Toggle
+                isOpen={props.isSignalTableOpen}
+                textWhenOpen="Close table"
+                textWhenClosed="Frequency breakdown"
+                onToggle={props.onToggleSignalTable}
+            />
+            <Collapse in={props.isSignalTableOpen}>
+                <div className={functionalGroupsStyle['frequency-table']}>
+                    <SignalTable
+                        mutation={props.mutation}
+                        indexedVariantAnnotations={
+                            props.indexAnnotationsByGenomicLocationPromise
+                        }
+                        mutationType={props.mutationType}
+                    />
+                </div>
+            </Collapse>
+        </div>
+    );
+};
+
 @observer
 class Signal extends React.Component<ISignalProps> {
-    @observable showSignalTable = false;
+    @observable showSignalGermlineTable = false;
+    @observable showSignalSomaticTable = false;
 
     constructor(props: ISignalProps) {
         super(props);
@@ -71,52 +116,55 @@ class Signal extends React.Component<ISignalProps> {
         const mutation = variantToMutation(
             this.props.variantAnnotation?.annotation_summary
         );
-        const signalValue = getSignalValue(
+        const signalGermlineValue = getSingleSignalValue(
             mutation[0],
+            Pathogenicity.GERMLINE,
+            this.props.indexAnnotationsByGenomicLocationPromise
+        );
+
+        const signalSomaticValue = getSingleSignalValue(
+            mutation[0],
+            Pathogenicity.SOMATIC,
             this.props.indexAnnotationsByGenomicLocationPromise
         );
         if (
             this.props.indexAnnotationsByGenomicLocationPromise.result &&
-            signalValue !== null
+            (signalGermlineValue || signalSomaticValue)
         ) {
+            const commonProps = {
+                signalUrl: signalUrl,
+                mutation: mutation[0],
+                indexAnnotationsByGenomicLocationPromise:
+                    this.props.indexAnnotationsByGenomicLocationPromise,
+            };
             return (
                 <div className={functionalGroupsStyle['functional-group']}>
                     <div className={functionalGroupsStyle['data-source']}>
                         <SignalInfo url={signalUrl} />
                     </div>
                     <div>
-                        <span
-                            className={functionalGroupsStyle['data-with-link']}
-                        >
-                            <a
-                                href={signalUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {signalValue}
-                            </a>
-                        </span>
-                        <Toggle
-                            isOpen={this.showSignalTable}
-                            textWhenOpen="Close table"
-                            textWhenClosed="Frequency breakdown"
-                            onToggle={this.onToggleSignalTable}
-                        />
-                        <Collapse in={this.showSignalTable}>
-                            <div
-                                className={
-                                    functionalGroupsStyle['frequency-table']
+                        {signalGermlineValue && (
+                            <FrequencyRow
+                                mutationType={Pathogenicity.GERMLINE}
+                                frequency={signalGermlineValue}
+                                isSignalTableOpen={this.showSignalGermlineTable}
+                                onToggleSignalTable={
+                                    this.onToggleSignalGermlineTable
                                 }
-                            >
-                                <SignalTable
-                                    mutation={mutation[0]}
-                                    indexedVariantAnnotations={
-                                        this.props
-                                            .indexAnnotationsByGenomicLocationPromise
-                                    }
-                                />
-                            </div>
-                        </Collapse>
+                                {...commonProps}
+                            />
+                        )}
+                        {signalSomaticValue && (
+                            <FrequencyRow
+                                mutationType={Pathogenicity.SOMATIC}
+                                frequency={signalSomaticValue}
+                                isSignalTableOpen={this.showSignalSomaticTable}
+                                onToggleSignalTable={
+                                    this.onToggleSignalSomaticTable
+                                }
+                                {...commonProps}
+                            />
+                        )}
                     </div>
                 </div>
             );
@@ -141,8 +189,13 @@ class Signal extends React.Component<ISignalProps> {
     }
 
     @action
-    onToggleSignalTable = () => {
-        this.showSignalTable = !this.showSignalTable;
+    onToggleSignalGermlineTable = () => {
+        this.showSignalGermlineTable = !this.showSignalGermlineTable;
+    };
+
+    @action
+    onToggleSignalSomaticTable = () => {
+        this.showSignalSomaticTable = !this.showSignalSomaticTable;
     };
 }
 

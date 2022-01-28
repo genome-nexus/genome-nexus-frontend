@@ -143,11 +143,7 @@ const searchTooltipContent = (
             <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
         </div>
         <div>
-            <Link
-                to={`/variant/17:g.41223015_41223016del?transcriptId=ENST00000478531`}
-            >
-                BRCA1:c.68_69del
-            </Link>
+            <Link to={`/variant/13:g.32914438del`}>BRCA2:c.5946del</Link>
         </div>
         <div>
             <Link to={`/variant/7:g.55249012_55249013insGGGTTA`}>
