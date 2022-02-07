@@ -44,3 +44,12 @@ export function getProteinPosStart(proteinChange: string | undefined) {
     const proteinPosition = getProteinPositionFromProteinChange(proteinChange);
     return proteinPosition ? proteinPosition.start : -1;
 }
+
+export function variantToGenomicLocationString(
+    data: VariantAnnotationSummary | undefined
+) {
+    const genomicLocation = data?.genomicLocation;
+    return genomicLocation
+        ? `${genomicLocation.chromosome},${genomicLocation.start},${genomicLocation.end},${genomicLocation.referenceAllele},${genomicLocation.variantAllele}`
+        : '';
+}

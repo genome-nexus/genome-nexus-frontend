@@ -102,3 +102,15 @@
         }
     }
 }
+
+.without-linkout {
+    color: #007bff;
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+        color: #007bff;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}

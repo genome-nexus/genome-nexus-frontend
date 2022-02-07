@@ -455,6 +455,9 @@ class Variant extends React.Component<IVariantProps> {
                                             ]: VariantAnnotation;
                                         }>
                                     }
+                                    curiousCases={
+                                        this.props.store.curiousCases.result
+                                    }
                                 />
                             </Col>
                         </Row>

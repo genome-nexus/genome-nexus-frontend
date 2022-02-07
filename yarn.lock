@@ -6916,6 +6916,14 @@ genome-nexus-ts-api-client@^1.1.19:
     superagent "^3.8.3"
     typescript "4.0.3"
 
+genome-nexus-ts-api-client@^1.1.20:
+  version "1.1.20"
+  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.20.tgz#a0a4ef3853f918edd73a16ce620b84cbe7eb0917"
+  integrity sha512-PzyQGVdZiyHWfwGvQU93UKsONpeovkaVFcbListrXKvnckENBSZzQIbN4BZoRWQA7V0Z1hllpoyN07VUZp5l3A==
+  dependencies:
+    superagent "^3.8.3"
+    typescript "4.0.3"
+
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
