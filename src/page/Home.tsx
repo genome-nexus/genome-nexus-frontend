@@ -265,6 +265,13 @@ class Home extends React.Component<{ history: any }> {
                     </Row>
                     <Row className="mb-5">
                         <Col md={10} className="mx-auto text-center">
+                            
+                            <div>
+                                {`Reference genome: GRCh37. `}
+                                <a href="https://grch38.genomenexus.org" target="_top">
+                                    Swtich to GRCh38.
+                                </a>
+                            </div>
                             {searchExample}
                         </Col>
                     </Row>

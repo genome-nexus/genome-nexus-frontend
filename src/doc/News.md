@@ -92,6 +92,11 @@
 -   **API Update**: Add [OncoKB](https://www.oncokb.org/) to annotation endpoints.
     -   Please get your license from [OncoKB](https://www.oncokb.org/) first and paste your `token` to API.
 
+## Jan 23, 2020
+
+-   **Updates**: Integrated in [cBioPortal](https://www.cbioportal.org/). 
+    -   Click [example query](https://www.cbioportal.org/results/mutations?cancer_study_list=ov_tcga_pub&cancer_study_id=ov_tcga_pub&genetic_profile_ids_PROFILE_MUTATION_EXTENDED=ov_tcga_pub_mutations&Z_SCORE_THRESHOLD=2.0&case_set_id=ov_tcga_pub_3way_complete&gene_list=BRCA1+BRCA2&gene_set_choice=user-defined-list), click `Columns` button and add `HGVSg` to the table. Every HGVSg link goes to corresponding Genome Nexus variant page.
+
 ## Dec 10, 2019
 
 -   **Website New Feature**: Add [OncoKB](https://www.oncokb.org/) to variant page.
