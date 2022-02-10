@@ -13,20 +13,37 @@ import ValidatorNotification, {
 } from '../component/ValidatorNotification';
 import { Link } from 'react-router-dom';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import { MORE_EXAMPLE_DATA_GRCh37, MORE_EXAMPLE_DATA_GRCh38, SEARCH_BAR_EXAMPLE_DATA_GRCh37, SEARCH_BAR_EXAMPLE_DATA_GRCh38, TABLE_EXAMPLE_DATA_GRCh37, TABLE_EXAMPLE_DATA_GRCh38 } from '../util/SearchUtils';
+import {
+    MORE_EXAMPLE_DATA_GRCh37,
+    MORE_EXAMPLE_DATA_GRCh38,
+    SEARCH_BAR_EXAMPLE_DATA_GRCh37,
+    SEARCH_BAR_EXAMPLE_DATA_GRCh38,
+    TABLE_EXAMPLE_DATA_GRCh37,
+    TABLE_EXAMPLE_DATA_GRCh38,
+} from '../util/SearchUtils';
 
 enum GENOME_BUILD {
     GRCh37 = 'GRCh37',
     GRCh38 = 'GRCh38',
 }
 
-const SearchTooltipContent: React.FunctionComponent<{genomeBuild: string}> = (props) => {
-    const tableExamples = props.genomeBuild === GENOME_BUILD.GRCh37 ? TABLE_EXAMPLE_DATA_GRCh37 : TABLE_EXAMPLE_DATA_GRCh38;
-    const moreExamples = props.genomeBuild === GENOME_BUILD.GRCh37 ? MORE_EXAMPLE_DATA_GRCh37 : MORE_EXAMPLE_DATA_GRCh38;
+const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
+    props
+) => {
+    const tableExamples =
+        props.genomeBuild === GENOME_BUILD.GRCh37
+            ? TABLE_EXAMPLE_DATA_GRCh37
+            : TABLE_EXAMPLE_DATA_GRCh38;
+    const moreExamples =
+        props.genomeBuild === GENOME_BUILD.GRCh37
+            ? MORE_EXAMPLE_DATA_GRCh37
+            : MORE_EXAMPLE_DATA_GRCh38;
 
     return (
         <>
-            <strong style={{ fontSize: 16 }}>How to search on Genome Nexus</strong>
+            <strong style={{ fontSize: 16 }}>
+                How to search on Genome Nexus
+            </strong>
             <br />
             <strong>Valid input:</strong>
             <Table bordered hover size="sm">
@@ -37,49 +54,49 @@ const SearchTooltipContent: React.FunctionComponent<{genomeBuild: string}> = (pr
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        tableExamples.map(data => (
-                            <tr>
-                                <td>{data.format}</td>
-                                <td>
-                                    <Link to={data.link}>
-                                        {data.label}
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))
-                    }
+                    {tableExamples.map((data) => (
+                        <tr>
+                            <td>{data.format}</td>
+                            <td>
+                                <Link to={data.link}>{data.label}</Link>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
             <strong>More examples:</strong>
-            {
-                moreExamples.map(data => (
-                    <div>
-                        <Link to={data.link}>{data.label}</Link>
-                    </div>
-                ))
-            }
+            {moreExamples.map((data) => (
+                <div>
+                    <Link to={data.link}>{data.label}</Link>
+                </div>
+            ))}
         </>
-    )
+    );
 };
 
-const SearchExample: React.FunctionComponent<{genomeBuild: string}> = (props) => (
+const SearchExample: React.FunctionComponent<{ genomeBuild: string }> = (
+    props
+) => (
     <>
         <strong>Examples</strong>:{' '}
-        {
-            props.genomeBuild === GENOME_BUILD.GRCh37 ? SEARCH_BAR_EXAMPLE_DATA_GRCh37.map((data, index) => (
-                <>
-                    <Link to={data.link}>{data.label}</Link>
-                    {/* Add comma and whitespace between examples */}
-                    {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh37.length - 1 && (<>,{' '}</>)}
-                </>
-            )) : SEARCH_BAR_EXAMPLE_DATA_GRCh38.map((data, index) => (
-                <>
-                    <Link to={data.link}>{data.label}</Link>
-                    {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh38.length - 1 && (<>,{' '}</>)}
-                </>
-            ))
-        }
+        {props.genomeBuild === GENOME_BUILD.GRCh37
+            ? SEARCH_BAR_EXAMPLE_DATA_GRCh37.map((data, index) => (
+                  <>
+                      <Link to={data.link}>{data.label}</Link>
+                      {/* Add comma and whitespace between examples */}
+                      {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh37.length - 1 && (
+                          <>, </>
+                      )}
+                  </>
+              ))
+            : SEARCH_BAR_EXAMPLE_DATA_GRCh38.map((data, index) => (
+                  <>
+                      <Link to={data.link}>{data.label}</Link>
+                      {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh38.length - 1 && (
+                          <>, </>
+                      )}
+                  </>
+              ))}
     </>
 );
 
@@ -162,7 +179,11 @@ class Home extends React.Component<{ history: any }> {
                             <DefaultTooltip
                                 trigger="click"
                                 placement="right"
-                                overlay={<SearchTooltipContent genomeBuild={this.genomeBuild}/>}
+                                overlay={
+                                    <SearchTooltipContent
+                                        genomeBuild={this.genomeBuild}
+                                    />
+                                }
                                 destroyTooltipOnHide={true}
                                 visible={this.searchTooltipVisibility}
                             >
@@ -181,13 +202,25 @@ class Home extends React.Component<{ history: any }> {
                     </Row>
                     <Row className="mb-5">
                         <Col md={10} className="mx-auto text-center">
-                            <div style={{color: 'gray', fontSize: '14px'}}>
+                            <SearchExample genomeBuild={this.genomeBuild} />
+                            <div style={{ color: 'gray', fontSize: '14px' }}>
                                 {`Genome build: ${this.genomeBuild}`}
-                                <a href={this.genomeBuild === GENOME_BUILD.GRCh37 ? "https://grch38.genomenexus.org" : "https://www.genomenexus.org"} target="_top" style={{marginLeft: '14px'}}>
-                                    Switch to {this.genomeBuild === GENOME_BUILD.GRCh37 ? GENOME_BUILD.GRCh38 : GENOME_BUILD.GRCh37}
+                                <a
+                                    href={
+                                        this.genomeBuild === GENOME_BUILD.GRCh37
+                                            ? 'https://grch38.genomenexus.org'
+                                            : 'https://www.genomenexus.org'
+                                    }
+                                    target="_top"
+                                    style={{ marginLeft: '14px' }}
+                                >
+                                    Go to{' '}
+                                    {this.genomeBuild === GENOME_BUILD.GRCh37
+                                        ? GENOME_BUILD.GRCh38
+                                        : GENOME_BUILD.GRCh37}
+                                    (Beta)
                                 </a>
                             </div>
-                            <SearchExample genomeBuild={this.genomeBuild}/>
                         </Col>
                     </Row>
                     <ValidatorNotification

@@ -20,7 +20,7 @@ export const SEARCH_BAR_EXAMPLE_DATA_GRCh37 = [
     {
         link: '/variant/17:g.7577121G>A',
         label: 'TP53 R273C',
-    }
+    },
 ];
 
 export const SEARCH_BAR_EXAMPLE_DATA_GRCh38 = [
@@ -43,7 +43,7 @@ export const SEARCH_BAR_EXAMPLE_DATA_GRCh38 = [
     {
         link: '/variant/17:g.7673803G>A',
         label: 'TP53 R273C',
-    }
+    },
 ];
 
 export const TABLE_EXAMPLE_DATA_GRCh37 = [
@@ -180,7 +180,7 @@ export const MORE_EXAMPLE_DATA_GRCh37 = [
     {
         link: '/variant/17:g.41276044A>T',
         label: 'rs80357410',
-    }
+    },
 ];
 
 export const MORE_EXAMPLE_DATA_GRCh38 = [
@@ -213,7 +213,7 @@ export const MORE_EXAMPLE_DATA_GRCh38 = [
     {
         link: '/variant/17:g.43124027A>T',
         label: 'rs80357410',
-    }
+    },
 ];
 
 export function normalizeSearchText(keyword: string) {
