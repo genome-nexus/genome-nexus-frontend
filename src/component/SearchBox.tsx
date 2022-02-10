@@ -24,7 +24,6 @@ interface ISearchBoxProps {
     styles?: CSSRule;
     history?: any;
     placeholder?: string;
-    exampleOptions: Option[];
     onChange?: (input: string) => void;
     onSearch: () => void;
     changeSearchTooltipVisibility: () => void;

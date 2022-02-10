@@ -121,9 +121,9 @@ export default class Oncokb extends React.Component<IOncokbProps> {
         if (mutationEffect && oncogenicity) {
             biologicalFunctionData = `${mutationEffect}, ${oncogenicity}`;
         } else if (mutationEffect) {
-            biologicalFunctionData = oncogenicity;
-        } else if (oncogenicity) {
             biologicalFunctionData = mutationEffect;
+        } else if (oncogenicity) {
+            biologicalFunctionData = oncogenicity;
         } else {
             biologicalFunctionData = 'N/A';
         }

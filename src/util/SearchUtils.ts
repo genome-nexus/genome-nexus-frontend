@@ -1,5 +1,221 @@
 import _ from 'lodash';
 
+export const SEARCH_BAR_EXAMPLE_DATA_GRCh37 = [
+    // 0 Search bar example
+    {
+        link: '/variant/7:g.55249071C>T',
+        label: 'EGFR:p.T790M',
+    },
+    // 1 Search bar example
+    {
+        link: '/variant/7:g.140453136A>T',
+        label: '7:g.140453136A>T',
+    },
+    // 2 Search bar example
+    {
+        link: '/variant/17:g.41276044A>T',
+        label: 'rs80357410',
+    },
+    // 3 Search bar example
+    {
+        link: '/variant/17:g.7577121G>A',
+        label: 'TP53 R273C',
+    }
+];
+
+export const SEARCH_BAR_EXAMPLE_DATA_GRCh38 = [
+    // 0 Search bar example
+    {
+        link: '/variant/7:g.55181378C>T',
+        label: 'EGFR:p.T790M',
+    },
+    // 1 Search bar example
+    {
+        link: '/variant/7:g.140753336A>T',
+        label: '7:g.140753336A>T',
+    },
+    // 2 Search bar example
+    {
+        link: '/variant/17:g.43124027A>T',
+        label: 'rs80357410',
+    },
+    // 3 Search bar example
+    {
+        link: '/variant/17:g.7673803G>A',
+        label: 'TP53 R273C',
+    }
+];
+
+export const TABLE_EXAMPLE_DATA_GRCh37 = [
+    // 0 Table example
+    {
+        format: 'Gene:p.Protein-change',
+        link: '/variant/7:g.140453136A>T',
+        label: 'BRAF:p.V600E',
+    },
+    // 1 Table example
+    {
+        format: 'Gene p.Protein-change',
+        link: '/variant/7:g.140453136A>T',
+        label: 'BRAF p.V600E',
+    },
+    // 2 Table example
+    {
+        format: 'Gene Protein-change',
+        link: '/variant/7:g.140453136A>T',
+        label: 'BRAF V600E',
+    },
+    // 3 Table example
+    {
+        format: 'Gene:c.cDNA',
+        link: '/variant/7:g.140453136A>T',
+        label: 'BRAF:c.1799T>A',
+    },
+    // 4 Table example
+    {
+        format: 'Gene c.cDNA',
+        link: '/variant/7:g.140453136A>T',
+        label: 'BRAF c.1799T>A',
+    },
+
+    // 5 Table example
+    {
+        format: 'HGVSg',
+        link: '/variant/7:g.140453136A>T',
+        label: '7:g.140453136A>T',
+    },
+    // 6 Table example
+    {
+        format: 'HGVSc',
+        link: '/variant/7:g.140453136A>T?transcriptId=ENST00000288602',
+        label: 'ENST00000288602.6:c.1799T>A',
+    },
+    // 7 Table example
+    {
+        format: 'rs id',
+        link: '/variant/7:g.140453136A>T',
+        label: 'rs113488022',
+    },
+];
+
+export const TABLE_EXAMPLE_DATA_GRCh38 = [
+    // 0 Table example
+    {
+        format: 'Gene:p.Protein-change',
+        link: '/variant/7:g.140753336A>T',
+        label: 'BRAF:p.V600E',
+    },
+    // 1 Table example
+    {
+        format: 'Gene p.Protein-change',
+        link: '/variant/7:g.140753336A>T',
+        label: 'BRAF p.V600E',
+    },
+    // 2 Table example
+    {
+        format: 'Gene Protein-change',
+        link: '/variant/7:g.140753336A>T',
+        label: 'BRAF V600E',
+    },
+    // 3 Table example
+    {
+        format: 'Gene:c.cDNA',
+        link: '/variant/7:g.140753336A>T',
+        label: 'BRAF:c.1799T>A',
+    },
+    // 4 Table example
+    {
+        format: 'Gene c.cDNA',
+        link: '/variant/7:g.140753336A>T',
+        label: 'BRAF c.1799T>A',
+    },
+
+    // 5 Table example
+    {
+        format: 'HGVSg',
+        link: '/variant/7:g.140753336A>T',
+        label: '7:g.140753336A>T',
+    },
+    // 6 Table example
+    {
+        format: 'HGVSc',
+        link: '/variant/7:g.140753336A>T?transcriptId=ENST00000288602',
+        label: 'ENST00000288602.6:c.1799T>A',
+    },
+    // 7 Table example
+    {
+        format: 'rs id',
+        link: '/variant/7:g.140753336A>T',
+        label: 'rs113488022',
+    },
+];
+
+export const MORE_EXAMPLE_DATA_GRCh37 = [
+    // 0 More example
+    {
+        link: '/variant/5:g.1295228G>A',
+        label: '5:g.1295228G>A',
+    },
+    // 1 More example
+    {
+        link: '/variant/7:g.55249071C>T',
+        label: 'EGFR p.T790M',
+    },
+    // 2 More example
+    {
+        link: '/variant/17:g.7577121G>A',
+        label: 'TP53 R273C',
+    },
+    // 3 More example
+    {
+        link: '/variant/13:g.32914438del',
+        label: 'BRCA2:c.5946del',
+    },
+    // 4 More example
+    {
+        link: '/variant/7:g.55249012_55249013insGGGTTA',
+        label: 'EGFR p.D770_N771insGL',
+    },
+    // 5 More example
+    {
+        link: '/variant/17:g.41276044A>T',
+        label: 'rs80357410',
+    }
+];
+
+export const MORE_EXAMPLE_DATA_GRCh38 = [
+    // 0 More example
+    {
+        link: '/variant/5:g.1295113G>A',
+        label: '5:g.1295113G>A',
+    },
+    // 1 More example
+    {
+        link: '/variant/7:g.55181378C>T',
+        label: 'EGFR p.T790M',
+    },
+    // 2 More example
+    {
+        link: '/variant/17:g.7673803G>A',
+        label: 'TP53 R273C',
+    },
+    // 3 More example
+    {
+        link: '/variant/13:g.32340301del',
+        label: 'BRCA2:c.5946del',
+    },
+    // 4 More example
+    {
+        link: '/variant/7:g.55181319_55181320insGGGTTA',
+        label: 'EGFR p.D770_N771insGL',
+    },
+    // 5 More example
+    {
+        link: '/variant/17:g.43124027A>T',
+        label: 'rs80357410',
+    }
+];
+
 export function normalizeSearchText(keyword: string) {
     // convert search text to upper case
     if (
