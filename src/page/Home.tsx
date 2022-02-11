@@ -1,4 +1,4 @@
-import { action, observable, computed, makeObservable } from 'mobx';
+import { action, observable, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Button, Col, Image, Row, Table } from 'react-bootstrap';
@@ -13,156 +13,90 @@ import ValidatorNotification, {
 } from '../component/ValidatorNotification';
 import { Link } from 'react-router-dom';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import {
+    MORE_EXAMPLE_DATA_GRCh37,
+    MORE_EXAMPLE_DATA_GRCh38,
+    SEARCH_BAR_EXAMPLE_DATA_GRCh37,
+    SEARCH_BAR_EXAMPLE_DATA_GRCh38,
+    TABLE_EXAMPLE_DATA_GRCh37,
+    TABLE_EXAMPLE_DATA_GRCh38,
+} from '../util/SearchUtils';
 
 enum GENOME_BUILD {
     GRCh37 = 'GRCh37',
     GRCh38 = 'GRCh38',
 }
-const EXAMPLE_DATA_GRCh37 = [
-    {
-        value: '7:g.140453136A>T',
-        label: '7:g.140453136A>T (BRAF p.V600E)',
-    },
-    {
-        value: '5:g.1295228G>A',
-        label: '5:g.1295228G>A (TERT Promotor mutation)',
-    },
-    {
-        value: '17:g.41276045_41276046del',
-        label: '17:g.41276045_41276046del (BRCA1 c.68_69del/p.E23Vfs)',
-    },
-    {
-        value: '17:g.7577121G>A',
-        label: '17:g.7577121G>A (TP53 p.R273C)',
-    },
-];
 
-const EXAMPLE_DATA_GRCh38 = [
-    {
-        value: '17:g.39723967T>C',
-        label: '17:g.39723967T>C (ERBB2 L755S)',
-    },
-    { value: '7:g.55181378C>T', label: '7:g.55181378C>T (EGFR T790M)' },
-    {
-        value: '7:g.55174775_55174788delinsAC',
-        label: '7:g.55174775_55174788delinsAC (EGFR L747_T751delinsP)',
-    },
-    {
-        value: '7:g.55181324_55181325insCCA',
-        label: '7:g.55181324_55181325insCCA (EGFR H773dup)',
-    },
-];
+const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
+    props
+) => {
+    const tableExamples =
+        props.genomeBuild === GENOME_BUILD.GRCh37
+            ? TABLE_EXAMPLE_DATA_GRCh37
+            : TABLE_EXAMPLE_DATA_GRCh38;
+    const moreExamples =
+        props.genomeBuild === GENOME_BUILD.GRCh37
+            ? MORE_EXAMPLE_DATA_GRCh37
+            : MORE_EXAMPLE_DATA_GRCh38;
 
-const searchTooltipContent = (
-    <>
-        <strong style={{ fontSize: 16 }}>How to search on Genome Nexus</strong>
-        <br />
-        <strong>Valid input:</strong>
-        <Table bordered hover size="sm">
-            <thead>
-                <tr>
-                    <th>Format</th>
-                    <th>Example</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Gene:p.Protein-change</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            BRAF:p.V600E
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gene p.Protein-change</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            BRAF p.V600E
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gene Protein-change</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>BRAF V600E</Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gene:c.cDNA</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            BRAF:c.1799T{'>'}A
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gene c.cDNA</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            BRAF c.1799T{'>'}A
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>HGVSg</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            7:g.140453136A{'>'}T
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>HGVSc</td>
-                    <td>
-                        <Link
-                            to={`/variant/7:g.140453136A>T?transcriptId=ENST00000288602`}
-                        >
-                            ENST00000288602.6:c.1799T{'>'}A
-                        </Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>rs id</td>
-                    <td>
-                        <Link to={`/variant/7:g.140453136A>T`}>
-                            rs113488022
-                        </Link>
-                    </td>
-                </tr>
-            </tbody>
-        </Table>
-        <strong>More examples:</strong>
-        <div>
-            <Link to={`/variant/5:g.1295228G>A`}>5:g.1295228G{'>'}A</Link>
-        </div>
-        <div>
-            <Link to={`/variant/7:g.55249071C>T`}>EGFR p.T790M</Link>
-        </div>
-        <div>
-            <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
-        </div>
-        <div>
-            <Link to={`/variant/13:g.32914438del`}>BRCA2:c.5946del</Link>
-        </div>
-        <div>
-            <Link to={`/variant/7:g.55249012_55249013insGGGTTA`}>
-                EGFR p.D770_N771insGL
-            </Link>
-        </div>
-        <div>
-            <Link to={`/variant/17:g.41276044A>T`}>rs80357410</Link>
-        </div>
-    </>
-);
+    return (
+        <>
+            <strong style={{ fontSize: 16 }}>
+                How to search on Genome Nexus
+            </strong>
+            <br />
+            <strong>Valid input:</strong>
+            <Table bordered hover size="sm">
+                <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableExamples.map((data) => (
+                        <tr>
+                            <td>{data.format}</td>
+                            <td>
+                                <Link to={data.link}>{data.label}</Link>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+            <strong>More examples:</strong>
+            {moreExamples.map((data) => (
+                <div>
+                    <Link to={data.link}>{data.label}</Link>
+                </div>
+            ))}
+        </>
+    );
+};
 
-const searchExample = (
+const SearchExample: React.FunctionComponent<{ genomeBuild: string }> = (
+    props
+) => (
     <>
         <strong>Examples</strong>:{' '}
-        <Link to={`/variant/7:g.55249071C>T`}>EGFR:p.T790M</Link>,{' '}
-        <Link to={`/variant/7:g.140453136A>T`}>7:g.140453136A{'>'}T</Link>,{' '}
-        <Link to={`/variant/17:g.41276044A>T`}>rs80357410</Link>,{' '}
-        <Link to={`/variant/17:g.7577121G>A`}>TP53 R273C</Link>
+        {props.genomeBuild === GENOME_BUILD.GRCh37
+            ? SEARCH_BAR_EXAMPLE_DATA_GRCh37.map((data, index) => (
+                  <>
+                      <Link to={data.link}>{data.label}</Link>
+                      {/* Add comma and whitespace between examples */}
+                      {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh37.length - 1 && (
+                          <>, </>
+                      )}
+                  </>
+              ))
+            : SEARCH_BAR_EXAMPLE_DATA_GRCh38.map((data, index) => (
+                  <>
+                      <Link to={data.link}>{data.label}</Link>
+                      {index !== SEARCH_BAR_EXAMPLE_DATA_GRCh38.length - 1 && (
+                          <>, </>
+                      )}
+                  </>
+              ))}
     </>
 );
 
@@ -238,7 +172,6 @@ class Home extends React.Component<{ history: any }> {
                             <SearchBox
                                 onChange={this.onTextChange}
                                 onSearch={this.onSearch}
-                                exampleOptions={this.exampleData}
                                 changeSearchTooltipVisibility={
                                     this.changeSearchTooltipVisibility
                                 }
@@ -246,7 +179,11 @@ class Home extends React.Component<{ history: any }> {
                             <DefaultTooltip
                                 trigger="click"
                                 placement="right"
-                                overlay={searchTooltipContent}
+                                overlay={
+                                    <SearchTooltipContent
+                                        genomeBuild={this.genomeBuild}
+                                    />
+                                }
                                 destroyTooltipOnHide={true}
                                 visible={this.searchTooltipVisibility}
                             >
@@ -265,7 +202,25 @@ class Home extends React.Component<{ history: any }> {
                     </Row>
                     <Row className="mb-5">
                         <Col md={10} className="mx-auto text-center">
-                            {searchExample}
+                            <SearchExample genomeBuild={this.genomeBuild} />
+                            <div style={{ color: 'gray', fontSize: '14px' }}>
+                                {`Genome build: ${this.genomeBuild}`}
+                                <a
+                                    href={
+                                        this.genomeBuild === GENOME_BUILD.GRCh37
+                                            ? 'https://grch38.genomenexus.org'
+                                            : 'https://www.genomenexus.org'
+                                    }
+                                    target="_top"
+                                    style={{ marginLeft: '14px' }}
+                                >
+                                    Go to{' '}
+                                    {this.genomeBuild === GENOME_BUILD.GRCh37
+                                        ? GENOME_BUILD.GRCh38
+                                        : GENOME_BUILD.GRCh37}
+                                    (Beta)
+                                </a>
+                            </div>
                         </Col>
                     </Row>
                     <ValidatorNotification
@@ -294,17 +249,6 @@ class Home extends React.Component<{ history: any }> {
         }
         this.alert = true;
     };
-
-    @computed
-    get exampleData() {
-        if (this.genomeBuild === GENOME_BUILD.GRCh37) {
-            return EXAMPLE_DATA_GRCh37;
-        } else if (this.genomeBuild === GENOME_BUILD.GRCh38) {
-            return EXAMPLE_DATA_GRCh38;
-        } else {
-            return [];
-        }
-    }
 
     @action
     changeSearchTooltipVisibility = () => {
