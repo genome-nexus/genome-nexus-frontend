@@ -216,6 +216,11 @@ export const MORE_EXAMPLE_DATA_GRCh38 = [
     },
 ];
 
+export enum GENOME_BUILD {
+    GRCh37 = 'GRCh37',
+    GRCh38 = 'GRCh38',
+}
+
 export function normalizeSearchText(keyword: string) {
     // convert search text to upper case
     if (
