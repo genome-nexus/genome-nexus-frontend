@@ -11,6 +11,7 @@ import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
 import client from '../page/genomeNexusClientInstance';
 import {
     extractHgvsg,
+    GENOME_BUILD,
     isSearchingByHgvsg,
     isSearchingByRsid,
     isValidInput,
@@ -27,6 +28,7 @@ interface ISearchBoxProps {
     onChange?: (input: string) => void;
     onSearch: () => void;
     changeSearchTooltipVisibility: () => void;
+    genomeBuild: string;
 }
 
 type Option = {
@@ -45,18 +47,32 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         makeObservable(this);
     }
 
-    private searchRecoder(keyword: string): Promise<any> {
+    private searchRecoder(keyword: string, genomeBuild: string): Promise<any> {
         keyword = normalizeInputFormatForOutsideSearch(keyword);
-        // TODO: support grch38
-        return fetch(
-            `https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`
-        );
+        return genomeBuild === GENOME_BUILD.GRCh38
+            ? fetch(
+                  `https://rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`
+              )
+            : fetch(
+                  `https://grch37.rest.ensembl.org/variant_recoder/human/${keyword}?content-type=application/json`
+              );
     }
 
-    private searchInternalDb(keyword: string): Promise<any> {
-        return fetch(
-            encodeURI(`https://www.genomenexus.org/search?keyword=${keyword}`)
-        );
+    private searchInternalDb(
+        keyword: string,
+        genomeBuild: string
+    ): Promise<any> {
+        return genomeBuild === GENOME_BUILD.GRCh38
+            ? fetch(
+                  encodeURI(
+                      `https://grch38.genomenexus.org/search?keyword=${keyword}`
+                  )
+              )
+            : fetch(
+                  encodeURI(
+                      `https://www.genomenexus.org/search?keyword=${keyword}`
+                  )
+              );
     }
 
     private getGenomeNexusDataByKeywords(keywords: string[]): Promise<any> {
@@ -68,12 +84,12 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
 
     @action
     public getInternalOptions = (keyword: string) => {
-        return this.searchInternalDb(keyword);
+        return this.searchInternalDb(keyword, this.props.genomeBuild);
     };
 
     @action
     public getRecoderOptions = (keyword: string) => {
-        return this.searchRecoder(keyword);
+        return this.searchRecoder(keyword, this.props.genomeBuild);
     };
 
     @action

@@ -14,6 +14,7 @@ import ValidatorNotification, {
 import { Link } from 'react-router-dom';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import {
+    GENOME_BUILD,
     MORE_EXAMPLE_DATA_GRCh37,
     MORE_EXAMPLE_DATA_GRCh38,
     SEARCH_BAR_EXAMPLE_DATA_GRCh37,
@@ -21,11 +22,6 @@ import {
     TABLE_EXAMPLE_DATA_GRCh37,
     TABLE_EXAMPLE_DATA_GRCh38,
 } from '../util/SearchUtils';
-
-enum GENOME_BUILD {
-    GRCh37 = 'GRCh37',
-    GRCh38 = 'GRCh38',
-}
 
 const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
     props
@@ -46,25 +42,30 @@ const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
             </strong>
             <br />
             <strong>Valid input:</strong>
-            <Table bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>Format</th>
-                        <th>Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tableExamples.map((data) => (
+            {/* Hide BRAF V600E examples for grch38 for now */}
+            {props.genomeBuild === GENOME_BUILD.GRCh37 && (
+                <Table bordered hover size="sm">
+                    <thead>
                         <tr>
-                            <td>{data.format}</td>
-                            <td>
-                                <Link to={data.link}>{data.label}</Link>
-                            </td>
+                            <th>Format</th>
+                            <th>Example</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <strong>More examples:</strong>
+                    </thead>
+                    <tbody>
+                        {tableExamples.map((data) => (
+                            <tr>
+                                <td>{data.format}</td>
+                                <td>
+                                    <Link to={data.link}>{data.label}</Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            )}
+            {props.genomeBuild === GENOME_BUILD.GRCh37 && (
+                <strong>More examples:</strong>
+            )}
             {moreExamples.map((data) => (
                 <div>
                     <Link to={data.link}>{data.label}</Link>
@@ -175,6 +176,7 @@ class Home extends React.Component<{ history: any }> {
                                 changeSearchTooltipVisibility={
                                     this.changeSearchTooltipVisibility
                                 }
+                                genomeBuild={this.genomeBuild}
                             />
                             <DefaultTooltip
                                 trigger="click"
@@ -204,7 +206,11 @@ class Home extends React.Component<{ history: any }> {
                         <Col md={10} className="mx-auto text-center">
                             <SearchExample genomeBuild={this.genomeBuild} />
                             <div style={{ color: 'gray', fontSize: '14px' }}>
-                                {`Genome build: ${this.genomeBuild}`}
+                                {`Genome build: ${this.genomeBuild}${
+                                    this.genomeBuild === GENOME_BUILD.GRCh37
+                                        ? ''
+                                        : `(Beta)`
+                                }`}
                                 <a
                                     href={
                                         this.genomeBuild === GENOME_BUILD.GRCh37
@@ -216,9 +222,8 @@ class Home extends React.Component<{ history: any }> {
                                 >
                                     Go to{' '}
                                     {this.genomeBuild === GENOME_BUILD.GRCh37
-                                        ? GENOME_BUILD.GRCh38
+                                        ? `${GENOME_BUILD.GRCh38}(Beta)`
                                         : GENOME_BUILD.GRCh37}
-                                    (Beta)
                                 </a>
                             </div>
                         </Col>
