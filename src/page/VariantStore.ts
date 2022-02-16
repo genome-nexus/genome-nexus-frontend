@@ -24,13 +24,18 @@ import {
 } from 'react-mutation-mapper';
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+import { MainStore } from './MainStore';
 
 export interface VariantStoreConfig {
     variant: string;
 }
 export class VariantStore {
     public query: any;
-    constructor(public variantId: string, public queryString: string) {
+    constructor(
+        public variantId: string,
+        public queryString: string,
+        public mainStore: MainStore
+    ) {
         makeObservable(this);
         this.variant = variantId;
         this.query = qs.parse(this.queryString, { ignoreQueryPrefix: true });
@@ -112,9 +117,11 @@ export class VariantStore {
     });
 
     readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
+        await: () => [this.mainStore.genomeBuild],
         invoke: async () => {
             return await oncokbClient.annotateMutationsByHGVSgGetUsingGET_1({
                 hgvsg: this.variant,
+                referenceGenome: this.mainStore.genomeBuild.result || undefined,
             });
         },
         onError: () => {

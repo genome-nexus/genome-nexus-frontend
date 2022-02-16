@@ -11,9 +11,11 @@ import Api from './Api';
 import { VariantStore } from './VariantStore';
 import { observer } from 'mobx-react';
 import News from './News';
+import { MainStore } from './MainStore';
 
 @observer
 class Main extends React.Component<{}> {
+    private mainStore = new MainStore();
     public render() {
         const VariantPage = (props: any) => (
             <Variant
@@ -21,10 +23,14 @@ class Main extends React.Component<{}> {
                 store={
                     new VariantStore(
                         props.match.params.variant,
-                        props.location.search
+                        props.location.search,
+                        this.mainStore
                     )
                 }
             />
+        );
+        const HomePage = (props: any) => (
+            <Home history={props.history} mainStore={this.mainStore} />
         );
 
         return (
@@ -33,7 +39,7 @@ class Main extends React.Component<{}> {
                     <Header />
                     <div>
                         <Switch>
-                            <Route exact={true} path="/" component={Home} />
+                            <Route exact={true} path="/" component={HomePage} />
                             <Route
                                 exact={true}
                                 path="/variant/:variant"
