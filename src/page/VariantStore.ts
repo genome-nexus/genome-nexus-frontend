@@ -17,7 +17,10 @@ import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
 import _ from 'lodash';
 import qs from 'qs';
-import { variantToMutation } from '../util/variantUtils';
+import {
+    variantToGenomicLocationString,
+    variantToMutation,
+} from '../util/variantUtils';
 import {
     initDefaultMutationMapperStore,
     DataFilterType,
@@ -25,6 +28,7 @@ import {
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { MainStore } from './MainStore';
+import internalclient from './genomeNexusClientInternalInstance';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -189,6 +193,20 @@ export class VariantStore {
             }
         },
         onError: () => {},
+    });
+
+    readonly curiousCases = remoteData({
+        await: () => [this.annotation],
+        invoke: async () => {
+            return internalclient.fetchCuriousCasesGET({
+                genomicLocation: encodeURIComponent(
+                    variantToGenomicLocationString(this.annotationSummary)
+                ),
+            });
+        },
+        onError: (err: Error) => {
+            // fail silently
+        },
     });
 
     @computed
