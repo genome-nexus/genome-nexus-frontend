@@ -29,10 +29,14 @@ export const SEARCH_BAR_EXAMPLE_DATA_GRCh38 = [
         link: '/variant/7:g.55181378C>T',
         label: 'EGFR:p.T790M',
     },
-    // 1 Search bar example
+    // 1 Search bar example (BRAF V600E, add this back after fixing grch38 canonical transcript mapping)
+    // {
+    //     link: '/variant/7:g.140753336A>T',
+    //     label: '7:g.140753336A>T',
+    // },
     {
-        link: '/variant/7:g.140753336A>T',
-        label: '7:g.140753336A>T',
+        link: '/variant/17:g.43124027A>T',
+        label: '17:g.43124027A>T',
     },
     // 2 Search bar example
     {
