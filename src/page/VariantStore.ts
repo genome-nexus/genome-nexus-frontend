@@ -90,6 +90,7 @@ export class VariantStore {
         invoke: async () => {
             return await genomeNexusClient.fetchVariantAnnotationGET({
                 variant: this.variant,
+                isoformOverrideSource: 'mskcc',
                 fields: annotationQueryFields(),
             });
         },
@@ -241,6 +242,7 @@ export class VariantStore {
                     },
                 ],
                 entrezGeneId: mutation[0].gene.entrezGeneId,
+                isoformOverrideSource: 'mskcc',
             });
         }
         return undefined;
