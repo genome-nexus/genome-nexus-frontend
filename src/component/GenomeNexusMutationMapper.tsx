@@ -4,6 +4,7 @@ import {
     MutationMapper as ReactMutationMapper,
     MutationMapperProps,
 } from 'react-mutation-mapper';
+
 interface IGenomeNexusMutationMapperProps extends MutationMapperProps {
     variantData?: VariantAnnotationSummary | undefined;
     onInit?: (mutationMapper: GenomeNexusMutationMapper) => void;
