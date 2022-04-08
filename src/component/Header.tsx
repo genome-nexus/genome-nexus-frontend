@@ -8,10 +8,15 @@ import './Header.css';
 class Header extends React.Component<{}> {
     public render() {
         return (
-            <header>
-                <Navbar bg="mskcc-header" expand="lg" variant="dark">
+            <header className="sticky-top">
+                <Navbar
+                    bg="mskcc-header"
+                    expand="lg"
+                    variant="dark"
+                    className="navbar-dark main-navbar"
+                >
                     <Container fluid={true}>
-                        <Navbar.Brand className="pt-0">
+                        <Navbar.Brand>
                             <Link to="/" className="brand-title-link">
                                 <Image src={squareLogo} />
                                 &nbsp;Genome Nexus

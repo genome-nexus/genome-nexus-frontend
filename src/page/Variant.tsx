@@ -15,6 +15,7 @@ import Spinner from 'react-spinkit';
 import { variantToMutation } from '../util/variantUtils';
 import { RemoteData } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
+import WindowStore from '../component/shared/WindowStore';
 
 interface IVariantProps {
     variant: string;
@@ -132,6 +133,15 @@ class Variant extends React.Component<IVariantProps> {
         );
     };
 
+    @computed
+    get windowWrapper() {
+        const windowSize = {
+            width: WindowStore.size.width - 40,
+            height: WindowStore.size.height,
+        };
+        return { size: windowSize };
+    }
+
     private getMutationMapper() {
         const mutation = variantToMutation(
             this.props.store.annotationSummary,
@@ -201,6 +211,7 @@ class Variant extends React.Component<IVariantProps> {
                     oncoKbUrl={'https://www.cbioportal.org/proxy/oncokb'}
                     collapsePtmTrack={true}
                     collapseUniprotTopologyTrack={true}
+                    windowWrapper={this.windowWrapper}
                 />
             );
         } else {

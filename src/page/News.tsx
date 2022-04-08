@@ -24,7 +24,7 @@ class News extends React.Component<{}> {
             <div>
                 {this.source.isComplete && (
                     <ReactMarkdown
-                        components={{ image: ContentImage }}
+                        components={{ img: ContentImage }}
                         className={'markdown-body'}
                         children={this.source.result!}
                         rehypePlugins={[rehypeRaw, rehypeSanitize, remarkGfm]}
