@@ -1,3 +1,9 @@
+// In order to use bootstrap's style and functions
+// We need to import these three files
+@import 'bootstrap/scss/_functions';
+@import 'bootstrap/scss/_variables';
+@import 'bootstrap/scss/mixins/_breakpoints';
+
 #home-logo {
     padding-top: 5%;
     margin-left: auto;
@@ -55,6 +61,13 @@
         font-family: Futura, sans-serif;
         font-size: 80px;
         text-shadow: 0 0 4px #ccc;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        div {
+            white-space: pre-wrap;
+        }
     }
 }
 
@@ -67,5 +80,17 @@
     }
     tr:last-child td {
         border-bottom: 1px solid #dee2e6;
+    }
+}
+
+.tooltip-close-button {
+    margin-top: 8px;
+    margin-right: 8px;
+    float: right;
+}
+
+.space {
+    @include media-breakpoint-down(md) {
+        display: none;
     }
 }

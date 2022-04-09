@@ -350,8 +350,10 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                         return {
                             ...styles,
                             width: '100%',
-                            lineHeight: '30px',
+                            lineHeight: '20px',
                             textAlign: 'center',
+                            paddingRight: '16px',
+                            fontSize: '14px',
                         };
                     },
                     container(styles: any) {

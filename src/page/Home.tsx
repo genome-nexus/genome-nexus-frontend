@@ -22,9 +22,10 @@ import {
 } from '../util/SearchUtils';
 import { MainStore } from './MainStore';
 
-const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
-    props
-) => {
+const SearchTooltipContent: React.FunctionComponent<{
+    genomeBuild: string;
+    onClose: () => void;
+}> = (props) => {
     const tableExamples =
         props.genomeBuild === GENOME_BUILD.GRCh37
             ? TABLE_EXAMPLE_DATA_GRCh37
@@ -36,6 +37,10 @@ const SearchTooltipContent: React.FunctionComponent<{ genomeBuild: string }> = (
 
     return (
         <>
+            <i
+                className="fa fa-times-circle fa-lg tooltip-close-button"
+                onClick={props.onClose}
+            />
             <strong style={{ fontSize: 16 }}>
                 How to search on Genome Nexus
             </strong>
@@ -131,18 +136,22 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                             }
                         >
                             <h2>
-                                Genome Ne<span className={'d-none'}>X</span>
-                                <Image
-                                    src={logo}
-                                    fluid
-                                    style={{
-                                        height: 63,
-                                        verticalAlign: 'baseline',
-                                        position: 'relative',
-                                        top: 5,
-                                    }}
-                                />
-                                us
+                                <div>Genome</div>
+                                <div className="space"> </div>
+                                <div>
+                                    Ne<span className={'d-none'}>X</span>
+                                    <Image
+                                        src={logo}
+                                        fluid
+                                        style={{
+                                            height: 63,
+                                            verticalAlign: 'baseline',
+                                            position: 'relative',
+                                            top: 5,
+                                        }}
+                                    />
+                                    us
+                                </div>
                             </h2>
                             Annotation and Interpretation of Genetic Variants in
                             Cancer
@@ -177,6 +186,10 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                                 this.props.mainStore.genomeBuild
                                                     .result ||
                                                 GENOME_BUILD.GRCh37
+                                            }
+                                            onClose={
+                                                this
+                                                    .changeSearchTooltipVisibility
                                             }
                                         />
                                     }
