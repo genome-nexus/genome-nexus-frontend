@@ -7,7 +7,7 @@ import './SideBar.css';
 import { VariantStore } from '../../page/VariantStore';
 import { isVariantValid } from '../../util/variantValidator';
 import { observer } from 'mobx-react';
-import client from '../../page/genomeNexusClientInstance';
+import client from '../../util/genomeNexusClientInstance';
 import ValidatorNotification, { ErrorType } from '../ValidatorNotification';
 
 type PathParamsType = {

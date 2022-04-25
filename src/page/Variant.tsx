@@ -9,7 +9,9 @@ import { VariantStore } from './VariantStore';
 import { TrackName, DataFilterType } from 'react-mutation-mapper';
 import GenomeNexusMutationMapper from '../component/GenomeNexusMutationMapper';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
-import { genomeNexusApiRoot } from './genomeNexusClientInstance';
+import { getDataFetcher } from '../util/ApiUtils';
+import { genomeNexusApiRoot } from '../util/genomeNexusClientInstance';
+import { oncokbApiRoot } from '../util/oncokbClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
 import { variantToMutation } from '../util/variantUtils';
@@ -162,7 +164,9 @@ class Variant extends React.Component<IVariantProps> {
             );
             return (
                 <GenomeNexusMutationMapper
+                    dataFetcher={getDataFetcher()}
                     genomeNexusUrl={genomeNexusApiRoot}
+                    oncoKbUrl={oncokbApiRoot}
                     data={mutation}
                     store={store}
                     tracks={[
@@ -208,7 +212,6 @@ class Variant extends React.Component<IVariantProps> {
                             values: [mutation[0].proteinPosStart],
                         },
                     ]}
-                    oncoKbUrl={'https://www.cbioportal.org/proxy/oncokb'}
                     collapsePtmTrack={true}
                     collapseUniprotTopologyTrack={true}
                     windowWrapper={this.windowWrapper}

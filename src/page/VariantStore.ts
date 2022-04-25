@@ -12,23 +12,24 @@ import {
     IndicatorQueryResp,
     CancerGene as OncoKbGene,
 } from 'oncokb-ts-api-client';
-import client, { genomeNexusApiRoot } from './genomeNexusClientInstance';
-import oncokbClient from './OncokbClientInstance';
 import MobxPromise from 'mobxpromise';
 import _ from 'lodash';
 import qs from 'qs';
-import {
-    variantToGenomicLocationString,
-    variantToMutation,
-} from '../util/variantUtils';
 import {
     initDefaultMutationMapperStore,
     DataFilterType,
 } from 'react-mutation-mapper';
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+import { getDataFetcher } from '../util/ApiUtils';
+import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
+import genomeNexusClient from '../util/genomeNexusClientInstance';
+import oncoKbClient from '../util/oncokbClientInstance';
+import {
+    variantToGenomicLocationString,
+    variantToMutation,
+} from '../util/variantUtils';
 import { MainStore } from './MainStore';
-import internalclient from './genomeNexusClientInternalInstance';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -87,7 +88,7 @@ export class VariantStore {
 
     readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {
-            return await client.fetchVariantAnnotationGET({
+            return await genomeNexusClient.fetchVariantAnnotationGET({
                 variant: this.variant,
                 fields: annotationQueryFields(),
             });
@@ -123,7 +124,7 @@ export class VariantStore {
     readonly oncokbData: MobxPromise<IndicatorQueryResp> = remoteData({
         await: () => [this.mainStore.genomeBuild],
         invoke: async () => {
-            return await oncokbClient.annotateMutationsByHGVSgGetUsingGET_1({
+            return await oncoKbClient.annotateMutationsByHGVSgGetUsingGET_1({
                 hgvsg: this.variant,
                 referenceGenome: this.mainStore.genomeBuild.result || undefined,
             });
@@ -136,7 +137,7 @@ export class VariantStore {
     readonly oncokbGenes = remoteData<OncoKbGene[]>({
         await: () => [],
         invoke: async () => {
-            return oncokbClient.utilsCancerGeneListGetUsingGET_1({});
+            return oncoKbClient.utilsCancerGeneListGetUsingGET_1({});
         },
         onError: (error) => {},
         default: [],
@@ -198,7 +199,7 @@ export class VariantStore {
     readonly curiousCases = remoteData({
         await: () => [this.annotation],
         invoke: async () => {
-            return internalclient.fetchCuriousCasesGET({
+            return genomeNexusInternalClient.fetchCuriousCasesGET({
                 genomicLocation: encodeURIComponent(
                     variantToGenomicLocationString(this.annotationSummary)
                 ),
@@ -227,11 +228,10 @@ export class VariantStore {
             mutation[0].gene &&
             mutation[0].gene.hugoGeneSymbol.length !== 0
         ) {
-            const store = initDefaultMutationMapperStore({
-                genomeNexusUrl: genomeNexusApiRoot,
+            return initDefaultMutationMapperStore({
+                dataFetcher: getDataFetcher(),
                 data: mutation,
                 hugoSymbol: mutation[0].gene.hugoGeneSymbol,
-                oncoKbUrl: 'https://www.cbioportal.org/proxy/oncokb',
                 enableOncoKb: true,
                 // select the lollipop by default
                 selectionFilters: [
@@ -242,7 +242,6 @@ export class VariantStore {
                 ],
                 entrezGeneId: mutation[0].gene.entrezGeneId,
             });
-            return store;
         }
         return undefined;
     }

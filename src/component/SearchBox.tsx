@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 import { components } from 'react-select';
 import Select from 'react-select';
 import { SEARCH_QUERY_FIELDS } from '../config/configDefaults';
-import client from '../page/genomeNexusClientInstance';
+import client from '../util/genomeNexusClientInstance';
 import {
     extractHgvsg,
     GENOME_BUILD,
