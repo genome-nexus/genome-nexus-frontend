@@ -13,3 +13,9 @@ To use GRCh38 Genome Nexus API, uncomment `REACT_APP_GENOME_NEXUS_URL=https://gr
 - 3:g.178952152_178952162del (protein change differs in genome nexus(`*1069*`), oncokb(`*1069F`), cbioportal(`*1069fs*`))
 
 > This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## How to run
+When using `nvm` and `yvm`:
+```bash
+echo load genome nexus frontend env && nvm use 15.2.1 && yvm use 1.22.5 && yarn && yarn run start
+```
