@@ -79,6 +79,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
         return client.fetchVariantAnnotationPOST({
             variants: keywords,
             fields: SEARCH_QUERY_FIELDS,
+            isoformOverrideSource: 'mskcc',
         });
     }
 
