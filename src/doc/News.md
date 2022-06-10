@@ -85,12 +85,12 @@
 
 ## Mar 03, 2019
 
--   **Command Line Interface Update**: Add OncoKB annotation to output annotation MAF file.
+-   **Command Line Interface Update**: Add OncoKB™ annotation to output annotation MAF file.
 
 ## Feb 04, 2020
 
--   **API Update**: Add [OncoKB](https://www.oncokb.org/) to annotation endpoints.
-    -   Please get your license from [OncoKB](https://www.oncokb.org/) first and paste your `token` to API.
+-   **API Update**: Add [OncoKB™](https://www.oncokb.org/) to annotation endpoints.
+    -   Please get your license from [OncoKB™](https://www.oncokb.org/) first and paste your `token` to API.
 
 ## Jan 23, 2020
 
@@ -99,7 +99,7 @@
 
 ## Dec 10, 2019
 
--   **Website New Feature**: Add [OncoKB](https://www.oncokb.org/) to variant page.
+-   **Website New Feature**: Add [OncoKB™](https://www.oncokb.org/) to variant page.
     -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
         <img src="https://user-images.githubusercontent.com/16869603/148015041-92655b1f-a9c3-40d4-9c19-036ca7c1df89.png" />
 
