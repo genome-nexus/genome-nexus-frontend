@@ -215,7 +215,6 @@ export class VariantStore {
     readonly curiousCases = remoteData({
         await: () => [this.annotation],
         invoke: async () => {
-            fetch('./CuriousCasesList.json');
             if (this.annotation.result?.variant === '4:g.55593580A>T') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
