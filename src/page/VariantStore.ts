@@ -195,8 +195,8 @@ export class VariantStore {
         },
         onError: () => {},
     });
-    
-    // API pull 
+
+    // API pull
     // readonly curiousCases = remoteData({
     //     await: () => [this.annotation],
     //     invoke: async () => {
@@ -210,13 +210,20 @@ export class VariantStore {
     //         // fail silently
     //     },
     // });
-    
-    // Harcoded version     
+
+    // Harcoded version
     readonly curiousCases = remoteData({
         await: () => [this.annotation],
-        invoke: async () => { 
-            if (this.annotation.result?.variant === "4:g.55593580A>T") {
-                return {"genomicLocation":"4,55593580,55593580,A,T","comment":"Potential in-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors","pubmedIds":[15507676,27600498,32697050],"hugoGeneSymbol":"KIT"}
+        invoke: async () => {
+            fetch("./CuriousCasesList.json")
+            if (this.annotation.result?.variant === '4:g.55593580A>T') {
+                return {
+                    genomicLocation: '4,55593580,55593580,A,T',
+                    comment:
+                        'Potential in-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors',
+                    pubmedIds: [15507676, 27600498, 32697050],
+                    hugoGeneSymbol: 'KIT',
+                };
             }
         },
         onError: (err: Error) => {
