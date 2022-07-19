@@ -22,11 +22,11 @@ import {
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { getDataFetcher } from '../util/ApiUtils';
-import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
+//import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
 import genomeNexusClient from '../util/genomeNexusClientInstance';
 import oncoKbClient from '../util/oncokbClientInstance';
 import {
-    variantToGenomicLocationString,
+    //variantToGenomicLocationString,
     variantToMutation,
 } from '../util/variantUtils';
 import { MainStore } from './MainStore';
