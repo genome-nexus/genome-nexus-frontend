@@ -22,14 +22,15 @@ import {
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { getDataFetcher } from '../util/ApiUtils';
-import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
+//import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
 import genomeNexusClient from '../util/genomeNexusClientInstance';
 import oncoKbClient from '../util/oncokbClientInstance';
 import {
-    variantToGenomicLocationString,
+    //variantToGenomicLocationString,
     variantToMutation,
 } from '../util/variantUtils';
 import { MainStore } from './MainStore';
+import { default as VUEs } from './../data/VUEs.json';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -198,18 +199,21 @@ export class VariantStore {
         onError: () => {},
     });
 
-    readonly curiousCases = remoteData({
+    readonly vue = remoteData({
         await: () => [this.annotation],
-        invoke: async () => {
-            return genomeNexusInternalClient.fetchCuriousCasesGET({
-                genomicLocation: encodeURIComponent(
-                    variantToGenomicLocationString(this.annotationSummary)
-                ),
-            });
+        invoke: async() => {
+            if (this.annotation.result?.annotation_summary) {
+                const transcriptSummary = this.annotationSummary?.transcriptConsequenceSummary;
+                // Check if variant is a VUE
+                const vue = VUEs.find((x) => x.hugoGeneSymbol === transcriptSummary?.hugoGeneSymbol);
+                if (vue?.revisedProteinEffects && vue.revisedProteinEffects.find((x) => x.variant === this.variant)) {
+                    return vue;
+                } else {
+                    return undefined;
+                }
+            }
         },
-        onError: (err: Error) => {
-            // fail silently
-        },
+        onError: () => {},
     });
 
     @computed

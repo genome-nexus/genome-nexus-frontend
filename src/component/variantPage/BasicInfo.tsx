@@ -20,6 +20,7 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
+import { VUE } from './biologicalFunction/CuriousCase';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -31,6 +32,7 @@ interface IBasicInfoProps {
     isCanonicalTranscriptSelected?: boolean | undefined;
     allValidTranscripts: string[];
     onTranscriptSelect(transcriptId: string): void;
+    vue: VUE | undefined;
 }
 
 type MutationTypeFormat = {
@@ -141,7 +143,8 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         if (this.props.annotation) {
             let renderData: BasicInfoData[] | null =
                 this.getDataFromTranscriptConsequenceSummary(
-                    selectedTranscript || canonicalTranscript
+                    selectedTranscript || canonicalTranscript,
+                    this.props.variant
                 );
             if (renderData === null) {
                 return null;
@@ -204,7 +207,8 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
     }
 
     public getDataFromTranscriptConsequenceSummary(
-        transcript: TranscriptConsequenceSummary | undefined
+        transcript: TranscriptConsequenceSummary | undefined,
+        variant: string
     ): BasicInfoData[] | null {
         // no canonical transcript, return null
         if (transcript === undefined) {
@@ -235,18 +239,42 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'tsg',
             category: 'tsg',
         });
-        // protein change
-        parsedData.push({
-            value: transcript.hgvspShort,
-            key: 'hgvsShort',
-            category: 'default',
-        });
-        // variant classification
-        parsedData.push({
-            value: transcript.variantClassification,
-            key: 'variantClassification',
-            category: getMutationTypeClassName(transcript),
-        });
+
+        // Check if variant is a VUE
+        let revisedProteinEffectRecord;
+        if (this.props.vue?.revisedProteinEffects) {
+            revisedProteinEffectRecord = this.props.vue.revisedProteinEffects.find((x) => x.variant === variant)
+        }
+        if (revisedProteinEffectRecord?.revisedProteinEffect) {
+            parsedData.push(
+                {
+                    value: 'VUE',
+                    key: 'RevueAnnotation',
+                    category: getMutationTypeClassName(transcript),
+                },
+            );
+            parsedData.push(
+                {
+                    value: revisedProteinEffectRecord.revisedProteinEffect,
+                    key: 'hgvsShort',
+                    category: 'default',
+                }
+
+            )
+            parsedData.push({
+                value: revisedProteinEffectRecord.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else {
+            // variant classification
+            parsedData.push({
+                value: transcript.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        }
+
         // variant type
         parsedData.push({
             value: this.props.annotation!.variantType,

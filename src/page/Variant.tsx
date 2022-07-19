@@ -391,6 +391,7 @@ class Variant extends React.Component<IVariantProps> {
                                                     transcriptId
                                                 )
                                             }
+                                            vue={this.props.store.vue.result}
                                         />
                                     </Col>
                                 </Row>
@@ -470,12 +471,10 @@ class Variant extends React.Component<IVariantProps> {
                                             ]: VariantAnnotation;
                                         }>
                                     }
-                                    curiousCases={
-                                        this.props.store.curiousCases.result
-                                    }
                                     genomeBuild={
                                         this.props.store.genomeBuild.result
                                     }
+                                    curiousCases={this.props.store.vue.result}
                                 />
                             </Col>
                         </Row>

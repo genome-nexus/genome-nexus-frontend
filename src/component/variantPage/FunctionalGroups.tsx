@@ -16,7 +16,7 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
 import { RemoteData } from 'cbioportal-utils';
 import PrevalenceInCancer from './PrevalenceInCancer';
-import { CuriousCases } from 'genome-nexus-ts-api-client/dist/generated/GenomeNexusAPIInternal';
+import { VUE } from './biologicalFunction/CuriousCase';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -28,8 +28,8 @@ interface IFunctionalGroupsProps {
     indexAnnotationsByGenomicLocationPromise: RemoteData<{
         [genomicLocation: string]: VariantAnnotation;
     }>;
-    curiousCases?: CuriousCases;
     genomeBuild?: string;
+    curiousCases?: VUE;
 }
 
 @observer
