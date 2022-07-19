@@ -27,6 +27,25 @@ const TooltipLinks: React.FunctionComponent<{ pubmedIds: number[] }> = (
     return <>{tooltipLinks}</>;
 };
 
+// API pull 
+// const CuriousCaseContent: React.FunctionComponent<{
+//     curiousCases?: CuriousCases;
+// }> = (props) => {
+//     return props.curiousCases ? (
+//         <span>
+//             {props.curiousCases.comment} {`. Pubmed ids: `}
+//             {props.curiousCases.pubmedIds ? (
+//                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
+//             ) : (
+//                 'NA'
+//             )}
+//         </span>
+//     ) : (
+//         <span>NA</span>
+//     );
+// };
+
+// Hardcode version 
 const CuriousCaseContent: React.FunctionComponent<{
     curiousCases?: CuriousCases;
 }> = (props) => {
@@ -34,10 +53,11 @@ const CuriousCaseContent: React.FunctionComponent<{
         <span>
             {props.curiousCases.comment} {`. Pubmed ids: `}
             {props.curiousCases.pubmedIds ? (
-                <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
+                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
             ) : (
-                'NA'
-            )}
+                 'NA'
+            )}     
+    
         </span>
     ) : (
         <span>NA</span>
