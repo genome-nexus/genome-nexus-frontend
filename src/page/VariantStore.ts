@@ -224,7 +224,7 @@ export class VariantStore {
                     hugoGeneSymbol: 'KIT',
                 };
             }
-            else if(this.annotation.result?.variant ==  '5:g.112151184A>G') {
+            else if(this.annotation.result?.variant ===  '5:g.112151184A>G') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
@@ -234,7 +234,7 @@ export class VariantStore {
 
                 };
             }
-            else if(this.annotation.result?.variant ==  '3:g.52439306A>G') {
+            else if(this.annotation.result?.variant ===  '3:g.52439306A>G') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
@@ -244,7 +244,7 @@ export class VariantStore {
 
                 };
             }
-            else if(this.annotation.result?.variant ==  '17:g.7579883G>A') {
+            else if(this.annotation.result?.variant ===  '17:g.7579883G>A') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
