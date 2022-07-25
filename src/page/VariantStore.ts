@@ -139,7 +139,7 @@ export class VariantStore {
         invoke: async () => {
             return oncoKbClient.utilsCancerGeneListGetUsingGET_1({});
         },
-        onError: (error) => {},
+        onError: (error) => {}, 
         default: [],
     });
 
