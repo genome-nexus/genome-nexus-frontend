@@ -233,7 +233,7 @@ export class VariantStore {
                 };
             } else if (this.annotation.result?.variant === '3:g.52439306A>G') {
                 return {
-                    genomicLocation: '4,55593580,55593580,A,T',
+                    genomicLocation: '3,52439306,A,G',
                     comment:
                         'Leads to exon 11 skipping, recurrent in prognostic and kidney cancer',
                     pubmedIds: [33681728],
@@ -241,7 +241,7 @@ export class VariantStore {
                 };
             } else if (this.annotation.result?.variant === '17:g.7579883G>A') {
                 return {
-                    genomicLocation: '4,55593580,55593580,A,T',
+                    genomicLocation: '17,7579883,7579883,G,A',
                     comment:
                         'Affects mRNA structure, reduces HDM2 binding, recurrent in many cancer types',
                     pubmedIds: [31671760],
@@ -249,7 +249,7 @@ export class VariantStore {
                 };
             } else if (this.annotation.result?.variant === '12:g.25380277G>T') {
                 return {
-                    genomicLocation: '4,55593580,55593580,A,T',
+                    genomicLocation: '12,25380277,25380277,G,T',
                     comment:
                         'Introduces a splice donor site if Q61K is not co-occurring with G60G, recurrent in many cancer types',
                     pubmedIds: [35236983],
