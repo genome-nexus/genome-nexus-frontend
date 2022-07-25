@@ -223,48 +223,39 @@ export class VariantStore {
                     pubmedIds: [15507676, 27600498, 32697050],
                     hugoGeneSymbol: 'KIT',
                 };
-            }
-            else if(this.annotation.result?.variant ===  '5:g.112151184A>G') {
+            } else if (this.annotation.result?.variant === '5:g.112151184A>G') {
                 return {
-                    genomicLocation: '4,55593580,55593580,A,T',
+                    genomicLocation: '5,112151184,112151184,A,G',
                     comment:
                         'Introduces splice acceptor site causing a frameshift, recurrent alteration in CRCs',
                     pubmedIds: [29316426],
                     hugoGeneSymbol: 'APC',
-
                 };
-            }
-            else if(this.annotation.result?.variant ===  '3:g.52439306A>G') {
+            } else if (this.annotation.result?.variant === '3:g.52439306A>G') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
                         'Leads to exon 11 skipping, recurrent in prognostic and kidney cancer',
                     pubmedIds: [33681728],
                     hugoGeneSymbol: 'BAP1',
-
                 };
-            }
-            else if(this.annotation.result?.variant ===  '17:g.7579883G>A') {
+            } else if (this.annotation.result?.variant === '17:g.7579883G>A') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
                         'Affects mRNA structure, reduces HDM2 binding, recurrent in many cancer types',
                     pubmedIds: [31671760],
                     hugoGeneSymbol: 'TP53',
-
                 };
-            }
-            else if(this.annotation.result?.variant ==  '12:g.25380277G>T') {
+            } else if (this.annotation.result?.variant == '12:g.25380277G>T') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
                         'Introduces a splice donor site if Q61K is not co-occurring with G60G, recurrent in many cancer types',
                     pubmedIds: [35236983],
                     hugoGeneSymbol: 'KRAS',
-
                 };
             }
-            
         },
         onError: (err: Error) => {
             // fail silently

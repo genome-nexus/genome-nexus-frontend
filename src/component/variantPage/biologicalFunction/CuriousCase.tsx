@@ -63,23 +63,23 @@ const CuriousCaseContent: React.FunctionComponent<{
     );
 };
 
-//Version to hardcode entire json 
-const CuriousCaseContent: React.FunctionComponent<{
-    curiousCases?: CuriousCases;
-}> = (props) => {
-    return props.curiousCases ? (
-        <span>
-            {props.curiousCases.comment} {`. Pubmed ids: `}
-            {props.curiousCases.pubmedIds ? (
-                <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
-            ) : (
-                'NA'
-            )}
-        </span>
-    ) : (
-        <span>NA</span>
-    );
-};
+//Version to hardcode entire json
+// const CuriousCaseContent: React.FunctionComponent<{
+//     curiousCases?: CuriousCases;
+// }> = (props) => {
+//     return props.curiousCases ? (
+//         <span>
+//             {props.curiousCases.comment} {`. Pubmed ids: `}
+//             {props.curiousCases.pubmedIds ? (
+//                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
+//             ) : (
+//                 'NA'
+//             )}
+//         </span>
+//     ) : (
+//         <span>NA</span>
+//     );
+// };
 
 @observer
 export default class CuriousCase extends React.Component<ICuriousCaseProps> {
