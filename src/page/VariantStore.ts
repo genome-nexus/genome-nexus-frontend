@@ -139,7 +139,7 @@ export class VariantStore {
         invoke: async () => {
             return oncoKbClient.utilsCancerGeneListGetUsingGET_1({});
         },
-        onError: (error) => {}, 
+        onError: (error) => {},
         default: [],
     });
 
@@ -247,7 +247,7 @@ export class VariantStore {
                     pubmedIds: [31671760],
                     hugoGeneSymbol: 'TP53',
                 };
-            } else if (this.annotation.result?.variant == '12:g.25380277G>T') {
+            } else if (this.annotation.result?.variant === '12:g.25380277G>T') {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
