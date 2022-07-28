@@ -219,7 +219,7 @@ export class VariantStore {
                 return {
                     genomicLocation: '4,55593580,55593580,A,T',
                     comment:
-                        'In-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors. Revised Protein Annotation: p.100_107del',
+                        'In-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors. Revised Protein Annotation: p.549_556del',
                     pubmedIds: [15507676, 27600498, 32697050],
                     hugoGeneSymbol: 'KIT',
                 };
