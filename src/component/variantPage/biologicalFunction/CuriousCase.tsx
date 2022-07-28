@@ -51,7 +51,8 @@ const CuriousCaseContent: React.FunctionComponent<{
 }> = (props) => {
     return props.curiousCases ? (
         <span>
-            {props.curiousCases.comment} {`. Pubmed ids: `}
+            {props.curiousCases.comment} <br />
+            {`Pubmed ids: `}
             {props.curiousCases.pubmedIds ? (
                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
             ) : (
