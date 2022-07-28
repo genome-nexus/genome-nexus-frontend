@@ -95,7 +95,7 @@ export default class CuriousCase extends React.Component<ICuriousCaseProps> {
                         <span
                             className={functionalGroupsStyle['without-linkout']}
                         >
-                            Curious Case
+                            REVUE
                         </span>
                     </DefaultTooltip>
                 </div>
