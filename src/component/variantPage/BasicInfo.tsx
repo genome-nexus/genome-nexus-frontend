@@ -210,6 +210,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         if (transcript === undefined) {
             return null;
         }
+
         let parsedData: BasicInfoData[] = [];
         // gene
         parsedData.push({
@@ -235,12 +236,20 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'tsg',
             category: 'tsg',
         });
+        // harcode for KIT variant
+        if (transcript.transcriptId === "ENST00000288135") {
+            parsedData.push({
+                value: 'p.100_107del',
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
         // protein change
-        parsedData.push({
+       else { parsedData.push({
             value: transcript.hgvspShort,
             key: 'hgvsShort',
             category: 'default',
-        });
+        }); }
         // variant classification
         parsedData.push({
             value: transcript.variantClassification,
