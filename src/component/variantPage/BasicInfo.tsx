@@ -239,7 +239,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         // harcode for KIT variant
         if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
-                value: 'p.100_107del',
+                value: 'p.549_556del',
                 key: 'hgvsShort',
                 category: 'default',
             });
