@@ -237,7 +237,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             category: 'tsg',
         });
         // harcode for KIT variant
-        if (transcript.transcriptId === "ENST00000288135") {
+        if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
                 value: 'p.100_107del',
                 key: 'hgvsShort',
@@ -245,11 +245,13 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             });
         }
         // protein change
-       else { parsedData.push({
-            value: transcript.hgvspShort,
-            key: 'hgvsShort',
-            category: 'default',
-        }); }
+        else {
+            parsedData.push({
+                value: transcript.hgvspShort,
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
         // variant classification
         parsedData.push({
             value: transcript.variantClassification,
