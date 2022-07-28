@@ -236,7 +236,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'tsg',
             category: 'tsg',
         });
-        // harcode for KIT variant
+        // harcode for KIT protein change
         if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
                 value: 'p.549_556del',
@@ -252,12 +252,22 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 category: 'default',
             });
         }
-        // variant classification
-        parsedData.push({
-            value: transcript.variantClassification,
-            key: 'variantClassification',
-            category: getMutationTypeClassName(transcript),
-        });
+        //hardcode for KIT variant classification
+        if (transcript.transcriptId === 'ENST00000288135') {
+            parsedData.push({
+                value: 'In frame deletion',
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else {
+            // variant classification
+            parsedData.push({
+                value: transcript.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        }
+
         // variant type
         parsedData.push({
             value: this.props.annotation!.variantType,
