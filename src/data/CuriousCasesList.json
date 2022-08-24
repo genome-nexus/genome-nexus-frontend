@@ -1,0 +1,32 @@
+[
+    {
+        "hugoGeneSymbol": "APC",
+        "genomicLocation": "5:g.112151184A>G",
+        "comment": "Introduces splice acceptor site causing a frameshift",
+        "pubmedIds": [29316426]
+    },
+    {
+        "genomicLocation": "3:g.52439306A>G",
+        "comment": "Leads to exon 11 skipping, recurrent in prognostic and kidney cancer",
+        "pubmedIds": [33681728],
+        "hugoGeneSymbol": "BAP1"
+    },
+    {
+        "genomicLocation": "4:g.55593580A>T",
+        "comment": "In-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors. Revised Protein Annotation: p.549_556del",
+        "pubmedIds": [15507676, 27600498, 32697050],
+        "hugoGeneSymbol": "KIT"
+    },
+    {
+        "genomicLocation": "17:g.7579883G>A",
+        "comment": "Affects mRNA structure, reduces HDM2 binding, recurrent in many cancer types",
+        "pubmedIds": [31671760],
+        "hugoGeneSymbol": "TP53"
+    },
+    {
+        "genomicLocation": "12:g.25380277G>T",
+        "comment": "Introduces a splice donor site if Q61K is not co-occurring with G60G, recurrent in many cancer types",
+        "pubmedIds": [35236983],
+        "hugoGeneSymbol": "KRAS"
+    }
+]

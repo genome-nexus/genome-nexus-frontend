@@ -265,22 +265,19 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 key: 'variantClassification',
                 category: getMutationTypeClassName(transcript),
             });
-        }
-        else if (transcript.transcriptId === 'ENST00000460680') {
+        } else if (transcript.transcriptId === 'ENST00000460680') {
             parsedData.push({
                 value: 'Exon Skipping',
                 key: 'variantClassification',
                 category: getMutationTypeClassName(transcript),
             });
-
-        }else if (transcript.transcriptId === 'ENST00000256078') {
+        } else if (transcript.transcriptId === 'ENST00000256078') {
             parsedData.push({
                 value: 'Splice',
                 key: 'variantClassification',
                 category: getMutationTypeClassName(transcript),
             });
-
-        } else { 
+        } else {
             // variant classification
             parsedData.push({
                 value: transcript.variantClassification,
