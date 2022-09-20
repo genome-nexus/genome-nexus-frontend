@@ -8,7 +8,6 @@ import { Collapse, Table } from 'react-bootstrap';
 
 import Toggle from '../../Toggle';
 
-import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
@@ -24,24 +23,6 @@ export interface IMutationAssessorProps {
 export function hideArrow(tooltipEl: any) {
     const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
     arrowEl.style.display = 'true';
-}
-
-// This is mostly to make the legacy MA links work
-function maLink(link: string | undefined) {
-    let url = null;
-
-    // ignore invalid links ("", "NA", "Not Available")
-    if (link) {
-        // getma.org is the legacy link, need to replace it with the actual value
-        url = link.replace('getma.org', 'mutationassessor.org/r3');
-
-        // prepend "http://" if needed
-        if (url.indexOf('http://') !== 0) {
-            url = `http://${url}`;
-        }
-    }
-
-    return url;
 }
 
 const MutationAssessorLegend: React.FunctionComponent = () => {
@@ -162,7 +143,7 @@ const MutationAssessorValue: React.FunctionComponent<{
 }> = (props) => {
     if (props.mutationAssessor) {
         const maData = props.mutationAssessor;
-        
+
         const impact = maData.functionalImpact ? (
             <div>
                 {(maData.functionalImpactScore ||
