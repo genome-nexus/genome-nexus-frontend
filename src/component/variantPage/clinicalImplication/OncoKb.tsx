@@ -7,6 +7,7 @@ import {
     IndicatorQueryTreatment,
 } from 'oncokb-ts-api-client';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { getTumorTypeNameWithExclusionInfo } from 'react-mutation-mapper';
 
 import {
     ClinicalSignificance,
@@ -35,9 +36,10 @@ function treatmentToEvidence(treatment: IndicatorQueryTreatment) {
             LEVEL_TO_CLINICAL_SIGNIFICANCE[treatment.level] ||
             ClinicalSignificance.NA,
         drugs: treatment.drugs.map((d) => d.drugName),
-        disease:
-            treatment.levelAssociatedCancerType?.name ||
-            treatment.levelAssociatedCancerType?.mainType?.name,
+        disease: getTumorTypeNameWithExclusionInfo(
+            treatment.levelAssociatedCancerType,
+            treatment.levelExcludedCancerTypes
+        ),
     };
 }
 
