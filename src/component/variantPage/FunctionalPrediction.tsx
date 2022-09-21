@@ -9,12 +9,14 @@ import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
 import { SHOW_MUTATION_ASSESSOR } from '../../config/configDefaults';
 import Separator from '../Separator';
+import { GENOME_BUILD } from '../../util/SearchUtils';
 
 // Most of this component comes from cBioPortal-frontend
 
 interface IFunctionalPredictionProps {
     variantAnnotation?: VariantAnnotation;
     isCanonicalTranscriptSelected: boolean;
+    genomeBuild?: string;
 }
 
 interface IFunctionalImpactData {
@@ -61,6 +63,10 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     }
     public render() {
         const data = this.getData(this.props.variantAnnotation);
+        // Mutation Assessor only available in grch37
+        const shouldShowMutationAssessor =
+            SHOW_MUTATION_ASSESSOR &&
+            this.props.genomeBuild === GENOME_BUILD.GRCh37;
         return (
             <div>
                 <PolyPhen2
@@ -68,7 +74,7 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     polyPhenPrediction={data.polyPhenPrediction}
                 />
                 <Separator />
-                {SHOW_MUTATION_ASSESSOR && (
+                {shouldShowMutationAssessor && (
                     <>
                         <MutationAssessor
                             mutationAssessor={data.mutationAssessor}
