@@ -1,4 +1,4 @@
-export const SHOW_MUTATION_ASSESSOR = false;
+export const SHOW_MUTATION_ASSESSOR = true;
 
 export function annotationQueryFields() {
     const fields = DEFAULT_ANNOTATION_QUERY_FIELDS;

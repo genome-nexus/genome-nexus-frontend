@@ -29,6 +29,7 @@ interface IFunctionalGroupsProps {
         [genomicLocation: string]: VariantAnnotation;
     }>;
     curiousCases?: CuriousCases;
+    genomeBuild?: string;
 }
 
 @observer
@@ -79,6 +80,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                 isCanonicalTranscriptSelected={
                                     this.props.isCanonicalTranscriptSelected
                                 }
+                                genomeBuild={this.props.genomeBuild}
                             />
                         </td>
                     </tr>

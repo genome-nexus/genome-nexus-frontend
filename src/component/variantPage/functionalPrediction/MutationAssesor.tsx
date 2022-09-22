@@ -8,7 +8,6 @@ import { Collapse, Table } from 'react-bootstrap';
 
 import Toggle from '../../Toggle';
 
-import tooltipStyles from './styles/mutationAssessorTooltip.module.scss';
 import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
@@ -24,24 +23,6 @@ export interface IMutationAssessorProps {
 export function hideArrow(tooltipEl: any) {
     const arrowEl = tooltipEl.querySelector('.rc-tooltip-arrow');
     arrowEl.style.display = 'true';
-}
-
-// This is mostly to make the legacy MA links work
-function maLink(link: string | undefined) {
-    let url = null;
-
-    // ignore invalid links ("", "NA", "Not Available")
-    if (link) {
-        // getma.org is the legacy link, need to replace it with the actual value
-        url = link.replace('getma.org', 'mutationassessor.org/r3');
-
-        // prepend "http://" if needed
-        if (url.indexOf('http://') !== 0) {
-            url = `http://${url}`;
-        }
-    }
-
-    return url;
 }
 
 const MutationAssessorLegend: React.FunctionComponent = () => {
@@ -162,11 +143,7 @@ const MutationAssessorValue: React.FunctionComponent<{
 }> = (props) => {
     if (props.mutationAssessor) {
         const maData = props.mutationAssessor;
-        const xVarLink = maLink(
-            `http://mutationassessor.org/r3/?cm=var&p=${maData.uniprotId}&var=${maData.variant}`
-        );
-        const msaLink = maLink(maData.msaLink);
-        const pdbLink = maLink(maData.pdbLink);
+
         const impact = maData.functionalImpact ? (
             <div>
                 {(maData.functionalImpactScore ||
@@ -191,67 +168,7 @@ const MutationAssessorValue: React.FunctionComponent<{
                 </div>
             </div>
         ) : null;
-
-        const xVar =
-            xVarLink &&
-            maData.uniprotId.length !== 0 &&
-            maData.variant.length !== 0 ? (
-                <div className={tooltipStyles['mutation-assessor-link']}>
-                    <a
-                        href={xVarLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            height="15"
-                            width="19"
-                            src={require('./styles/mutationAssessor.png')}
-                            className={
-                                tooltipStyles['mutation-assessor-main-img']
-                            }
-                            alt="Mutation Assessor"
-                        />
-                        Go to Mutation Assessor
-                    </a>
-                </div>
-            ) : null;
-
-        const msa =
-            msaLink && maData.msaLink.length !== 0 ? (
-                <div className={tooltipStyles['mutation-assessor-link']}>
-                    <a href={msaLink} target="_blank" rel="noopener noreferrer">
-                        <span
-                            className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-msa-icon']}`}
-                        >
-                            msa
-                        </span>
-                        Multiple Sequence Alignment
-                    </a>
-                </div>
-            ) : null;
-
-        const pdb =
-            pdbLink && maData.pdbLink.length !== 0 ? (
-                <div className={tooltipStyles['mutation-assessor-link']}>
-                    <a href={pdbLink} target="_blank" rel="noopener noreferrer">
-                        <span
-                            className={`${tooltipStyles['ma-icon']} ${tooltipStyles['ma-3d-icon']}`}
-                        >
-                            3D
-                        </span>
-                        Mutation Assessor 3D View
-                    </a>
-                </div>
-            ) : null;
-
-        return (
-            <div>
-                {impact}
-                {msa}
-                {pdb}
-                {xVar}
-            </div>
-        );
+        return impact;
     } else {
         return null;
     }
