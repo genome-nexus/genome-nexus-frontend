@@ -58,6 +58,9 @@ class Header extends React.Component<{}> {
                                 <Nav.Link href="/news" className="ml-5">
                                     News
                                 </Nav.Link>
+                                <Nav.Link href="/Revue" className="ml-5">
+                                    Revue
+                                </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

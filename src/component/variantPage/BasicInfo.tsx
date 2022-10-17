@@ -236,10 +236,48 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'tsg',
             category: 'tsg',
         });
+
+        //REVUE blip for KIT variant based on transcript ID
+        if (
+            transcript.transcriptId === 'ENST00000288135' ||
+            transcript.transcriptId === 'ENST00000257430'
+        ) {
+            parsedData.push({
+                value: 'VUE',
+                key: 'RevueAnnotation',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else {
+            // variant classification
+            parsedData.push({
+                value: transcript.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        }
+
         // harcode for KIT protein change
         if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
                 value: 'p.549_556del',
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
+
+        // protein change
+        else {
+            parsedData.push({
+                value: transcript.hgvspShort,
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
+
+        //hardcode for APC protein change
+        if (transcript.transcriptId === 'ENST00000257430') {
+            parsedData.push({
+                value: 'Gly279Phefs*11',
                 key: 'hgvsShort',
                 category: 'default',
             });
@@ -252,6 +290,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 category: 'default',
             });
         }
+
         //hardcode for KIT variant classification
         if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({

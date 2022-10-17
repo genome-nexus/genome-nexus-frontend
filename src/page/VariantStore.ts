@@ -212,7 +212,7 @@ export class VariantStore {
     //     },
     // });
 
-    //API Pull aditi
+    //JSON Pull
     readonly curiousCases = remoteData({
         await: () => [this.annotation],
         invoke: async () => {

@@ -12,6 +12,7 @@ import { VariantStore } from './VariantStore';
 import { observer } from 'mobx-react';
 import News from './News';
 import { MainStore } from './MainStore';
+import Revue from './REVUEPage';
 
 @observer
 class Main extends React.Component<{}> {
@@ -56,6 +57,12 @@ class Main extends React.Component<{}> {
                                 component={Patient}
                             />
                             <Route exact={true} path="/news" component={News} />
+                            //adding revue
+                            <Route
+                                exact={true}
+                                path="/Revue"
+                                component={Revue}
+                            />
                             <Route exact={true} path="/api" component={Api} />
                         </Switch>
                     </div>

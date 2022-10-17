@@ -92,10 +92,11 @@ export default class CuriousCase extends React.Component<ICuriousCaseProps> {
                         placement="top"
                         overlay={<div>Curated list of splice variants.</div>}
                     >
+
                         <span
                             className={functionalGroupsStyle['without-linkout']}
                         >
-                            REVUE
+                            reVUE
                         </span>
                     </DefaultTooltip>
                 </div>
