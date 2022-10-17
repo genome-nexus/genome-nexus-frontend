@@ -1,6 +1,6 @@
 import * as React from 'react';
 //import { useTable } from 'react-table';
-import { default as JsonData } from '../data/CuriousCasesList.json';
+//import { default as JsonData } from '../data/CuriousCasesList.json';
 
 import JsonDataDisplay from '../page/REVUETable';
 function App() {
