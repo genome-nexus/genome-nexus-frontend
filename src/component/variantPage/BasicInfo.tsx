@@ -20,8 +20,8 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
-// importing revue
-import { default as jsonData } from '../../data/CuriousCasesList.json';
+// importing revue eventually to check for entries and display VUE pill
+//import { default as jsonData } from '../../data/CuriousCasesList.json';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
