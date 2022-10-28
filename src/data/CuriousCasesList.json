@@ -12,8 +12,8 @@
         "hugoGeneSymbol": "BAP1"
     },
     {
-        "genomicLocation": "4:g.55593580A>T",
-        "comment": "In-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors. Revised Protein Annotation: p.549_556del",
+        "genomicLocation": "4:g.55593576_55593606del",
+        "comment": "In-frame deletion event at intron10-exon 11 boundary, commmon in Gastrointestinal Stromal Tumors. Revised Protein Annotation: p.549_557del",
         "pubmedIds": [15507676, 27600498, 32697050],
         "hugoGeneSymbol": "KIT"
     },

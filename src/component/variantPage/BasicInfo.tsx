@@ -20,6 +20,8 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
+// importing revue
+import { default as jsonData } from '../../data/CuriousCasesList.json';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -238,10 +240,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
 
         //REVUE blip for KIT variant based on transcript ID
-        if (
-            transcript.transcriptId === 'ENST00000288135' ||
-            transcript.transcriptId === 'ENST00000257430'
-        ) {
+        if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
                 value: 'VUE',
                 key: 'RevueAnnotation',
@@ -259,7 +258,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         // harcode for KIT protein change
         if (transcript.transcriptId === 'ENST00000288135') {
             parsedData.push({
-                value: 'p.549_556del',
+                value: 'p.549_557del',
                 key: 'hgvsShort',
                 category: 'default',
             });
