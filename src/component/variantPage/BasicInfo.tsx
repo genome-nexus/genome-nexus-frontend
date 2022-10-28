@@ -266,7 +266,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         }
 
         // protein change
-        else if (transcript.transcriptId != 'ENST00000257430') {
+        else if (transcript.transcriptId !== 'ENST00000257430') {
             parsedData.push({
                 value: transcript.hgvspShort,
                 key: 'hgvsShort',
