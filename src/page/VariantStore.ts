@@ -8,7 +8,7 @@ import {
     ICivicVariantIndex,
 } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
-// importing revue 
+// importing revue
 import { default as jsonData } from '../data/CuriousCasesList.json';
 import {
     IndicatorQueryResp,
