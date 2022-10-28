@@ -8,6 +8,7 @@ import {
     ICivicVariantIndex,
 } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
+//
 import { default as jsonData } from '../data/CuriousCasesList.json';
 import {
     IndicatorQueryResp,
