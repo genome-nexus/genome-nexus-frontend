@@ -20,6 +20,8 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
+// importing revue eventually to check for entries and display VUE pill
+//import { default as jsonData } from '../../data/CuriousCasesList.json';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -210,6 +212,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         if (transcript === undefined) {
             return null;
         }
+
         let parsedData: BasicInfoData[] = [];
         // gene
         parsedData.push({
@@ -235,18 +238,92 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             key: 'tsg',
             category: 'tsg',
         });
+
+        //REVUE blip for KIT variant based on transcript ID
+        if (transcript.transcriptId === 'ENST00000288135') {
+            parsedData.push({
+                value: 'VUE',
+                key: 'RevueAnnotation',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else {
+            // variant classification
+            parsedData.push({
+                value: transcript.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        }
+
+        // harcode for KIT protein change
+        if (transcript.transcriptId === 'ENST00000288135') {
+            parsedData.push({
+                value: 'p.549_557del',
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
+
         // protein change
-        parsedData.push({
-            value: transcript.hgvspShort,
-            key: 'hgvsShort',
-            category: 'default',
-        });
-        // variant classification
-        parsedData.push({
-            value: transcript.variantClassification,
-            key: 'variantClassification',
-            category: getMutationTypeClassName(transcript),
-        });
+        else if (transcript.transcriptId !== 'ENST00000257430') {
+            parsedData.push({
+                value: transcript.hgvspShort,
+                key: 'hgvsShort',
+                category: 'default',
+            });
+        }
+
+        //hardcode for APC protein change
+        // if (transcript.transcriptId === 'ENST00000257430') {
+        //     parsedData.push({
+        //         value: 'Gly279Phefs*11',
+        //         key: 'hgvsShort',
+        //         category: 'default',
+        //     });
+        // }
+        // // protein change
+        // else {
+        //     parsedData.push({
+        //         value: transcript.hgvspShort,
+        //         key: 'hgvsShort',
+        //         category: 'default',
+        //     });
+        // }
+
+        //hardcode for KIT variant classification
+        if (transcript.transcriptId === 'ENST00000288135') {
+            parsedData.push({
+                value: 'In frame deletion',
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else if (transcript.transcriptId === 'ENST00000257430') {
+            parsedData.push({
+                value: 'Frameshift',
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else if (transcript.transcriptId === 'ENST00000460680') {
+            parsedData.push({
+                value: 'Exon Skipping',
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else if (transcript.transcriptId === 'ENST00000256078') {
+            parsedData.push({
+                value: 'Splice',
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        } else {
+            // variant classification
+            parsedData.push({
+                value: transcript.variantClassification,
+                key: 'variantClassification',
+                category: getMutationTypeClassName(transcript),
+            });
+        }
+
         // variant type
         parsedData.push({
             value: this.props.annotation!.variantType,

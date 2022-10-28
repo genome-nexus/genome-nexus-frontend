@@ -27,12 +27,32 @@ const TooltipLinks: React.FunctionComponent<{ pubmedIds: number[] }> = (
     return <>{tooltipLinks}</>;
 };
 
+// API pull
+// const CuriousCaseContent: React.FunctionComponent<{
+//     curiousCases?: CuriousCases;
+// }> = (props) => {
+//     return props.curiousCases ? (
+//         <span>
+//             {props.curiousCases.comment} {`. Pubmed ids: `}
+//             {props.curiousCases.pubmedIds ? (
+//                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
+//             ) : (
+//                 'NA'
+//             )}
+//         </span>
+//     ) : (
+//         <span>NA</span>
+//     );
+// };
+
+// Hardcode version
 const CuriousCaseContent: React.FunctionComponent<{
     curiousCases?: CuriousCases;
 }> = (props) => {
     return props.curiousCases ? (
         <span>
-            {props.curiousCases.comment} {`. Pubmed ids: `}
+            {props.curiousCases.comment} <br />
+            {`Pubmed ids: `}
             {props.curiousCases.pubmedIds ? (
                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
             ) : (
@@ -44,6 +64,24 @@ const CuriousCaseContent: React.FunctionComponent<{
     );
 };
 
+//Version to hardcode entire json
+// const CuriousCaseContent: React.FunctionComponent<{
+//     curiousCases?: CuriousCases;
+// }> = (props) => {
+//     return props.curiousCases ? (
+//         <span>
+//             {props.curiousCases.comment} {`. Pubmed ids: `}
+//             {props.curiousCases.pubmedIds ? (
+//                 <TooltipLinks pubmedIds={props.curiousCases.pubmedIds} />
+//             ) : (
+//                 'NA'
+//             )}
+//         </span>
+//     ) : (
+//         <span>NA</span>
+//     );
+// };
+
 @observer
 export default class CuriousCase extends React.Component<ICuriousCaseProps> {
     public render() {
@@ -54,11 +92,12 @@ export default class CuriousCase extends React.Component<ICuriousCaseProps> {
                         placement="top"
                         overlay={<div>Curated list of splice variants.</div>}
                     >
-                        <span
+                        {/* <span
                             className={functionalGroupsStyle['without-linkout']}
                         >
-                            Curious Case
-                        </span>
+                            reVUE
+                        </span> */}
+                        <a href={'https://www.cancerrevue.org/'}>reVUE</a>
                     </DefaultTooltip>
                 </div>
                 <CuriousCaseContent curiousCases={this.props.curiousCases} />
