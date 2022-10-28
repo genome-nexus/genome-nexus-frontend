@@ -266,7 +266,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         }
 
         // protein change
-        else {
+        else if (transcript.transcriptId != 'ENST00000257430') {
             parsedData.push({
                 value: transcript.hgvspShort,
                 key: 'hgvsShort',
@@ -275,21 +275,21 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         }
 
         //hardcode for APC protein change
-        if (transcript.transcriptId === 'ENST00000257430') {
-            parsedData.push({
-                value: 'Gly279Phefs*11',
-                key: 'hgvsShort',
-                category: 'default',
-            });
-        }
-        // protein change
-        else {
-            parsedData.push({
-                value: transcript.hgvspShort,
-                key: 'hgvsShort',
-                category: 'default',
-            });
-        }
+        // if (transcript.transcriptId === 'ENST00000257430') {
+        //     parsedData.push({
+        //         value: 'Gly279Phefs*11',
+        //         key: 'hgvsShort',
+        //         category: 'default',
+        //     });
+        // }
+        // // protein change
+        // else {
+        //     parsedData.push({
+        //         value: transcript.hgvspShort,
+        //         key: 'hgvsShort',
+        //         category: 'default',
+        //     });
+        // }
 
         //hardcode for KIT variant classification
         if (transcript.transcriptId === 'ENST00000288135') {

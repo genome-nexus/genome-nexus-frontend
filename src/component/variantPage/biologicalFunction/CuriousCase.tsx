@@ -97,7 +97,9 @@ export default class CuriousCase extends React.Component<ICuriousCaseProps> {
                         >
                             reVUE
                         </span> */}
-                        <a href={'https://www.genomenexus.org/Revue'}>reVUE</a>
+                        <a href={'https://www.cancerrevue.org/'}>
+                            reVUE
+                        </a>
                     </DefaultTooltip>
                 </div>
                 <CuriousCaseContent curiousCases={this.props.curiousCases} />
