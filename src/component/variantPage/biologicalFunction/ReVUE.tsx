@@ -21,7 +21,7 @@ interface IReVUEProps {
     vue?: VUE;
 }
 
-const ReVUEContent: React.FunctionComponent<{
+export const ReVUEContent: React.FunctionComponent<{
     vue?: VUE;
 }> = (props) => {
     return props.vue ? (

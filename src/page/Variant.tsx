@@ -395,6 +395,10 @@ class Variant extends React.Component<IVariantProps> {
                                                 )
                                             }
                                             vue={this.props.store.vue.result}
+                                            revisedProteinEffectRecord={
+                                                this.props.store
+                                                    .revisedProteinEffect
+                                            }
                                         />
                                     </Col>
                                 </Row>

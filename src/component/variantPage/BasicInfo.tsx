@@ -20,7 +20,8 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
-import { VUE } from './biologicalFunction/ReVUE';
+import { RevisedProteinEffectRecord, VUE } from './biologicalFunction/ReVUE';
+import { ReVUEContent } from './biologicalFunction/ReVUE';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -33,6 +34,7 @@ interface IBasicInfoProps {
     allValidTranscripts: string[];
     onTranscriptSelect(transcriptId: string): void;
     vue: VUE | undefined;
+    revisedProteinEffectRecord: RevisedProteinEffectRecord | undefined;
 }
 
 type MutationTypeFormat = {
@@ -152,7 +154,14 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             if (renderData) {
                 renderData = renderData.filter((data) => data.value != null); // remove null fields
             }
-            let basicInfoList = _.map(renderData, (data) => {
+            let basicInfoBeforeVUE = _.map(renderData.slice(0, 2), (data) => {
+                return this.generateBasicInfoPills(
+                    data.value,
+                    data.key,
+                    data.category
+                );
+            });
+            let basicInfoAfterVUE = _.map(renderData.slice(2), (data) => {
                 return this.generateBasicInfoPills(
                     data.value,
                     data.key,
@@ -163,7 +172,14 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             return (
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
-                        {basicInfoList}
+                        {basicInfoBeforeVUE}
+                        {this.props.revisedProteinEffectRecord &&
+                            this.props.vue &&
+                            this.generateBasicInfoReVUE(
+                                this.props.vue,
+                                this.props.revisedProteinEffectRecord
+                            )}
+                        {basicInfoAfterVUE}
                         {this.jsonButton()}
                         {haveTranscriptTable &&
                             this.transcriptsButton(this.showAllTranscripts)}
@@ -241,30 +257,13 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         });
 
         // Check if variant is a VUE
-        let revisedProteinEffectRecord;
-        if (this.props.vue?.revisedProteinEffects) {
-            revisedProteinEffectRecord =
-                this.props.vue.revisedProteinEffects.find(
-                    (x) => x.variant === variant
-                );
-        }
-        if (revisedProteinEffectRecord?.revisedProteinEffect) {
+        if (!this.props.revisedProteinEffectRecord) {
+            // protein change
             parsedData.push({
-                value: 'VUE',
-                key: 'RevueAnnotation',
-                category: getMutationTypeClassName(transcript),
-            });
-            parsedData.push({
-                value: revisedProteinEffectRecord.revisedProteinEffect,
+                value: transcript.hgvspShort,
                 key: 'hgvsShort',
                 category: 'default',
             });
-            parsedData.push({
-                value: revisedProteinEffectRecord.variantClassification,
-                key: 'variantClassification',
-                category: getMutationTypeClassName(transcript),
-            });
-        } else {
             // variant classification
             parsedData.push({
                 value: transcript.variantClassification,
@@ -364,6 +363,72 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     {'JSON '}
                     <i className="fa fa-external-link" />
                 </Link>
+            </DefaultTooltip>
+        );
+    }
+
+    public generateBasicInfoReVUE(
+        vue: VUE,
+        revisedProteinEffectRecord: RevisedProteinEffectRecord
+    ) {
+        return (
+            <DefaultTooltip
+                placement="bottom"
+                overlay={
+                    <span>
+                        <ReVUEContent vue={vue} /> | Source:{' '}
+                        <a
+                            href="https://cancerrevue.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            reVUE <i className="fa fa-external-link" />
+                        </a>
+                    </span>
+                }
+            >
+                <span
+                    className={classNames(basicInfo[`vue-wrapper`])}
+                    style={{
+                        paddingLeft: 3,
+                        paddingTop: 2,
+                        paddingBottom: 2,
+                        paddingRight: 0,
+                        marginLeft: -2,
+                        marginRight: 4,
+                    }}
+                >
+                    <a
+                        href="https://cancerrevue.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <img
+                            src="https://www.cancerrevue.org/static/media/vue_logo.f7904d3925e95ec147ad.png"
+                            alt="reVUE logo"
+                            width={22}
+                            style={{ paddingRight: 5, marginTop: -2 }}
+                        />
+                        <span
+                            style={{ color: '#8e7cc3' }}
+                            className={classNames(basicInfo[`data-pills`])}
+                        >
+                            VUE
+                        </span>
+                        <span className={classNames(basicInfo[`data-pills`])}>
+                            {revisedProteinEffectRecord.revisedProteinEffect}
+                        </span>
+                        <span
+                            className={classNames(
+                                basicInfo[`data-pills`],
+                                basicInfo[`inframe-mutation`]
+                            )}
+                        >
+                            {revisedProteinEffectRecord.variantClassification}
+                        </span>
+                    </a>
+                </span>
             </DefaultTooltip>
         );
     }
