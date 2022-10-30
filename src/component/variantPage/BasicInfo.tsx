@@ -20,7 +20,7 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
-import { VUE } from './biologicalFunction/CuriousCase';
+import { VUE } from './biologicalFunction/ReVUE';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -243,24 +243,22 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         // Check if variant is a VUE
         let revisedProteinEffectRecord;
         if (this.props.vue?.revisedProteinEffects) {
-            revisedProteinEffectRecord = this.props.vue.revisedProteinEffects.find((x) => x.variant === variant)
+            revisedProteinEffectRecord =
+                this.props.vue.revisedProteinEffects.find(
+                    (x) => x.variant === variant
+                );
         }
         if (revisedProteinEffectRecord?.revisedProteinEffect) {
-            parsedData.push(
-                {
-                    value: 'VUE',
-                    key: 'RevueAnnotation',
-                    category: getMutationTypeClassName(transcript),
-                },
-            );
-            parsedData.push(
-                {
-                    value: revisedProteinEffectRecord.revisedProteinEffect,
-                    key: 'hgvsShort',
-                    category: 'default',
-                }
-
-            )
+            parsedData.push({
+                value: 'VUE',
+                key: 'RevueAnnotation',
+                category: getMutationTypeClassName(transcript),
+            });
+            parsedData.push({
+                value: revisedProteinEffectRecord.revisedProteinEffect,
+                key: 'hgvsShort',
+                category: 'default',
+            });
             parsedData.push({
                 value: revisedProteinEffectRecord.variantClassification,
                 key: 'variantClassification',

@@ -16,7 +16,7 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
 import { RemoteData } from 'cbioportal-utils';
 import PrevalenceInCancer from './PrevalenceInCancer';
-import { VUE } from './biologicalFunction/CuriousCase';
+import { VUE } from './biologicalFunction/ReVUE';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -29,7 +29,7 @@ interface IFunctionalGroupsProps {
         [genomicLocation: string]: VariantAnnotation;
     }>;
     genomeBuild?: string;
-    curiousCases?: VUE;
+    vue?: VUE;
 }
 
 @observer
@@ -67,7 +67,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                     this.props.isCanonicalTranscriptSelected
                                 }
                                 clinvar={this.clinvar}
-                                curiousCases={this.props.curiousCases}
+                                vue={this.props.vue}
                             />
                         </td>
                     </tr>

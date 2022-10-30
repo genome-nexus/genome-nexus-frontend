@@ -7,13 +7,13 @@ import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 import Separator from '../Separator';
 import Oncokb from './biologicalFunction/Oncokb';
 import ClinvarInterpretation from './biologicalFunction/ClinvarInterpretation';
-import CuriousCase, { VUE } from './biologicalFunction/CuriousCase';
+import ReVUE, { VUE } from './biologicalFunction/ReVUE';
 
 interface IBiologicalFunctionProps {
     oncokb: IndicatorQueryResp | undefined;
     isCanonicalTranscriptSelected: boolean;
     clinvar?: Clinvar;
-    curiousCases?: VUE;
+    vue?: VUE;
 }
 
 @observer
@@ -35,7 +35,7 @@ class BiologicalFunction extends React.Component<IBiologicalFunctionProps> {
                     }
                 />
                 <Separator />
-                <CuriousCase curiousCases={this.props.curiousCases} />
+                <ReVUE vue={this.props.vue} />
             </>
         );
     }

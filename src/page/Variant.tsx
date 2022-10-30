@@ -148,6 +148,7 @@ class Variant extends React.Component<IVariantProps> {
     private getMutationMapper() {
         const mutation = variantToMutation(
             this.props.store.annotationSummary,
+            this.props.store.revisedProteinEffect,
             this.props.store.selectedTranscript
         );
         if (
@@ -185,7 +186,7 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.Exon]: 'visible',
                         [TrackName.UniprotTopology]: 'visible',
                     }}
-                    hugoSymbol={mutation[0].gene.hugoGeneSymbol}
+                    hugoSymbol={mutation[0]?.gene?.hugoGeneSymbol}
                     entrezGeneId={Number(
                         getTranscriptConsequenceSummary(
                             this.props.store.annotationSummary,
@@ -364,7 +365,9 @@ class Variant extends React.Component<IVariantProps> {
                                             mutation={
                                                 variantToMutation(
                                                     this.props.store
-                                                        .annotationSummary
+                                                        .annotationSummary,
+                                                    this.props.store
+                                                        .revisedProteinEffect
                                                 )[0]
                                             }
                                             variant={this.props.variant}
@@ -474,7 +477,7 @@ class Variant extends React.Component<IVariantProps> {
                                     genomeBuild={
                                         this.props.store.genomeBuild.result
                                     }
-                                    curiousCases={this.props.store.vue.result}
+                                    vue={this.props.store.vue.result}
                                 />
                             </Col>
                         </Row>

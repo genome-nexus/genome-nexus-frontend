@@ -177,7 +177,10 @@ export class VariantStore {
         await: () => [this.civicGenes],
         invoke: async () => {
             if (this.civicGenes.result) {
-                const mutations = variantToMutation(this.annotationSummary);
+                const mutations = variantToMutation(
+                    this.annotationSummary,
+                    this.revisedProteinEffect
+                );
 
                 mutations.forEach((mutation) => {
                     // fetchCivicVariants cannot handle protein change values starting with 'p.'
@@ -201,12 +204,20 @@ export class VariantStore {
 
     readonly vue = remoteData({
         await: () => [this.annotation],
-        invoke: async() => {
+        invoke: async () => {
             if (this.annotation.result?.annotation_summary) {
-                const transcriptSummary = this.annotationSummary?.transcriptConsequenceSummary;
+                const transcriptSummary =
+                    this.annotationSummary?.transcriptConsequenceSummary;
                 // Check if variant is a VUE
-                const vue = VUEs.find((x) => x.hugoGeneSymbol === transcriptSummary?.hugoGeneSymbol);
-                if (vue?.revisedProteinEffects && vue.revisedProteinEffects.find((x) => x.variant === this.variant)) {
+                const vue = VUEs.find(
+                    (x) =>
+                        x.hugoGeneSymbol === transcriptSummary?.hugoGeneSymbol
+                );
+                if (
+                    vue?.revisedProteinEffects?.find(
+                        (x) => x.variant === this.variant
+                    )
+                ) {
                     return vue;
                 } else {
                     return undefined;
@@ -215,6 +226,19 @@ export class VariantStore {
         },
         onError: () => {},
     });
+
+    @computed
+    get revisedProteinEffect() {
+        return this.vue.result?.revisedProteinEffects?.find(
+            (x) =>
+                x.variant === this.variant &&
+                (this.selectedTranscript === x.transcriptId ||
+                    // selectedTranscript is empty string if canonical is shown
+                    (!this.selectedTranscript &&
+                        this.annotationSummary?.canonicalTranscriptId ===
+                            x.transcriptId))
+        );
+    }
 
     @computed
     get annotationSummary() {
@@ -227,6 +251,7 @@ export class VariantStore {
     get getMutationMapperStore() {
         const mutation = variantToMutation(
             this.annotationSummary,
+            this.revisedProteinEffect,
             this.selectedTranscript
         );
         if (

@@ -3,10 +3,12 @@ import {
     Mutation,
 } from 'cbioportal-utils';
 import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
+import { RevisedProteinEffectRecord } from '../component/variantPage/biologicalFunction/ReVUE';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(
     data: VariantAnnotationSummary | undefined,
+    revisedProteinEffectRecord?: RevisedProteinEffectRecord | undefined,
     transcript?: string
 ): Mutation[] {
     let mutations = [];
@@ -26,7 +28,9 @@ export function variantToMutation(
             endPosition: data.genomicLocation.end,
             referenceAllele: data.genomicLocation.referenceAllele,
             variantAllele: data.genomicLocation.variantAllele,
-            proteinChange: transcriptConsequence.hgvspShort,
+            proteinChange:
+                revisedProteinEffectRecord?.revisedProteinEffect ||
+                transcriptConsequence.hgvspShort,
             proteinPosStart: transcriptConsequence.proteinPosition?.start
                 ? transcriptConsequence.proteinPosition.start
                 : getProteinPosStart(transcriptConsequence.hgvspShort),
