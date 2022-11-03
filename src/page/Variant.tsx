@@ -85,7 +85,8 @@ class Variant extends React.Component<IVariantProps> {
             this.props.store.oncokbGenesMap.isPending ||
             this.props.store.civicVariants.isPending ||
             this.props.store.isAnnotatedSuccessfully.isPending ||
-            this.props.store.indexedAnnotation.isPending
+            this.props.store.indexedAnnotation.isPending ||
+            this.props.store.genomeBuild.isPending
         );
     }
 
@@ -471,6 +472,9 @@ class Variant extends React.Component<IVariantProps> {
                                     }
                                     curiousCases={
                                         this.props.store.curiousCases.result
+                                    }
+                                    genomeBuild={
+                                        this.props.store.genomeBuild.result
                                     }
                                 />
                             </Col>

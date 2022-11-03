@@ -7,6 +7,7 @@ import {
     IndicatorQueryTreatment,
 } from 'oncokb-ts-api-client';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { getTumorTypeNameWithExclusionInfo } from 'react-mutation-mapper';
 
 import {
     ClinicalSignificance,
@@ -35,9 +36,10 @@ function treatmentToEvidence(treatment: IndicatorQueryTreatment) {
             LEVEL_TO_CLINICAL_SIGNIFICANCE[treatment.level] ||
             ClinicalSignificance.NA,
         drugs: treatment.drugs.map((d) => d.drugName),
-        disease:
-            treatment.levelAssociatedCancerType?.name ||
-            treatment.levelAssociatedCancerType?.mainType?.name,
+        disease: getTumorTypeNameWithExclusionInfo(
+            treatment.levelAssociatedCancerType,
+            treatment.levelExcludedCancerTypes
+        ),
     };
 }
 
@@ -82,7 +84,7 @@ class OncoKb extends React.Component<IOncoKbProps> {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            OncoKB
+                            OncoKB™
                         </a>{' '}
                         is a precision oncology knowledge base and contains
                         information about the effects and treatment implications
@@ -91,7 +93,7 @@ class OncoKb extends React.Component<IOncoKbProps> {
                 }
             >
                 <a href={oncokbUrl} target="_blank" rel="noopener noreferrer">
-                    OncoKB&nbsp;
+                    OncoKB™&nbsp;
                     <i className="fas fa-external-link-alt" />
                     {!this.props.isCanonicalTranscriptSelected && (
                         <span> *</span>

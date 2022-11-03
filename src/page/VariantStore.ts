@@ -88,6 +88,8 @@ export class VariantStore {
     @observable public variant: string = '';
     @observable public selectedTranscript: string = '';
 
+    readonly genomeBuild: MobxPromise<string> = this.mainStore.genomeBuild;
+
     readonly annotation = remoteData<VariantAnnotation>({
         invoke: async () => {
             return await genomeNexusClient.fetchVariantAnnotationGET({

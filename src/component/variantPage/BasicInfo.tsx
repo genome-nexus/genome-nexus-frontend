@@ -443,7 +443,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    OncoKB
+                                    OncoKB™
                                     <img
                                         height={12}
                                         src={require('./biologicalFunction/oncokb.png')}
