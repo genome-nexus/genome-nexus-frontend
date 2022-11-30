@@ -405,7 +405,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                         style={{ textDecoration: 'none' }}
                     >
                         <img
-                            src="https://www.cancerrevue.org/static/media/vue_logo.f7904d3925e95ec147ad.png"
+                            src={require('./biologicalFunction/vue_logo.png')}
                             alt="reVUE logo"
                             width={22}
                             style={{ paddingRight: 5, marginTop: -2 }}
