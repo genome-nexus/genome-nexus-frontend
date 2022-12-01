@@ -256,7 +256,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             category: 'tsg',
         });
 
-        // Check if variant is a VUE
+        // Add default protein change and variant classification when it is not VUE
         if (!this.props.revisedProteinEffectRecord) {
             // protein change
             parsedData.push({
