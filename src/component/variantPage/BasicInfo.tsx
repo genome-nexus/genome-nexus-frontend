@@ -154,14 +154,17 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             if (renderData) {
                 renderData = renderData.filter((data) => data.value != null); // remove null fields
             }
-            let basicInfoBeforeVUE = _.map(renderData.slice(0, 2), (data) => {
-                return this.generateBasicInfoPills(
-                    data.value,
-                    data.key,
-                    data.category
-                );
+
+            const dataBeforeVUE = renderData.filter(element => {
+                return element.key === "hugoGeneSymbol" || element.key === "oncogene";
+              });
+
+            const dataAfterVUE = renderData.filter(element => {
+            return element.key === "variantType" || element.key === "hgvsg" || element.key === "hgvsc"
+            || element.key === "transcript"|| element.key === "refSeq";
             });
-            let basicInfoAfterVUE = _.map(renderData.slice(2), (data) => {
+
+            let basicInfoBeforeVUE = _.map(dataBeforeVUE, (data) => {
                 return this.generateBasicInfoPills(
                     data.value,
                     data.key,
@@ -169,6 +172,14 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 );
             });
 
+            let basicInfoAfterVUE = _.map(dataAfterVUE, (data) => {
+                return this.generateBasicInfoPills(
+                    data.value,
+                    data.key,
+                    data.category
+                );
+            });
+            
             return (
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
