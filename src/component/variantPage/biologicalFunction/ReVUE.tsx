@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
-export declare type RevisedProteinEffectRecord = {
+export type RevisedProteinEffectRecord = {
     revisedProteinEffect: string;
     variantClassification: string;
     variant: string;
@@ -28,7 +28,7 @@ export const ReVUEContent: React.FunctionComponent<{
         <span>
             {props.vue.comment}{' '}
             <a
-                href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds[0]}/`}
+                href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds}/`}
                 rel="noopener noreferrer"
                 target="_blank"
             >
