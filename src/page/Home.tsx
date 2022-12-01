@@ -1,7 +1,7 @@
 import { action, observable, makeObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Button, Col, Image, Row, Table } from 'react-bootstrap';
+import { Button, Image, Table } from 'react-bootstrap';
 import SearchBox from '../component/SearchBox';
 import './Home.scss';
 import logo from '../image/home_page_logo.png';
@@ -82,7 +82,7 @@ const SearchTooltipContent: React.FunctionComponent<{
 const SearchExample: React.FunctionComponent<{ genomeBuild: string }> = (
     props
 ) => (
-    <>
+    <div style={{ marginTop: 10 }}>
         <strong>Examples</strong>:{' '}
         {props.genomeBuild === GENOME_BUILD.GRCh37
             ? SEARCH_BAR_EXAMPLE_DATA_GRCh37.map((data, index) => (
@@ -102,7 +102,7 @@ const SearchExample: React.FunctionComponent<{ genomeBuild: string }> = (
                       )}
                   </>
               ))}
-    </>
+    </div>
 );
 
 @observer
@@ -144,7 +144,7 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                         src={logo}
                                         fluid
                                         style={{
-                                            height: 63,
+                                            height: 83,
                                             verticalAlign: 'baseline',
                                             position: 'relative',
                                             top: 5,
@@ -153,17 +153,26 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                     us
                                 </div>
                             </h2>
-                            Annotation and Interpretation of Genetic Variants in
-                            Cancer
+                            <div style={{ fontSize: 20, marginTop: 25 }}>
+                                Annotation and Interpretation of Genetic
+                                Variants in Cancer
+                            </div>
                         </div>
-
-                        <Row className="mb-1">
-                            <Col
-                                md={6}
+                        <div
+                            className="mx-auto"
+                            style={{
+                                width: '70%',
+                                background: 'aliceblue',
+                                borderRadius: 25,
+                                padding: '25px 0px 10px 0px',
+                            }}
+                        >
+                            <div
                                 className="mx-auto"
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
+                                    width: '95%',
                                 }}
                             >
                                 <SearchBox
@@ -209,17 +218,18 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                         />
                                     </Button>
                                 </DefaultTooltip>
-                            </Col>
-                        </Row>
-                        <Row className="mb-5">
-                            <Col md={10} className="mx-auto text-center">
+                            </div>
+                            <div className="mx-auto text-center">
                                 <SearchExample
                                     genomeBuild={
                                         this.props.mainStore.genomeBuild.result!
                                     }
                                 />
                                 <div
-                                    style={{ color: 'gray', fontSize: '14px' }}
+                                    style={{
+                                        color: 'gray',
+                                        fontSize: '14px',
+                                    }}
                                 >
                                     {`Genome build: ${
                                         this.props.mainStore.genomeBuild.result
@@ -246,8 +256,31 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                             : GENOME_BUILD.GRCh37}
                                     </a>
                                 </div>
-                            </Col>
-                        </Row>
+                            </div>
+                        </div>
+
+                        <div style={{ textAlign: 'center', marginTop: 10 }}>
+                            When using Genome Nexus, please cite{' '}
+                            <a
+                                href={
+                                    'https://ascopubs.org/doi/abs/10.1200/CCI.21.00144'
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                de Bruijn et al., JCO CCI 2022.
+                            </a>{' '}
+                            View full{' '}
+                            <a
+                                href={
+                                    'https://docs.genomenexus.org/about#how-do-i-cite-the-genome-nexus'
+                                }
+                                rel="noopener noreferrer"
+                            >
+                                terms
+                            </a>
+                            .
+                        </div>
                         <ValidatorNotification
                             showAlert={this.alert}
                             type={this.alertType}
