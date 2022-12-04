@@ -158,128 +158,122 @@ class Home extends React.Component<{ history: any; mainStore: MainStore }> {
                                 Variants in Cancer
                             </div>
                         </div>
-                        <div
-                            className="mx-auto"
-                            style={{
-                                width: '70%',
-                                background: 'aliceblue',
-                                borderRadius: 25,
-                                padding: '25px 0px 10px 0px',
-                            }}
-                        >
+                        <div className="row justify-content-center">
                             <div
-                                className="mx-auto"
+                                className="col-md-9 col-sm-11 col-11"
                                 style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    width: '95%',
+                                    background: 'aliceblue',
+                                    borderRadius: 25,
+                                    padding: '25px 0px 10px 0px',
                                 }}
                             >
-                                <SearchBox
-                                    onChange={this.onTextChange}
-                                    onSearch={this.onSearch}
-                                    changeSearchTooltipVisibility={
-                                        this.changeSearchTooltipVisibility
-                                    }
-                                    genomeBuild={
-                                        this.props.mainStore.genomeBuild
-                                            .result || GENOME_BUILD.GRCh37
-                                    }
-                                />
-                                <DefaultTooltip
-                                    trigger="click"
-                                    placement="right"
-                                    overlay={
-                                        <SearchTooltipContent
-                                            genomeBuild={
-                                                this.props.mainStore.genomeBuild
-                                                    .result ||
-                                                GENOME_BUILD.GRCh37
-                                            }
-                                            onClose={
+                                <div
+                                    className="mx-auto"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        width: '95%',
+                                    }}
+                                >
+                                    <SearchBox
+                                        onChange={this.onTextChange}
+                                        onSearch={this.onSearch}
+                                        changeSearchTooltipVisibility={
+                                            this.changeSearchTooltipVisibility
+                                        }
+                                        genomeBuild={
+                                            this.props.mainStore.genomeBuild
+                                                .result || GENOME_BUILD.GRCh37
+                                        }
+                                    />
+                                    <DefaultTooltip
+                                        trigger="click"
+                                        placement="right"
+                                        overlay={
+                                            <SearchTooltipContent
+                                                genomeBuild={
+                                                    this.props.mainStore
+                                                        .genomeBuild.result ||
+                                                    GENOME_BUILD.GRCh37
+                                                }
+                                                onClose={
+                                                    this
+                                                        .changeSearchTooltipVisibility
+                                                }
+                                            />
+                                        }
+                                        destroyTooltipOnHide={true}
+                                        visible={this.searchTooltipVisibility}
+                                    >
+                                        <Button
+                                            variant="link"
+                                            className="btn btn-xs"
+                                            onClick={
                                                 this
                                                     .changeSearchTooltipVisibility
                                             }
-                                        />
-                                    }
-                                    destroyTooltipOnHide={true}
-                                    visible={this.searchTooltipVisibility}
-                                >
-                                    <Button
-                                        variant="link"
-                                        className="btn btn-xs"
-                                        onClick={
-                                            this.changeSearchTooltipVisibility
+                                        >
+                                            <i
+                                                className="fas fa-info-circle"
+                                                style={{ color: '#49A8E5' }}
+                                            />
+                                        </Button>
+                                    </DefaultTooltip>
+                                </div>
+                                <div className="mx-auto text-center">
+                                    <SearchExample
+                                        genomeBuild={
+                                            this.props.mainStore.genomeBuild
+                                                .result!
                                         }
+                                    />
+                                    <div
+                                        style={{
+                                            color: 'gray',
+                                            fontSize: '14px',
+                                        }}
                                     >
-                                        <i
-                                            className="fas fa-info-circle"
-                                            style={{ color: '#49A8E5' }}
-                                        />
-                                    </Button>
-                                </DefaultTooltip>
-                            </div>
-                            <div className="mx-auto text-center">
-                                <SearchExample
-                                    genomeBuild={
-                                        this.props.mainStore.genomeBuild.result!
-                                    }
-                                />
-                                <div
-                                    style={{
-                                        color: 'gray',
-                                        fontSize: '14px',
-                                    }}
-                                >
-                                    {`Genome build: ${
-                                        this.props.mainStore.genomeBuild.result
-                                    }${
-                                        this.props.mainStore.genomeBuild
-                                            .result === GENOME_BUILD.GRCh37
-                                            ? ''
-                                            : `(Beta)`
-                                    }`}
-                                    <a
-                                        href={
+                                        {`Genome build: ${
+                                            this.props.mainStore.genomeBuild
+                                                .result
+                                        }${
                                             this.props.mainStore.genomeBuild
                                                 .result === GENOME_BUILD.GRCh37
-                                                ? 'https://grch38.genomenexus.org'
-                                                : 'https://www.genomenexus.org'
-                                        }
-                                        target="_top"
-                                        style={{ marginLeft: '14px' }}
-                                    >
-                                        Go to{' '}
-                                        {this.props.mainStore.genomeBuild
-                                            .result === GENOME_BUILD.GRCh37
-                                            ? `${GENOME_BUILD.GRCh38}(Beta)`
-                                            : GENOME_BUILD.GRCh37}
-                                    </a>
+                                                ? ''
+                                                : `(Beta)`
+                                        }`}
+                                        <a
+                                            href={
+                                                this.props.mainStore.genomeBuild
+                                                    .result ===
+                                                GENOME_BUILD.GRCh37
+                                                    ? 'https://grch38.genomenexus.org'
+                                                    : 'https://www.genomenexus.org'
+                                            }
+                                            target="_top"
+                                            style={{ marginLeft: '14px' }}
+                                        >
+                                            Go to{' '}
+                                            {this.props.mainStore.genomeBuild
+                                                .result === GENOME_BUILD.GRCh37
+                                                ? `${GENOME_BUILD.GRCh38}(Beta)`
+                                                : GENOME_BUILD.GRCh37}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div style={{ textAlign: 'center', marginTop: 10 }}>
-                            When using Genome Nexus, please cite{' '}
+                            How to{' '}
                             <a
                                 href={
-                                    'https://ascopubs.org/doi/abs/10.1200/CCI.21.00144'
-                                }
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                de Bruijn et al., JCO CCI 2022.
-                            </a>{' '}
-                            View full{' '}
-                            <a
-                                href={
-                                    'https://docs.genomenexus.org/about#how-do-i-cite-the-genome-nexus'
+                                    'https://docs.genomenexus.org/about#how-do-i-cite-genome-nexus'
                                 }
                                 rel="noopener noreferrer"
                             >
-                                terms
+                                cite <i className="fas fa-external-link-alt" />
                             </a>
-                            .
                         </div>
                         <ValidatorNotification
                             showAlert={this.alert}
