@@ -343,7 +343,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                     input(styles: any) {
                         return {
                             ...styles,
-                            lineHeight: '30px',
+                            lineHeight: '35px',
                         };
                     },
                     placeholder(styles: any) {
@@ -353,7 +353,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
                             lineHeight: '20px',
                             textAlign: 'center',
                             paddingRight: '16px',
-                            fontSize: '14px',
+                            fontSize: 'min(2.5vw, 16px)',
                         };
                     },
                     container(styles: any) {
