@@ -1,3 +1,75 @@
+## Dec 13, 2022
+- **Database Update**:
+    - New HGNC symbols, version: 2022.10.01
+    - Update both GRCh37 and GRCh38.
+
+## Oct 18, 2022
+- **Annotation Tool Updates**:
+    -  Python code docker image is now available
+
+## Sep 21, 2022
+- **Database Update**: Support "Mutation Assessor" in annotation API
+    - When query annotations, add `mutation_assessor` in `fields`
+    - [Example: 7,140453136,140453136,A,T](https://www.genomenexus.org/annotation/genomic/7%2C140453136%2C140453136%2CA%2CT?fields=mutation_assessor)
+    - Mutation Assessor data version: v3
+
+## Sep 14, 2022
+- **Database Update**: 
+    - Cancer hotspots update: GRCh38_ensembl95 Cancer Hotspots data has been updated with the latest transcripts
+    - Canonical transcript update: GRCh38_ensembl95 canonical transcript has been updated 
+
+## Aug 29, 2022
+-  **Annotation Pipeline Update**: Now Genome Nexus annotation pipeline shows response time to the summary.
+    - ```
+        Average Response Time:  1.000 sec.
+        Total Response Time:  1 sec.
+        Total Run Time:  2 sec.`
+       ```
+
+## Aug 16, 2022
+-  **Annotation Pipeline Update**: Support Subcommands annotate and merge.
+
+## Aug 12, 2022
+- **API Update**: Version support
+    - New `version` API that supports versioning for Genome Nexus (server/codebase and mongo) and VEP (server/codebase and cache)
+    - Please check out here: https://www.genomenexus.org/swagger-ui.html#!/info45controller/fetchVersionGET
+
+## Aug 09, 2022,
+-   **Annotation Pipeline Update**: Support Customize output file format.
+    - There are lots of empty columns in the output file. You will be able to use option-format option to supply an output format. As an example, you can create a file with the following line:
+        ```
+        Hugo_Symbol,Entrez_Gene_Id,Center,NCBI_Build,Chromosome
+        ```
+    - The application will only output these columns + any other column/s required by the application. Order is preserved.
+    - Currently, it only supports commas as the separator.
+
+## Jul 20, 2022
+- **Website New Feature**: Add a possibility to use local vep for hotspots endpoint
+    - Set `gn_vep.region.url` to your local VEP service
+
+## Jun 02, 2022
+- **Genome Nexus VEP**:
+    - Genome Nexus VEP image is available on docker.
+    - https://hub.docker.com/r/genomenexus/genome-nexus-vep
+
+## Apr 11, 2022
+- **Website New Feature**: Genome Nexus now fits in small screen too! Check out on your phone: [www.genomenexus.org](https://www.genomenexus.org/)
+
+## Feb 17, 2022
+- **Website New Feature**: Show information about curious cases on variant page. This feature is still in beta, need to manually add `curious` in URL. 
+    -   [Example: 4:g.55593580A>T](https://deploy-preview-119--genome-nexus-frontend.netlify.app/variant/4:g.55593580A%3ET?curious)
+    <img src="https://user-images.githubusercontent.com/16869603/153139930-81ef5fb3-00a0-4141-a0ba-13145cd401b2.png" />
+
+## Feb 11, 2022
+- **Publication**
+    - When using Genome Nexus, please cite [de Bruijn et al., JCO CCI 2022](https://ascopubs.org/doi/abs/10.1200/CCI.21.00144).
+    - Genome Nexus aggregates variant annotation from various sources. See this [documentation](https://docs.genomenexus.org/annotation-sources#annotation-sources%F0%9F%97%84%EF%B8%8F) for all supported annotation sources. Remember to also cite the underlying annotation sources you are using.
+
+## Feb 01, 2022
+- **Website New Feature**: Show both somatic and germline frequency for SIGNAL.
+    -   [Example: 7:g.55249071C>T](https://www.genomenexus.org/variant/7:g.55249071C%3ET)
+    <img src="https://user-images.githubusercontent.com/16869603/151427238-7d41070b-e822-4a53-aa29-fed5c91334f7.png" />
+
 ## Dec 16, 2021
 
 -   **API Update**: New search endpoint to search Genome Nexus database.
