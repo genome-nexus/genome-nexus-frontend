@@ -3,10 +3,6 @@
     - New HGNC symbols, version: 2022.10.01
     - Update both GRCh37 and GRCh38.
 
-## Oct 18, 2022
-- **Annotation Tool Updates**:
-    -  Python code docker image is now available
-
 ## Sep 21, 2022
 - **Database Update**: Support "Mutation Assessor" in annotation API
     - When query annotations, add `mutation_assessor` in `fields`
@@ -28,6 +24,22 @@
 
 ## Aug 16, 2022
 -  **Annotation Pipeline Update**: Support Subcommands annotate and merge.
+    - This tool has two subcommands: annotate, merge
+    Help page can be displayed by:
+        ```
+        java -jar gnap.jar -h
+        ```
+    - Subcommand - annotate: 
+    Allows the annotation of genomic variants from a MAF file using [Genome Nexus](http://genomenexus.org). Help page can be displayed by: 
+        ```
+        java -jar gnap.jar annotate -h
+        ```
+    - Subcommand - merge:
+    Merges given MAF files or given directory which contains MAF files, into a single MAF file.
+    Help page can be displayed by:
+        ```
+        java -jar gnap.jar merge -h
+        ```
 
 ## Aug 12, 2022
 - **API Update**: Version support
