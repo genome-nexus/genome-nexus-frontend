@@ -20,8 +20,8 @@ import basicInfo from './BasicInfo.module.scss';
 import { Link } from 'react-router-dom';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
-import { RevisedProteinEffectRecord, VUE } from './biologicalFunction/ReVUE';
 import { ReVUEContent } from './biologicalFunction/ReVUE';
+import { isVue } from '../../util/variantUtils';
 
 interface IBasicInfoProps {
     annotation: VariantAnnotationSummary | undefined;
@@ -33,8 +33,6 @@ interface IBasicInfoProps {
     isCanonicalTranscriptSelected?: boolean | undefined;
     allValidTranscripts: string[];
     onTranscriptSelect(transcriptId: string): void;
-    vue: VUE | undefined;
-    revisedProteinEffectRecord: RevisedProteinEffectRecord | undefined;
 }
 
 type MutationTypeFormat = {
@@ -192,12 +190,10 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
                         {basicInfoBeforeVUE}
-                        {this.props.revisedProteinEffectRecord &&
-                            this.props.vue &&
-                            this.generateBasicInfoReVUE(
-                                this.props.vue,
-                                this.props.revisedProteinEffectRecord
-                            )}
+                        {isVue(
+                            this.props.annotation,
+                            this.props.selectedTranscript
+                        ) && this.generateBasicInfoReVUE(this.props.annotation)}
                         {basicInfoAfterVUE}
                         {this.jsonButton()}
                         {haveTranscriptTable &&
@@ -275,21 +271,18 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             category: 'tsg',
         });
 
-        // Add default protein change and variant classification when it is not VUE
-        if (!this.props.revisedProteinEffectRecord) {
-            // protein change
-            parsedData.push({
-                value: transcript.hgvspShort,
-                key: 'hgvsShort',
-                category: 'default',
-            });
-            // variant classification
-            parsedData.push({
-                value: transcript.variantClassification,
-                key: 'variantClassification',
-                category: getMutationTypeClassName(transcript),
-            });
-        }
+        // protein change
+        parsedData.push({
+            value: transcript.hgvspShort,
+            key: 'hgvsShort',
+            category: 'default',
+        });
+        // variant classification
+        parsedData.push({
+            value: transcript.variantClassification,
+            key: 'variantClassification',
+            category: getMutationTypeClassName(transcript),
+        });
 
         // variant type
         parsedData.push({
@@ -386,16 +379,14 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
-    public generateBasicInfoReVUE(
-        vue: VUE,
-        revisedProteinEffectRecord: RevisedProteinEffectRecord
-    ) {
+    public generateBasicInfoReVUE(annotationSummary: VariantAnnotationSummary) {
         return (
             <DefaultTooltip
                 placement="bottom"
                 overlay={
                     <span>
-                        <ReVUEContent vue={vue} /> | Source:{' '}
+                        <ReVUEContent vue={this.props.annotation!.vues} /> |
+                        Source:{' '}
                         <a
                             href="https://cancerrevue.org"
                             target="_blank"
@@ -436,7 +427,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                             VUE
                         </span>
                         <span className={classNames(basicInfo[`data-pills`])}>
-                            {revisedProteinEffectRecord.revisedProteinEffect}
+                            {annotationSummary.vues.revisedProteinEffect}
                         </span>
                         <span
                             className={classNames(
@@ -444,7 +435,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                                 basicInfo[`inframe-mutation`]
                             )}
                         >
-                            {revisedProteinEffectRecord.variantClassification}
+                            {annotationSummary.vues.variantClassification}
                         </span>
                     </a>
                 </span>

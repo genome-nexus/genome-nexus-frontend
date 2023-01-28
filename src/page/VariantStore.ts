@@ -24,12 +24,8 @@ import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { getDataFetcher } from '../util/ApiUtils';
 import genomeNexusClient from '../util/genomeNexusClientInstance';
 import oncoKbClient from '../util/oncokbClientInstance';
-import {
-    //variantToGenomicLocationString,
-    variantToMutation,
-} from '../util/variantUtils';
+import { variantToMutation } from '../util/variantUtils';
 import { MainStore } from './MainStore';
-import { default as VUEs } from './../data/VUEs.json';
 
 export interface VariantStoreConfig {
     variant: string;
@@ -176,10 +172,7 @@ export class VariantStore {
         await: () => [this.civicGenes],
         invoke: async () => {
             if (this.civicGenes.result) {
-                const mutations = variantToMutation(
-                    this.annotationSummary,
-                    this.revisedProteinEffect
-                );
+                const mutations = variantToMutation(this.annotationSummary);
 
                 mutations.forEach((mutation) => {
                     // fetchCivicVariants cannot handle protein change values starting with 'p.'
@@ -201,44 +194,6 @@ export class VariantStore {
         onError: () => {},
     });
 
-    readonly vue = remoteData({
-        await: () => [this.annotation],
-        invoke: async () => {
-            if (this.annotation.result?.annotation_summary) {
-                const transcriptSummary =
-                    this.annotationSummary?.transcriptConsequenceSummary;
-                // Check if variant is a VUE
-                const vue = VUEs.find(
-                    (x) =>
-                        x.hugoGeneSymbol === transcriptSummary?.hugoGeneSymbol
-                );
-                if (
-                    vue?.revisedProteinEffects?.find(
-                        (x) => x.variant === this.variant
-                    )
-                ) {
-                    return vue;
-                } else {
-                    return undefined;
-                }
-            }
-        },
-        onError: () => {},
-    });
-
-    @computed
-    get revisedProteinEffect() {
-        return this.vue.result?.revisedProteinEffects?.find(
-            (x) =>
-                x.variant === this.variant &&
-                (this.selectedTranscript === x.transcriptId ||
-                    // selectedTranscript is empty string if canonical is shown
-                    (!this.selectedTranscript &&
-                        this.annotationSummary?.canonicalTranscriptId ===
-                            x.transcriptId))
-        );
-    }
-
     @computed
     get annotationSummary() {
         return this.annotation.result
@@ -250,7 +205,6 @@ export class VariantStore {
     get getMutationMapperStore() {
         const mutation = variantToMutation(
             this.annotationSummary,
-            this.revisedProteinEffect,
             this.selectedTranscript
         );
         if (

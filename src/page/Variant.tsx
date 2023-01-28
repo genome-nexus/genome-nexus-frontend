@@ -14,7 +14,7 @@ import { genomeNexusApiRoot } from '../util/genomeNexusClientInstance';
 import { oncokbApiRoot } from '../util/oncokbClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
-import { variantToMutation } from '../util/variantUtils';
+import { isVue, variantToMutation } from '../util/variantUtils';
 import { RemoteData } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import WindowStore from '../component/shared/WindowStore';
@@ -148,7 +148,6 @@ class Variant extends React.Component<IVariantProps> {
     private getMutationMapper() {
         const mutation = variantToMutation(
             this.props.store.annotationSummary,
-            this.props.store.revisedProteinEffect,
             this.props.store.selectedTranscript
         );
         if (
@@ -365,9 +364,7 @@ class Variant extends React.Component<IVariantProps> {
                                             mutation={
                                                 variantToMutation(
                                                     this.props.store
-                                                        .annotationSummary,
-                                                    this.props.store
-                                                        .revisedProteinEffect
+                                                        .annotationSummary
                                                 )[0]
                                             }
                                             variant={this.props.variant}
@@ -393,11 +390,6 @@ class Variant extends React.Component<IVariantProps> {
                                                 this.setActiveTranscript(
                                                     transcriptId
                                                 )
-                                            }
-                                            vue={this.props.store.vue.result}
-                                            revisedProteinEffectRecord={
-                                                this.props.store
-                                                    .revisedProteinEffect
                                             }
                                         />
                                     </Col>
@@ -481,7 +473,15 @@ class Variant extends React.Component<IVariantProps> {
                                     genomeBuild={
                                         this.props.store.genomeBuild.result
                                     }
-                                    vue={this.props.store.vue.result}
+                                    vue={
+                                        isVue(
+                                            this.props.store.annotationSummary,
+                                            this.props.store.selectedTranscript
+                                        )
+                                            ? this.props.store.annotationSummary
+                                                  ?.vues
+                                            : undefined
+                                    }
                                 />
                             </Col>
                         </Row>

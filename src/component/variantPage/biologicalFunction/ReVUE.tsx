@@ -1,34 +1,19 @@
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
+import { Vues } from 'genome-nexus-ts-api-client';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
-export type RevisedProteinEffectRecord = {
-    revisedProteinEffect: string;
-    variantClassification: string;
-    variant: string;
-};
-
-export declare type VUE = {
-    comment: string;
-    context: string;
-    referenceText: string;
-    pubmedIds: Array<number>;
-    revisedProteinEffects: Array<RevisedProteinEffectRecord>;
-};
-
 interface IReVUEProps {
-    vue?: VUE;
+    vue?: Vues;
 }
 
-export const ReVUEContent: React.FunctionComponent<{
-    vue?: VUE;
-}> = (props) => {
+export const ReVUEContent: React.FunctionComponent<IReVUEProps> = (props) => {
     return props.vue ? (
         <span>
             {props.vue.comment}{' '}
             <a
-                href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds}/`}
+                href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds[0]}/`} // should be multiple links if have a list of ids? Also need a list of reference text
                 rel="noopener noreferrer"
                 target="_blank"
             >

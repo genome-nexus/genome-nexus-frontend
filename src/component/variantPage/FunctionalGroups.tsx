@@ -6,6 +6,7 @@ import {
     VariantAnnotationSummary,
     VariantAnnotation,
     MyVariantInfo,
+    Vues,
 } from 'genome-nexus-ts-api-client';
 import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 
@@ -16,7 +17,6 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
 import { RemoteData } from 'cbioportal-utils';
 import PrevalenceInCancer from './PrevalenceInCancer';
-import { VUE } from './biologicalFunction/ReVUE';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -29,7 +29,7 @@ interface IFunctionalGroupsProps {
         [genomicLocation: string]: VariantAnnotation;
     }>;
     genomeBuild?: string;
-    vue?: VUE;
+    vue?: Vues;
 }
 
 @observer
