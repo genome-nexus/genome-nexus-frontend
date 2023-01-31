@@ -76,6 +76,15 @@
     align-items: center;
 }
 
+.vue-wrapper {
+    border: 1px dotted transparent;
+    border-radius: 5;
+
+    &:hover {
+        border: 1px dotted #8e7cc3;
+    }
+}
+
 .missense-mutation {
     color: #008000;
     font-weight: bold;

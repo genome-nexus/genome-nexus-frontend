@@ -3,10 +3,12 @@ import {
     Mutation,
 } from 'cbioportal-utils';
 import { VariantAnnotationSummary } from 'genome-nexus-ts-api-client';
+import { RevisedProteinEffectRecord } from '../component/variantPage/biologicalFunction/ReVUE';
 import { getTranscriptConsequenceSummary } from './AnnotationSummaryUtil';
 
 export function variantToMutation(
     data: VariantAnnotationSummary | undefined,
+    revisedProteinEffectRecord?: RevisedProteinEffectRecord | undefined,
     transcript?: string
 ): Mutation[] {
     let mutations = [];
@@ -16,6 +18,28 @@ export function variantToMutation(
         transcript
     );
     if (data && transcriptConsequence) {
+        let proteinChange;
+        let proteinPosStart;
+        let proteinPosEnd;
+        let mutationType;
+
+        if (revisedProteinEffectRecord?.revisedProteinEffect) {
+            proteinChange = revisedProteinEffectRecord.revisedProteinEffect;
+            proteinPosStart = getProteinPosStart(proteinChange);
+            proteinPosEnd =
+                getProteinPositionFromProteinChange(proteinChange)?.end;
+            mutationType = revisedProteinEffectRecord.variantClassification;
+        } else {
+            proteinChange = transcriptConsequence.hgvspShort;
+            proteinPosStart = transcriptConsequence.proteinPosition?.start
+                ? transcriptConsequence.proteinPosition.start
+                : getProteinPosStart(transcriptConsequence.hgvspShort);
+            proteinPosEnd = transcriptConsequence.proteinPosition
+                ? transcriptConsequence.proteinPosition.end
+                : undefined;
+            mutationType = transcriptConsequence.variantClassification;
+        }
+
         mutation = {
             gene: {
                 hugoGeneSymbol: transcriptConsequence.hugoGeneSymbol,
@@ -26,14 +50,10 @@ export function variantToMutation(
             endPosition: data.genomicLocation.end,
             referenceAllele: data.genomicLocation.referenceAllele,
             variantAllele: data.genomicLocation.variantAllele,
-            proteinChange: transcriptConsequence.hgvspShort,
-            proteinPosStart: transcriptConsequence.proteinPosition?.start
-                ? transcriptConsequence.proteinPosition.start
-                : getProteinPosStart(transcriptConsequence.hgvspShort),
-            proteinPosEnd: transcriptConsequence.proteinPosition
-                ? transcriptConsequence.proteinPosition.end
-                : undefined,
-            mutationType: transcriptConsequence.variantClassification,
+            proteinChange,
+            proteinPosStart,
+            proteinPosEnd,
+            mutationType,
         };
         mutations.push(mutation);
     }
