@@ -14,7 +14,7 @@ import { genomeNexusApiRoot } from '../util/genomeNexusClientInstance';
 import { oncokbApiRoot } from '../util/oncokbClientInstance';
 import FunctionalGroups from '../component/variantPage/FunctionalGroups';
 import Spinner from 'react-spinkit';
-import { variantToMutation } from '../util/variantUtils';
+import { isVue, variantToMutation } from '../util/variantUtils';
 import { RemoteData } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import WindowStore from '../component/shared/WindowStore';
@@ -185,7 +185,7 @@ class Variant extends React.Component<IVariantProps> {
                         [TrackName.Exon]: 'visible',
                         [TrackName.UniprotTopology]: 'visible',
                     }}
-                    hugoSymbol={mutation[0].gene.hugoGeneSymbol}
+                    hugoSymbol={mutation[0]?.gene?.hugoGeneSymbol}
                     entrezGeneId={Number(
                         getTranscriptConsequenceSummary(
                             this.props.store.annotationSummary,
@@ -470,11 +470,17 @@ class Variant extends React.Component<IVariantProps> {
                                             ]: VariantAnnotation;
                                         }>
                                     }
-                                    curiousCases={
-                                        this.props.store.curiousCases.result
-                                    }
                                     genomeBuild={
                                         this.props.store.genomeBuild.result
+                                    }
+                                    vue={
+                                        isVue(
+                                            this.props.store.annotationSummary,
+                                            this.props.store.selectedTranscript
+                                        )
+                                            ? this.props.store.annotationSummary
+                                                  ?.vues
+                                            : undefined
                                     }
                                 />
                             </Col>

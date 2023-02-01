@@ -53,3 +53,16 @@ export function variantToGenomicLocationString(
         ? `${genomicLocation.chromosome},${genomicLocation.start},${genomicLocation.end},${genomicLocation.referenceAllele},${genomicLocation.variantAllele}`
         : '';
 }
+
+export function isVue(
+    annotation: VariantAnnotationSummary | undefined,
+    selectedTranscript: string
+) {
+    if (selectedTranscript) {
+        return annotation?.transcriptConsequenceSummaries.find(
+            (summary) => summary.transcriptId === selectedTranscript
+        )?.isVue;
+    } else {
+        return annotation?.transcriptConsequenceSummary.isVue;
+    }
+}

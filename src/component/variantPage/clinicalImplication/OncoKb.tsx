@@ -7,7 +7,7 @@ import {
     IndicatorQueryTreatment,
 } from 'oncokb-ts-api-client';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import { getTumorTypeNameWithExclusionInfo } from 'react-mutation-mapper';
+import { getTumorTypeNameWithExclusionInfo } from 'oncokb-frontend-commons';
 
 import {
     ClinicalSignificance,

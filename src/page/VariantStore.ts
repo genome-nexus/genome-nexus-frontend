@@ -22,13 +22,9 @@ import {
 import { annotationQueryFields } from '../config/configDefaults';
 import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { getDataFetcher } from '../util/ApiUtils';
-import genomeNexusInternalClient from '../util/genomeNexusClientInternalInstance';
 import genomeNexusClient from '../util/genomeNexusClientInstance';
 import oncoKbClient from '../util/oncokbClientInstance';
-import {
-    variantToGenomicLocationString,
-    variantToMutation,
-} from '../util/variantUtils';
+import { variantToMutation } from '../util/variantUtils';
 import { MainStore } from './MainStore';
 
 export interface VariantStoreConfig {
@@ -196,20 +192,6 @@ export class VariantStore {
             }
         },
         onError: () => {},
-    });
-
-    readonly curiousCases = remoteData({
-        await: () => [this.annotation],
-        invoke: async () => {
-            return genomeNexusInternalClient.fetchCuriousCasesGET({
-                genomicLocation: encodeURIComponent(
-                    variantToGenomicLocationString(this.annotationSummary)
-                ),
-            });
-        },
-        onError: (err: Error) => {
-            // fail silently
-        },
     });
 
     @computed

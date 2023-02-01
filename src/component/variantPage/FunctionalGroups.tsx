@@ -6,6 +6,7 @@ import {
     VariantAnnotationSummary,
     VariantAnnotation,
     MyVariantInfo,
+    Vues,
 } from 'genome-nexus-ts-api-client';
 import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 
@@ -16,7 +17,6 @@ import functionalGroupsStyle from './functionalGroups.module.scss';
 import ClinicalImplication from './ClinicalImplication';
 import { RemoteData } from 'cbioportal-utils';
 import PrevalenceInCancer from './PrevalenceInCancer';
-import { CuriousCases } from 'genome-nexus-ts-api-client/dist/generated/GenomeNexusAPIInternal';
 
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
@@ -28,8 +28,8 @@ interface IFunctionalGroupsProps {
     indexAnnotationsByGenomicLocationPromise: RemoteData<{
         [genomicLocation: string]: VariantAnnotation;
     }>;
-    curiousCases?: CuriousCases;
     genomeBuild?: string;
+    vue?: Vues;
 }
 
 @observer
@@ -67,7 +67,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                     this.props.isCanonicalTranscriptSelected
                                 }
                                 clinvar={this.clinvar}
-                                curiousCases={this.props.curiousCases}
+                                vue={this.props.vue}
                             />
                         </td>
                     </tr>
