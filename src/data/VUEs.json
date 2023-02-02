@@ -74,7 +74,15 @@
         "comment": "Complete exon 3 skip or inframe deletion in exon 3",
         "pubmedIds": [29316426],
         "context": "Recurrent alteration in CRC",
-        "referenceText": "Yaeger et al, 2018"
+        "referenceText": "Yaeger et al, 2018",
+        "revisedProteinEffects": [
+            {
+                "variant": "4:g.55593576_55593606del",
+                "transcriptId": "ENST00000349496",
+                "revisedProteinEffect": "p.E9_D81del",
+                "variantClassification": "In_Frame_Del"
+            }
+        ]
     },
     {
         "hugoGeneSymbol": "KIT",
@@ -100,7 +108,15 @@
         "comment": "Skipping of exon 14",
         "context": "Actionable in NSCLC",
         "pubmedIds": [27343443],
-        "referenceText": "Schrock et al, 2014"
+        "referenceText": "Schrock et al, 2014",
+        "revisedProteinEffects": [
+            {
+                "variant": "13:g.28608217_28608218insCCAAACTCTAAATTTTCTCTTGGAAACTCCCATTTGAGATCATATTCATATTCTCTG",
+                "transcriptId": "ENST00000241453",
+                "revisedProteinEffect": "p.E598_F612dup",
+                "variantClassification": "In_Frame_Ins"
+            }
+        ]
     },
     {
         "hugoGeneSymbol": "PIK3R1",
@@ -109,7 +125,15 @@
         "comment": "Skipping of exon 11",
         "context": "Recurrent in breast and uterine cancer",
         "pubmedIds": [25488983],
-        "referenceText": "Lucas et al, 2014"
+        "referenceText": "Lucas et al, 2014",
+        "revisedProteinEffects": [
+            {
+                "variant": "5:g.67589663G>C",
+                "transcriptId": "ENST00000521381",
+                "revisedProteinEffect": "p.D434_E476del",
+                "variantClassification": "In_Frame_Del"
+            }
+        ]
     },
     {
         "hugoGeneSymbol": "FLT3",
@@ -117,7 +141,15 @@
         "defaultEffect": "splice",
         "comment": "Internal Tandem Duplication",
         "context": "Recurrent alteration in AML",
-        "pubmedIds": [25488983],
-        "referenceText": "Zhang et al, 2020"
+        "pubmedIds": [31285539],
+        "referenceText": "Zhang et al, 2020",
+        "revisedProteinEffects": [
+            {
+                "variant": "13:g.28608217_28608218insCCAAACTCTAAATTTTCTCTTGGAAACTCCCATTTGAGATCATATTCATATTCTCTG",
+                "transcriptId": "ENST00000241453",
+                "revisedProteinEffect": "p.E598_F612dup",
+                "variantClassification": "In_Frame_Ins"
+            }
+        ]
     }
 ]
