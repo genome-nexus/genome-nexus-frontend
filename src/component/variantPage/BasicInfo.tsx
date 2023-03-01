@@ -152,49 +152,37 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             if (renderData) {
                 renderData = renderData.filter((data) => data.value != null); // remove null fields
             }
-
-            const dataBeforeVUE = renderData.filter((element) => {
-                return (
-                    element.key === 'hugoGeneSymbol' ||
-                    element.key === 'oncogene'
-                );
-            });
-
-            const dataAfterVUE = renderData.filter((element) => {
-                return (
-                    element.key === 'variantType' ||
-                    element.key === 'hgvsg' ||
-                    element.key === 'hgvsc' ||
-                    element.key === 'transcript' ||
-                    element.key === 'refSeq'
-                );
-            });
-
-            let basicInfoBeforeVUE = _.map(dataBeforeVUE, (data) => {
-                return this.generateBasicInfoPills(
-                    data.value,
-                    data.key,
-                    data.category
-                );
-            });
-
-            let basicInfoAfterVUE = _.map(dataAfterVUE, (data) => {
-                return this.generateBasicInfoPills(
-                    data.value,
-                    data.key,
-                    data.category
-                );
-            });
+            // if variant is VUE, remove hgvsShort and variantClassification
+            // Show revised hgvsShort and variantClassification in VUE block instead
+            // Otherwise show all fields
+            const showVue = isVue(
+                this.props.annotation,
+                this.props.selectedTranscript
+            );
+            const keysBeforeVue = showVue
+                ? ['hugoGeneSymbol', 'oncogene', 'tsg']
+                : [
+                      'hugoGeneSymbol',
+                      'oncogene',
+                      'tsg',
+                      'hgvsShort',
+                      'variantClassification',
+                  ];
+            const keysAfterVue = [
+                'variantType',
+                'hgvsg',
+                'hgvsc',
+                'transcript',
+                'refSeq',
+            ];
 
             return (
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
-                        {basicInfoBeforeVUE}
-                        {isVue(
-                            this.props.annotation,
-                            this.props.selectedTranscript
-                        ) && this.generateBasicInfoReVUE(this.props.annotation)}
-                        {basicInfoAfterVUE}
+                        {this.getPillList(keysBeforeVue, renderData)}
+                        {showVue &&
+                            this.generateBasicInfoReVUE(this.props.annotation)}
+                        {this.getPillList(keysAfterVue, renderData)}
                         {this.jsonButton()}
                         {haveTranscriptTable &&
                             this.transcriptsButton(this.showAllTranscripts)}
@@ -443,7 +431,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         );
     }
 
-    public generateBasicInfoPills(
+    public generatePills(
         value: string | null,
         key: string,
         category: string | undefined
@@ -504,6 +492,16 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
             >
                 {value}
             </span>
+        );
+    }
+
+    public filterPillsByKey(keys: string[], renderData: BasicInfoData[]) {
+        return renderData.filter((element) => keys.includes(element.key));
+    }
+
+    public getPillList(keys: string[], renderData: BasicInfoData[]) {
+        return this.filterPillsByKey(keys, renderData).map((data) =>
+            this.generatePills(data.value, data.key, data.category)
         );
     }
 
