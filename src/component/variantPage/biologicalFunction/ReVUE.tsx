@@ -10,16 +10,24 @@ interface IReVUEProps {
 
 export const ReVUEContent: React.FunctionComponent<IReVUEProps> = (props) => {
     return props.vue ? (
-        <span>
-            {props.vue.comment}{' '}
-            <a
-                href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds[0]}/`} // should be multiple links if have a list of ids? Also need a list of reference text
-                rel="noopener noreferrer"
-                target="_blank"
-            >
-                ({props.vue.referenceText})
-            </a>
-        </span>
+        <div>
+            <span>
+                {props.vue.comment}{' '}
+                <a
+                    href={`https://pubmed.ncbi.nlm.nih.gov/${props.vue.pubmedIds[0]}/`} // should be multiple links if have a list of ids? Also need a list of reference text
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    ({props.vue.referenceText})
+                </a>
+            </span>
+            <div>
+            Predicted effect†:{' '}{props.vue.defaultEffect}
+
+            </div>
+            
+        </div>
+        
     ) : (
         <span>NA</span>
     );
