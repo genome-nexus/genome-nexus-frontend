@@ -78,7 +78,7 @@ export default class SearchBox extends React.Component<ISearchBoxProps> {
     private getGenomeNexusDataByKeywords(keywords: string[]): Promise<any> {
         return client.fetchVariantAnnotationPOST({
             variants: keywords,
-            fields: SEARCH_QUERY_FIELDS,
+            fields: SEARCH_QUERY_FIELDS as any,
         });
     }
 

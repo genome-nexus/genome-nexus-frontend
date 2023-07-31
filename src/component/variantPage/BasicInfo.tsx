@@ -371,27 +371,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
         return (
             <DefaultTooltip
                 placement="bottom"
-                overlay={
-                    <span>
-                        <ReVUEContent vue={this.props.annotation!.vues} />
-                        Source:{' '}
-                        <a
-                            href="https://cancerrevue.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            reVUE <i className="fa fa-external-link" />
-                        </a>
-                        {', '}
-                        <a
-                            href="https://useast.ensembl.org/info/docs/tools/vep/index.html"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            VEP† <i className="fa fa-external-link" />
-                        </a>
-                    </span>
-                }
+                overlay={<ReVUEContent vue={this.props.annotation!.vues} />}
             >
                 <span
                     className={classNames(basicInfo[`vue-wrapper`])}
@@ -431,7 +411,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                                 basicInfo[`inframe-mutation`]
                             )}
                         >
-                            {annotationSummary.vues.variantClassification}
+                            {annotationSummary.vues.revisedVariantClassification}
                         </span>
                     </a>
                 </span>

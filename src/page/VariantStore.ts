@@ -88,7 +88,7 @@ export class VariantStore {
         invoke: async () => {
             return await genomeNexusClient.fetchVariantAnnotationGET({
                 variant: this.variant,
-                fields: annotationQueryFields(),
+                fields: annotationQueryFields() as any,
             });
         },
         onError: (err: Error) => {
