@@ -411,7 +411,10 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                                 basicInfo[`inframe-mutation`]
                             )}
                         >
-                            {annotationSummary.vues.revisedVariantClassification}
+                            {
+                                annotationSummary.vues
+                                    .revisedVariantClassification
+                            }
                         </span>
                     </a>
                 </span>
