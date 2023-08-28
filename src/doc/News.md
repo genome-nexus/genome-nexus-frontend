@@ -1,7 +1,47 @@
+## Aug 8, 2023:
+- **Annotation Pipeline Update**: Add support for [OncoKB™](https://www.oncokb.org/) annotation in annotation pipeline
+    - OncoKB™ annotation access requires token. See [document](https://github.com/genome-nexus/genome-nexus-annotation-pipeline#annotation-fields) about how to add OncoKB™ annotation in MAF.
+- **Annotation Pipeline Update**: Release v1.0.0!
+
+## Aug 4, 2023
+- **Database Update**: Update ClinVar version to 20230722
+
+## Jul 31, 2023:
+- **Annotation Pipeline Update**: Add version as subcommand 
+    - Example:
+        ```
+        $ java -jar annotationPipeline/target/annotationPipeline-*.jar version
+        ```
+
+## May 30, 2023
+- **Database Update**:
+    - New HGNC symbols, version: 2024.4.01
+    - Update both GRCh37 and GRCh38.
+
+## Apr 24, 2023
+- **Annotation Tool Update**: New python tool to convert vcf to maf file. See [documents](https://github.com/genome-nexus/annotation-tools).
+    - annotation_wrapper_suite.sh: This suite of tools was designed with the AACR Project GENIE
+      - Example:
+        ```
+        ./annotation_suite_wrapper.sh --input-directory=/data/vcfs/ --output-directory=/data/maf/ --merged-mutation-file=/data/merged.maf --center-name=CTR --sequence-source=WGS --annotation-scripts-home=$(pwd)
+        ```
+    - VCF to MAF Conversion Tool: `vcf2maf.py` can be used as a standalone tool to convert a VCF file to a Mutation Annotation Format (MAF) file.
+      - Example:
+        ```
+        python3 vcf2maf.py --input-data /data/vcfs --output-directory /data/maf/ --center-name CTR --sequence-source WGS --tumor-id Tumor --normal-id Normal
+        ```
+
+## Jan 30, 2023
+- **API Update**:
+    - Integrating list of VUEs from [www.cancerrevue.org](www.cancerrevue.org) into the backend server of Genome Nexus. Now confirmed VUEs will overwrite annotations in `annotation_summary`.
+
 ## Dec 13, 2022
 - **Database Update**:
     - New HGNC symbols, version: 2022.10.01
     - Update both GRCh37 and GRCh38.
+
+## Dec 12, 2022
+- **Annotation Pipeline Update**: Support not removing matching bases and sticking with original input (see [document](**Annotation Pipeline Update**))
 
 ## Sep 21, 2022
 - **Database Update**: Support "Mutation Assessor" in annotation API
