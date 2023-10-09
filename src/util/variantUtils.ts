@@ -63,6 +63,6 @@ export function isVue(
             (summary) => summary.transcriptId === selectedTranscript
         )?.isVue;
     } else {
-        return annotation?.transcriptConsequenceSummary.isVue;
+        return annotation?.transcriptConsequenceSummary?.isVue;
     }
 }
