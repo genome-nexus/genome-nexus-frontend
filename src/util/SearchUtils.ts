@@ -250,7 +250,9 @@ export function normalizeSearchText(keyword: string) {
         }
         // Check if the firstPart matches the pattern ^(chr)?([1-9]|1[0-9]|2[0-4]|[XY]|(MT))
         // If firstPart matches the pattern, keep it lowercase, otherwise uppercase it
-        const firstPartProcessed = /^\b(chr)/.test(firstPart)? firstPart : _.toUpper(firstPart);
+        const firstPartProcessed = /^\b(chr)/.test(firstPart)
+            ? firstPart
+            : _.toUpper(firstPart);
 
         // if "del"/"ins"/"dup" in text(it should be in second part of text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
