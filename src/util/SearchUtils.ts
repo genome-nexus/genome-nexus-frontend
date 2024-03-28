@@ -248,6 +248,12 @@ export function normalizeSearchText(keyword: string) {
             secondPart = keyword.slice(seperatorIndex + 3, keyword.length);
             type = keyword.slice(seperatorIndex + 1, seperatorIndex + 3);
         }
+        // Check if the firstPart matches the pattern ^(chr)?([1-9]|1[0-9]|2[0-4]|[XY]|(MT))
+        // If firstPart matches the pattern, keep it lowercase, otherwise uppercase it
+        const firstPartProcessed = /^\b(chr)/.test(firstPart)
+            ? firstPart
+            : _.toUpper(firstPart);
+
         // if "del"/"ins"/"dup" in text(it should be in second part of text after splitting by ":"), don't convert second part to upper case
         // otherwire convert all to upper case except type
         const match = secondPart.match(/del|dup|ins/g);
@@ -255,7 +261,7 @@ export function normalizeSearchText(keyword: string) {
             const alternationType = match[0];
             const location = secondPart.split(alternationType)[0];
             const alleles = secondPart.split(alternationType)[1];
-            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+            keyword = `${firstPartProcessed}${separator}${type}${_.toUpper(
                 location
             )}${alternationType}${_.toUpper(alleles)}`;
         }
@@ -264,11 +270,11 @@ export function normalizeSearchText(keyword: string) {
             const alternationType = 'delins';
             const location = secondPart.split(alternationType)[0];
             const alleles = secondPart.split(alternationType)[1];
-            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+            keyword = `${firstPartProcessed}${separator}${type}${_.toUpper(
                 location
             )}${alternationType}${_.toUpper(alleles)}`;
         } else {
-            keyword = `${_.toUpper(firstPart)}${separator}${type}${_.toUpper(
+            keyword = `${firstPartProcessed}${separator}${type}${_.toUpper(
                 secondPart
             )}`;
         }

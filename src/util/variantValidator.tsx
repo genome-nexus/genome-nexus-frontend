@@ -37,7 +37,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         if (variant.includes(VARIANT_OPERATOR.SNP)) {
             // chromosome(1-24,X,Y,MT) + start(number) + ref(A/T/G/C) + ">" + var(A/T/G/C)
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*[ATGC]>[ATGC]$/i;
+                /^\b(chr[1-9]|chr1[0-9]|chr2[0-4]|chr[XY]|(chrMT)|[1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*[ATGC]>[ATGC]$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,
@@ -50,7 +50,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         else if (variant.includes(VARIANT_OPERATOR.DELINS)) {
             // chromosome(1-24,X,Y,MT) + start(number) + "_" + end(number) + "delins" + var(ATGC)
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(delins)[ATGC]*$/i;
+                /^\b(chr[1-9]|chr1[0-9]|chr2[0-4]|chr[XY]|(chrMT)|[1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(delins)[ATGC]*$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,
@@ -63,7 +63,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         else if (variant.includes(VARIANT_OPERATOR.INS)) {
             // chromosome(1-24,X,Y,MT) + start(number) + "_" + end(number) + "ins" + var(ATGC)
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*_[0-9]*(ins)[ATGC]*$/i;
+                /^\b(chr[1-9]|chr1[0-9]|chr2[0-4]|chr[XY]|(chrMT)|[1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*_[0-9]*(ins)[ATGC]*$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,
@@ -75,7 +75,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         // DEL
         else if (variant.includes(VARIANT_OPERATOR.DEL)) {
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(del)$/i;
+                /^\b(chr[1-9]|chr1[0-9]|chr2[0-4]|chr[XY]|(chrMT)|[1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(del)$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,
@@ -87,7 +87,7 @@ export function isVariantValid(variant: string): VariantValidStatus {
         // DUP
         else if (variant.includes(VARIANT_OPERATOR.DUP)) {
             pattern =
-                /^\b([1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(dup)$/i;
+                /^\b(chr[1-9]|chr1[0-9]|chr2[0-4]|chr[XY]|(chrMT)|[1-9]|1[0-9]|2[0-4]|[XY]|(MT))\b(:g.)[0-9]*(?:_([0-9]*))?(dup)$/i;
             if (variant.trim().match(pattern)) {
                 return {
                     isValid: true,
