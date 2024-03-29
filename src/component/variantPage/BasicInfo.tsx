@@ -24,6 +24,7 @@ import { ReVUEContent } from './biologicalFunction/ReVUE';
 import { isVue } from '../../util/variantUtils';
 
 interface IBasicInfoProps {
+    isIGV: boolean;
     annotation: VariantAnnotationSummary | undefined;
     mutation: Mutation;
     variant: string;
@@ -146,12 +147,27 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     selectedTranscript || canonicalTranscript,
                     this.props.variant
                 );
-            if (renderData === null) {
-                return null;
-            }
             if (renderData) {
                 renderData = renderData.filter((data) => data.value != null); // remove null fields
             }
+
+            if (renderData === null) {
+                if (this.props.isIGV) {
+                    renderData = [
+                        {
+                            value: 'Intergenic Variant',
+                            key: 'variantType',
+                            category: 'mutation',
+                        },
+                        {
+                            value: this.props.variant,
+                            key: 'hgvsg',
+                            category: 'hgvsg',
+                        },
+                    ];
+                } else return null;
+            }
+
             // if variant is VUE, remove hgvsShort and variantClassification
             // Show revised hgvsShort and variantClassification in VUE block instead
             // Otherwise show all fields
@@ -175,14 +191,22 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                 'transcript',
                 'refSeq',
             ];
-
+            const keysForIGV = ['variantType', 'hgvsg'];
             return (
                 <div className={basicInfo['basic-info-container']}>
                     <span className={basicInfo['basic-info-pills']}>
-                        {this.getPillList(keysBeforeVue, renderData)}
-                        {showVue &&
-                            this.generateBasicInfoReVUE(this.props.annotation)}
-                        {this.getPillList(keysAfterVue, renderData)}
+                        {this.props.isIGV &&
+                            this.getPillList(keysForIGV, renderData)}
+                        {!this.props.isIGV && (
+                            <>
+                                {this.getPillList(keysBeforeVue, renderData)}
+                                {showVue &&
+                                    this.generateBasicInfoReVUE(
+                                        this.props.annotation
+                                    )}
+                                {this.getPillList(keysAfterVue, renderData)}
+                            </>
+                        )}
                         {this.jsonButton()}
                         {haveTranscriptTable &&
                             this.transcriptsButton(this.showAllTranscripts)}
