@@ -357,6 +357,13 @@ class Variant extends React.Component<IVariantProps> {
                                 <Row>
                                     <Col>
                                         <BasicInfo
+                                            isIGV={
+                                                this.props.store.annotation
+                                                    .result
+                                                    ?.most_severe_consequence ===
+                                                    'intergenic_variant' ||
+                                                false
+                                            }
                                             annotation={
                                                 this.props.store
                                                     .annotationSummary
