@@ -437,7 +437,7 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                         >
                             {
                                 annotationSummary.vues
-                                    .revisedVariantClassification
+                                    .revisedVariantClassificationStandard
                             }
                         </span>
                     </a>

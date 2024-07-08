@@ -1,7 +1,7 @@
 import { remoteData } from 'cbioportal-frontend-commons';
-import MobxPromise from 'mobxpromise';
 import { GENOME_BUILD } from '../util/SearchUtils';
 import client from '../util/genomeNexusClientInstance';
+import { MobxPromise } from 'cbioportal-frontend-commons';
 
 export class MainStore {
     readonly genomeBuild: MobxPromise<string> = remoteData({

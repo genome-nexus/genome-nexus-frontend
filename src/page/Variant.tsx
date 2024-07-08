@@ -53,10 +53,10 @@ class Variant extends React.Component<IVariantProps> {
         return this.props.store.oncokbData.result;
     }
 
-    @computed
-    private get civic() {
-        return this.props.store.civicVariants.result;
-    }
+    // @computed
+    // private get civic() {
+    //     return this.props.store.civicVariants.result;
+    // }
 
     @computed
     private get variantAnnotation() {
@@ -83,7 +83,7 @@ class Variant extends React.Component<IVariantProps> {
         return (
             this.props.store.annotation.isPending ||
             this.props.store.oncokbGenesMap.isPending ||
-            this.props.store.civicVariants.isPending ||
+            // this.props.store.civicVariants.isPending ||
             this.props.store.isAnnotatedSuccessfully.isPending ||
             this.props.store.indexedAnnotation.isPending ||
             this.props.store.genomeBuild.isPending
@@ -465,7 +465,7 @@ class Variant extends React.Component<IVariantProps> {
                                     }
                                     variantAnnotation={this.variantAnnotation}
                                     oncokb={this.oncokb}
-                                    civic={this.civic}
+                                    // civic={this.civic}
                                     isCanonicalTranscriptSelected={
                                         this.isCanonicalTranscriptSelected!
                                     }

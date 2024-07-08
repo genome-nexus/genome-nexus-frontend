@@ -50,7 +50,7 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                         <td>
                             <ClinicalImplication
                                 oncokb={this.props.oncokb}
-                                civic={this.props.civic}
+                                // civic={this.props.civic}
                                 isCanonicalTranscriptSelected={
                                     this.props.isCanonicalTranscriptSelected
                                 }
