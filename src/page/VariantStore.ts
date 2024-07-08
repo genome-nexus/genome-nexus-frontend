@@ -1,18 +1,18 @@
 import { observable, computed, reaction, makeObservable } from 'mobx';
 import { remoteData } from 'cbioportal-frontend-commons';
 import {
-    fetchCivicVariants,
+    // fetchCivicVariants,
     genomicLocationString,
-    getCivicGenes,
-    ICivicGeneIndex,
-    ICivicVariantIndex,
+    // getCivicGenes,
+    // ICivicGeneIndex,
+    // ICivicVariantIndex,
 } from 'cbioportal-utils';
 import { VariantAnnotation } from 'genome-nexus-ts-api-client';
 import {
     IndicatorQueryResp,
     CancerGene as OncoKbGene,
 } from 'oncokb-ts-api-client';
-import MobxPromise from 'mobxpromise';
+import { MobxPromise } from 'cbioportal-frontend-commons';
 import _ from 'lodash';
 import qs from 'qs';
 import {
@@ -20,7 +20,7 @@ import {
     DataFilterType,
 } from 'react-mutation-mapper';
 import { annotationQueryFields } from '../config/configDefaults';
-import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
+// import { getTranscriptConsequenceSummary } from '../util/AnnotationSummaryUtil';
 import { getDataFetcher } from '../util/ApiUtils';
 import genomeNexusClient from '../util/genomeNexusClientInstance';
 import oncoKbClient from '../util/oncokbClientInstance';
@@ -152,47 +152,47 @@ export class VariantStore {
         default: {},
     });
 
-    readonly civicGenes = remoteData<ICivicGeneIndex | undefined>({
-        await: () => [this.annotation],
-        invoke: async () =>
-            getCivicGenes([
-                Number(
-                    getTranscriptConsequenceSummary(this.annotationSummary)
-                        ?.entrezGeneId
-                        ? getTranscriptConsequenceSummary(
-                              this.annotationSummary
-                          )!.entrezGeneId
-                        : 0
-                ),
-            ]),
-        onError: () => {},
-    });
+    // readonly civicGenes = remoteData<ICivicGeneIndex | undefined>({
+    //     await: () => [this.annotation],
+    //     invoke: async () =>
+    //         getCivicGenes([
+    //             Number(
+    //                 getTranscriptConsequenceSummary(this.annotationSummary)
+    //                     ?.entrezGeneId
+    //                     ? getTranscriptConsequenceSummary(
+    //                           this.annotationSummary
+    //                       )!.entrezGeneId
+    //                     : 0
+    //             ),
+    //         ]),
+    //     onError: () => {},
+    // });
 
-    readonly civicVariants = remoteData<ICivicVariantIndex | undefined>({
-        await: () => [this.civicGenes],
-        invoke: async () => {
-            if (this.civicGenes.result) {
-                const mutations = variantToMutation(this.annotationSummary);
+    // readonly civicVariants = remoteData<ICivicVariantIndex | undefined>({
+    //     await: () => [this.civicGenes],
+    //     invoke: async () => {
+    //         if (this.civicGenes.result) {
+    //             const mutations = variantToMutation(this.annotationSummary);
 
-                mutations.forEach((mutation) => {
-                    // fetchCivicVariants cannot handle protein change values starting with 'p.'
-                    if (mutation.proteinChange) {
-                        mutation.proteinChange = mutation.proteinChange.replace(
-                            'p.',
-                            ''
-                        );
-                    } else {
-                        mutation.proteinChange = '';
-                    }
-                });
+    //             mutations.forEach((mutation) => {
+    //                 // fetchCivicVariants cannot handle protein change values starting with 'p.'
+    //                 if (mutation.proteinChange) {
+    //                     mutation.proteinChange = mutation.proteinChange.replace(
+    //                         'p.',
+    //                         ''
+    //                     );
+    //                 } else {
+    //                     mutation.proteinChange = '';
+    //                 }
+    //             });
 
-                return fetchCivicVariants(this.civicGenes.result, mutations);
-            } else {
-                return {};
-            }
-        },
-        onError: () => {},
-    });
+    //             return fetchCivicVariants(this.civicGenes.result, mutations);
+    //         } else {
+    //             return {};
+    //         }
+    //     },
+    //     onError: () => {},
+    // });
 
     @computed
     get annotationSummary() {
