@@ -7,6 +7,7 @@ import {
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
+import AlphaMissense from './functionalPrediction/AlphaMissense';
 import { SHOW_MUTATION_ASSESSOR } from '../../config/configDefaults';
 import Separator from '../Separator';
 import { GENOME_BUILD } from '../../util/SearchUtils';
@@ -25,10 +26,13 @@ interface IFunctionalImpactData {
     siftPrediction: string | undefined;
     polyPhenScore: number | undefined;
     polyPhenPrediction: string | undefined;
+    amClass: string | undefined;
+    amPathogenicityScore: number | undefined;
 }
 
 @observer
 class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
+
     public getData(
         genomeNexusData: VariantAnnotation | undefined
     ): IFunctionalImpactData {
@@ -52,17 +56,28 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
             genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].polyphen_prediction;
+        const amClass =
+            genomeNexusData &&
+            genomeNexusData.transcript_consequences &&
+            genomeNexusData.transcript_consequences[0].alphaMissense.am_class;
+        const amPathogenicityScore =
+            genomeNexusData &&
+            genomeNexusData.transcript_consequences &&
+            genomeNexusData.transcript_consequences[0].alphaMissense.am_pathogenicity_score;
 
         return {
+            amClass,
+            amPathogenicityScore,
             mutationAssessor,
             siftScore,
             siftPrediction,
             polyPhenScore,
-            polyPhenPrediction,
+            polyPhenPrediction
         };
     }
     public render() {
         const data = this.getData(this.props.variantAnnotation);
+        console.log(data + "12344565462w")
         // Mutation Assessor only available in grch37
         const shouldShowMutationAssessor =
             SHOW_MUTATION_ASSESSOR &&
@@ -88,6 +103,11 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                 <Sift
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}
+                />
+                <Separator />
+                <AlphaMissense
+                    amClass={data.amClass}
+                    amPathogenicityScore={data.amPathogenicityScore}
                 />
             </div>
         );
