@@ -8,7 +8,10 @@ import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
 import AlphaMissense from './functionalPrediction/AlphaMissense';
-import { SHOW_ALPHAMISSENSE } from '../../config/configDefaults';
+import {
+    SHOW_ALPHAMISSENSE,
+    SHOW_MUTATION_ASSESSOR,
+} from '../../config/configDefaults';
 import Separator from '../Separator';
 import { GENOME_BUILD } from '../../util/SearchUtils';
 
@@ -61,7 +64,6 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
         const amPathogenicityScore =
             genomeNexusData?.annotation_summary?.transcriptConsequenceSummary
                 ?.alphaMissense?.score || undefined;
-
         return {
             amClass,
             amPathogenicityScore,
@@ -74,7 +76,10 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
     }
     public render() {
         const data = this.getData(this.props.variantAnnotation);
-        const shouldShowAlphaMissense = SHOW_ALPHAMISSENSE;
+        // Mutation Assessor only available in grch37
+        const shouldShowMutationAssessor =
+            SHOW_MUTATION_ASSESSOR &&
+            this.props.genomeBuild === GENOME_BUILD.GRCh37;
         return (
             <div>
                 <PolyPhen2
@@ -82,21 +87,23 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     polyPhenPrediction={data.polyPhenPrediction}
                 />
                 <Separator />
-                <>
-                    <MutationAssessor
-                        mutationAssessor={data.mutationAssessor}
-                        isCanonicalTranscriptSelected={
-                            this.props.isCanonicalTranscriptSelected
-                        }
-                    />
-                    <Separator />
-                </>
+                {shouldShowMutationAssessor && (
+                    <>
+                        <MutationAssessor
+                            mutationAssessor={data.mutationAssessor}
+                            isCanonicalTranscriptSelected={
+                                this.props.isCanonicalTranscriptSelected
+                            }
+                        />
+                        <Separator />
+                    </>
+                )}
                 <Sift
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}
                 />
                 <Separator />
-                {shouldShowAlphaMissense && (
+                {SHOW_ALPHAMISSENSE && (
                     <AlphaMissense
                         amClass={data.amClass}
                         amPathogenicityScore={data.amPathogenicityScore}

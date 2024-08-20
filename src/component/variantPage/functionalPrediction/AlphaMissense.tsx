@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import { makeObservable, observable } from 'mobx';
-import { observer } from 'mobx-react';
+import { makeObservable } from 'mobx';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 export interface IAlphaMissenseProps {
@@ -45,13 +44,10 @@ const AlphaMissenseInfo: React.FunctionComponent = () => {
     );
 };
 
-@observer
 export default class AlphaMissense extends React.Component<
     IAlphaMissenseProps,
     {}
 > {
-    @observable showDetails = false;
-
     constructor(props: IAlphaMissenseProps) {
         super(props);
         makeObservable(this);
@@ -66,18 +62,12 @@ export default class AlphaMissense extends React.Component<
                 <i className="fas fa-external-link-alt" />
             </>
         );
-        if (
-            this.props.amClass &&
-            this.props.amClass.length > 0 &&
-            this.props.amClass !== 'N/A'
-        ) {
+        if (this.props.amClass) {
             alphaMissenseContent = (
-                <span>
-                    <p>
-                        {this.props.amClass + ' '}(
-                        {this.props.amPathogenicityScore})
-                    </p>{' '}
-                </span>
+                <p>
+                    {this.props.amClass + ' '}({this.props.amPathogenicityScore}
+                    )
+                </p>
             );
         } else {
             alphaMissenseContent = <span> N/A </span>;
