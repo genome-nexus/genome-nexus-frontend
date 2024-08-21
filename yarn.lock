@@ -4260,15 +4260,10 @@ caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000985.tgz#208c723beb15123eb27cc6ad9bc285b4f27a3f87"
   integrity sha512-1m3CC9+dYNh/FHd0V1/McOB73CxjmzzrcXi360x8mKoApUY8QIOYXg4bU5QeJmlenn++20GBI38EKw6qQpJ3kQ==
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000984:
-  version "1.0.30000985"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000985.tgz#0eb40f6c8a8c219155cbe43c4975c0efb4a0f77f"
-  integrity sha512-1ngiwkgqAYPG0JSSUp3PUDGPKKY59EK7NrGGX+VOxaKCNzRbNc7uXMny+c3VJfZxtoK3wSImTvG9T9sXiTw2+w==
-
-caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001219:
-  version "1.0.30001245"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001245.tgz#45b941bbd833cb0fa53861ff2bae746b3c6ca5d4"
-  integrity sha512-768fM9j1PKXpOCKws6eTo3RHmvTUsG9UrpT4WoREFeZgJBTi4/X9g565azS/rVUGtqb8nt7FjLeF5u4kukERnA==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30000984, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001219:
+  version "1.0.30001643"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001643.tgz"
+  integrity sha512-ERgWGNleEilSrHM6iUz/zJNSQTP8Mr21wDWpdgvRwcTXGAq6jMtOUPP4dqFPTdKqZ2wKTdtB+uucZ3MRpAUSmg==
 
 canvg@1.5.3:
   version "1.5.3"
@@ -7038,10 +7033,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-genome-nexus-ts-api-client@1.1.32, genome-nexus-ts-api-client@^1.1.32:
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.32.tgz#e8a9c70d6644e17ae7f76c803ecb0d3e1720c7d9"
-  integrity sha512-ELXH+50alvUVnRioxCOLvxf5VcN57YVheF80kEVFBXT5cnO178tvDLHdaqbmAlEvezHwptercQ9kqh8d9TTm5Q==
+genome-nexus-ts-api-client@1.1.33:
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.33.tgz#aea3eafe6ca59e0187c25c487b7fb9f9b704bdde"
+  integrity sha512-wrbDKoVjw9etDChfacrNStlORqWlS/k2dA5DzlxFEfen3WYO7QtXAFLVSxpjanA/3sGQnVqaxreZzjTPDXhs1A==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"
@@ -7050,6 +7045,14 @@ genome-nexus-ts-api-client@^1.1.28:
   version "1.1.28"
   resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.28.tgz#ead791bceffc3317081109c507539e756160da9c"
   integrity sha512-ASClrj5jH5hDzh7SCKWgoLeSqUZnc+S40u4HymAQGEQeom+yOFWqqzsO0iaYg/0bXouxLSV3kxWZV6YJZO1qNA==
+  dependencies:
+    superagent "^3.8.3"
+    typescript "4.0.3"
+
+genome-nexus-ts-api-client@^1.1.32:
+  version "1.1.32"
+  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.32.tgz#e8a9c70d6644e17ae7f76c803ecb0d3e1720c7d9"
+  integrity sha512-ELXH+50alvUVnRioxCOLvxf5VcN57YVheF80kEVFBXT5cnO178tvDLHdaqbmAlEvezHwptercQ9kqh8d9TTm5Q==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"

@@ -1,5 +1,5 @@
 export const SHOW_MUTATION_ASSESSOR = true;
-
+export const SHOW_ALPHAMISSENSE = true;
 export function annotationQueryFields() {
     const fields = DEFAULT_ANNOTATION_QUERY_FIELDS;
     if (SHOW_MUTATION_ASSESSOR) {
@@ -7,7 +7,6 @@ export function annotationQueryFields() {
     }
     return fields;
 }
-
 export const DEFAULT_ANNOTATION_QUERY_FIELDS = [
     'hotspots',
     'annotation_summary',

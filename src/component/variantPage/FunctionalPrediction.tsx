@@ -7,7 +7,11 @@ import {
 import MutationAssessor from './functionalPrediction/MutationAssesor';
 import Sift from './functionalPrediction/Sift';
 import PolyPhen2 from './functionalPrediction/PolyPhen2';
-import { SHOW_MUTATION_ASSESSOR } from '../../config/configDefaults';
+import AlphaMissense from './functionalPrediction/AlphaMissense';
+import {
+    SHOW_ALPHAMISSENSE,
+    SHOW_MUTATION_ASSESSOR,
+} from '../../config/configDefaults';
 import Separator from '../Separator';
 import { GENOME_BUILD } from '../../util/SearchUtils';
 
@@ -25,6 +29,8 @@ interface IFunctionalImpactData {
     siftPrediction: string | undefined;
     polyPhenScore: number | undefined;
     polyPhenPrediction: string | undefined;
+    amClass: string | undefined;
+    amPathogenicityScore: number | undefined;
 }
 
 @observer
@@ -52,8 +58,15 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
             genomeNexusData &&
             genomeNexusData.transcript_consequences &&
             genomeNexusData.transcript_consequences[0].polyphen_prediction;
-
+        const amClass =
+            genomeNexusData?.annotation_summary?.transcriptConsequenceSummary
+                ?.alphaMissense?.pathogenicity || undefined;
+        const amPathogenicityScore =
+            genomeNexusData?.annotation_summary?.transcriptConsequenceSummary
+                ?.alphaMissense?.score || undefined;
         return {
+            amClass,
+            amPathogenicityScore,
             mutationAssessor,
             siftScore,
             siftPrediction,
@@ -89,6 +102,13 @@ class FunctionalPrediction extends React.Component<IFunctionalPredictionProps> {
                     siftScore={data.siftScore}
                     siftPrediction={data.siftPrediction}
                 />
+                <Separator />
+                {SHOW_ALPHAMISSENSE && (
+                    <AlphaMissense
+                        amClass={data.amClass}
+                        amPathogenicityScore={data.amPathogenicityScore}
+                    />
+                )}
             </div>
         );
     }
