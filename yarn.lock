@@ -4297,13 +4297,13 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cbioportal-frontend-commons@^0.5.67:
-  version "0.5.67"
-  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.67.tgz#08964fc455b26908a37da2ae0c0e690005bc7032"
-  integrity sha512-wSaLHGLYYLOQum9ZuRC+yqz3ySHtcTPZjGfTRNQ12g3kIMWwGStpiKTYFFtSEA7MjH9+7icyVokHc2j0t9HSRw==
+cbioportal-frontend-commons@^0.5.70:
+  version "0.5.70"
+  resolved "https://registry.yarnpkg.com/cbioportal-frontend-commons/-/cbioportal-frontend-commons-0.5.70.tgz#e2c8df098d073aebcc8f6950a1fbbd38ad56943b"
+  integrity sha512-U7SLmitc1KqIkSNIASqB079vRgzNR2suTwyUGoTZRfGFOruqumQK7gZPdNeT7KHX6F//lR7Gl+0MtiY5yrY/aw==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-utils "^0.3.41"
+    cbioportal-utils "^0.3.44"
     classnames "^2.2.5"
     jquery "^3.2.1"
     juice "^10.0.0"
@@ -4311,7 +4311,7 @@ cbioportal-frontend-commons@^0.5.67:
     measure-text "0.0.4"
     numeral "^2.0.6"
     object-sizeof "^1.2.0"
-    oncokb-ts-api-client "^1.3.5"
+    oncokb-ts-api-client "^1.3.6"
     rc-tooltip "^5.0.2"
     rc-trigger "^5.2.1"
     rc-util "^5.8.0"
@@ -4339,15 +4339,15 @@ cbioportal-utils@^0.3.34:
     superagent "^3.8.3"
     typescript "4.0.3"
 
-cbioportal-utils@^0.3.41:
-  version "0.3.41"
-  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.3.41.tgz#32ad3df0da04c65a81d7bda4aad8c671850b08bd"
-  integrity sha512-jRaRseWV9jE+UJ5gLiC4mKVCL0GKykvRk8sJtMa5MtCg1WuHIQupbhpsWs0xjeon/HN9mmUNnyYTeeUU/ahZfA==
+cbioportal-utils@^0.3.44:
+  version "0.3.44"
+  resolved "https://registry.yarnpkg.com/cbioportal-utils/-/cbioportal-utils-0.3.44.tgz#08f1cc30bd40474fab35c2b0a670aa0b7ffb5225"
+  integrity sha512-VEr89BR5qC8INoTP8zxBK9aGCeqLWlYmHFhA8DzBBa4XiUKNLKkCSkOepBDLzlWWbgOqzMjO1w2j7i9THfaw9g==
   dependencies:
     buffer "^6.0.3"
-    genome-nexus-ts-api-client "^1.1.32"
+    genome-nexus-ts-api-client "^1.1.34"
     lodash "^4.17.15"
-    oncokb-ts-api-client "^1.3.5"
+    oncokb-ts-api-client "^1.3.6"
     superagent "^3.8.3"
     typescript "4.0.3"
 
@@ -7038,10 +7038,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-genome-nexus-ts-api-client@1.1.32, genome-nexus-ts-api-client@^1.1.32:
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.32.tgz#e8a9c70d6644e17ae7f76c803ecb0d3e1720c7d9"
-  integrity sha512-ELXH+50alvUVnRioxCOLvxf5VcN57YVheF80kEVFBXT5cnO178tvDLHdaqbmAlEvezHwptercQ9kqh8d9TTm5Q==
+genome-nexus-ts-api-client@1.1.34, genome-nexus-ts-api-client@^1.1.34:
+  version "1.1.34"
+  resolved "https://registry.yarnpkg.com/genome-nexus-ts-api-client/-/genome-nexus-ts-api-client-1.1.34.tgz#7b7529cd52025aa273662bc2effe734a6a760e2d"
+  integrity sha512-9r8uFX7bD32NUfjm3/6ZDH9XEzZ+k1KGf4Icl8xQukrqaXUoGQ/1spyMaOrZIfb2oF416rMwLJTTIhy1uhlIWw==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"
@@ -10844,16 +10844,16 @@ oncokb-frontend-commons@^0.0.18:
     react-if "^2.1.0"
     react-table "^6.10.0"
 
-oncokb-frontend-commons@^0.0.25:
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/oncokb-frontend-commons/-/oncokb-frontend-commons-0.0.25.tgz#f4be188fd85935b3844c6cba09fa305a7669d36d"
-  integrity sha512-fzOjPR9fWZY7DXflUFdHU7tXd+ZEsPkk1pX+I6ofYMnLAebRSbPY6DDmk4Chifa5OyY93m40+AlKb/AVkIQlWg==
+oncokb-frontend-commons@^0.0.28:
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/oncokb-frontend-commons/-/oncokb-frontend-commons-0.0.28.tgz#37606cd49687f2990720ddc0bd351a678b0cd002"
+  integrity sha512-EPJ5Vdsh0ORcHIy66QtosDGwoHrTamFePNG6qltuOSMGla0/BuBHN+MFgCks7p0Y6rt2hbWP0DBWg01SBswMUg==
   dependencies:
-    cbioportal-utils "^0.3.41"
+    cbioportal-utils "^0.3.44"
     classnames "^2.2.5"
     lodash "^4.17.15"
     oncokb-styles "~1.4.2"
-    oncokb-ts-api-client "^1.3.5"
+    oncokb-ts-api-client "^1.3.6"
     rc-tooltip "^5.0.2"
     react-bootstrap "^0.31.5"
     react-collapse "^4.0.3"
@@ -10881,10 +10881,10 @@ oncokb-ts-api-client@^1.3.3:
     superagent "^3.8.3"
     typescript "4.0.3"
 
-oncokb-ts-api-client@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/oncokb-ts-api-client/-/oncokb-ts-api-client-1.3.5.tgz#c829eed16482f7499641701c1cc3a6787f55fdb8"
-  integrity sha512-LPA6hyPZAqBcO3/f6s9TxdEWRFcEpDN3x7nkaxdtq0GJMyoV/ha7CoLiLZ7ja+LhzVGKFYgV5j7ZyO0wvy59ow==
+oncokb-ts-api-client@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/oncokb-ts-api-client/-/oncokb-ts-api-client-1.3.6.tgz#17a768b6ef51ea52ffa0dc232eabf7c7c9b6b9e7"
+  integrity sha512-n2KWw1rX1dpfvy6YhDFzpt4w0P+HA6SXcbNNfk1TefvkklBH5f4OQSnpy4SE2QttaUXsCwKpt4WWi5TA6+J+9Q==
   dependencies:
     superagent "^3.8.3"
     typescript "4.0.3"
@@ -12903,22 +12903,22 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-mutation-mapper@^0.8.110:
-  version "0.8.110"
-  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.110.tgz#be526612c5bc7734ea5a700bfbbaae04c0718e01"
-  integrity sha512-vJrEPqQGWwFgZKDwkrcZe37LY0WeB7en4P1M0SbHwrqr09mLhEtKwsZK7aNlm3OHmJbmTJ7kMlXfRAr5FHYSnw==
+react-mutation-mapper@^0.8.114:
+  version "0.8.114"
+  resolved "https://registry.yarnpkg.com/react-mutation-mapper/-/react-mutation-mapper-0.8.114.tgz#9ad3443183e8ddb692732db42a0e74c167519654"
+  integrity sha512-ma8/gy7nICaqFYWGnop/ltBR0IVedSsp0okX2X7jF6yRiIRC25AT3NpdZ5Zs8fSUp5EUvCGzwcY57qKy5fR/PQ==
   dependencies:
     autobind-decorator "^2.1.0"
-    cbioportal-frontend-commons "^0.5.67"
-    cbioportal-utils "^0.3.41"
+    cbioportal-frontend-commons "^0.5.70"
+    cbioportal-utils "^0.3.44"
     classnames "^2.2.5"
-    genome-nexus-ts-api-client "^1.1.32"
+    genome-nexus-ts-api-client "^1.1.34"
     jquery "^3.2.1"
     lodash "^4.17.15"
     memoize-weak-decorator "^1.0.3"
-    oncokb-frontend-commons "^0.0.25"
+    oncokb-frontend-commons "^0.0.28"
     oncokb-styles "~1.4.2"
-    oncokb-ts-api-client "^1.3.5"
+    oncokb-ts-api-client "^1.3.6"
     react-collapse "^4.0.3"
     react-if "^2.1.0"
     react-motion "^0.5.2"

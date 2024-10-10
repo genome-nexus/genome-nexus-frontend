@@ -13,6 +13,7 @@ import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
 
+// TODO: Need to update the url when new manuscript is available
 const MUTATION_ASSESSOR_URL = 'http://mutationassessor.org/r3/';
 
 export interface IMutationAssessorProps {
@@ -120,58 +121,48 @@ const MutationAssessorLegend: React.FunctionComponent = () => {
 
 const MutationAssessorInfo: React.FunctionComponent = () => {
     return (
-        <div>
+        <div style={{ maxWidth: 450 }}>
+            Mutation Assessor predicts the functional impact of amino-acid
+            substitutions in proteins, such as mutations discovered in cancer or
+            missense polymorphisms. The functional impact is assessed based on
+            evolutionary conservation of the affected amino acid in protein
+            homologs. The method has been validated on a large set of disease
+            associated and polymorphic variants (
+            <a
+                href="https://www.ncbi.nlm.nih.gov/clinvar/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                ClinVar
+            </a>
+            ).
+            <br />
+            <b>
+                Mutation Assessor V4 data is now available in Genome Nexus!
+            </b>{' '}
+            New manuscript is in progress. Click{` `}
             <a
                 href={MUTATION_ASSESSOR_URL}
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                Mutation Assessor
-            </a>{' '}
-            predicts the functional impact of amino-acid substitutions in
-            proteins, such as mutations discovered in cancer or missense
-            polymorphisms. The functional impact is assessed based on
-            evolutionary conservation of the affected amino acid in protein
-            homologs. The method has been validated on a large set (60k) of
-            disease associated (OMIM) and polymorphic variants.
+                here
+            </a>
+            {` `} to see information about V3 data.
         </div>
     );
 };
 
 const MutationAssessorValue: React.FunctionComponent<{
     mutationAssessor?: MutationAssessorData;
-}> = (props) => {
-    if (props.mutationAssessor) {
-        const maData = props.mutationAssessor;
-
-        const impact = maData.functionalImpact ? (
-            <div>
-                {(maData.functionalImpactScore ||
-                    maData.functionalImpactScore === 0) && (
-                    <div>
-                        <span className="mr-2">Score</span>
-                        <strong>
-                            {maData.functionalImpactScore.toFixed(2)}
-                        </strong>
-                    </div>
-                )}
-                <div>
-                    Please refer to the score range{' '}
-                    <a
-                        href="http://mutationassessor.org/r3/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        here
-                    </a>
-                    .
-                </div>
-            </div>
-        ) : null;
-        return impact;
-    } else {
-        return null;
-    }
+}> = ({ mutationAssessor }) => {
+    if (!mutationAssessor) return null;
+    return mutationAssessor.functionalImpactScore != null ? (
+        <div>
+            <span className="mr-2">Score</span>
+            <strong>{mutationAssessor.functionalImpactScore.toFixed(2)}</strong>
+        </div>
+    ) : null;
 };
 
 @observer
@@ -187,37 +178,23 @@ export default class MutationAssessor extends React.Component<
     }
 
     public render() {
-        let maContent: JSX.Element;
+        let functionalImpactPrediction =
+            this.props.mutationAssessor?.functionalImpactPrediction || 'N/A';
 
         const dataSource = (
-            <>
+            <div className={functionalGroupsStyle['data-with-link']}>
                 Mutation Assessor&nbsp;
                 <i className="fas fa-external-link-alt" />
                 {!this.props.isCanonicalTranscriptSelected && <span> *</span>}
-            </>
+            </div>
         );
-
-        if (
-            this.props.mutationAssessor &&
-            this.props.mutationAssessor.functionalImpact != null &&
-            this.props.mutationAssessor.functionalImpact !== ''
-        ) {
-            const maData = this.props.mutationAssessor;
-            maContent = <span>{maData.functionalImpact}</span>;
-        } else {
-            maContent = <span>N/A</span>;
-        }
-
+        // TODO: Need to add url link when new manuscript is available
         return (
             <div className={functionalGroupsStyle['functional-group']}>
                 <div className={functionalGroupsStyle['data-source']}>
                     <DefaultTooltip
                         placement="top"
-                        overlay={
-                            <div style={{ maxWidth: 450 }}>
-                                <MutationAssessorInfo />
-                            </div>
-                        }
+                        overlay={<MutationAssessorInfo />}
                     >
                         <a
                             href={MUTATION_ASSESSOR_URL}
@@ -230,13 +207,7 @@ export default class MutationAssessor extends React.Component<
                 </div>
                 <div>
                     <span className={functionalGroupsStyle['data-with-link']}>
-                        <a
-                            href={MUTATION_ASSESSOR_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {maContent}
-                        </a>
+                        <>{functionalImpactPrediction}</>
                     </span>
                     <Toggle
                         isOpen={this.showDetails}
