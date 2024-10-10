@@ -1,14 +1,10 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { DefaultTooltip } from 'cbioportal-frontend-commons';
 import { MutationAssessor as MutationAssessorData } from 'genome-nexus-ts-api-client';
 import { action, makeObservable, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { Collapse, Table } from 'react-bootstrap';
-
 import Toggle from '../../Toggle';
-
-import functionalImpactColor from './styles/functionalImpactTooltip.module.scss';
 import functionalGroupsStyle from '../functionalGroups.module.scss';
 
 // Most of this component comes from cBioPortal-frontend
@@ -32,7 +28,6 @@ const MutationAssessorLegend: React.FunctionComponent = () => {
             <Table table-border-top striped bordered hover size="sm">
                 <thead>
                     <tr>
-                        <th>Legend</th>
                         <th>
                             <span
                                 style={{ display: 'inline-block' }}
@@ -51,64 +46,20 @@ const MutationAssessorLegend: React.FunctionComponent = () => {
                 <tbody>
                     <tr>
                         <td>
-                            <span>
-                                <i
-                                    className={classNames(
-                                        functionalImpactColor['high'],
-                                        'fa fa-circle'
-                                    )}
-                                    aria-hidden="true"
-                                />
-                            </span>
-                        </td>
-                        <td>
                             <b>High</b>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <span>
-                                <i
-                                    className={classNames(
-                                        functionalImpactColor['medium'],
-                                        'fa fa-circle'
-                                    )}
-                                    aria-hidden="true"
-                                />
-                            </span>
-                        </td>
                         <td>
                             <b>Medium</b>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span>
-                                <i
-                                    className={classNames(
-                                        functionalImpactColor['low'],
-                                        'fa fa-circle'
-                                    )}
-                                    aria-hidden="true"
-                                />
-                            </span>
-                        </td>
-                        <td>
                             <b>Low</b>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <span>
-                                <i
-                                    className={classNames(
-                                        functionalImpactColor['neutral'],
-                                        'fa fa-circle'
-                                    )}
-                                    aria-hidden="true"
-                                />
-                            </span>
-                        </td>
                         <td>
                             <b>Neutral</b>
                         </td>
