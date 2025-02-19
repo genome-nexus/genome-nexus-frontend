@@ -88,6 +88,7 @@ export class VariantStore {
         invoke: async () => {
             return await genomeNexusClient.fetchVariantAnnotationGET({
                 variant: this.variant,
+                isoformOverrideSource: 'mskcc',
                 fields: annotationQueryFields() as any,
             });
         },

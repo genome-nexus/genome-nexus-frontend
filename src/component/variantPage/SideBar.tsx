@@ -100,7 +100,7 @@ class SideBar extends React.Component<SideBarProps> {
     onSearch = async () => {
         if (isVariantValid(`${this.inputText}`).isValid) {
             const response = await client
-                .fetchVariantAnnotationGET({ variant: this.inputText! })
+                .fetchVariantAnnotationGET({ variant: this.inputText!, isoformOverrideSource: 'mskcc' })
                 .catch((ex) => {
                     this.alertType = ErrorType.NO_RESULT;
                 });
