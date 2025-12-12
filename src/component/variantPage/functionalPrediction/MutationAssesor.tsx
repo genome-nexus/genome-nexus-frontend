@@ -108,12 +108,38 @@ const MutationAssessorValue: React.FunctionComponent<{
     mutationAssessor?: MutationAssessorData;
 }> = ({ mutationAssessor }) => {
     if (!mutationAssessor) return null;
-    return mutationAssessor.functionalImpactScore != null ? (
+
+    const scoreElement =
+        mutationAssessor.functionalImpactScore != null ? (
+            <div>
+                <span className="mr-2">Score</span>
+                <strong>
+                    {mutationAssessor.functionalImpactScore.toFixed(2)}
+                </strong>
+            </div>
+        ) : null;
+
+    const msaLink = mutationAssessor.msa ? (
         <div>
-            <span className="mr-2">Score</span>
-            <strong>{mutationAssessor.functionalImpactScore.toFixed(2)}</strong>
+            Download multiple sequence alignment file{' '}
+            <a
+                href={`https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor-v4-multiple-sequence-alignment-files/${mutationAssessor.msa}.fa.br`}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                here
+            </a>
         </div>
     ) : null;
+
+    if (!scoreElement && !msaLink) return null;
+
+    return (
+        <div>
+            {scoreElement}
+            {msaLink}
+        </div>
+    );
 };
 
 @observer
