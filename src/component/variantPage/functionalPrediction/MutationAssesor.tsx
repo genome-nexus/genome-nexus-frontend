@@ -121,13 +121,21 @@ const MutationAssessorValue: React.FunctionComponent<{
 
     const msaLink = mutationAssessor.msa ? (
         <div>
-            Download multiple sequence alignment file{' '}
+            Multiple sequence alignment file:{' '}
             <a
-                href={`https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor-v4-multiple-sequence-alignment-files/${mutationAssessor.msa}.fa.br`}
+                href={`https://projects.sanderlab.org/av/?url=https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor-v4-multiple-sequence-alignment-files-uncompressed/${mutationAssessor.msa}.fa`}
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                here
+                View
+            </a>
+            {' | '}
+            <a
+                href={`https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor-v4-multiple-sequence-alignment-files-uncompressed/${mutationAssessor.msa}.fa`}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Download
             </a>
         </div>
     ) : null;
