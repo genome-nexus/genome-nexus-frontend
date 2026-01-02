@@ -1,4 +1,112 @@
-## Aug 8, 2023:
+## Dec 18, 2025
+**Website New Feature**  
+Mutation Assessor V4 multiple sequence alignment files are now directly accessible from the variant page. Click `View` or `Download` under the `Mutation Assessor` section to explore the alignment files.
+<img src="https://github.com/user-attachments/assets/dc8f1d08-586f-40f9-9690-34181bada7d2" />
+
+## Nov 25, 2025
+**Database Update**  
+Slim version database images are now available for all future releases. Slim version database images only includes the necessary components for running the Genome Nexus service, such as Ensembl related files and HGNC list, no external connections to other data sources. Users who only need to run the Genome Nexus service for basic variant annotation or need to run the service in a restricted environment can looking for image tag `slim`.
+
+## Nov 5, 2025  
+**Data Update**  
+New canonical transcripts for CDKN2A mskcc isoform are:
+- ENST00000579755.1 (p14) - MANE plus clinical p14, this is also Germline transcript
+- ENST00000304494.5 (p16) - p16 MANE
+
+## Nov 5, 2025
+**Database Update**
+Genome Nexus database v1.0 is now available. Starting from version v1.0, ensembl 111 will be the default for grch37.
+
+## Nov 5, 2025
+**API Update**  
+Transcript subversion information is now supported! Look for `transcriptSubversion` field in the API response, this will be supported on hotspots endpoints and ensembl endpoints.
+
+## Oct 29, 2025
+**Data Update**
+MSKCC isoform for grch37 is updated! Checkout the isoform file [here](https://github.com/genome-nexus/genome-nexus-importer/blob/master/data/common_input/isoform_overrides_at_mskcc_grch37.txt).
+In this new mskcc isoform, the default transcripts for each gene were updated to align better with OncoKB, prioritizing clinically relevant and MANE transcripts (Morales et al. 2022). Also Ensembl's subversions are now included for each transcript.
+
+## Oct 23, 2025  
+**Annotation Pipeline Update**  
+A configurable option for replacing gene symbols with Entrez identifiers has been restored in the annotation pipeline. 
+By default this parameter is set to "true".
+Usage example:
+- no  `--replace-symbol-entrez` provided in command: 
+  - replace symbols and Entrez ID to what in annotator
+- `--replace-symbol-entrez true` provided in command:
+  - replace symbols and Entrez ID to what in annotator
+- `--replace-symbol-entrez false` provided in command:
+  - use symbols and Entrez ID from input file
+
+## Jul 16, 2025 
+**Annotation Pipeline Update**  
+Improved Memory Usage for Large Annotation Jobs: the annotation pipeline now can handle large MAF files or cohort-level datasets.  
+
+## Apr 16, 2025
+**Genome Nexus Update**
+Genome Nexus now always returns the latest HGNC symbols. For examples, `FAM58A` will be changed to `CCNQ`.
+
+## Mar 11, 2025
+**API Update**  
+Genome Nexus v2.0.0 Breaking Changes ⚠️
+Please notice that `gn_vep.region.url`, `gn_vep.server.version`, and `gn_vep.cache.version` from application properties are removed.
+Genome Nexus VEP **<2.0.0** no longer supported, see Docker Hub, and use tags labeled `{VEP_VERSION}-2.0.0` or greater.
+Please see release notes for more details: https://github.com/genome-nexus/genome-nexus/releases/tag/v2.0.0
+
+## Mar 7, 2025  
+**Genome Nexus VEP**  
+The Genome Nexus VEP service now supports MySQL database-backed annotation workflows. Error reporting was also improved to better align with upstream VEP output.  
+
+## Feb 11, 2025
+**Genome Nexus Improvements**
+2 new configurations added to Genome Nexus application.properties:
+- `cache.enabled`: Enables or disables caching for annotation sources such as vep.annotation, index, my_variant_info.annotation.
+  - Default value: true
+  - When set to false, queries bypass the cache and make direct calls to the web service, not saving any data to the database.
+- `prioritize_cancer_gene_transcripts`: prioritize OncoKB genes when picking canonical transcript. 
+  - Default value: true.
+  - If users prefer to not include this prioritizer, it can be disabled in the application.properties.
+
+## Jan 21, 2025
+**Database Update**
+- Update HGNC to version 2024-10
+- Update ClinVar to version 20250106
+
+## Oct 10, 2024
+**Annotation Pipeline Update**  
+Support for Mutation Assessor v4 output was added to the annotation pipeline. Removed columns that are not available in new version, add three new columns: `MSA`, `MAV`, `SV`.
+
+## Oct 11, 2024
+**Annotation Pipeline Update**  
+Improved Annotation of Intergenic Variants: Intergenic variants are now annotated with `intergenic_variant` in `Consequence` column, and `IGV` in `Variant_Classification` column.
+
+## Aug 21, 2024
+**Database Update**
+Mutation Assessor v4 data is now supported.
+
+## Jun 22, 2024
+**Data Update**
+AlphaMissense are now available in Genome Nexus API response. Looking for `alphaMissense` field in any of the following fields: `transcript_consequences`, `transcriptConsequences`, `transcriptConsequenceSummaries`, `transcriptConsequenceSummary`.  
+
+## Jan 3, 2024
+**Database Update**
+Update HGNC symbol to version 2023.10.
+
+## Jan 2, 2024
+**Genome Nexus Update**
+Consequence terms and variant classification terms are updated to align with Ensembl (https://useast.ensembl.org/info/genome/variation/prediction/predicted_data.html).
+
+## Oct 11, 2023
+**Genome Nexus Update**  
+Genome Nexus now supports `N` allele when giving a HGVsg or genomic variants.
+
+## Sep 25, 2023
+**Annotation Pipeline Update**
+Add a new new parameter `-n` to annotation pipeline. 
+`-n` will add "genomic_location_explanation" column to output file. Only variants that have altered genomic location will have value in this column
+example column value: End position changes from 170837525 to 170837526, end position should equal to start position for SNV variants
+
+## Aug 8, 2023
 - **Annotation Pipeline Update**: Add support for [OncoKB™](https://www.oncokb.org/) annotation in annotation pipeline
     - OncoKB™ annotation access requires token. See [document](https://github.com/genome-nexus/genome-nexus-annotation-pipeline#annotation-fields) about how to add OncoKB™ annotation in MAF.
 - **Annotation Pipeline Update**: Release v1.0.0!
