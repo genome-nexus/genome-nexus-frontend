@@ -1,3 +1,68 @@
+## Aug 10, 2026
+**Annotation Pipeline Update**  
+Added a new `Hgvs_Offset` column, populated under `--mode extended` alongside `Additional_Transcripts`. It is resolved from the canonical transcript's `hgvs_offset` field in the raw Genome Nexus response (see the Jul 14, 2026 update below, which exposed this field in the API).
+
+## Jul 23, 2026
+**API Update**  
+Genome Nexus can now serve Cancer Hotspots v3 data. A new `version` field (`v2`/`v3`) was added to the Hotspot model. The `hotspots` field on `/annotation` endpoints now always returns both v2 and v3 records unfiltered, and the standalone `/cancer_hotspots` endpoints gained a new `version` query parameter: `v2` returns v2-only records, while `v3` (the default) returns v2 and v3 combined.
+
+## Jul 22, 2026
+**Database Update**  
+The importer now ingests Cancer Hotspots v3 data alongside the existing v2 and 3D hotspots data, tagging each record with a `version` column so the API can serve v3 as opt-in. This is a companion update to the Jul 23, 2026 API change above.
+
+## Jul 14, 2026
+**Genome Nexus Update**  
+Major improvements to transcript selection and splice consequence handling:
+- **Biotype-aware transcript selection**: The transcript picking pipeline now filters candidates by gene biotype before applying isoform overrides, so a `protein_coding` gene always outranks a lncRNA-only or pseudogene gene, both at the gene level and the per-transcript level.
+- **OncoKB curated gene prioritization**: Added a two-tier OncoKB filter. Genes with a curated OncoKB entry (`oncokbAnnotated: true`) are preferred first; if none are present, any gene in the broader OncoKB cancer gene collection is used as a fallback. This prevents non-curated panel genes from outranking curated cancer genes appearing on the same variant.
+- **Splice consequence refinements**:
+    - `splice_region_variant` was removed from the splice site variant terms, so it now produces `p.*(pos)*` instead of `p.X(pos)_splice`, consistent with being classified as `Splice_Region` rather than `Splice_Site`.
+    - `splice_polypyrimidine_tract_variant` is now ranked between other splice region terms and synonymous in priority, and its variant classification is mapped to `Intron` rather than `Splice_Region`.
+    - HGVSp suppression was narrowed from any "splice" classification to only `Splice_Site`, so `Splice_Region` variants can now return a valid HGVSp when VEP provides one.
+- **HGVSp_Short fix for UTR-spanning variants**: Fixed incorrect protein position for HGVSc strings spanning from the 5′ UTR into the CDS (e.g. `c.-309_60+142del`), which previously dropped the minus sign on the UTR position.
+- **`hgvs_offset` exposed**: VEP's `hgvs_offset` field is now available on `TranscriptConsequence` in the API response.
+- **Bug fixes**: fixed a 406 error on the single-variant GET path against local VEP instances; prevented a crash when VEP returns a plain-string error body instead of JSON; added a guard against an `IndexOutOfBoundsException` when transcript consequences are empty; added a null check for the OncoKB service; and fixed the fallback HGVSp_Short for variants without a defined alt amino acid.
+- **Documentation**: `docs/FAQ.md` was updated with a detailed transcript-picking walkthrough, a corrected effect priority table, and corrected splice consequence classification tables.
+
+## Jul 10, 2026
+**Genome Nexus VEP**  
+Performance and reliability improvements to the VEP wrapper service:
+- Raised the batch HGVS request chunk size from 1 to 200 variants per request.
+- Replaced the per-request unbounded thread pool with a shared, bounded thread pool.
+- Fixed a potential deadlock in VEP execution by draining VEP's stderr on a separate background thread.
+- Failing variants within a batch (e.g. incorrect reference allele) are no longer silently dropped — they are now identified and retried individually while the rest of the batch proceeds.
+- Improved error messages to surface the underlying output returned by VEP.
+
+## May 18, 2026
+**Annotation Pipeline Update**  
+Added a new `Additional_Transcripts` column to the annotation pipeline output. It contains a semicolon-separated list of alternate transcripts, where each entry is a comma-separated list of: Transcript ID, Hugo Gene Symbol, HGVSp Short, HGVSc, and Variant Classification.
+
+## May 14, 2026
+**Database Update**  
+Updated OncoKB data to the latest version, v7.1, for GRCh37.
+
+## May 13, 2026
+**Documentation**  
+Added a new [FAQ document](https://github.com/genome-nexus/genome-nexus/blob/master/docs/FAQ.md) covering how Genome Nexus works, including a detailed walkthrough of transcript picking logic and splice consequence handling.
+
+## Apr 8, 2026
+**Genome Nexus VEP**  
+Added a new Cache Mode to Genome Nexus VEP for users who cannot support a full database backend. Cache mode uses VEP's cache and FASTA files directly and is configured by setting `mode: cache` in the application properties. Database mode remains the preferred and default option, providing the same functionality as the public Ensembl REST API; cache mode has reduced functionality and cannot annotate variants with non-genomic coordinates or HGVSg inversions and duplications.
+
+## Apr 6, 2026
+**Database Update**  
+Upgraded the database to MongoDB 7.0.28, adding support for the ARM platform.
+
+## Feb 23, 2026
+**Database Update**  
+- Updated HGNC to version 2025-10-07.
+- Updated ClinVar to version 2026-02-08.
+- Refreshed all GRCh37 transcript files. GRCh38 files will follow in a separate update, based on a newer isoform transcript list.
+
+## Dec 29, 2025
+**Documentation**  
+Added a [transcript changelog document](https://github.com/genome-nexus/genome-nexus-importer/blob/master/docs/transcript-changelog.md) tracking MSKCC isoform transcript changes for v1.0.
+
 ## Dec 18, 2025
 **Website New Feature**  
 Mutation Assessor V4 multiple sequence alignment files are now directly accessible from the variant page. Click `View` or `Download` under the `Mutation Assessor` section to explore the alignment files.
