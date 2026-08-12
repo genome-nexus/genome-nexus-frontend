@@ -66,7 +66,7 @@ export const ONCOKB_URL = 'https://www.oncokb.org';
 @observer
 export default class Oncokb extends React.Component<IOncokbProps> {
     public oncogenicity(oncokb: IndicatorQueryResp) {
-        if (oncokb.oncogenic && oncokb.oncogenic !== '') {
+        if (oncokb.oncogenic) {
             return oncokb.oncogenic;
         } else {
             return null;
@@ -105,7 +105,7 @@ export default class Oncokb extends React.Component<IOncokbProps> {
     }
 
     public mutationEffect(oncokb: IndicatorQueryResp) {
-        if (oncokb.mutationEffect && oncokb.mutationEffect.knownEffect !== '') {
+        if (oncokb.mutationEffect && oncokb.mutationEffect.knownEffect) {
             return oncokb.mutationEffect.knownEffect;
         } else {
             return null;
