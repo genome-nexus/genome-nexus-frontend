@@ -61,9 +61,9 @@
     "yarn": ">=1.22.5"
   },
   "scripts": {
-    "start": "PORT=3088 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-markdown)/\"",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider PORT=3088 react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "NODE_OPTIONS=--openssl-legacy-provider react-scripts test --transformIgnorePatterns \"node_modules/(?!react-markdown)/\"",
     "eject": "react-scripts eject",
     "prettier": "prettier --config ./.prettierrc.js --write './src/**'",
     "test-prettier": "prettier --config ./.prettierrc.js -c './src/**'"
