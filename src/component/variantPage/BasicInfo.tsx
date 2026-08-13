@@ -564,7 +564,5 @@ function getTsgFromOncokbGenesMap(
     gene?: string
 ): string | null {
     const geneType = gene && oncokbGenesMap[gene]?.geneType;
-    return geneType === 'TSG' || geneType === 'ONCOGENE_AND_TSG'
-        ? 'TSG'
-        : null;
+    return geneType === 'TSG' || geneType === 'ONCOGENE_AND_TSG' ? 'TSG' : null;
 }
