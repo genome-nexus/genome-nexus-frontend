@@ -1,4 +1,4 @@
-# Javascript Node CircleCI 2.0 configuration file
+# Javascript Node CircleCI 2.1 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
@@ -8,7 +8,7 @@ defaults: &defaults
     # specify the version you desire here
     - image: cimg/node:22.18.0-browsers
 
-version: 2
+version: 2.1
 jobs:
   install:
     <<: *defaults
@@ -60,7 +60,6 @@ jobs:
 
 
 workflows:
-    version: 2
     install_and_test:
         jobs:
             - install
