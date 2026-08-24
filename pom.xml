@@ -26,7 +26,7 @@
                         </goals>
 
                         <configuration>
-                            <nodeVersion>v22.18.0</nodeVersion>
+                            <nodeVersion>v20.18.0</nodeVersion>
                             <yarnVersion>v1.22.5</yarnVersion>
                         </configuration>
 
@@ -39,6 +39,9 @@
                         <goals>
                             <goal>yarn</goal>
                         </goals>
+                        <configuration>
+                            <arguments>--ignore-engines</arguments>
+                        </configuration>
                     </execution>
 
                     <execution>
