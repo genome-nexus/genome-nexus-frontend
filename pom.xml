@@ -50,7 +50,7 @@
                             <goal>yarn</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build --ignore-engines</arguments>
                         </configuration>
                     </execution>
                 </executions>
