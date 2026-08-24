@@ -39,9 +39,6 @@
                         <goals>
                             <goal>yarn</goal>
                         </goals>
-                        <configuration>
-                            <arguments>--ignore-engines</arguments>
-                        </configuration>
                     </execution>
 
                     <execution>
@@ -50,7 +47,7 @@
                             <goal>yarn</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build --ignore-engines</arguments>
+                            <arguments>run build</arguments>
                         </configuration>
                     </execution>
                 </executions>
