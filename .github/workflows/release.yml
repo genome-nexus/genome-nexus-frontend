@@ -1,0 +1,94 @@
+name: Release to Maven Central
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Branch, release tag, or commit hash to build"
+        type: string
+        required: true
+
+env:
+  JAVA_VERSION: '17'
+  JAVA_DIST: 'temurin'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref }}
+
+      - name: Checkout repository (automatic trigger)
+        if: github.event_name != 'workflow_dispatch'
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DIST }}
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_CENTRAL_GPG_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Set version from release tag
+        if: github.event_name == 'release'
+        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+
+      - name: Set version from pushed tag
+        if: github.event_name == 'push'
+        run: mvn versions:set -DnewVersion=${{ github.ref_name }} -DgenerateBackupPoms=false
+
+      - name: Set version from source ref (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        run: mvn versions:set -DnewVersion=${{ inputs.source_ref }} -DgenerateBackupPoms=false
+
+      - name: Publish to Maven Central
+        run: mvn --batch-mode deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_CENTRAL_GPG_PASSPHRASE }}
+
+      - name: Check publish status
+        env:
+          ARTIFACT_ID: "genome-nexus-frontend"
+          GROUP_ID_PATH: "io/github/genome-nexus"
+          MAX_RETRIES: 30
+          INTERVAL_SECONDS: 60
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ inputs.source_ref }}"
+          elif [ "${{ github.event_name }}" == "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+          elif [ "${{ github.event_name }}" == "push" ]; then
+            VERSION="${{ github.ref_name }}"
+          else
+            echo "Action triggered through an invalid event!"
+            exit 1
+          fi
+          URL="https://repo1.maven.org/maven2/${GROUP_ID_PATH}/${ARTIFACT_ID}/${VERSION}"
+          for ((i=1; i<=$MAX_RETRIES; i++)); do
+            if curl --silent --head --fail "$URL" > /dev/null; then
+              echo "Package successfully published at $URL"
+              exit 0
+            else
+              echo "Not yet available, retrying in $INTERVAL_SECONDS seconds... ($i/$MAX_RETRIES)"
+              sleep "$INTERVAL_SECONDS"
+            fi
+          done
+          echo "Publish not confirmed after $MAX_RETRIES attempts."
+          exit 1
