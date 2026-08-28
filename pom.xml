@@ -80,6 +80,7 @@
                 <configuration>
                     <publishingServerId>central</publishingServerId>
                     <autoPublish>true</autoPublish>
+                    <deploymentName>${mavenCentralDeploymentName}</deploymentName>
                 </configuration>
             </plugin>
 

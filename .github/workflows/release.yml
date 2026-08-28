@@ -3,9 +3,6 @@ name: Release to Maven Central
 on:
   release:
     types: [published]
-  push:
-    tags:
-      - '*'
   workflow_dispatch:
     inputs:
       source_ref:
@@ -25,16 +22,16 @@ jobs:
     steps:
       - name: Checkout repository (manual trigger)
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ inputs.source_ref }}
 
       - name: Checkout repository (automatic trigger)
         if: github.event_name != 'workflow_dispatch'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DIST }}
@@ -46,18 +43,14 @@ jobs:
 
       - name: Set version from release tag
         if: github.event_name == 'release'
-        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
-
-      - name: Set version from pushed tag
-        if: github.event_name == 'push'
-        run: mvn versions:set -DnewVersion=${{ github.ref_name }} -DgenerateBackupPoms=false
+        run: mvn versions:set -DnewVersion=${GITHUB_REF_NAME#v} -DgenerateBackupPoms=false
 
       - name: Set version from source ref (manual trigger)
         if: github.event_name == 'workflow_dispatch'
         run: mvn versions:set -DnewVersion=${{ inputs.source_ref }} -DgenerateBackupPoms=false
 
       - name: Publish to Maven Central
-        run: mvn --batch-mode deploy
+        run: mvn --batch-mode deploy -DmavenCentralDeploymentName=genome-nexus-frontend-${GITHUB_REF_NAME}
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
@@ -73,9 +66,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             VERSION="${{ inputs.source_ref }}"
           elif [ "${{ github.event_name }}" == "release" ]; then
-            VERSION="${{ github.event.release.tag_name }}"
-          elif [ "${{ github.event_name }}" == "push" ]; then
-            VERSION="${{ github.ref_name }}"
+            VERSION="${GITHUB_REF_NAME#v}"
           else
             echo "Action triggered through an invalid event!"
             exit 1
