@@ -17,7 +17,7 @@ import TranscriptSummaryTable from './TranscriptSummaryTable';
 import { generateOncokbLink, ONCOKB_URL } from './biologicalFunction/Oncokb';
 
 import basicInfo from './BasicInfo.module.scss';
-import { Link } from 'react-router-dom';
+import { genomeNexusApiRoot } from '../../util/genomeNexusClientInstance';
 import { annotationQueryFields } from '../../config/configDefaults';
 import Toggle from '../Toggle';
 import { ReVUEContent } from './biologicalFunction/ReVUE';
@@ -377,16 +377,17 @@ export default class BasicInfo extends React.Component<IBasicInfoProps> {
                     </span>
                 }
             >
-                <Link
-                    to={`/annotation/${
-                        this.props.variant
+                <a
+                    href={`${genomeNexusApiRoot}/annotation/${
+                        encodeURIComponent(this.props.variant)
                     }?fields=${annotationQueryFields().join(',')}`}
                     target="_blank"
+                    rel="noopener noreferrer"
                     style={{ paddingLeft: '8px', paddingRight: '8px' }}
                 >
                     {'JSON '}
                     <i className="fa fa-external-link" />
-                </Link>
+                </a>
             </DefaultTooltip>
         );
     }
