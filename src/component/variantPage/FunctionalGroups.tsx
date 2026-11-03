@@ -11,6 +11,8 @@ import {
 import { IndicatorQueryResp } from 'oncokb-ts-api-client';
 
 import PrevalenceInPopulation from './PrevalenceInPopulation';
+import AlphaGenome from './AlphaGenome';
+import { VariantAnnotationWithAlphaGenome } from '../../model/AlphaGenome';
 import FunctionalPrediction from './FunctionalPrediction';
 import BiologicalFunction from './BiologicalFunction';
 import functionalGroupsStyle from './functionalGroups.module.scss';
@@ -21,7 +23,7 @@ import PrevalenceInCancer from './PrevalenceInCancer';
 interface IFunctionalGroupsProps {
     annotationInternal?: VariantAnnotationSummary;
     myVariantInfo?: MyVariantInfo;
-    variantAnnotation?: VariantAnnotation;
+    variantAnnotation?: VariantAnnotationWithAlphaGenome;
     oncokb?: IndicatorQueryResp;
     civic?: ICivicVariantIndex;
     isCanonicalTranscriptSelected: boolean;
@@ -81,6 +83,18 @@ class FunctionalGroups extends React.Component<IFunctionalGroupsProps> {
                                     this.props.isCanonicalTranscriptSelected
                                 }
                                 genomeBuild={this.props.genomeBuild}
+                            />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>AlphaGenome:</th>
+                        <td>
+                            <AlphaGenome
+                                annotation={
+                                    this.props.variantAnnotation?.alpha_genome
+                                        ?.annotation
+                                }
                             />
                         </td>
                     </tr>

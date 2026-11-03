@@ -14,6 +14,7 @@ export const DEFAULT_ANNOTATION_QUERY_FIELDS = [
     'my_variant_info',
     'clinvar',
     'signal',
+    'alpha_genome',
 ];
 
 export const SEARCH_QUERY_FIELDS = ['annotation_summary'];
